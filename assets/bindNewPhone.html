@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>输入新手机号</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <style>
+        /* header */
+        /* section */
+        .cellContent {
+            height: 50px;
+        }
+
+        .masg {
+            padding: 9px 16px;
+            background: #F4F4F4;
+            font-size: 12px;
+            color: #999999;
+        }
+
+        body {
+            background: #F4F4F4;
+        }
+
+        .icon_phone {
+            width: 15px;
+            height: 20px;
+            display: inline-block;
+            background: url('img/geren/phone.png')no-repeat center;
+            background-size: 100%;
+            margin-right: 18px;
+        }
+
+        .icon_code {
+            width: 21px;
+            height: 17px;
+            display: inline-block;
+            background: url('img/geren/code.png')no-repeat center;
+            background-size: 100%;
+            margin-right: 13px;
+        }
+
+        #getCode {
+            width: 84px;
+            height: 34px;
+            color: #098E75;
+            font-size: 12px;
+            border: 1px solid #098E75;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 34px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">输入新手机号</div>
+        </div>
+    </header>
+    <section id=''>
+        <p class="masg">请输入新手机号</p>
+        <div class="paddl15 bg_white ">
+            <div class="cellContent  bottomBorder">
+                <div>
+                    <i class="icon_phone"></i>
+                    <input id="phone" type="tel" maxlength="11" placeholder="请输入11位新手机号">
+                </div>
+            </div>
+        </div>
+        <div class="paddl15 bg_white ">
+            <div class="cellContent  ">
+                <div>
+                    <i class="icon_code"></i>
+                    <input type="tel" id="codeVal" maxlength="6" placeholder="请输入验证码">
+                </div>
+                <div id="getCode" onclick="model.getCode(this)">获取验证码</div>
+            </div>
+        </div>
+        <div class="flex-justify-center" style="margin-top:34px;">
+            <button onclick="model.submission()">确定</button>
+        </div>
+    </section>
+
+</body>
+
+
+
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script type="text/javascript" src="inc/picker.min.js"></script>
+<script type="text/javascript" src="inc/upimg/upload.js"></script>
+
+<script>
+
+
+    function pageresume() {
+
+    }
+
+    function pageload() {
+
+    }
+    var model = {
+        countdown: 60,//倒计时时间上限
+        //获取验证码
+        getCode: function (el) {
+            var that = this;
+            var phone = $('#phone').val();
+            if (phone == '') {
+                Comm.message('请输入手机号');
+                return;
+            }
+            AJAX.POST('/api/customer/sendMsg', { phone: phone, bo: 3 }, function (d) {
+                if (d && d.code == 1) {
+                    that.settime($(el))
+                } else {
+                    Comm.message(d.msg || '网络错误')
+                }
+            })
+        },
+        //验证码倒计时
+        settime: function (el) {
+            var thih = this
+            var i = setInterval(function () {
+                el.html(thih.countdown + '秒');
+                if (thih.countdown > 0) {
+                    thih.countdown -= 1;
+                } else {
+                    el.html('重新获取');
+                    thih.countdown = 60
+                    clearInterval(i)
+                }
+            }, 1000)
+        },
+        //确定
+        submission: function () {
+            var phone = $('#phone').val();
+            var codeVal = $('#codeVal').val();
+            if (phone == '') {
+                Comm.message('手机号不能为空');
+                return;
+            }
+            if (codeVal == '') {
+                Comm.message('验证码不能为空');
+                return;
+            }
+            AJAX.POST('/api/customer/updatePhone', { phone: phone, code: codeVal }, function (d) {
+                    if (d && d.code) {
+                        Comm.message('操作成功');
+                        setTimeout(function () {
+                            Comm.close(2)
+
+                        }, 1500)
+
+                    } else {
+                        Comm.message(d.msg);
+                    }
+                })
+        }
+    }
+</script>
+
+</html>

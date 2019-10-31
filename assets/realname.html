@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>实名认证</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <style>
+        body {
+            background: #f4f4f4;
+        }
+
+        body {
+            background: #F4F4F4;
+        }
+
+        .item {
+            padding: 15px;
+            background: #fff;
+            display: flex;
+            position: relative;
+        }
+
+        .item label {
+            width: 100px;
+
+        }
+
+        input {
+            background: #fff;
+        }
+
+        .icon_left {
+            display: inline-block;
+            width: 15px;
+            height: 12px;
+            position: absolute;
+            right: 15px;
+            margin-top: -6px;
+            top: 50%;
+            background: url('img/geren/icon_left.png') no-repeat center;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">实名认证</div>
+        </div>
+    </header>
+    <section id='dom'>
+
+    </section>
+    <footer>
+
+    </footer>
+</body>
+<script type="text/html" id="dome1">
+    <div class="item bottomBorder">
+        <label for="userName">真实姓名</label>
+        <input id="userName" style="width: 72%;"  type="text" value="{{if realName}}{{realName}}{{/if}}" maxlength="11" placeholder="请输入姓名">
+    </div>
+    <div class="item bottomBorder" onclick="sexPicker.show()">
+        <label for="sex">性别</label>
+        <input id="sex" type="text" value="{{if gender==1}}男{{else if gender==0}}女{{/if}}" maxlength="11"  placeholder="请选择" disabled>
+        <i class="icon_left"></i>
+    </div>
+    <div class="item ">
+        <label for="userCode">身份证号</label>
+        <input id="userCode" type="tel" style="width: 72%;" value="{{if idCard}}{{idCard}}{{/if}}" maxlength="22" placeholder="请输入身份证号">
+    </div>
+    <div class="flex-justify-center" style="margin-top:34px;">
+        <button onclick="model.submission()">提交</button>
+    </div>
+</script>
+
+
+
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script type="text/javascript" src="inc/picker.min.js"></script>
+<script type="text/javascript" src="inc/upimg/upload.js"></script>
+
+<script>
+
+
+    function pageresume() {
+
+    }
+
+    function pageload() {
+        //初始化性别时间picker
+        var _data = [{ text: '男', i: 1 }, { text: '女', i: 0 }];
+        sexPicker = new Commpicker("性别", [_data], function (a, v, sid) {
+            $("#sex").val(v).attr("data", sid);
+        });
+
+    }
+    var model = {
+        //提交
+        submission: function () {
+            var realName = $('#userName').val();
+            var gender = 0;
+            var idCard = $('#userCode').val();
+            if ($('#sex').val() == '男') {
+                gender = 1;
+            }
+            if ($('#sex').val() == '女') {
+                gender = 0;
+            }
+            if (realName == '') {
+                Comm.message('请填写真实姓名');
+                return;
+            }
+            if ($('#sex').val() == '') {
+                Comm.message('请选择性别');
+                return;
+            }
+            if (idCard == '') {
+                Comm.message('请填写身份证号码');
+                return;
+            }
+            AJAX.POST('/api/customer/realName', { realName: realName, gender: gender, idCard: idCard }, function (d) {
+                if (d && d.code == 1) {
+                    Comm.message('操作成功');
+                    setTimeout(function () {
+                        Comm.close()
+                    }, 1500)
+                } else {
+                    Comm.message(d.msg || '网络错误');
+                }
+            })
+
+        },
+        realInfo: function () {
+            AJAX.GET('/api/customer/realInfo', function (d) {
+                if(d&&d.code==1){
+                    $('#dom').html(template('dome1',d.data))
+                }
+            })
+        }
+
+
+    }
+    	model.realInfo()
+   
+    
+</script>
+
+</html>

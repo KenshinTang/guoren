@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>会员等级</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <style>
+        .main{
+            padding: 15px;
+        }
+      
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon " onclick="Comm.close()"></div>
+            <div class="navTitle">会员等级</div>
+        </div>
+    </header>
+    <section id=''>
+        <div class="main">
+            <p>会员等级</p>
+            <div>
+                
+            </div>
+            <p style="color:#ccc;text-indent:2em">会员等级说明文案会员等级说明文案会员等级说明文案会员等级说明文案会员等级说明文案会员等级说明文案会员等级说明文案会员等级说明文案会员等级说明文案会员等级说明文案会员等级说明文案会员等级说明文案会员等级说明文案会员等级说明文案会员等级说明文案会员等级说明文案</p>
+        </div>
+
+    </section>
+
+</body>
+
+
+
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script type="text/javascript" src="inc/picker.min.js"></script>
+<script type="text/javascript" src="inc/upimg/upload.js"></script>
+<script>
+   
+
+    function pageresume() {
+
+    }
+
+    function pageload() {
+
+    }
+    var model = {
+
+        determine:function(){
+            if($('#newPsw').val()==''){
+                Comm.message('请填写新密码');
+                return;
+            }
+            if($('#newPsw2').val()==''){
+                Comm.message('请填写确认密码');
+                return;
+            }
+            Comm.message('密码修改成功');
+        }
+
+    }
+</script>
+
+</html>

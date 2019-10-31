@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>举报</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="./css/g.css" />
+    <link rel="stylesheet" href="./css/comm.css" />
+    <style>
+    	div {
+    -webkit-user-select: text;
+}
+
+div * {
+    -webkit-user-select: text
+}
+        section {
+            background-color: #F4F4F4;
+        }
+        
+        .refound-box {
+            width: 100%;
+        }
+        
+        h3 {
+            width: calc(100% - 200px - 40px);
+            height: 30px;
+            line-height: 30px;
+        }
+        
+        .refund-type {
+            width: 100%;
+        }
+        
+        .typeBtn {
+            width: 80px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid #BBBBBB;
+            border-radius: 4px;
+        }
+        
+        .checked {
+            background: #6CCEC5;
+        }
+        
+        .price {
+            width: 200px;
+            height: 30px;
+            border: 1px solid #888888;
+            position: relative;
+            top: -1px;
+        }
+        
+        .remarks {
+            width: calc(100% - 70%);
+        }
+        
+        .refund-area {
+            width: 70%;
+            height: 90px;
+            border: none;
+        }
+        
+        .btn-box {
+            width: 100%;
+            height: 50px;
+        }
+        
+        .refund-btn {
+            width: 90%;
+            margin: 0 auto;
+            font-size: 17px;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 3px;
+            border: 0px;
+        }
+        /*  */
+        
+        .closeimg {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+        }
+        
+        div#conimg {}
+        
+        div#conimg .left {
+            width: 80px;
+            height: 80px;
+        }
+        
+        div#conimg .left img {}
+        
+        div#conimg .left img.closeimg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .refund-t {
+            padding: 10px;
+            background-color: #F4F4F4;
+            color: #818181;
+        }
+        
+        .refund-h {
+            float: left;
+            padding: 5px 15px;
+            margin-left: 10px;
+            margin-top: 10px;
+            color: #333333;
+            border: #f4f4f4 1px solid;
+        }
+        
+        .refund-h-active {
+            color: #098E75;
+            border: #098E75 1px solid;
+        }
+        
+        .commonButton1 {
+            width: 80%;
+            margin: 10px auto;
+            border-radius: 20px;
+            background-color: #098E75;
+            color: #fff;
+            text-align: center;
+            height: 45px;
+            line-height: 45px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">举报</div>
+        </div>
+    </header>
+    <section>
+        <div class="submitOrder-l-goods-ls"></div>
+
+        <div class="sp5"></div>
+
+        <div class="refund-box">
+            <div class="bg_white refund-type bb1 paddb15">
+                <div class="refund-t">举报类型</div>
+                <div class="block ovf pad10">
+                    <div id="list">
+
+
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="refund-t">
+                    <div class="fl">举报说明</div>
+                    <div class="fr"><span id="nowSize" class="color56c">0</span><span>/200</span></div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="block ovf pad10">
+                    <textarea id="text" oninput="length()" maxlength="200" class="f14" style="width: 100%;height: 120px;border: none;" placeholder="不要超过200个字哦~..."></textarea>
+                </div>
+                <div class="paddl15 paddt5 bg_white refund-price">
+                    <div class="bg_white  paddr10">
+                        <div class="clearfix paddb10 paddt10" id="conimg">
+                            <div class="left marr10 marb10" id="upm">
+                                <img src="./img/my/xztp.png" width="80" height="80" id="imgupimg" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="commonButton1" onclick="model.submission()">提交</div>
+    </section>
+
+    <footer>
+
+    </footer>
+
+</body>
+<script type="text/html" id="demo">
+    {{each $data as v k}} {{if(k==0)}}
+    <div class="refund-h  refund-h-active" onclick="model.swdicl(this,{{v.dictid}})">{{v.dictname}}</div>
+    {{else}}
+    <div class="refund-h" onclick="model.swdicl(this,{{v.dictid}})">{{v.dictname}}</div>
+    {{/if}} {{/each}}
+    <!-- <div class="refund-h">不友善行为</div> -->
+</script>
+<script type="text/javascript" src="./inc/z.js"></script>
+<script type="text/javascript" src="./inc/g.js"></script>
+<script type="text/javascript" src="./inc/comm.js"></script>
+<script type="text/javascript" src="./inc/picker.min.js"></script>
+<script type="text/javascript" src="./inc/upimg/upload.js"></script>
+<script src="./inc/art-template.js"></script>
+<script src="inc/dict.js"></script>
+
+<script>
+    var whyPicker;
+    var upHeader = null;
+    var i = 0; //图片数量
+    var dictId = ''; //标签id
+    var content = ''; //举报内容
+    var customerId = app.getCid();
+    var itemType = Comm.query('itemType') || 1; //举报类型
+    var itemId = Comm.query('itemId'); //id
+    function length() {
+        if ($("#text").val().length >= 200) {
+            Comm.message('举报内容最多输入200字')
+        }
+    }
+    //移除凭证
+    function removeimg(a, i) {
+        imgUrlList.splice(i, 1)
+        Comm.confirm('是否删除该图片', function(d) {
+            if (d) {
+                $(a).parent().remove();
+                var imgData = $(a).attr('data');
+                for (var i = 0; i < imgUrlList.length; i++) {
+                    if (imgUrlList[i].img == imgData) {
+                        imgUrlList.splice(i, 1)
+                        imgUploader.prototype.del(i);
+                    }
+                }
+                console.log(imgUrlList)
+                $("#upm").show().find('.moxie-shim').width(80).height(80);
+
+            }
+        })
+    }
+    var imgUrlList = []
+
+    function pageload() {
+        upHeader = new imgUploader("imgupimg");
+        upHeader.success = function() {
+            var cimgUrl = this.imgList.length > 0 ? this.imgList[0] : 'img/error.png';
+            imgUrlList.push(cimgUrl)
+            $("#upm").before(template('imgTpl', {
+                src: cimgUrl,
+                i: imgUrlList.length - 1
+            }))
+            i++;
+            if (i == 4) {
+                $("#upm").hide();
+            } else {
+                $("#upm").show().find('.moxie-shim').width(80).height(80);
+            }
+        }
+    }
+
+    function pageresume() {
+
+    }
+
+
+    function submit() {
+
+    }
+    var model = {
+        //获取标签列表
+        getlistByPid: function() {
+            AJAX.GET('/api/complain/dict/listByPid', function(d) {
+                if (d.code == 1) {
+                    $('#list').html(template('demo', d.data));
+                    dictId = d.data[0].dictid
+                } else {
+                    Comm.message('错误')
+                }
+            })
+        },
+        swdicl: function(e, id) {
+            $('#list>div').attr('class', 'refund-h');
+            $(e).attr('class', 'refund-h refund-h-active');
+            dictId = id;
+        },
+        submission: function() {
+        	document.activeElement.blur();
+        	Comm.resizeSection();
+        		 AJAX.GET('/api/customer/detail', function(d) {
+                if (d && d.code === 1) {
+                	if (content.length > 200) {
+                Comm.message('举报内容最大字数200字，请重新编辑举报内容');
+                return false;
+            }
+            AJAX.POST('/api/complain/add', {
+                dictId: dictId,
+                itemType: itemType,
+                itemId: itemId,
+                content: content,
+                url: imgUrlList.join(','),
+                customerId: customerId
+            }, function(d) {
+                if (d.code == 1) {
+                    Comm.message('您的举报已提交');
+                    Comm.close();
+                } else {
+                    Comm.message('网络错误');
+                }
+            })
+                }
+              })
+            
+        }
+    }
+    $('#text').on('input', function(e) {
+        $('#nowSize').html($('#text').val().length)
+        content = $('#text').val();
+    })
+    model.getlistByPid()
+</script>
+<script id="imgTpl" type="text/html">
+    <div class="left marr10 marb10" style="position:relative;">
+        <img src="./img/close.png" width="20" class="closeimg" data-i="{{i}}" onclick="removeimg(this)" />
+        <img class="upimg" src="{{OSS(src)}}" width="80" height="80" data="{{src}}" />
+    </div>
+</script>
+
+</html>

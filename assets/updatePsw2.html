@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>重置密码</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <style>
+        .main {
+            padding: 0 27px;
+        }
+
+        .title {
+            margin-top: 10px;
+            color: #404040;
+            font-size: 22px;
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .pswBox {
+            padding: 35px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #DFDFDF;
+        }
+
+        .masg {
+            font-size: 12px;
+            color: #ccc;
+            margin-top: 10px;
+        }
+
+        #Determine {
+            width: 100%;
+        }
+
+        .icon_quxiao {
+            display: inline-block;
+            width: 13px;
+            height: 13px;
+            color: #fff;
+            background: #CCCCCC;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 13px;
+            font-size: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navBar ">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+        </div>
+    </header>
+    <section id=''>
+        <div class="main">
+            <h3 class="title">重置密码</h3>
+            <div class="pswBox">
+                <input type="password" id="newPsw" placeholder="请输入原密码">
+                <span class="icon_quxiao fr" id="quxiao1">x</span>
+            </div>
+            <div class="pswBox">
+                <input type="password" id="newPsw2" placeholder="请输入新密码">
+                <span class="icon_quxiao fr" id="quxiao2">x</span>
+            </div>
+            <p class="masg">密码长度6-16位字符，字母数字组合</p>
+            <div style="margin-top:50px;">
+                <button id="Determine" style="" onclick="model.determine()">确定</button>
+            </div>
+        </div>
+    </section>
+</body>
+
+
+
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script type="text/javascript" src="inc/picker.min.js"></script>
+<script type="text/javascript" src="inc/upimg/upload.js"></script>
+<script>
+    $('#quxiao1').on('click',function(e){
+        $('#newPsw').val('')
+    })
+    $('#quxiao2').on('click',function(e){
+        $('#newPsw2').val('')
+    })
+
+    function pageresume() {
+
+    }
+
+    function pageload() {
+
+    }
+    var model = {
+        determine:function(){
+            if($('#newPsw').val()==''){
+                Comm.message('请填写新密码');
+                return;
+            }
+            if($('#newPsw2').val()==''){
+                Comm.message('请填写确认密码');
+                return;
+            }
+            AJAX.POST('/api/customer/updatePassword',{oldPassword:$('#newPsw').val(),password:$('#newPsw2').val()},function(d){
+                if(d&&d.code){
+                    Comm.message('密码修改成功');
+                    setTimeout(function(){
+                        Comm.db('_token','');
+    					Comm.db('userinfo','');
+    					Comm.gotop('newLogin.html');
+                    },1500)
+                }else{
+                    Comm.message(d.msg||'网络错误');
+                }
+            })
+         
+        }
+
+    }
+</script>
+
+</html>

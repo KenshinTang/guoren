@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>分类</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <style>
+        .navItemIcon {
+            background: inherit;
+        }
+        
+        .searchBar {
+            margin: 0 auto;
+        }
+        
+        .searchBar input {
+            width: 95%;
+            padding-left: 30px;
+            padding-right: 10px;
+            line-height: 20px;
+            height: 30px;
+            font-size: 14px;
+            color: #8891A7;
+            background-color: #F2F6F7;
+            border-radius: 18px;
+            background-image: url('img/search.png');
+            background-repeat: no-repeat;
+            background-size: 14px;
+            background-position: 10px center;
+            margin: 0 auto;
+            margin-left: 2.5%;
+        }
+        
+        .pad10ed {
+            padding: 10px 10px 0px 10px;
+        }
+        
+        .active {
+            display: inline-block;
+            border-bottom: 3px solid #DD1474;
+            color: #DD1474;
+        }
+        
+        .catch span {
+            display: inline-block;
+            background-color: #F5F5F5;
+            padding: 4px 8px;
+            border-radius: 15px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            color: #3C3C3C;
+        }
+        
+        .sear {
+            background: url(img/index/sj.png) no-repeat 5px center;
+            background-size: 14px;
+            border-bottom: 1px solid #f4f4f4;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar" style="padding: 0;box-shadow: none;">
+            <div class="navBackIcon" style="height: 44px;" onclick="Comm.close()"></div>
+            <div class="navItemIcon marl5 marr10" style="height: 44px;" onclick="model.search()">搜索</div>
+            <div class="nav-title block searchBar" style="width: calc(100% - 100px);height: 44px;">
+                <form action="javascript:return true;" onsubmit="model.search();return false;" style="position: relative;">
+                    <input id="id_searchInput" maxlength="20" class="lh20" autocomplete="off" type="search" placeholder="输入关键字">
+
+                </form>
+            </div>
+        </div>
+    </header>
+    <section>
+        <div class="history bg_white">
+            <div class="pad10">
+                <span class="color333">搜索历史</span>
+                <img src="img/del.png" onclick="model.del(-1,this)" height="14" class="fr" onclick="" />
+            </div>
+            <div class="pad10" id="historyList">
+
+            </div>
+        </div>
+    </section>
+</body>
+<script id="historyListTpl" type="text/html">
+    {{each $data v k}}
+    <div class="sear paddl30 paddb10 paddt10" onclick="model.search('{{v}}')">
+        <span class="color333">{{v}}</span>
+        <div  class="fr paddr15 paddl15 paddt5" onclick="model.del('{{v}}',this);event.stopPropagation()"><img src="img/index/sqx.png" height="10" /></div>
+        
+    </div>
+    {{/each}}
+</script>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script src="inc/art-template.js"></script>
+<script>
+    var type = Comm.query('type');
+    if (Comm.db('historySearch')) {
+        var historySearch = Comm.db('historySearch')
+    } else {
+        var historySearch = [];
+    }
+
+    function pageload() {
+        model.init();
+       if (Comm.ios()) {
+            	setTimeout(function(){
+        		var elem = document.getElementById('id_searchInput');
+            elem.focus();
+            Comm.PopUpKeyboard({
+                    code: 1
+                });
+        	},500)
+       } else {
+                var elem = document.getElementById('id_searchInput');
+                elem.focus();
+                Comm.PopUpKeyboard({
+                    code: 1
+                });
+        }
+    }
+
+    function pageresume() {
+        model.init();
+        if (Comm.ios()) {
+            var elem = document.getElementById('id_searchInput');
+            elem.focus();
+       } else {
+                var elem = document.getElementById('id_searchInput');
+                elem.focus();
+                Comm.PopUpKeyboard({
+                    code: 1
+                });
+        }
+    }
+    var model = {
+        search: function(name) {
+        	document.activeElement.blur();
+            if (name) {
+                if (type == 1) {
+                    Comm.goself('searchDetail.html?keyWord=' + name);
+                    
+                } else if (type == 2) {
+                	Comm.goself('searchDetail.html?keyWord=' + name);
+//                  Comm.goself('searchQz.html?keyWord=' + name);
+                } else if (type == 3) {
+                    Comm.goself('searchSchool.html?keyWord=' + name);
+                } else if (type == 4) {
+                    Comm.goself('searchTz.html?keyWord=' + name + '&groupId=' + Comm.query('groupId'));
+                } else if (type == 5) {
+                	Comm.goself('searchDetail.html?keyWord=' + name);
+//                  Comm.goself('searchQz1.html?keyWord=' + name);
+                } else if (type == 11) {
+                    Comm.goself('searchTop.html?keyWord=' + name + '&topicId=' + Comm.query('topicId'));
+                }
+		
+            } else {
+                var keyWord = $("#id_searchInput").val()
+                if (keyWord == '') {
+                    Comm.message('请输入关键词');
+                    return false;
+                }
+
+                historySearch = historySearch && historySearch.length > 0 ? historySearch : [];
+                if (keyWord != '') {
+                    var index = historySearch.indexOf(keyWord)
+                    if (index == -1) {
+                        historySearch.unshift(keyWord);
+                    } else {
+                        historySearch.splice(index, 1);
+                        historySearch.unshift(keyWord);
+                    }
+                    Comm.db('historySearch', historySearch);
+                }
+
+                if (type == 1) {
+                    Comm.goself('searchDetail.html?keyWord=' + $("#id_searchInput").val());
+                } else if (type == 2) {
+                    Comm.goself('searchQz.html?keyWord=' + $("#id_searchInput").val());
+                } else if (type == 3) {
+                    Comm.goself('searchSchool.html?keyWord=' + $("#id_searchInput").val());
+                } else if (type == 4) {
+                    Comm.goself('searchTz.html?keyWord=' + $("#id_searchInput").val() + '&groupId=' + Comm.query('groupId'));
+                } else if (type == 5) {
+                    Comm.goself('searchQz1.html?keyWord=' + $("#id_searchInput").val());
+                } else if (type == 11) {
+                    Comm.goself('searchTop.html?keyWord=' + $("#id_searchInput").val() + '&topicId=' + Comm.query('topicId'));
+                }
+
+            }
+
+        },
+        clear: function() {
+            $("#id_searchInput").val('');
+        },
+        init: function() {
+            $("#historyList").html(template('historyListTpl', historySearch));
+        },
+        del: function(id, e) {
+            if (id == -1) {
+                $("#historyList").html('');
+                Comm.db('historySearch', '');
+            } else {
+                var i = historySearch.indexOf(id);
+                if (i >= 0) {
+                    historySearch.splice(i, 1);
+                }
+                $(e).parent().remove();
+                Comm.db('historySearch', historySearch);
+            }
+        }
+
+    }
+</script>
+
+</html>

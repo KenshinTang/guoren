@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>收索</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+		<link rel="stylesheet" href="css/photo.css" />
+		<style>
+			.searchBar {
+				margin: 0 auto;
+			}
+			
+			.schoolMsg {
+				padding: 15px 0px 15px 0px;
+			}
+			
+			.searchBar input {
+				width: 95%;
+				padding-left: 30px;
+				line-height: 20px;
+				height: 30px;
+				font-size: 14px;
+				color: #8891A7;
+				background-color: #F2F6F7;
+				border-radius: 18px;
+				background-image: url('img/search.png');
+				background-repeat: no-repeat;
+				background-size: 14px;
+				background-position: 10px center;
+				margin: 0 auto;
+			}
+			
+			.order-t {
+				text-align: center;
+				font-size: 12px;
+			}
+			
+			.scrollx {
+				overflow: hidden;
+			}
+			
+			.scrollx-content {
+				width: 100%;
+				overflow-x: auto;
+				white-space: nowrap;
+			}
+			
+			.order-t-c {
+				width: 17%;
+				height: 98%;
+				font-size: 15px;
+				/*font-weight: bold;*/
+				color: #888888;
+				display: inline-block;
+				/*margin-bottom: 30px;*/
+				/*把水平滚动条撑到外面,达到隐藏的目的*/
+				vertical-align: middle;
+			}
+			
+			.order-t-c-active {
+				/*border-bottom: 2px solid #000000;*/
+				position: relative;
+				color: #098E75;
+			}
+			
+			.order-t-c-active:after {
+				content: '';
+				position: absolute;
+				left: 27%;
+				bottom: auto;
+				right: auto;
+				height: 2px;
+				width: 30px;
+				background-color: #098E75;
+			}
+			
+			.mescroll-totop {
+				bottom: 80px;
+				right: 30px;
+				opacity: 1;
+				z-index: 99;
+			}
+			
+			.swiper-container2 {
+				height: 170px;
+				width: 80%;
+			}
+			
+			.navItemIcon {
+				background: inherit;
+			}
+			
+			.swiper-container2 .swiper-wrapper {
+				left: 15%;
+			}
+			
+			.isselatesku-item {
+				position: relative;
+			}
+			
+			.getmor {
+				background: url(img/my/left.png) no-repeat 100% center;
+				background-size: 8px 14px;
+				border-bottom: 1px solid #f4f4f4;
+			}
+			
+			.isJiaru {
+				/*border: 1px solid #D3D3D3;*/
+				color: #fff;
+				border-radius: 4px;
+			}
+			
+			.schoolMsg {
+				border-bottom: 0px;
+			}
+			
+			.fansItem {
+				margin: 0px;
+				padding-right: 0px;
+			}
+			
+			.data-list {
+				background-color: #F4F4F4;
+			}
+			.c60 div, .c60 span{
+				color: #606060;
+			}
+			.mart1{
+				margin-top: 1px;
+			}
+			#mescroll0 .mescroll-upwarp{
+				display: none !important;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar" style="padding: 0;box-shadow: none;">
+				<div class="navBackIcon" style="width: 30px;" onclick="Comm.close()"></div>
+				<div class="navItemIcon marl5 marr10" onclick="getListData({num:1, size:10})">搜索</div>
+				<div class="nav-title block searchBar marl30" style="width: calc(100% - 70px);height: 44px;">
+					<form action="javascript:return true;" onsubmit="model.search();return false;" style="position: relative;">
+						<input id="id_searchInput" oninput="leng()" maxlength="20" autocomplete="off" type="search" class="paddr15" placeholder="输入关键字">
+						<!--<img src="img/index/qxgz.png" onclick="model.clear()" width="15" style="position: absolute;right: 15px;top: 15px;" />-->
+					</form>
+				</div>
+			</div>
+			<div class="scrollx mescroll-touch-x">
+				<div id="scrollxContent" class="scrollx-content">
+					<div id="nav" class="order-t ovf bb1">
+						<div class=" order-t-c brp order-t-c-active" i='0'>综合</div>
+						
+						<div class=" order-t-c brp" i='1'>用户</div>
+						<div class=" order-t-c brp" i='2'>说说</div>
+						<div class=" order-t-c brp" i='3'>日志</div>
+						<div class=" order-t-c brp" i='4'>圈子</div>
+						<!--<div class=" order-t-c brp" i='5'>视频</div>-->
+						<div class=" order-t-c brp" i='5'>问问</div>
+						<div class=" order-t-c brp" i='6'>话题</div>
+						<div class=" order-t-c brp" i='7'>资讯</div>
+
+					</div>
+				</div>
+			</div>
+		</header>
+		<section>
+
+			<!--轮播-->
+			<div id="swiper" class="swiper-container">
+				<div id="swiperWrapper" class="swiper-wrapper">
+					<!--全部-->
+					<div id="mescroll0" class="swiper-slide mescroll">
+						<div id="dataList0" class="data-list" style="border-top: 10px solid #f4f4f4;">
+						</div>
+					</div>
+					<!--旗舰店-->
+					<div id="mescroll1" class="swiper-slide mescroll">
+						<div id="dataList1" class="data-list" style="border-top: 10px solid #f4f4f4;">
+						</div>
+					</div>
+					<!--优享店-->
+					<div id="mescroll2" class="swiper-slide mescroll">
+						<div id="dataList2" class="data-list" style="border-top: 10px solid #f4f4f4;">
+						</div>
+					</div>
+					<!--快取店-->
+					<div id="mescroll3" class="swiper-slide mescroll">
+						<div id="dataList3" class="data-list" style="border-top: 10px solid #f4f4f4;">
+						</div>
+					</div>
+					<div id="mescroll4" class="swiper-slide mescroll">
+						<div id="dataList4" class="data-list" style="border-top: 10px solid #f4f4f4;">
+						</div>
+					</div>
+					<div id="mescroll5" class="swiper-slide mescroll">
+						<div id="dataList5" class="data-list" style="border-top: 10px solid #f4f4f4;">
+						</div>
+					</div>
+					<div id="mescroll6" class="swiper-slide mescroll">
+						<div id="dataList6" class="data-list" style="border-top: 10px solid #f4f4f4;">
+						</div>
+					</div>
+					<div id="mescroll7" class="swiper-slide mescroll">
+						<div id="dataList7" class="data-list" style="border-top: 10px solid #f4f4f4;">
+						</div>
+					</div>
+					<!--<div id="mescroll7" class="swiper-slide mescroll">
+						<div id="dataList7" class="data-list" style="border-top: 5px solid #f4f4f4;">
+						</div>
+					</div>-->
+				</div>
+			</div>
+		</section>
+		<footer class="shared">
+
+		</footer>
+	</body>
+	<script type="text/html" id="listTpl">
+		<!--{{if $data.informationResult==''&&$data.articleResult==''&&$data.groupsResult==''&&$data.customerResult==''&&$data.videoResult==''&&$data.questionResult==''&&$data.forumResult==''&&$data.saysayResult==''&&$data.topicResult==''}}
+		<div class="mescroll-empty">
+			<p class="empty-tip">没有更多数据啦~5~</p>
+		</div>
+		{{/if}} -->
+		{{if $data.dataIndex==0}}
+		
+		{{if $data.articleResult!=''}}
+		<div class="paddl15 bg_white paddr15" {{if $data.articleResult!='' }}style="border-bottom: 10px solid #f4f4f4;" {{/if}}>
+
+			<div class="getmor paddb10 paddt10" onclick="model.qh(3)">
+				<div class="fl color666 mart1" style="line-height: 24px;">日志</div>
+				<div class="fr color666 mart1"><img src="img/more.png" width="60" height="24" /></div>
+				<div class="clearfix"></div>
+			</div>
+			{{each $data.articleResult v k}}
+			<div style="border-bottom: 1px solid #f4f4f4 ;" class="paddb10" onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}')">
+				<div class="f15 wordW2 mart10">{{v.title}}</div>
+				<div class="fl mart5 lh20 wordW2 c60">
+					{{v.subhead}}
+				</div>
+				<!--<div class="fr sc-r mart15">
+				<img src="img/index/scr.png" class="fr" width="100%" height="70" style="border-radius: 10px;">
+			</div>-->
+				<div class="clearfix"></div>
+				<div class="f12 color999">转发 {{conunm(v.forwardNumber)}} · 回复 {{conunm(v.commentNumber)}} · 点赞{{conunm(v.praiseNumber)}}</div>
+				<div class="clearfix"></div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}} {{if $data.saysayResult!=''}}
+		<div class="paddl15 bg_white paddr15" {{if $data.articleResult!='' }}style="border-bottom: 10px solid #f4f4f4;" {{/if}}>
+
+			<div class="getmor paddb10 paddt10" onclick="model.qh(2)">
+				<div class="fl color666 mart1" style="line-height: 24px;">说说</div>
+				<div class="fr color666 mart1"><img src="img/more.png" width="60" height="24" /></div>
+				<div class="clearfix"></div>
+			</div>
+			{{each $data.saysayResult v k}}
+			<div style="border-bottom: 1px solid #f4f4f4 ;" class="paddb10" onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}')">
+
+				<div class="fl mart15 wordW2 c60">
+					{{v.subhead}}
+				</div>
+				<!--<div class="fr sc-r mart15">
+				<img src="img/index/scr.png" class="fr" width="100%" height="70" style="border-radius: 10px;">
+			</div>-->
+				<div class="clearfix"></div>
+				<div class="f12 color999">转发 {{conunm(v.forwardNumber)}} · 回复 {{conunm(v.commentNumber)}} · 点赞{{conunm(v.praiseNumber)}}</div>
+				<div class="clearfix"></div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}}{{if $data.groupsResult!=''}}
+		<div class="paddl15 bg_white paddr15" {{if $data.groupsResult!='' }}style="border-bottom: 10px solid #f4f4f4;" {{/if}}>
+
+			<div class="getmor paddb10 paddt10" onclick="model.qh(4)">
+				<div class="fl color666 mart1" style="line-height: 24px;">圈子</div>
+				<div class="fr color666 mart1"><img src="img/more.png" width="60" height="24" /></div>
+				<div class="clearfix"></div>
+			</div>
+			{{each $data.groupsResult v k}}
+			<div class="schoolMsg">
+				<div class="heads">
+					<div class="name-left fl" style="width: 75%; position: relative;" onclick="Comm.go('postDetails.html?groupId={{v.groupId}}')">
+						<img class="fl" src="{{OSS(v.face)}}" style="border-radius: 5px;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+						<div class="fl marl10" style="width: 70%;">
+							<p class="f15 wordW">{{v.groupName}}</p>
+							<p class="f12 c9e">帖子{{conunm(v.newsNum)}} · 成员 {{conunm(v.customerNum)}}</p>
+						</div>
+					</div>
+					<div id="isAdd">
+						{{if v.focus==0}}
+						<div class=" add-guan fr " onclick="model.add({{v.groupId}},this)">加入</div>
+						{{else}}
+						<div class="f14 fr isJiaru" onclick="model.remove({{v.groupId}},this)">退出</div>
+						{{/if}}
+					</div>
+					<div class="clearfix"></div>
+
+				</div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}} {{if $data.customerResult!=''}}
+		<div class="paddl15 bg_white paddr15" {{if $data.customerResult!='' }} style="border-bottom: 10px solid #f4f4f4;" {{/if}}>
+
+			<div class="getmor paddb10 paddt10" style="border-bottom: initial;" onclick="model.qh(1)">
+				<div class="fl color666 mart1" style="line-height: 24px;">用户</div>
+				<div class="fr color666 mart1"><img src="img/more.png" width="60" height="24" /></div>
+				<div class="clearfix"></div>
+			</div>
+			{{each $data.customerResult v k}}
+			<div class="schoolMsg" style="border-top: 1px solid #f4f4f4;">
+				<div class="heads">
+					<div class="name-left fl" style="width: 80%; position: relative;" onclick="Comm.go('personal.html?customerId={{v.customerId}}')">
+						<img class="fl" src="{{OSS(v.face)}}" style="border-radius: 50%;margin-top: 6px;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+						<div class="fl marl10" style="width: 70%;">
+							<p class="f12 wordW">{{v.customerName}}</p>
+							<p class="f12 c9e wordW">{{if v.userType==5||(v.userType==0&&v.customerId==1||v.userType==0&&v.customerId==2)}}果仁官方{{else}}{{if v.schoolName}}{{v.schoolName}}{{v.enrollmentYear}}级{{/if}}{{/if}}</p>
+							{{if v.customerId!=1&&v.customerId!=2}}<p class="f12 c9e">关注{{conunm(v.followNumber)}} · 粉丝{{conunm(v.fansNumber)}} · 获赞{{conunm(v.praiseNumber)}} </p>{{/if}}
+						</div>
+					</div>
+					<div id="isAdd1">
+						{{if(v.focus == 1&&v.isAdd==1)}}
+						<div class="pad10 fr" style="width: 50px; padding-bottom: 1px;margin-top: 9px;" onclick="model.removepeo({{v.customerId}},this);event.stopPropagation()">
+							<i class="icon_quxiao"></i>
+						</div>
+						{{/if}} {{if(v.focus == 1&&v.isAdd=="0")}}
+						<div class="pad10 fr" style="width: 50px; padding-bottom: 1px;margin-top: 9px;" onclick="model.removepeo({{v.customerId}},this);event.stopPropagation()">
+							<i class="icon_yguanzhu"></i>
+						</div>
+						{{/if}} {{if(v.focus == "0")}}
+						<div class="pad10 fr" style="width: 50px; padding-bottom: 1px;margin-top: 9px;" onclick="model.addpeo({{v.customerId}},this);event.stopPropagation()">
+							<i class="icon_guanzu"></i>
+						</div>
+						{{/if}}
+					</div>
+					<div class="clearfix"></div>
+
+				</div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}}
+		<!--{{if $data.videoResult!=''}}
+		<div class="paddl10 paddr10" {{if $data.videoResult!=''}}style="border-bottom: 5px solid #f4f4f4;" {{/if}}>
+			
+			<div class="getmor paddb10 paddt10 paddl20 paddr30" onclick="model.qh(5)">
+				<div class="fl color666">视频</div>
+				<div class="fr color666">更多</div>
+				<div class="clearfix"></div>
+			</div>
+			 {{each $data.videoResult v k}}
+			<div class="vido-ss" onclick="Comm.go('videoDetails.html?newsId={{v.newsId}}')">
+				<div class="vidos-ssl">
+					<img class="vpic" src="{{OSS(v.face)}}" onerror="this.src='img/index/vpic.png';this.onerror=null;" />
+					<div class="vtime2 f12">
+						{{miaochange(v.subhead)}}
+					</div>
+				</div>
+				<div class="vidos-ssr">
+					<div class="wordW2  mart5">{{v.title}}</div>
+					<div class="wordW c9e mart20 f12">{{conunm(v.playNumber)}}次播放 · {{sldate(v.addTime)}}</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}}-->
+		{{if $data.questionResult!=''}}
+		<div class="paddl15 bg_white paddr15" {{if $data.questionResult!='' }}style="border-bottom: 5px solid #f4f4f4;" {{/if}}>
+
+			<div class="getmor paddb10 paddt10" onclick="model.qh(5)">
+				<div class="fl color666 mart1" style="line-height: 24px;">问问</div>
+				<div class="fr color666 mart1"><img src="img/more.png" width="60" height="24" /></div>
+				<div class="clearfix"></div>
+			</div>
+			{{each $data.questionResult v k}}
+			<div style="border-bottom: 1px solid #f4f4f4 ;" class="paddb10" onclick="Comm.go('qzAskDetail.html?newsId={{v.newsId}}')">
+				<div class="f16  wordW2 mart15">{{v.title}}</div>
+				<div class="fl mart15 wordW3 c60">
+					{{v.content}}
+				</div>
+				<div class="clearfix"></div>
+				<div class="f12 mart10 color999">{{v.commentNumber}}个回答 · {{sldate(v.addTime)}}</div>
+
+			</div>
+			{{/each}}
+		</div>
+		{{/if}} 
+		{{if $data.topicResult!=''}}
+		<div class="paddl15 bg_white paddr15" {{if $data.topicResult!='' }}style="border-bottom: 10px solid #f4f4f4;" {{/if}}>
+
+			<div class="getmor paddb10 paddt10" onclick="model.qh(6)">
+				<div class="fl color666 mart1" style="line-height: 24px;">话题</div>
+				<div class="fr color666 mart1"><img src="img/more.png" width="60" height="24" /></div>
+				<div class="clearfix"></div>
+			</div>
+			{{each $data.topicResult v k}}
+			<div class="schoolMsg" style="border-bottom: 1px solid #f4f4f4 ;" onclick="Comm.go('talkDetail.html?topicId={{v.topicId}}')">
+				<div class="heads">
+					<div class="name-left fl">
+						<div>
+							<p class="f15  wordW" style="width: 300px"><img src="img/index/fwz.png" class="marb5 marr5" width="15" />{{v.title}}</p>
+							<p class="f12 c9e paddl5">{{v.newsNumber}}篇 · {{v.customerNumber}}关注</p>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}}
+		{{if $data.informationResult!=''}}
+		<div class="paddl15 bg_white paddr15" {{if $data.informationResult!='' }}style="border-bottom: 10px solid #f4f4f4;" {{/if}}>
+
+			<div class="getmor paddb10 paddt10" onclick="model.qh(7)">
+				<div class="fl color666 mart1" style="line-height: 24px;">资讯</div>
+				<div class="fr color666 mart1"><img src="img/more.png" width="60" height="24" /></div>
+				<div class="clearfix"></div>
+			</div>
+			{{each $data.informationResult v k}}
+			<div style="border-bottom: 1px solid #f4f4f4 ;" class="paddb10" onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}')">
+				<div class="f16  wordW2 mart15">{{v.title}}</div>
+				<div class="fl mart5 wordW2 c60">
+					{{v.subhead}}
+				</div>
+				<!--<div class="fr sc-r mart15">
+				<img src="img/index/scr.png" class="fr" width="100%" height="70" style="border-radius: 10px;">
+			</div>-->
+				<div class="f12 color999">转发 {{conunm(v.forwardNumber)}} · 回复 {{conunm(v.commentNumber)}} · 点赞{{conunm(v.praiseNumber)}}</div>
+				<div class="clearfix"></div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}}
+		{{/if}}{{if $data.dataIndex==7}}
+		<div class="paddl15 bg_white paddr15">
+			{{each $data v k}}
+			<div style="border-bottom: 1px solid #f4f4f4 ;" class="paddb10" onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}')">
+				<div class="f16  wordW2 mart15">{{v.title}}</div>
+				{{if v.face&&v.face[0]!=''&&v.face.length==1}}
+				<div class="sc-l fl mart15 wordW2 lh25 c60">
+					{{if v.subhead!=''}}{{v.subhead}}{{else}}{{v.content}}{{/if}}
+				</div>
+				<div class="fr sc-r mart15">
+					{{imgTpl(v.face,96)}}
+				</div>
+				{{else if v.face&&v.face.length>1}}
+				<div class="mart15 wordW2 c60">
+					{{if v.subhead!=''}}{{v.subhead}}{{else}}{{v.content}}{{/if}}
+				</div>
+				<div class="mart5">
+					{{if v.newsType!=6&&v.newsType!=2}}{{imgTpl(v.face,96)}} {{else}}{{imgTpl(v.face,76)}}{{/if}}
+				</div>
+				{{else}}
+				<div class=" mart15 wordW2 c60">
+					{{if v.subhead!=''}}{{v.subhead}}{{else}}{{v.content}}{{/if}}
+				</div>
+				{{/if}}
+				<div class="clearfix"></div>
+				<div class="f12 paddt5 color999">转发 {{conunm(v.forwardNumber)}} · 回复 {{conunm(v.commentNumber)}} · 点赞{{conunm(v.praiseNumber)}}</div>
+
+			</div>
+			{{/each}}
+		</div>
+		{{/if}} {{if $data.dataIndex==3}}
+		<div class="paddl15 bg_white paddr15">
+			{{each $data v k}}
+			<div style="border-bottom: 1px solid #f4f4f4 ;" class="paddb10" onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}')">
+				<div class="f15  wordW2 paddt15">{{v.title}}</div>
+				{{if v.face&&v.face[0]!=''&&v.face.length==1}}
+				<div class=" paddt5 wordW2 lh20 c60">
+					{{v.subhead}}
+				</div>
+				<div class="mart15">
+					{{imgTpl(v.face,96)}}
+				</div>
+				{{else if v.face&&v.face.length>1}}
+				<div class="mart5 wordW2 c60">
+					<!--{{if v.subhead!=''}}-->
+					{{v.subhead}}
+					<!--{{else}}{{v.content}}{{/if}}-->
+				</div>
+				<div class="mart5">
+					{{if v.newsType!=6&&v.newsType!=2}}{{imgTpl(v.face,96)}} {{else}}{{imgTpl(v.face,76)}}{{/if}}
+				</div>
+				{{else}}
+				<div class=" mart15 wordW2 c60">
+					<!--{{if v.subhead!=''}}-->
+					{{v.subhead}}
+					<!--{{else}}{{v.content}}{{/if}}-->
+				</div>
+				{{/if}}
+				<div class="clearfix"></div>
+				<div class="f12 paddt5 color999">转发 {{conunm(v.forwardNumber)}} · 回复 {{conunm(v.commentNumber)}} · 点赞{{conunm(v.praiseNumber)}}</div>
+
+			</div>
+			{{/each}}
+		</div>
+		{{/if}} {{if $data.dataIndex==2}}
+		<div class="paddl15 bg_white paddr15">
+			{{each $data v k}}
+			<div style="border-bottom: 1px solid #f4f4f4 ;" class="paddb10" onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}')">
+				{{if v.face&&v.face[0]!=''&&v.face.length==1}}
+				<div class=" paddt15 wordW3 lh25 c60">
+					<!--{{if v.subhead!=''}}-->
+					{{v.subhead}}
+					<!--{{else}}{{v.content}}{{/if}}-->
+				</div>
+				<div class="mart15">
+					{{imgTpl(v.face,96)}}
+				</div>
+				{{else if v.face&&v.face.length>1}}
+				<div class="paddt15 wordW3 c60">
+					<!--{{if v.subhead!=''}}-->
+					{{v.subhead}}
+					<!--{{else}}{{v.content}}{{/if}}-->
+				</div>
+				<div class="mart5">
+					{{if v.newsType!=6&&v.newsType!=2}}{{imgTpl(v.face,96)}} {{else}}{{imgTpl(v.face,76)}}{{/if}}
+				</div>
+				{{else}}
+				<div class=" paddt15 wordW3 c60">
+					<!--{{if v.subhead!=''}}-->
+					{{v.subhead}}
+					<!--{{else}}{{v.content}}{{/if}}-->
+				</div>
+				{{/if}}
+				<div class="clearfix"></div>
+				<div class="f12 paddt5 color999">转发 {{conunm(v.forwardNumber)}} · 回复 {{conunm(v.commentNumber)}} · 点赞{{conunm(v.praiseNumber)}}</div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}} {{if $data.dataIndex==4}}
+		<div class="paddl15 bg_white paddr15">
+			{{each $data v k}}
+			<div class="paddt10 paddb10 borderb">
+				<div class="heads">
+					<div class="name-left fl" style="width: 75%; position: relative;" onclick="Comm.go('postDetails.html?groupId={{v.groupId}}')">
+						<img class="fl" src="{{OSS(v.face)}}" style="border-radius: 5px;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+						<div class="fl marl10" style="width: 70%;">
+							<p class="f15  wordW">{{v.groupName}}</p>
+							<p class="f12 c9e">帖子{{conunm(v.newsNum)}} · 成员 {{conunm(v.customerNum)}}</p>
+						</div>
+					</div>
+					<div id="isAdd">
+						{{if v.focus==0}}
+						<div class=" add-guan fr " style="margin-top: 8px;" onclick="model.add({{v.groupId}},this)">加入</div>
+						{{else}}
+						<div class="f14 fr isJiaru" style="margin-top: 7px;" onclick="model.remove({{v.groupId}},this)">退出</div>
+						{{/if}}
+					</div>
+					<div class="clearfix"></div>
+
+				</div>
+			</div>
+			{{/each}}
+		</div>
+
+		{{/if}} {{if $data.dataIndex==1 }}
+		<div class="paddl15 bg_white paddr15">
+			{{ include 'fenshiTpl' $data}}
+			<!--{{each $data v k}}
+        <div class="paddt15 paddb15 paddr15 borderb">
+            <div class="heads">
+                <div class="name-left fl" style="width: 75%; position: relative;" onclick="Comm.go('personal.html?customerId={{v.customerId}}')">
+                    <img class="fl" src="{{OSS(v.face)}}" style="border-radius: 50%;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+                    <div class="fl marl10" style="width: 70%;">
+                        <p class="f14  wordW">{{v.customerName}}</p>
+                        <p class="f12 c9e wordW mart5">{{v.autograph||'这是一句生来就注定要被消灭的签名'}}</p>
+                        <p class="f12 c9e">关注{{conunm(v.followNumber)}} · 粉丝{{conunm(v.fansNumber)}} · 获赞{{conunm(v.praiseNumber)}} </p>
+                    </div>
+                </div>
+                <div id="isAdd1">
+                    {{if v.focus==0}}
+                    <div class=" add-guan fr mart10" onclick="model.addpeo({{v.customerId}},this)">关注</div>
+                    {{else}}
+                    <div class="f14 fr mart10 isJiaru" onclick="model.removepeo({{v.customerId}},this)">取消关注</div>
+                    {{/if}}
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        {{/each}}-->
+		</div>
+		{{/if}}
+		<!--{{if $data.dataIndex==5 }}
+		<div class="paddl10 paddr10">
+			{{each $data v k}}
+			<div class="vido-ss" onclick="Comm.go('videoDetails.html?newsId={{v.newsId}}')">
+				<div class="vidos-ssl">
+					<img class="vpic" src="{{OSS(v.face)}}" onerror="this.src='img/index/vpic.png';this.onerror=null;" />
+					<div class="vtime2 f12">
+						{{miaochange(v.subhead)}}
+					</div>
+				</div>
+				<div class="vidos-ssr">
+					<div class="wordW2  mart5">{{v.title}}</div>
+					<div class="wordW c9e mart20 f12">{{conunm(v.playNumber)}}次播放 · {{sldate(v.addTime)}}</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}} -->
+		{{if $data.dataIndex==5 }}
+		<div class="paddl15 bg_white paddr15">
+			{{each $data v k}}
+			<div style="border-bottom: 1px solid #f4f4f4 ;" class="paddb10" onclick="Comm.go('qzAskDetail.html?newsId={{v.newsId}}')">
+				<div class="f16  wordW2 paddt15">{{v.title}}</div>
+				<div class="fl mart15 wordW3 c60">
+					{{v.content}}
+				</div>
+				<div class="clearfix"></div>
+				<div class="f12 mart10 color999">{{v.commentNumber}}个回答 · {{sldate(v.addTime)}}</div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}} {{if $data.dataIndex==6 }}
+		<div class="paddl15 bg_white paddr15">
+			{{each $data v k}}
+			<div class="schoolMsg" style="border-bottom: 1px solid #f4f4f4 ;" onclick="Comm.go('talkDetail.html?topicId={{v.topicId}}')">
+				<div class="heads">
+					<div class="name-left fl">
+						<div class="marl10">
+							<p class="f15  wordW" style="width: 300px"><img src="img/index/fwz.png" class="marb5 marr5" width="15" /> {{v.title}}</p>
+							<p class="f12 c9e paddl5">{{v.newsNumber}}篇 · {{v.customerNumber}}关注</p>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}}
+
+	</script>
+
+	<!--  -->
+	<script type="text/html" id="fenshiTpl">
+		{{each $data as v k}}
+		<div class="fansItem" onclick="Comm.go('./personal.html?customerId={{v.customerId}}')">
+			<div class="flex_wrap" style="align-items: center;width: 100%;">
+				<div class="userImg" style="margin-right: 15px;">
+					<img src="{{OSS(v.face,'s')}}" alt="" onerror="this.src='img/my/mti.png';this.onerror=null;" width="50" height="50" style="border-radius:50%">
+				</div>
+				<div style="width: calc(100% - 100px);">
+					<p class="wordW" style="color:#222222;font-size:12px;font-weight: 700; ">{{v.customerName}}</p>
+					<p class="wordW paddr10" style="color:#888888;font-size:12px;margin-top: 5px; ">{{if v.userType==5||(v.userType==0&&v.customerId==1||v.userType==0&&v.customerId==2)}}果仁官方{{else}}{{if v.schoolName}}{{v.schoolName}}{{v.enrollmentYear}}级{{/if}}{{/if}}</p>
+					{{if v.customerId!=1&&v.customerId!=2}}<p class="f12 c9e">关注{{conunm(v.followNumber)}} · 粉丝{{conunm(v.fansNumber)}} · 获赞{{conunm(v.praiseNumber)}} </p>{{/if}}
+				</div>
+				{{if myId!=v.customerId}}
+				<div class="caozuo">
+					{{if(v.focus == 1&&v.isAdd==1)}}
+					<div class="paddb10"style=" padding-bottom: 1px;" onclick="model.removepeo({{v.customerId}},this);event.stopPropagation()">
+						<i class="icon_quxiao"></i>
+					</div>
+					{{/if}} {{if(v.focus == 1&&v.isAdd=="0")}}
+					<div class="paddb10"style=" padding-bottom: 1px;" onclick="model.removepeo({{v.customerId}},this);event.stopPropagation()">
+						<i class="icon_yguanzhu"></i>
+					</div>
+					{{/if}} {{if(v.focus == "0")}}
+					<div class="paddb10"style=" padding-bottom: 1px;" onclick="model.addpeo({{v.customerId}},this);event.stopPropagation()">
+						<i class="icon_guanzu"></i>
+					</div>
+					{{/if}}
+				</div>
+				{{/if}}
+			</div>
+		</div>
+		{{/each}}
+	</script>
+
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="./inc/mescroll/swiper.min.js"></script>
+	<script type="text/javascript" src="inc/tpl.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+	<script type="text/javascript" src="inc/photo.js"></script>
+	<script>
+		if(Comm.db('userinfo')) {
+			var customerId = app.getCid();
+		} else {
+			var customerId = "";
+		}
+		if (Comm.db('historySearch')) {
+        var historySearch = Comm.db('historySearch');
+    } else {
+        var historySearch = [];
+    }
+		$("#id_searchInput").val(Comm.query('keyWord'));
+
+		function pageload() {
+			mescrollRefreshFn({
+				menuNumber: 8
+			});
+
+		}
+
+		function pageresume() {
+
+		}
+
+		function leng() {
+			if($("#id_searchInput").val() == '') {
+				//model.search();
+				Comm.goself('search.html')
+			}
+			//			else{
+			//				model.search();
+			//			}
+		}
+		var mid = "";
+		var model = {
+			qh: function(id) {
+				swiper.slideTo(id);
+				getListData({
+						num: 1,
+						size: 10
+					});
+			},
+			search: function() {
+				getListData({
+					num: 1,
+					size: 10
+				});
+				document.activeElement.blur();
+			},
+			clear: function() {
+				$("#id_searchInput").val('');
+			},
+			add: function(groupsId, e) {
+				AJAX.GET('/api/school/groups/addFocus?groupsId=' + groupsId + '&customerIds=' + customerId, function(a) {
+					if(a && a.code == 1) {
+						Comm.message('加入成功');
+						$(e).removeClass('add-guan').addClass('isJiaru').attr('onclick', 'event.stopPropagation();model.remove(' + groupsId + ',this)').html('退出')
+					}
+				})
+			},
+			remove: function(groupsId, e) {
+				Comm.confirm('是否确认退出？', function(d) {
+					if(d) {
+						AJAX.GET('/api/school/groups/cancelFocus?groupsId=' + groupsId + '&customerIds=' + customerId, function(a) {
+							if(a && a.code == 1) {
+								Comm.message('退出成功');
+								$(e).removeClass('isJiaru').addClass('add-guan').attr('onclick', 'event.stopPropagation();model.add(' + groupsId + ',this)').html('加入')
+							}
+						})
+					}
+				})
+
+			},
+
+			addpeo: function(fid, e) {
+				AJAX.GET('/api/fans/addFans?fid=' + fid + '&customerId=' + customerId, function(a) {
+					if(a && a.code == 1) {
+						console.log(fid);
+						$(e).attr('onclick', 'event.stopPropagation();model.removepeo(' + fid + ',this)');
+						if(a.data == 0) {
+							$(e).children().attr('class', 'icon_yguanzhu')
+						} else {
+							$(e).children().attr('class', 'icon_quxiao')
+						}
+
+						// $("#isAdd1").html('<div class="f14 fr isJiaru"onclick="model.removepeo(' + fid + ')">退出</div>');
+					}
+				})
+			},
+			removepeo: function(fid, e) {
+				Comm.confirm('是否确认取消关注？', function(d) {
+					if(d) {
+						AJAX.GET('/api/fans/unfollow?fid=' + fid + '&customerId=' + customerId, function(a) {
+							if(a && a.code == 1) {
+								$(e).attr('onclick', 'event.stopPropagation();model.addpeo(' + fid + ',this)')
+
+								$(e).children().attr('class', 'icon_guanzu');
+
+							}
+						})
+					}
+				})
+
+			}
+		}
+
+		function mescrollRefreshFn(option) {
+			n = option && option.menuNumber ? option.menuNumber : 1;
+			s = option && option.pagesize ? option.pagesize : 10;
+			mescrollArr = new Array(n);
+			//初始化首页
+			mescrollArr[curNavIndex] = initMescroll(curNavIndex, s);
+			if(mescrollArr.length > 1) {
+				/*初始化轮播*/
+				swiper = new Swiper('#swiper', {
+					observer: true,
+					onTransitionEnd: function(swiper) {
+						var i = swiper.activeIndex; //轮播切换完毕的事件
+						
+						changePage(i);
+						$('#dataList' + i).html('');
+						mescrollArr[curNavIndex].resetUpScroll(true);
+						getListData({
+							num: 1,
+							size: 10
+						});
+						
+						Comm.scorllDel();
+						
+					},
+					onTouchStart: function(swiper, even) {
+                if ((swiper.activeIndex == 0 || swiper.activeIndex == $('#swiperWrapper>.swiper-slide').length - 1) && even) {
+                    if (even.changedTouches && even.changedTouches.length > 0) {
+                        _pageX = even.changedTouches[0].pageX;
+                        if (swiper.activeIndex == $('#swiperWrapper>.swiper-slide').length - 1) {
+                            _lasttransform = Comm.g('swiperWrapper').style.transform;
+                        }
+                    }
+                }
+            },
+            onTouchMove: function(swiper, even) {
+                if (swiper.activeIndex == 0 && even) { //第一个
+                    //console.log(_pageX < even.changedTouches[0].pageX);
+                    if (even.changedTouches && even.changedTouches.length > 0) {
+                        if (_pageX < even.changedTouches[0].pageX) {
+                            $('#swiperWrapper').addClass('notransform');
+                        } else {
+                            $('#swiperWrapper').removeClass('notransform');
+                        }
+                    }
+                }
+
+                if (swiper.activeIndex == $('#swiperWrapper>.swiper-slide').length - 1 && even) { //最后一个
+                    if (even.changedTouches && even.changedTouches.length > 0) {
+                        //console.log(_pageX);
+                        //console.log(even.changedTouches[0].pageX);
+                        if (_pageX > even.changedTouches[0].pageX) {
+                            Comm.g('swiperWrapper').style.transform = _lasttransform;
+                        } else {}
+                    }
+                }
+            },
+            onTouchEnd: function(swiper, even) {
+                _lasttransform = "";
+                _pageX = 0;
+                $('#swiperWrapper').removeClass('notransform');
+            }
+				});
+				/*菜单点击事件*/
+				$("#nav div").click(function() {
+					var i = Number($(this).attr("i"));
+					//_type_ = Number($(this).attr("data-type"));
+					$('#dataList' + i).html('');
+					mescrollArr[curNavIndex].resetUpScroll(true);
+					getListData({
+						num: 1,
+						size: 10
+					});
+					Comm.scorllDel();
+					swiper.slideTo(i); //以轮播的方式切换列表
+
+				});
+				
+			}
+		}
+		/*设置列表数据
+		 * pageData 当前页的数据
+		 * dataIndex 数据属于哪个nav */
+		function setListData(pageData, dataIndex) {
+			var listDom = document.getElementById("dataList" + dataIndex),
+				listStr = "";
+			if(dataIndex == 0) {
+				if(pageData != '') {
+					pageData.dataIndex = dataIndex;
+					
+					if(pageData.articleResult != '') {
+						var value = $("#id_searchInput").val();
+						for(var i = 0; i < pageData.articleResult.length; i++) {
+							var values = pageData.articleResult[i].title.split(value);
+							pageData.articleResult[i].title = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+						}
+					}
+					if(pageData.customerResult != ''){
+						var value = $("#id_searchInput").val();
+						for(var i = 0; i < pageData.customerResult.length; i++) {
+							var values = pageData.customerResult[i].customerName.split(value);
+							var value1 = pageData.customerResult[i].enrollmentYear.split(value);
+							var value2 = pageData.customerResult[i].schoolName.split(value);
+							pageData.customerResult[i].customerName = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+							pageData.customerResult[i].enrollmentYear = value1.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+							pageData.customerResult[i].schoolName = value2.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+						}
+					}
+					if(pageData.saysayResult != ''){
+						var value = $("#id_searchInput").val();
+						for(var i = 0; i < pageData.saysayResult.length; i++) {
+							var values = pageData.saysayResult[i].subhead.split(value);
+							pageData.saysayResult[i].subhead = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+						}
+					}
+					if(pageData.questionResult != ''){
+						var value = $("#id_searchInput").val();
+						for(var i = 0; i < pageData.questionResult.length; i++) {
+							var values = pageData.questionResult[i].title.split(value);
+							pageData.questionResult[i].title = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+						}
+					}
+					if(pageData.groupsResult != ''){
+						var value = $("#id_searchInput").val();
+						for(var i = 0; i < pageData.groupsResult.length; i++) {
+							var values = pageData.groupsResult[i].groupName.split(value);
+							pageData.groupsResult[i].groupName = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+						}
+					}
+					if(pageData.topicResult != ''){
+						var value = $("#id_searchInput").val();
+						for(var i = 0; i < pageData.topicResult.length; i++) {
+							var values = pageData.topicResult[i].title.split(value);
+							pageData.topicResult[i].title = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+						}
+					}
+					listStr = template('listTpl', pageData);
+					listDom.innerHTML = listStr;
+
+				} else {
+					listDom.innerHTML = '<div class="mescroll-empty"><img class="empty-icon" src="img/noData.png"><p class="empty-tip">这里空空如也，去看看别的</p></div>'
+				}
+			} else {
+				if(pageData.length > 0) {
+					var value = $("#id_searchInput").val();
+					if(dataIndex == 7 || dataIndex == 2 || dataIndex == 3) {
+						for(var i = 0; i < pageData.length; i++) {
+							pageData[i].face = pageData[i].face.split(',');
+							var values = pageData[i].subhead.replace(/<\/?[^>]*>/gim, "").split(value);
+							pageData[i].subhead = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+							var values1 = pageData[i].title.replace(/<\/?[^>]*>/gim, "").split(value);
+							pageData[i].title = values1.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+						}
+						console.log(pageData)
+					} else if(dataIndex == 4) {
+						for(var i = 0; i < pageData.length; i++) {
+							var values = pageData[i].groupName.replace(/<\/?[^>]*>/gim, "").split(value);
+							pageData[i].groupName = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+						}
+
+					} else if(dataIndex == 5 || dataIndex == 6) {
+						for(var i = 0; i < pageData.length; i++) {
+							var values = pageData[i].title.replace(/<\/?[^>]*>/gim, "").split(value);
+							pageData[i].title = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+						}
+					} else if(dataIndex == 1) {
+						for(var i = 0; i < pageData.length; i++) {
+							var values = pageData[i].customerName.replace(/<\/?[^>]*>/gim, "").split(value);
+							var value1 = pageData[i].schoolName.replace(/<\/?[^>]*>/gim, "").split(value);
+							var value2 = pageData[i].enrollmentYear.replace(/<\/?[^>]*>/gim, "").split(value);
+							pageData[i].customerName = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+							pageData[i].schoolName = value1.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+							pageData[i].enrollmentYear = value2.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+						}
+					}
+
+					pageData.dataIndex = dataIndex;
+					pageData.myId = app.getCid();
+					listStr = template('listTpl', pageData);
+					if(pageData.curPage > 1) {
+						listDom.innerHTML += listStr;
+					} else {
+						listDom.innerHTML = listStr
+					};
+				} else {
+					listDom.innerHTML = '<div class="mescroll-empty"><img class="empty-icon" src="img/noData.png"><p class="empty-tip">这里空空如也，去看看别的</p></div>'
+				}
+				
+			}
+			wscroll.reg('mescroll'+dataIndex);
+			Comm.scorllDel();
+			Comm.resizeSection();
+		}
+
+		/*联网加载列表数据
+		 在您的实际项目中,请参考官方写法: http://www.mescroll.com/api.html#tagUpCallback
+		 请忽略getListDataFromNet的逻辑,这里仅仅是在本地模拟分页数据,本地演示用
+		 实际项目以您服务器接口返回的数据为准,无需本地处理分页.
+		 * */
+		var htmlData = [];
+
+		function getListDataFromNet(curNavIndex, pageNum, pageSize, successCallback, errorCallback) {
+			var title = $("#id_searchInput").val();
+			document.activeElement.blur();
+			Comm.resizeSection();
+			var o = {};
+			o.title = title;
+			o.curpage = pageNum;
+			o.pagesize = pageSize;
+			 historySearch = historySearch && historySearch.length > 0 ? historySearch : [];
+                var keyWord = $("#id_searchInput").val()
+                if (keyWord != '') {
+                    var index = historySearch.indexOf(keyWord)
+                    if (index == -1) {
+                        historySearch.unshift(keyWord);
+                    } else {
+                        historySearch.splice(index, 1);
+                        historySearch.unshift(keyWord);
+                    }
+                    Comm.db('historySearch', historySearch);
+                }
+			if(curNavIndex == 7) {
+				o.type = 1;
+			} else if(curNavIndex == 3) {
+				o.type = 10;
+			} else if(curNavIndex == 4) {
+				o.type = 2;
+			} else if(curNavIndex == 1) {
+				o.type = 3;
+			} else if(curNavIndex == 5) {
+				o.type = 5;
+			} else if(curNavIndex == 6) {
+				o.type = 11;
+			} else if(curNavIndex == 2) {
+				o.type = 12;
+			}
+
+			o.customerId = customerId;
+			AJAX.POST("/api/news/getVagueList", o, function(a) {
+				if(a && a.code == 1) {
+					var r = a.data || [];
+					htmlData = r;
+					totalSize = a.totalCount;
+					htmlData.curPage = a.curPage;
+					if(htmlData.informationResult == '' && htmlData.articleResult == '' && htmlData.groupsResult == '' && htmlData.customerResult == '' && htmlData.videoResult == '' && htmlData.questionResult == '' && htmlData.forumResult == '' && htmlData.saysayResult == '' && htmlData.topicResult == '') {
+						htmlData = [];
+					}
+					successCallback && successCallback(htmlData, totalSize);
+				} else {
+					Comm.message(a.msg);
+					errorCallback && errorCallback();
+				}
+			});
+		}
+	</script>
+
+</html>

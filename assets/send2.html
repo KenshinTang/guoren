@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>添加关注</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+    <link rel="stylesheet" href="css/edit.css" />
+    <style>
+        div {
+            -webkit-user-select: text;
+        }
+        
+        div * {
+            -webkit-user-select: text
+        }
+        
+        .navItemIcon {
+            width: 50px;
+            background: none;
+        }
+        
+        .jjs {
+            background-color: #f4f4f4;
+            border-radius: 5px;
+            color: #FFF;
+            line-height: 22px;
+            padding: 1px 8px;
+        }
+        
+        .search {
+            padding: 10px 25px;
+            background-color: #F3F3F3;
+            background-image: url(img/index/down.png);
+            background-repeat: no-repeat;
+            background-size: 6px 3px;
+            background-position: 98% center;
+        }
+        
+        .inp {
+            width: 100%;
+            background-color: #F3F3F3;
+        }
+        
+        .in-title {
+            width: 100%;
+        }
+        
+        .whosee {
+            /*border-bottom: 1px solid #BFBFBF;
+				border-top: 1px solid #BFBFBF;*/
+            padding: 0px 20px;
+            height: 50px;
+            line-height: 50px;
+        }
+        
+        .who {
+            background: url(img/per.png) no-repeat left center;
+            background-size: 10px 15px;
+            color: #333333;
+        }
+        
+        .see {
+            background: url(img/index/bac-r.png) no-repeat right center;
+            background-size: 6px 11px;
+            color: #888888;
+        }
+        
+        .add-pic {
+            background-color: #F4F4F4;
+            padding: 10px 25px;
+        }
+        
+        #sinbox {
+            width: 300px;
+            border-radius: 10px;
+        }
+        
+        #sinbox1 {
+            width: 300px;
+            border-radius: 10px;
+            padding: 0;
+            background-color: #fff;
+        }
+        
+        #sinbox2 {
+            background-color: #fff;
+            padding: 0px 20px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+        
+        .qxgz {
+            background-size: 16px;
+            text-align: center;
+            padding: 20px;
+            color: #444444;
+        }
+        
+        #title:empty:before {
+            content: attr(placeholder);
+            color: #C0C0C0;
+        }
+        
+        #title {
+            color: #101010;
+            font-size: 16px;
+            font-weight: bold;
+            -webkit-user-select: text;
+        }
+        
+        #WTDBOX input[type="checkbox"]+label {
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+            position: relative;
+            -webkit-transition: 0.3s;
+            transition: 0.3s;
+            box-sizing: border-box;
+        }
+        
+        #WTDBOX input[type="checkbox"]+label:after {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 20px;
+            height: 20px;
+            -webkit-transition: 0.3s;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        
+        #WTDBOX #simple_1:checked+label.red {
+            background: #098E75;
+        }
+        
+        #WTDBOX #simple_1:checked+label:after {
+            left: calc(100% - 20px);
+        }
+        
+        #WTDBOX #simple_1+label {
+            background: #ddd;
+            border-radius: 20px;
+            box-shadow: 1px 1px 3px #aaa;
+        }
+        
+        #WTDBOX #simple_1+label:after {
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 1px 1px 3px #aaa;
+        }
+        
+        .content {
+            color: #464646;
+            font-size: 16px;
+        }
+        #content div{
+				color: #464646;
+			}
+		.content div{
+			text-align: left !important;
+			font-size: 16px !important;
+			}
+			
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar" style="padding: 0;box-shadow: none;">
+
+            <div class="navBackIcon" onclick="model.close()"></div>
+
+            <div class="navItemIcon marl5 marr10">
+                <div class="jjs mart10">发布</div>
+            </div>
+            <div class="nav-title block searchBar marl25 f16" style="width: calc(100% - 85px);height: 44px;">
+                发布日志
+            </div>
+        </div>
+        <!--<div class="paddt20 paddb20 paddl10" style="border-bottom:  1px solid #f4f4f4;">
+				<input id="title" placeholder="输入标题" type="text" class="in-title f18" />
+			</div>-->
+    </header>
+    <section>
+        <div class="paddl15 paddr15 paddt5">
+            <div id="weditbox"></div>
+
+        </div>
+
+        <!--<div class="paddt20 mart20 paddb20 paddl10" style="border-bottom:  1px solid #f4f4f4;border-top:  1px solid #f4f4f4;">
+				<input id="keyWord" placeholder="输入关键字,多个请用 # 隔开" type="text" class="in-title f14" />
+			</div>
+			-->
+    </section>
+
+    <footer class="shared">
+        <div class="see fr paddr10 hide" id="3">所有人</div>
+        <div class="add-pic">
+            <img id="imgupimg" class="fl" src="img/index/pics.png" width="23" height="21" />
+            <!--<img class="fl marl20" src="img/index/emjs.png" width="24" />-->
+            <!--<img onclick="Comm.showWindow('sinboxTemp2',true)" style="object-fit: contain;" class="fr sees" src="img/index/per.png" width="23" height="21" />-->
+            <img onclick="model.showSet()" style="object-fit: contain;" class="fr gjz" src="img/my/sezi.png" width="23" height="21" />
+
+            <div class="clearfix"></div>
+
+        </div>
+    </footer>
+    <div id="sinbox" wtd="sinboxTemp">
+        <div class="qxgz" style="border-bottom: 1px solid #F4F4F4;" onclick="model.see(3)">所有人</div>
+        <div class="qxgz" style="border-bottom: 1px solid #F4F4F4;" onclick="model.see(1)">仅自己可见</div>
+        <div class="qxgz" onclick="model.see(2)">仅好友可见</div>
+    </div>
+    <div id="sinbox1" wtd="sinboxTemp1">
+        <div class="qxgz" style="border-bottom: 1px solid #F4F4F4;">请输入关键字</div>
+        <div class="qxgz" style="border-bottom: 1px solid #F4F4F4;">
+            <input id="kewyWord" style="width: 100%;" placeholder="请输入关键字，多个使用#分割" />
+        </div>
+        <div class="flex">
+            <div class="qxgz" style="width: 50%;background: #f4f4f4;border-bottom-left-radius: 5px;" onclick="Comm.showWindow('')">取消</div>
+            <div class="qxgz" style="width: 50%;background:#098E75 ;color: #fff;border-bottom-right-radius: 5px;" onclick="setKey()">确认</div>
+        </div>
+    </div>
+    <div id="sinbox2" wtd="sinboxTemp2">
+        <div class="dflex">
+            <div class="whosee" onclick="Comm.showWindow('');Comm.showWindow('sinboxTemp',true)">
+                <div class="who fl paddl20">谁可以看</div>
+                <div class="see fr paddr10" id="3">所有人</div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="dflex" style="border-bottom: 1px solid #f4f4f4;border-top: 1px solid #f4f4f4;">
+            <div class="mart10 marb10" onclick="Comm.showWindow('');model.showGuan()">
+                <p class="tright paddr20 lh30 color333" id="guanjianzi">添加关键字</p>
+            </div>
+        </div>
+        <div class="dflex mart10 marb10 paddb5 paddt5" id="zhuanzai">
+            <div>
+                <p class="f16" style="color:#333333;">是否允许转载</p>
+            </div>
+            <div style="text-align: right;" class="paddr20">
+                <input type="checkbox" id="simple_1" class="bg_white">
+                <label for="simple_1" class="red" onclick="model.cheng()"></label>
+            </div>
+        </div>
+        <div class="paddt15 paddb15 color666" style="border-top:#f4f4f4 1px solid;" onclick="Comm.showWindow('')">
+            <img src="img/guanbi.png" width="20" height="20" />
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script type="text/javascript" src="inc/edit.js?33"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="./inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script type="text/javascript" src="./inc/upimg/upload.js"></script>
+<script src="inc/upimg/plupload.full.min.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+<script type="text/javascript" src="inc/tpl.js"></script>
+<script>
+    var img = [];
+    var groupId = Comm.query('groupId');
+    var types = Comm.query('type');
+    var keyWord = '';
+    var whoSee = 3;
+    var zhuanzai = 1;
+    var isfirst = 1;
+    var first = 1;
+    var isaadd = 0;
+	var tui=1;
+    function setKey() {
+        if ($('#WTDBOXTD #kewyWord').val() && $('#WTDBOXTD #kewyWord').val() != '') {
+            keyWord = $('#WTDBOXTD #kewyWord').val();
+        }
+        document.activeElement.blur();
+        Comm.showWindow('');
+    }
+
+    function showKey() {
+        Comm.showWindow('sinboxTemp1', true);
+
+    }
+    if (groupId) {
+        $('.nav-title').html('发布帖子');
+        $('.sees').hide();
+        $('.gjz').hide();
+    }
+
+    function androidback() {
+        if (parseInt(Comm._pageinfo.android_home) === 0) {
+            model.close();
+        } else {
+            if (parseInt(Comm._pageinfo.android_home) === 1) {
+                Comm._pageinfo.android_home = 2;
+                Comm.confirm("您确定要退出应用？", function(a) {
+                    if (a == 1) Comm.close();
+                    else Comm._pageinfo.android_home = 1;
+                });
+            }
+        }
+    }
+
+    function pageload() {
+        wedit.init();
+        Comm.scorllDel();
+        $('.content').attr('contenteditable', 'plaintext-only');
+        model.len();
+        upHeader = new imgUploader("imgupimg", 99, "imgupimg");
+        upHeader.success = function(arr) {
+                var cimgUrl = arr.length > 0 ? arr : 'img/error.png';
+                //for(var i=0;i<cimgUrl.length;i++){
+                wedit.addImg(arr);
+                //}
+//				setTimeout(function(){
+//				$('#content').html($('#content').html().replace(/<img>/gi, "<br>"));
+//				},1000)
+            }
+            //wedit.addImg();
+        if (Comm.query('id')) {
+            model.init();
+            $('.jjs').css('background', '#098E75');
+            $('.jjs').parent().attr('onclick', 'model.sub()');
+        } else {
+            if (Comm.ios()) {
+                document.getElementById('imgupimg').style.display = 'none';
+                setTimeout(function() {
+                    var elem = document.getElementById('title');
+                    elem.focus();
+                    Comm.PopUpKeyboard({
+                        code: 1
+                    });
+                }, 500)
+//              document.body.addEventListener('touchmove', function(e) {
+//					if(document.activeElement)
+//						document.activeElement.blur();
+//				}, {
+//					passive: false
+//				});
+            } else {
+                var elem = document.getElementById('title');
+                elem.focus();
+                Comm.PopUpKeyboard({
+                    code: 1
+                });
+            }
+        }
+
+        //$('#title').attr('placeholder', '请输入标题，最多50字')
+
+        $("#title").on("paste", function(e) {
+            isaadd = 1;
+            textInit(e)
+        });
+        $("#title").bind("keydown", function(e) {
+            // 兼容FF和IE和Opera    
+            var theEvent = e || window.event;
+            var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+            if (code == 13) {
+                //回车执行查询
+                $("#content").focus();
+                $('#imgupimg').css('display', 'block');
+                return false;
+            }
+        });
+        $("#content").on("paste", function(e) {
+            isaadd = 2
+            textInit(e)
+        });
+    }
+
+    function textInit(e) {
+        e.preventDefault();
+        var text;
+        var clp = (e.originalEvent || e).clipboardData;
+        if (clp === undefined || clp === null) {
+            text = window.clipboardData.getData("text") || "";
+            if (text !== "") {
+                if (window.getSelection) {
+                    var newNode = document.createElement("span");
+                    newNode.innerHTML = text;
+                    window.getSelection().getRangeAt(0).insertNode(newNode);
+                } else {
+                    document.selection.createRange().pasteHTML(text);
+                }
+            }
+        } else {
+            text = clp.getData('text/plain') || "";
+            if (text !== "") {
+                text = text.replace(/<\/?.+?\/?>/g, "").replace(/<[^>]*>|<\/[^>]*>/gm, "").replace(/<div>/gi, "<div class='f14'>");
+                if (isaadd == 2) {
+                    var div = document.createElement('div');
+                    div.innerHTML = text;
+                    document.execCommand('insertText', false, text);
+                    	//$("#content").html($("#content").html().replace(/<div>/gi, "<div class='f14'>").replace(/(\r\n|\n|\r)/gm, "<br/>"));
+//                  zhuanfa.focus(Comm.g('content'));
+                } else {
+                    document.execCommand('insertText', false, text);
+                }
+
+            }
+        }
+    }
+
+    function pageresume() {
+        //			wedit.init();
+        Comm.resizeSection();
+        Comm.scorllDel();
+
+    }
+    var mid = "";
+    var model = {
+        len: function() {
+            setInterval(function() {
+                if ((wedit.getData(3).title.length > 0 && wedit.getData(3).content.replace(/[ ]|&nbsp;/g, '').replace(/<br>/g, '').replace(/(\r\n|\n|\r)/gm, "").length > 0&&wedit.getData(3).img.length > 0)||(wedit.getData(3).content.replace(/<\/?.+?\/?>/g, "").replace(/[ ]|&nbsp;/g, '').replace(/<br>/g, '').replace(/(\r\n|\n|\r)/gm, "").length>0&&wedit.getData(3).title.length > 0)) {
+                    $('.jjs').css('background', '#098E75');
+                    $('.jjs').parent().attr('onclick', 'model.sub()');
+                } else {
+                    $('.jjs').css('background', '#f4f4f4');
+                    $('.jjs').parent().attr('onclick', '');
+                }
+            }, 1)
+
+        },
+        showSet: function() {
+            document.activeElement.blur();
+            Comm.showWindow('sinboxTemp2', true);
+            if (zhuanzai == 1) {
+                $("#WTDBOX #simple_1").attr('checked', 'checked');
+            }
+            if (keyWord != '') {
+                $('#WTDBOX #guanjianzi').html(keyWord);
+            }
+            if (whoSee == 3) {
+                $('.see').html('所有人');
+            } else if (whoSee == 2) {
+                $('.see').html('仅好友可见');
+            } else if (whoSee == 1) {
+                $('.see').html('仅自己可见');
+                $("#WTDBOX #simple_1").removeAttr('checked');
+                $("#WTDBOX #zhuanzai").hide();
+            }
+
+        },
+        cheng: function() {
+            if ($("#WTDBOX #simple_1").attr('checked') && $("#WTDBOX #simple_1").attr('checked') == 'checked') {
+                $("#WTDBOX #simple_1").removeAttr('checked');
+                zhuanzai = 0;
+            } else {
+                $("#WTDBOX #simple_1").attr('checked', 'checked');
+                zhuanzai = 1;
+            }
+        },
+        showGuan: function() {
+            Comm.showWindow('sinboxTemp1', true)
+            $('#WTDBOXTD #kewyWord').val(keyWord);
+        },
+        close: function() {
+            document.activeElement.blur();
+            Comm.resizeSection();
+            setTimeout(function() {
+                if (wedit.getData(3).title.replace(/\s+/g, "").length > 0 && wedit.getData(3).content.replace(/\s+/g, "").length > 0) {
+                    Comm.confirm('是否存入草稿箱？', function(d) {
+                        if (d) {
+                            var data = wedit.getData(3);
+                            var o = {};
+                            var title = data.title;
+                            if (title.replace(/\s+/g, "") == "") {
+                                if (Comm.query('groupId')) {
+                                    Comm.message('请输入帖子标题');
+                                } else {
+                                    Comm.message('请输入日志标题');
+                                }
+                                return false;
+                            }
+                            if (title.replace(/\s+/g, "").length > 50) {
+                                Comm.message('日志标题过长,最多50字，请重新输入');
+                                return false;
+                            }
+                            o.content = '<div>' + data.content.replace(/<div>/gi, "<div class='f14'>").replace(/(\r\n|\n|\r)/gm, "<br/>") + '</div>';
+                            o.subhead = '<div>' + data.content.replace(/<img\b[^>]*>/g, "").substring(0, 200) + '</div>';
+                            if (data.content.replace(/[ ]|&nbsp;/g, '') == "") {
+                                if (Comm.query('groupId')) {
+                                    Comm.message('请输入帖子内容');
+                                } else {
+                                    Comm.message('请输入日志内容');
+                                }
+                                return false;
+                            }
+                            o.urls = data.img;
+                            if (Comm.query('id')) {
+                                o.newsId = Comm.query('id');
+                                Comm.db('changNews', '1')
+                            }
+                            if (Comm.query('groupId')) {
+                                o.newsType = 7;
+                            } else {
+                                o.newsType = 2;
+                            }
+                            o.title = title;
+                            o.videoId = "";
+                            o.isdraft = 1;
+                            o.allowedToReprint = zhuanzai
+                            if (Comm.query('groupId')) {
+                                o.itemType = 4;
+                                o.itemId = Comm.query('groupId');
+                            } else {
+                                o.itemType = 0;
+                                o.itemId = 0;
+                            }
+
+                            o.keywords = keyWord;
+                            o.newsRange = whoSee;
+                            Comm.PopUpKeyboard({
+                                code: 2
+                            });
+                            //				Comm.loading('发布中...');
+                            AJAX.POST('/api/news/sub', o, function(a) {
+                                //					Comm.loading(false)
+                                if (a && a.code == 1) {
+                                    document.activeElement.blur();
+                                    Comm.message('操作成功');
+                                    if (Comm.query('dra')) {
+                                        Comm.close();
+                                    } else {
+                                        if (Comm.query('groupId')) {
+                                            //Comm.db('tzcb', '1');
+                                            Comm.close();
+                                        } else {
+                                            Comm.gotop('ifrm.html?top=0');
+                                        }
+                                    }
+
+                                } else {
+                                    Comm.message(a.msg);
+                                }
+                            })
+
+                        } else {
+                            document.activeElement.blur();
+                            Comm.close();
+                        }
+                    })
+                } else if (wedit.getData(3).title.replace(/\s+/g, "").length > 0 || wedit.getData(3).content.replace(/\s+/g, "").length > 0) {
+                    Comm.confirm('确认退出？', function(d) {
+                        if (d) {
+                            document.activeElement.blur();
+                            Comm.close();
+                        }
+                    })
+                } else {
+                    document.activeElement.blur();
+                    if(tui==1){
+                    	tui=2;
+                    	Comm.close();
+                    }
+                    
+                }
+            }, 200)
+
+        },
+        see: function(type) {
+            if (type == 3) {
+                $('.see').html('所有人');
+                $('.see').attr('id', '3');
+                whoSee = 3;
+                Comm.showWindow('');
+            } else if (type == 1) {
+                $('.see').html('仅自己可见');
+                $('.see').attr('id', '1');
+                whoSee = 1;
+                Comm.showWindow('');
+            } else {
+                $('.see').html('仅好友可见');
+                $('.see').attr('id', '2');
+                whoSee = 2
+                Comm.showWindow('');
+            }
+        },
+        sub: function() {
+            var data = wedit.getData(3);
+            var o = {};
+            var title = data.title;
+            if (title.replace(/\s+/g, "") == "") {
+                if (Comm.query('groupId')) {
+                    Comm.message('请输入帖子标题');
+                } else {
+                    Comm.message('请输入日志标题');
+                }
+                return false;
+            }
+            if (title.replace(/\s+/g, "").length > 50) {
+                if (Comm.query('groupId')) {
+                    Comm.message('帖子标题过长,最多50字，请重新输入');
+                } else {
+                    Comm.message('日志标题过长,最多50字，请重新输入');
+                }
+
+                return false;
+            }
+            //				if(!Comm.ios()){
+            //					//console.log(data.content)
+            //					data.content=data.content.replace(/(?!.*>)\s/g, "&nbsp;");
+            //				}
+            o.content = '<div>' + data.content.replace(/<div>/gi, "<div class='f14'>").replace(/(\r\n|\n|\r)/gm, "<br/>") + '</div>';
+            o.subhead = '<div>' + data.content.replace(/<\/?.+?>/g, "").replace(/<img\b[^>]*>/g, "").replace(/<br>/g, '').replace(/(\r\n|\n|\r)/gm, "").substring(0, 300) + '</div>';
+            //				$('.content').text().replace(/(?!.*>)\s/g, "").substring(0,100);
+            if (data.content.replace(/[ ]|&nbsp;/g, '') == "") {
+                if (Comm.query('groupId')) {
+                    Comm.message('请输入帖子内容');
+                } else {
+                    Comm.message('请输入日志内容');
+                }
+                return false;
+            }
+            o.urls = data.img;
+            if (Comm.query('id')) {
+                o.newsId = Comm.query('id');
+                Comm.db('changNews', '1')
+            }
+            if (Comm.query('groupId')) {
+                o.newsType = 7;
+            } else {
+                o.newsType = 2;
+            }
+            o.title = title;
+            o.videoId = "";
+            o.isdraft = 0;
+            o.allowedToReprint = zhuanzai
+            if (Comm.query('groupId')) {
+                o.itemType = 4;
+                o.itemId = Comm.query('groupId');
+            } else {
+                o.itemType = 0;
+                o.itemId = 0;
+            }
+
+            o.keywords = keyWord;
+            o.newsRange = whoSee;
+            Comm.PopUpKeyboard({
+                code: 2
+            });
+            console.log(o)
+            Comm.loading('发布中...');
+            AJAX.POST('/api/news/sub', o, function(a) {
+                Comm.loading(false)
+                if (a && a.code == 1) {
+                    document.activeElement.blur();
+                    Comm.message('操作成功');
+                    if (Comm.query('groupId')) {
+                        Comm.db('tzcb', '1');
+                        //Comm.close();
+                        Comm.gotop('ifrm.html?top=1');
+                    } else {
+                        //                      Comm.db('tzcb', '1');
+                        //                      Comm.close();
+
+                        Comm.gotop('ifrm.html?top=0');
+                    }
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+
+        },
+        init: function() {
+            AJAX.GET('/api/news/info?newsId=' + Comm.query('id') + '&customerId=' + app.getCid(), function(a) {
+                if (a && a.code == 1) {
+                    var data = {
+                        title: a.data.news.title,
+                        content: a.data.news.content
+                    };
+                    data.content = data.content.replace(/<div class="f14">/gi, '<div class="f16">').replace(/<script/g, '').replace(/(\r\n|\n|\r)/gm, "<br/>").replace(/(?!img>)\s/g, "&nbsp;").replace(/&nbsp;src/g, " src").replace(/&nbsp;len/g, " len").replace(/&nbsp;old/g, " old").replace(/&nbsp;class/g, " class").replace(/&nbsp;onclick/g, " onclick");
+                    wedit.fill(data);
+                    if (a.data.news.url) {
+                        img = a.data.news.url.split(',');
+                    }
+                    zhuanzai = a.data.news.allowedToReprint;
+                    if (a.data.keyword) {
+                        keyWord = a.data.keyword;
+                    }
+
+                } else {
+                    Comm.message(a.msg)
+                }
+            })
+        }
+    }
+</script>
+
+</html>

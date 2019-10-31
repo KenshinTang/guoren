@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+
+    <style>
+        .searchBar {
+            margin: 0 auto;
+        }
+        
+        .searchBar input {
+            width: 95%;
+            padding-left: 30px;
+            line-height: 30px;
+            height: 30px;
+            font-size: 14px;
+            color: #8891A7;
+            background-color: #F2F6F7;
+            border-radius: 18px;
+            background-image: url('img/search.png');
+            background-repeat: no-repeat;
+            background-size: 14px;
+            background-position: 10px center;
+            margin: 0 auto;
+            margin-left: 2.5%;
+        }
+        
+        .order-t {
+            text-align: center;
+            font-size: 12px;
+        }
+        
+        .scrollx {
+            height: 50px;
+            overflow: hidden;
+        }
+        
+        .scrollx-content {
+            width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        .order-t-c {
+            width: 25%;
+            height: 100%;
+            font-size: 15px;
+            /*font-weight: bold;*/
+            color: #888888;
+            display: inline-block;
+            margin-bottom: 30px;
+            /*把水平滚动条撑到外面,达到隐藏的目的*/
+            vertical-align: middle;
+        }
+        
+        .order-t-c-active {
+            /*border-bottom: 2px solid #000000;*/
+            position: relative;
+            font-weight: bold;
+            color: #098E75;
+        }
+        
+        .order-t-c-active:after {
+            content: '';
+            position: absolute;
+            left: 35%;
+            bottom: auto;
+            right: auto;
+            height: 2px;
+            width: 30%;
+            background-color: #098E75;
+        }
+        
+        .mescroll-totop {
+            bottom: 80px;
+            right: 30px;
+            opacity: 1;
+            z-index: 99;
+        }
+        
+        .swiper-container2 {
+            height: 170px;
+            width: 80%;
+        }
+        
+        .navItemIcon {
+            background: inherit;
+        }
+        
+        .swiper-container2 .swiper-wrapper {
+            left: 15%;
+        }
+        
+        .isselatesku-item {
+            position: relative;
+        }
+        
+        .getmor {
+            background: url(img/my/left.png) no-repeat 97% center;
+            background-size: 8px 14px;
+            border-bottom: 1px solid #f4f4f4;
+        }
+        
+        .isJiaru {
+            border: 1px solid #D3D3D3;
+            color: #fff;
+            border-radius: 4px;
+        }
+        
+        .schoolMsg {
+            border-bottom: 2px solid #f4f4f4;
+            background-color: #fff;
+        }
+        
+        .getmor {
+            background: url(img/my/left.png) no-repeat 97% center;
+            background-size: 8px 14px;
+            border-bottom: 3px solid #f4f4f4;
+        }
+        
+        .data-list {
+            background-color: #f4f4f4;
+        }
+        
+        #sinbox3 {
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+            width: 90%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar" style="padding: 0;box-shadow: none;">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navItemIcon marl5 marr10" onclick="getListData({num:1, size:10})">搜索</div>
+            <div class="nav-title block searchBar" style="width: calc(100% - 100px);height: 44px;">
+                <form action="javascript:return true;" onsubmit="model.search();return false;" style="position: relative;">
+                    <input id="id_searchInput" oninput="leng()" maxlength="20" class="paddr15" autocomplete="off" type="search" onsubmit="model.search()" placeholder="输入关键字">
+                    <!--<img src="img/index/qxgz.png" onclick="model.clear()" width="15" style="position: absolute;right: 15px;top: 15px;" />-->
+                </form>
+            </div>
+        </div>
+        <!--<div class="scrollx mescroll-touch-x">
+				<div id="scrollxContent" class="scrollx-content">
+					<div id="nav" class="order-t ovf bb1" style="border-bottom: 1px solid #f4f4f4;">
+						<div class=" order-t-c order-t-c-active brp" i='0'>综合</div>
+						<div class=" order-t-c brp" i='1'>帖子</div>
+						<div class=" order-t-c brp" i='2'>圈子</div>
+						<div class=" order-t-c brp" i='3'>问问</div>
+					</div>
+				</div>
+			</div>-->
+    </header>
+    <section>
+
+        <!--轮播-->
+        <div id="swiper" class="swiper-container">
+            <div id="swiperWrapper" class="swiper-wrapper">
+                <!--全部-->
+                <div id="mescroll0" class="swiper-slide mescroll">
+                    <div id="dataList0" class="data-list">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="shared">
+
+    </footer>
+    <div id="sinbox3" class="paddb10" wtd="sinboxTemp4">
+        <div class="bg_white marb10 f16" style="border-radius: 10px;">
+            <div class="coloreb3 paddb15 paddt15" onclick="model.shanchu(1)">删除</div>
+        </div>
+        <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+    </div>
+
+    <div id="sinbox3" class="paddb10" wtd="sinboxTemp1">
+        <div class="bg_white marb10 f16" style="border-radius: 10px;">
+            <div class="paddt15 paddb15" onclick="model.jb(5)">举报</div>
+        </div>
+        <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+    </div>
+</body>
+
+<script type="text/html" id="listTpl">
+    {{each $data v k}}
+    <div class="schoolMsg" id="{{v.newsId}}" onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}');event.stopPropagation()">
+        <div class="heads">
+            <div class="name-left fl" onclick="Comm.go('personal.html?customerId={{v.customerId}}');event.stopPropagation()">
+                <img class="fl" style="border-radius: 50%;" src="{{OSS(v.uface)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+                <div class="fl marl10">
+                    <p class="f14">{{v.customerName}}</p>
+                    <p class="f12 c9e">{{sldate(v.addTime)}}</p>
+                </div>
+            </div>
+            <div class="name-right fr" style="padding: 5px 10px;" onclick=" model.caozuo({{v.customerId}},{{v.newsId}});event.stopPropagation()">
+                <img src="img/index/more.png" class="fr" style="margin-top: 8px;" width="14" height="3" />
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+        <div class="f14 wordW2 mart5">
+            <span class="talk" style="margin:0; margin-right: 10px;">{{v.topicName}} </span><span>{{v.content}}</span>
+        </div>
+        <div class="mart5">
+            {{if v.face!=''&&v.face.length==1}}
+            <div class="marr5" style="width: 60%;"><img src="{{OSS(v.face,'m')}}" onerror="this.src='img/index/scr.png';this.onerror=null;" class="fr" width="100%" height="212" style="border-radius: 5px;" /></div>
+            {{else if v.face!=''&&v.face.length>1}} {{each v.face a b}}
+            <div class="marr5 mart5 fl" style="width: 30%;"><img src="{{OSS(a,'m')}}" onerror="this.src='img/index/scr.png';this.onerror=null;" class="fr" width="100%" height="96" style="border-radius: 5px;" /></div>
+            {{/each}} {{/if}}
+            <div class="clearfix"></div>
+        </div>
+        <div class="scl-but mart15">
+            {{if v.isPraise==0}}
+            <div onclick="model.zan({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zan.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12">{{v.praiseNumber}}</span></div>
+            {{else}}
+            <div onclick="model.quxiao({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zand.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12">{{v.praiseNumber}}</span></div>
+            {{/if}}
+            <div onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}&cont=1');event.stopPropagation()"><img src="img/index/pl.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12">{{v.commentNumber}}</span></div>
+            <div onclick="Comm.go('zhuanfa.html?newsId={{v.newsId}}');event.stopPropagation()"><img src="img/index/zf.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12">{{v.forwardNumber}}</span></div>
+        </div>
+    </div>
+    {{/each}}
+</script>
+
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="./inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+
+<script>
+    var customerId = "";
+    if (Comm.db('userinfo')) {
+        customerId = app.getCid();
+    }
+if (Comm.db('historySearch')) {
+        var historySearch = Comm.db('historySearch');
+    } else {
+        var historySearch = [];
+    }
+    $("#id_searchInput").val(Comm.query('keyWord'));
+
+    function pageload() {
+        mescrollRefreshFn({
+            menuNumber: 3
+        });
+    }
+
+    function leng() {
+        if ($("#id_searchInput").val() == '') {
+            Comm.goself('search2.html?type=11&focus=1&topicId=' + model.topicId);
+        }else{
+        	model.search();
+        }
+    }
+
+    function pageresume() {
+
+    }
+    var mid = "";
+    var model = {
+        topicId: Comm.query('topicId'),
+        qh: function(id) {
+            swiper.slideTo(id);
+        },
+        clear: function() {
+            $("#id_searchInput").val('');
+        },
+        search: function() {
+            getListData({
+                num: 1,
+                size: 10
+            });
+            document.activeElement.blur();
+        },
+        caozuo: function(id, nid) {
+            if (id == customerId) {
+                Comm.showWindow('sinboxTemp4', true);
+            } else {
+
+                Comm.showWindow('sinboxTemp1', true);
+
+            }
+            mid = nid;
+        },
+        zan: function(id, e) {
+            AJAX.GET('/api/news/praiseByNewsId?newsId=' + id, function(a) {
+                if (a && a.code == 1) {
+                    $(e).attr('onclick', 'model.quxiao(' + id + ',this);event.stopPropagation()');
+                    $(e).find('img')[0].src = 'img/index/zand.png';
+                    $(e).find('span')[0].innerHTML++;
+                } else {
+                    Comm.message(a.msg);
+                }
+            });
+            event.stopPropagation();
+        },
+        quxiao: function(id, e) {
+            AJAX.GET('/api/news/cancelPraiseByNewsId?newsId=' + id, function(a) {
+                if (a && a.code == 1) {
+                    $(e).attr('onclick', 'model.zan(' + id + ',this);event.stopPropagation()');
+                    $(e).find('img')[0].src = 'img/index/zan.png';
+                    $(e).find('span')[0].innerHTML--;
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+            event.stopPropagation()
+        },
+        shanchu: function() {
+            Comm.showWindow('');
+            Comm.confirm('确认删除？', function(d) {
+                if (d) {
+                    AJAX.GET('/api/news/del?newsId=' + mid, function(a) {
+                        if (a && a.code == 1) {
+                            Comm.message('删除成功');
+                            $('#' + mid).remove();
+                        } else {
+                            Comm.message(a.msg);
+                        }
+                    })
+                }
+            })
+        },
+        jb: function() {
+        		Comm.showWindow('');
+            Comm.go('report.html?itemId=' + mid);
+        },
+    }
+
+    /*设置列表数据
+     * pageData 当前页的数据
+     * dataIndex 数据属于哪个nav */
+    function setListData(pageData, dataIndex) {
+        var listDom = document.getElementById("dataList" + dataIndex),
+            listStr = "";
+
+        if (pageData.length > 0) {
+       
+            pageData.dataIndex = dataIndex;
+            for (var i = 0; i < pageData.length; i++) {
+                pageData[i].face = pageData[i].face.split(',');
+                var value = $("#id_searchInput").val();
+			var values = pageData[i].content.replace(/<\/?[^>]*>/gim,"").split(value);
+         pageData[i].content = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+            }
+
+            listStr += template('listTpl', pageData);
+
+            if (pageData.curPage > 1) {
+                listDom.innerHTML += listStr;
+            } else {
+                listDom.innerHTML = listStr
+                $('section').scrollTop(0);
+            }
+
+        }
+        Comm.scorllDel();
+Comm.resizeSection();
+    }
+
+    /*联网加载列表数据
+     在您的实际项目中,请参考官方写法: http://www.mescroll.com/api.html#tagUpCallback
+     请忽略getListDataFromNet的逻辑,这里仅仅是在本地模拟分页数据,本地演示用
+     实际项目以您服务器接口返回的数据为准,无需本地处理分页.
+     * */
+    var htmlData = [];
+
+    function getListDataFromNet(curNavIndex, pageNum, pageSize, successCallback, errorCallback) {
+        var keyword = $("#id_searchInput").val();
+        /*var o = {};
+        o.title = title;
+        o.curpage = pageNum;
+        o.pagesize = pageSize;
+        o.type = 11;
+        o.customerId = customerId;*/
+ historySearch = historySearch && historySearch.length > 0 ? historySearch : [];
+                var keyWord = $("#id_searchInput").val()
+                if (keyWord != '') {
+                    var index = historySearch.indexOf(keyWord)
+                    if (index == -1) {
+                        historySearch.unshift(keyWord);
+                    } else {
+                        historySearch.splice(index, 1);
+                        historySearch.unshift(keyWord);
+                    }
+                    Comm.db('historySearch', historySearch);
+                }
+        var o = {};
+        o.curpage = pageNum;
+        o.pagesize = pageSize;
+        o.topicId = Comm.query('topicId');
+        o.sortType = 2;
+        o.keyword = keyword;
+        o.customerId = customerId;
+        AJAX.POST("/api/topic/newsListById", o, function(a) {
+            if (a && a.code == 1) {
+                var r = a.data || [];
+                htmlData = r;
+                totalSize = a.totalCount;
+                htmlData.curPage = a.curPage;
+                successCallback && successCallback(htmlData, totalSize);
+            } else {
+                Comm.message(a.msg);
+                errorCallback && errorCallback();
+            }
+        });
+    }
+</script>
+
+</html>

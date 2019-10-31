@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>我的粉丝</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+
+    <style>
+        .navItemIcon {
+            background-image: url('img/msg.png');
+            background-position: center right;
+            background-repeat: no-repeat;
+            background-size: auto 20px;
+        }
+        
+        .searchBar {
+            margin: 0 auto;
+        }
+        
+        .searchBar input {
+            width: 95%;
+            padding-left: 30px;
+            line-height: 30px;
+            height: 30px;
+            font-size: 14px;
+            color: #8891A7;
+            background-color: #F2F6F7;
+            border-radius: 18px;
+            background-image: url('img/search.png');
+            background-repeat: no-repeat;
+            background-size: 14px;
+            background-position: 10px center;
+            margin: 0 auto;
+            margin-left: 2.5%;
+        }
+        .caozuo{
+        	margin-top: -1.5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">我的粉丝</div>
+        </div>
+    </header>
+    <section id="box" style="background-color: #f4f4f4;">
+        <div class="main">
+            <div class="fansList mescroll" id="fansList" style="background-color: #f4f4f4;">
+            </div>
+        </div>
+
+    </section>
+</body>
+<!--  -->
+<script type="text/html" id="dome1">
+    {{each $data as v k}}
+    <div class="fansItem"  style="background-color: #fff;" onclick="Comm.go('./personal.html?customerId={{v.customerId}}')">
+        <div class="flex_wrap" style="align-items: center;width: 100%;">
+            <div class="userImg" style="margin-right: 15px;position: relative;width: 75px;height: 75px;">
+            		<div style="position: absolute;z-index: 99; width:75px;height:75px;background:url({{OSS(v.colorUrl,'s')}});background-size:100% 100%;;">
+            		</div>
+                <img src="{{OSS(v.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;"alt="" width="52" height="52" style="border-radius:50%;position: absolute;top: 12px;left: 12px;">
+            </div>
+            <div style="width: calc(100% - 120px);">
+                <p class="wordW" style="color:#222222;font-size:12px;font-weight: 700; ">{{v.customerName}}</p>
+                <p class="wordW paddr10" style="color:#888888;font-size:12px;">{{if v.userType==5}}果仁官方{{else}}{{v.autograph||'这是一句生来就注定要被消灭的签名'}}{{/if}}</p>
+                <p class="f12 c9e">关注{{conunm(v.followNumber)}} · 粉丝{{conunm(v.fansNumber)}} · 获赞{{conunm(v.praiseNumber)}} </p>
+            </div>
+            {{if myId!=v.customerId}}
+            <div class="caozuo">
+            	{{if !v.focus}}
+            	{{if v.isAdd==1}}
+                <i class="icon_quxiao" onclick="unfollow(this,{{v.customerId}});event.stopPropagation()"></i> {{/if}} 
+                {{if v.isAdd == 0}}
+                <i class="icon_guanzu" onclick="addFans(this,{{v.customerId}}); event.stopPropagation()"></i> {{/if}}
+            	{{else}}
+            	{{if(v.focus == 1&&v.isAdd==1)}}
+                <i class="icon_quxiao" onclick="unfollow(this,{{v.customerId}});event.stopPropagation()"></i> {{/if}} {{if(v.focus == 1&&v.isAdd==0)}}
+                <i class="icon_yguanzhu" onclick="unfollow(this,{{v.customerId}});event.stopPropagation()"></i> {{/if}} {{if(v.focus == 0)}}
+                <i class="icon_guanzu" onclick="addFans(this,{{v.customerId}}); event.stopPropagation()"></i> {{/if}}
+            	{{/if}}
+                
+            </div>
+            {{/if}}
+        </div>
+    </div>
+    {{/each}}
+</script>
+
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+
+<script>
+    var customerId = app.getCid();
+    var merefresh = null;
+    var _customerId = Comm.query('customerId');
+    if (_customerId) {
+        if (_customerId != customerId) {
+            customerId = _customerId;
+            $('.navTitle').html('他的粉丝')
+        }
+    }
+
+    function pageload() {
+        myrefresh()
+    }
+
+
+
+    function myrefresh() {
+        if (merefresh == null) {
+            merefresh = new MERefresh('box,fansList', {
+                refreshUrl: '/api/fans/fansList',
+                refreshTypeGet: true
+            });
+            //网络请求参数
+            merefresh.refreshOption.refreshParm = {
+                curPage: 1,
+                pageSize: 10,
+                customerId: customerId
+            };
+            //页面 <刷新> 的回调
+            merefresh.refreshOption.refresh_cb = function(refresh, d) {
+                refresh.successEndRef(d.data.length, d.totalCount);
+                d.data.myId = app.getCid();
+                d.data.hisId = Comm.query('customerId') ? Comm.query('customerId') : app.getCid();
+                refresh.appendHtml(template('dome1', d.data));
+
+            };
+        } else {
+            console.log(merefresh)
+        }
+    }
+
+    //成为他的粉丝
+    function addFans(e, fid) {
+        var id = app.getCid();
+        AJAX.POST('/api/fans/addFans', {
+            customerId: id,
+            fid: fid
+        }, function(d) {
+            if (d.code == 1) {
+            	if(d.data==0){
+            	$(e).attr('class', 'icon_yguanzhu').attr('onclick', 'unfollow(this,' + fid + '); event.stopPropagation()')	
+            	}else{
+            	 $(e).attr('class', 'icon_quxiao').attr('onclick', 'unfollow(this,' + fid + '); event.stopPropagation()')	
+            	}
+            } else {
+                Comm.message(d.msg);
+            }
+        })
+    }
+    //取消关注
+    function unfollow(e, fid) {
+
+        Comm.confirm('是否确认取消关注？', function(a) {
+            if (a) {
+                var id = app.getCid();
+                AJAX.POST('/api/fans/unfollow', {
+                    customerId: id,
+                    fid: fid
+                }, function(d) {
+                    if (d.code == 1) {
+
+                        $(e).attr('class', 'icon_guanzu').attr('onclick', 'addFans(this,' + fid + ');event.stopPropagation()')
+                    } else {
+                        Comm.message(d.msg);
+                    }
+                })
+            }
+        })
+    }
+
+    // var model = {
+    //     // getFansList() {
+    //     //     AJAX.POST('/api/fans/fansList', { customerId: customerId, curPage: 1, pageSize: 10 }, function (d) {
+    //     //         if (d.code == 1) {
+    //     //             $('#fansList').html(template('dome1', d.data))
+    //     //         }
+    //     //     })
+    //     }
+    // }
+</script>
+
+</html>

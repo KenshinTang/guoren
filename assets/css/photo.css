@@ -1,0 +1,218 @@
+#photobox {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	width: 100%;
+	height: 100%;
+	visibility: hidden;
+	overflow: hidden;
+	background-color: #000000;
+	transform-origin: center;
+	transform: translate3d(0, 0, 0);
+}
+
+#photobox.photoshow {
+	opacity: 1;
+	transform: scale(1);
+}
+
+#photobox.photohide {
+	opacity: 0;
+	transform: scale(0);
+}
+
+#photobox * {
+	margin: 0;
+	padding: 0;
+	font-size: 0;
+	user-select: none;
+	outline: none;
+}
+
+#photobox *::-webkit-scrollbar {
+	display: none !important;
+}
+
+#photobox>img.face {
+	z-index: 9;
+	position: absolute;
+	left: 0;
+	top: 0;
+	object-fit: cover;
+	object-position: 50% 0;
+	visibility: hidden;
+	transform: translate3d(0, 0, 0);
+	transform-origin:50% 50% !important;
+}
+
+#photobox>ul,
+#photobox>ul li {
+	list-style: none;
+	width: 100%;
+	height: 100%;
+	white-space: nowrap;
+}
+
+#photobox>ul li {
+	display: inline-block;
+	position: relative;
+	overflow: hidden;
+	margin-right: 10px;
+	transform: translate3d(0, 0, 0);
+}
+
+#photobox li.loading:after {
+	position: absolute;
+	height: 20px;
+	width: 20px;
+	font-size: 14px;
+	top: 50%;
+	left: 45%;
+	margin-top: -15px;
+	content: "";
+	background: url(stIconfile/load.gif) no-repeat;
+	background-size: 100% 100%;
+	text-align: center;
+	color: #fff;
+}
+
+#photobox>ul li img {
+	position: absolute;
+	transform: translate3d(0, 0, 0);
+	width: 100%;
+	left: 0;
+	top: 0;
+}
+
+#photobox p {
+	text-align: center;
+	overflow: hidden;
+	position: fixed;
+	width: 100%;
+	left: 0;
+	bottom: 20px;
+	overflow: hidden;
+	height: 10px;
+	z-index: 90;
+}
+
+#photobox p b {
+	display: inline-block;
+	margin: 0px 5px;
+	height: 8px;
+	width: 8px;
+	border-radius: 50%;
+	background: #737383;
+}
+
+#photobox p b.cur {
+	background: #FFF;
+}
+
+#photobox>div {
+	background: rgba(0, 0, 0, 0.1);
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+	display: none;
+}
+
+#photobox>div.show {
+	background: rgba(0, 0, 0, 0.1);
+}
+
+#photobox>div.hide {
+	background: rgba(0, 0, 0, 0);
+}
+
+#photobox>div ul,
+#photobox>div li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	overflow: hidden;
+}
+
+#photobox>div ul {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	height: 125px;
+	bottom: -125px;
+	transition: bottom .3s;
+}
+
+#photobox>div li {
+	width: 90%;
+	border-radius: 10px;
+	line-height: 50px;
+	display: block;
+	height: 50px;
+	font-size: 16px;
+	color: #000;
+	text-align: center;
+	border-bottom: 1px solid #B3BEC6;
+	background: #fff;
+	color: #000;
+	margin-bottom: 5px;
+	margin-left: 5%;
+}
+
+#photobox>div li:last-child {
+	line-height: 50px;
+	height: 50px;
+	margin-bottom: -115px;
+	border-bottom-width: 0;
+}
+
+.getpic {
+	position: relative;
+}
+
+.getpic>img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: 50% 0;
+}
+
+.gif:after,
+.long:after {
+	position: absolute;
+	color: #fff;
+	bottom: 0px;
+	right: 5px;
+	width: 30px;
+	font-size: 12px;
+	background: #e2e2e2;
+	text-align: center;
+}
+.onePic:after {
+	position: absolute;
+	color: #fff;
+	bottom: 0px;
+	right: 0px;
+	width: 30px;
+	font-size: 12px;
+	background: #e2e2e2;
+	text-align: center;
+}
+.long:after {
+	content: "";
+	width:30px;
+	height: 18px;
+	background: url(../img/long.png) no-repeat;
+	background-size: 100% 100%;
+}
+
+.gif:after {
+	content: "";
+	width:30px;
+	height: 18px;
+	background: url(../img/gifpic.png) no-repeat;
+	background-size: 100% 100%;
+}

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>添加关注</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+
+    <style>
+        .navItemIcon {
+            background-image: url('img/msg.png');
+            background-position: center right;
+            background-repeat: no-repeat;
+            background-size: auto 20px;
+        }
+
+        .searchBar {
+            margin: 0 auto;
+        }
+
+        .searchBar input {
+            width: 95%;
+            padding-left: 30px;
+            line-height: 30px;
+            height: 30px;
+            font-size: 14px;
+            color: #8891A7;
+            background-color: #F2F6F7;
+            border-radius: 18px;
+            background-image: url('img/search.png');
+            background-repeat: no-repeat;
+            background-size: 14px;
+            background-position: 10px center;
+            margin: 0 auto;
+            margin-left: 2.5%;
+        }
+
+        .vidos {
+            width: 40px;
+            height: 100%;
+            float: left;
+            font-size: 15px;
+            font-weight: bold;
+            color: #888888;
+            margin-left: 10px;
+            padding: 5px 0;
+            text-align: center;
+        }
+
+        .vido-active {
+            border-bottom: 2px solid #098E75;
+            color: #000;
+        }
+
+        .order-t {
+           
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .order-t-c {
+            width: 20%;
+            height: 100%;
+            float: left;
+            font-size: 15px;
+            /*font-weight: bold;*/
+            color: #888888;
+        }
+
+        .order-t-c-active {
+            color: #000;
+            border-bottom: 2px solid #098E75;
+        }
+
+        /* .demo1 {
+            border-bottom:
+        } */
+
+        .schoolType {
+            display: inline-block;
+            width: 35px;
+            height: 16px;
+            text-align: center;
+            line-height: 16px;
+            color: #888888;
+            font-size: 10px;
+            background: #EEEEEE;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">我的关注</div>
+        </div>
+    </header>
+    <section>
+        <div class="scrollx mescroll-touch-x">
+            <div id="scrollxContent" class="scrollx-content">
+                <div id="nav" class="order-t ovf bb1" style="border-bottom: 1px solid #f4f4f4;">
+                    <div class="order-t-c brp order-t-c-active" i='0'>大学</div>
+                    <div class="order-t-c brp" i='1'>专业</div>
+                    <div class="order-t-c brp" i='2'>用户</div>
+                    <div class="order-t-c brp" i='3'>圈子</div>
+                    <div class="order-t-c brp" i='4'>话题</div>
+                </div>
+            </div>
+        </div>
+        <!--轮播-->
+        <div id="swiper" class="swiper-container">
+            <div id="swiperWrapper" class="swiper-wrapper">
+                <!--全部-->
+                <div id="mescroll0" class="swiper-slide mescroll">
+                    <div id="dataList0" class="data-list">
+                    </div>
+                </div>
+                <!--旗舰店-->
+                <div id="mescroll1" class="swiper-slide mescroll">
+                    <div id="dataList1" class="data-list">
+                    </div>
+                </div>
+                <!--快取店-->
+                <div id="mescroll2" class="swiper-slide mescroll">
+                    <div id="dataList2" class="data-list">
+                    </div>
+                </div>
+                <div id="mescroll3" class="swiper-slide mescroll">
+                    <div id="dataList3" class="data-list">
+                    </div>
+                </div>
+                <div id="mescroll4" class="swiper-slide mescroll">
+                    <div id="dataList4" class="data-list">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+<script type="text/html" id="listTpl">
+    {{if($data.dataIndex==0)}}
+        <div class="demo1">
+            <div class="flex-between" style="border-bottom:1px solid #f4f4f4;  padding: 13px;">
+                <div class="flex-between">
+                    <div style="width:50px;height:50px;border-radius:50%;border:1px solid #dedede;margin-right:15px;">
+                        <img src="" alt="">
+                    </div>
+                    <div>
+                        <p style="color:#222222;font-weight:700;font-size:14px;">清华大学</p>
+                        <p style="color:#2B2B2B;font-size:12px;">成都·关注4452</p>
+                        <div>
+                            <span class="schoolType">985</span>
+                            <span class="schoolType">211</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <span style="color:#098E75;font-size:12px;padding:3px 8px;border:1px solid #098E75;border-radius:3px;">关注</span>
+                    <!-- <span style="color:#888888;font-size:12px;padding:3px 8px;border:1px solid #CBCBCB;border-radius:3px;">已关注</span> -->
+                </div>
+            </div>
+        </div>
+    {{/if}}
+    {{if($data.dataIndex==1)}}
+    <div class="demo1">
+        <div class="flex-between" style="border-bottom:1px solid #f4f4f4;  padding: 13px;">
+            <div class="flex-between">
+                <div style="width:50px;height:50px;border-radius:50%;border:1px solid #dedede;margin-right:15px;">
+                    <img src="" alt="">
+                </div>
+                <div>
+                    <p style="color:#222222;font-weight:700;font-size:14px;">地址工程</p>
+                    <p style="color:#888888;font-size:12px;">海乃百川，有容奶大</p>
+                    <div>
+                        <p style="color:#888888;font-size:12px;">关注1.4万  学校1800</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <span style="color:#098E75;font-size:12px;padding:3px 8px;border:1px solid #098E75;border-radius:3px;">关注</span>
+                <!-- <span style="color:#888888;font-size:12px;padding:3px 8px;border:1px solid #CBCBCB;border-radius:3px;">已关注</span> -->
+            </div>
+        </div>
+    </div>
+    {{/if}}
+    {{if($data.dataIndex==2)}}
+    <div class="demo2">
+        <div class="flex-between" style="border-bottom:1px solid #f4f4f4;  padding: 13px;">
+            <div class="flex-between">
+                <div style="width:50px;height:50px;border-radius:50%;border:1px solid #dedede;margin-right:15px;">
+                    <img src="" alt="">
+                </div>
+                <div>
+                    <p style="color:#222222;font-weight:700;font-size:14px;">果仁管理员</p>
+                    <p style="color:#2B2B2B;font-size:12px;">爱音乐、爱分享</p>
+                    <p style="color:#888888;font-size:12px;">关注1.4万  粉丝254  获赞1521</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="demo3">
+        <div class="flex-between" style="border-bottom:1px solid #f4f4f4;  padding: 13px;">
+            <div class="flex-between">
+                <div onclick="Comm.go('./personal.html')" style="width:50px;height:50px;border-radius:50%;border:1px solid #dedede;margin-right:15px;">
+                    <img src="" alt="">
+                </div>
+                <div>
+                    <p style="color:#222222;font-weight:700;font-size:14px;">闫子罗</p>
+                    <p style="color:#2B2B2B;font-size:12px;">爱音乐、爱分享</p>
+                    <p style="color:#888888;font-size:12px;">关注1.4万  粉丝254  获赞1521</p>
+                </div>
+            </div>
+            <div>
+                <!-- <span style="color:#888888;font-size:12px;padding:3px 8px;border:1px solid #CBCBCB;border-radius:3px;">已关注</span> -->
+                <span style="color:#098E75;font-size:12px;padding:3px 8px;border:1px solid #098E75;border-radius:3px;">关注</span>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+    {{if($data.dataIndex==3)}}
+    <div class="demo1">
+        <div class="flex-between" style="border-bottom:1px solid #f4f4f4;  padding: 13px;">
+            <div class="flex-between">
+                <div style="width:50px;height:50px;border-radius:50%;border:1px solid #dedede;margin-right:15px;">
+                    <img src="" alt="">
+                </div>
+                <div>
+                    <p style="color:#222222;font-weight:700;font-size:14px;">果仁项目组</p>
+                    <p style="color:#888888;font-size:12px;">爱音乐 爱分享</p>
+                    <div>
+                        <p style="color:#888888;font-size:12px;">帖子1.4万  粉丝1800</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <span style="color:#098E75;font-size:12px;padding:3px 8px;border:1px solid #098E75;border-radius:3px;">关注</span>
+                <!-- <span style="color:#888888;font-size:12px;padding:3px 8px;border:1px solid #CBCBCB;border-radius:3px;">已关注</span> -->
+            </div>
+        </div>
+    </div>
+    {{/if}}
+    {{if($data.dataIndex==4)}}
+    <div class="demo3">
+        <div class="flex-between" style="border-bottom:1px solid #f4f4f4;  padding: 13px;">
+            <div >
+                <p style="color:#222222;font-weight:700;font-size:14px;">#你是怎么来果仁的？#</p>
+                <p style="color:#888888;font-size:12px;">15篇 · 521关注</p>
+            </div>
+            <div>
+                <!-- <span style="color:#888888;font-size:12px;padding:3px 8px;border:1px solid #CBCBCB;border-radius:3px;">已关注</span> -->
+                <span style="color:#098E75;font-size:12px;padding:3px 8px;border:1px solid #098E75;border-radius:3px;">关注</span>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+</script>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+
+<script>
+    function pageload() {
+        mescrollRefreshFn({
+            menuNumber: 6
+        });
+
+    }
+
+
+
+    /*设置列表数据
+     * pageData 当前页的数据
+     * dataIndex 数据属于哪个nav */
+    function setListData(pageData, dataIndex) {
+        var swiper = document.getElementById("swiper");
+        var listDom = document.getElementById("dataList" + dataIndex),
+            nowStr = "",
+            listStr = "",
+            name = "";
+        if (pageData.length > 0) {
+            //				if(dataIndex == 0) {
+            //					listStr = template('listTpl', pageData);
+            //					listDom.innerHTML = nowStr + name + listStr;
+            //				} else {
+            //					istStr = template('listTpl1', pageData);
+            //					listDom.innerHTML = nowStr + name + listStr;
+            //				}
+            pageData.dataIndex = dataIndex;
+            listStr = template('listTpl', pageData);
+            listDom.innerHTML = nowStr + name + listStr;
+			Comm.scorllDel();
+        }
+
+    }
+
+    /*联网加载列表数据
+     在您的实际项目中,请参考官方写法: http://www.mescroll.com/api.html#tagUpCallback
+     请忽略getListDataFromNet的逻辑,这里仅仅是在本地模拟分页数据,本地演示用
+     实际项目以您服务器接口返回的数据为准,无需本地处理分页.
+     * */
+    var htmlData = [];
+
+    function getListDataFromNet(curNavIndex, pageNum, pageSize, successCallback, errorCallback) {
+        var city = $('#city').attr('data-city'),
+            serch = $("#input").val() || "";
+        AJAX.GET("/api/store/list?pageno=" + pageNum + "&pagesize=" + pageSize + "&city=" + 510100 + "&serch=" + serch, function (a) {
+            if (a && a.code == 1) {
+                var r = a.data || [];
+                if (a.curPage == 1) {
+                    htmlData = r;
+                    totalSize = a.totalCount;
+                } else {
+                    htmlData = htmlData.concat(r);
+                    totalSize = totalSize;
+                }
+                //联网成功的回调
+                //		        	for (var i=0;i<htmlData.length;i++) {
+                //		        		htmlData[i].distance = Comm.getDistance(true);
+                //		        	}
+                htmlData = Comm.jsonSort(htmlData, "distance", true);
+                successCallback && successCallback(htmlData, totalSize);
+            } else {
+                Comm.message(a.msg);
+                errorCallback && errorCallback();
+            }
+        });
+    }
+    var model = {
+        constructor:function(){
+
+        },
+        addTo:function(){
+            
+        }
+    }
+   
+  
+</script>
+
+</html>

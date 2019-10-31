@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>浏览记录</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+
+    <style>
+ /*聊天室列表*/
+
+        .chatcell {
+            position: relative;
+
+        }
+
+        .leftView {
+            float: left;
+            width: 60px;
+            height: 50px;
+            padding-right: 10px;
+        }
+
+        .leftView .iconImg {
+            width: 50px;
+            height: 50px;
+            border-radius: 50px;
+        }
+
+        .chat_name {
+            margin-right: 20px;
+        }
+
+        .chat_num {
+            min-width: 15px;
+            min-height: 15px;
+            line-height: 15px;
+            text-align: center;
+            border-radius: 7px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .chat_unread {
+            padding: 0px 2px;
+        }
+
+        /*侧滑*/
+
+        .r0 {
+            right: 0;
+        }
+
+        .subListCon {
+            height: 100%;
+            background-color: white;
+            width: 100%;
+			min-height: 76px;
+            z-index: 999;
+            transform: translate3d(0px, 0px, 0px);
+            /*规定应用过渡的CSS属性*/
+            transition-property: transform;
+            /*规定应用过渡所花费的时间*/
+            transition-duration: 0s;
+            /*规定过渡效果从何开始，默认是0*/
+            transition-delay: 0;
+            /*规定过渡的时间曲线*/
+            transition-timing-function: linear;
+            position: relative;
+        }
+
+        .subListTitle {
+            position: absolute;
+            line-height: 75px;
+            height: 75px;
+            top: 0px;
+            z-index: 10;
+        }
+
+        .r0>.subRight {
+            display: block;
+            float: left;
+            width: 70px;
+            text-align: center;
+        }
+
+        .delete {
+            background-color: #ef473a;
+            color: white;
+        }
+
+        .update {
+            background-color: #ffc900;
+            color: white;
+        }
+
+        .collection {
+            background-color: #c7c7cc;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navItem f14 marr10" id="edit" onclick="model.edit()">清除</div>
+            <div class="navTitle">浏览记录</div>
+        </div>
+    </header>
+    <section>
+        <div class="main">
+            
+            
+        </div>
+    </section>
+
+
+</body>
+<script id="listTpl" type="text/html">
+	{{each $data v k}}
+        <div id="chatcell{{v.id}}" onclick="model.go({{v.id}},{{v.type}})" class="chatcell bg_white" style="border-bottom: 1px solid #f4f4f4;">
+        <div class="subListCon paddb15 paddt15 paddl10 paddr10">
+            <div class="leftView" style="position:relative;">
+               	{{if v.type==1}}
+                    <img src="img/index/wenzhang.png" width="50" height="50">
+                 {{else if v.type==2}}
+                 <img src="img/index/shipin.png" width="50" height="50">
+                 {{else if v.type==3}}
+                 <img src="img/index/tiwen.png" width="50" height="50">
+                 {{/if}}
+            </div>
+            <div class="rightView">
+                <div class="paddb5 paddt5">
+                   
+                    <div class="chat_name f14 color141 wordWrap bold">{{v.title}}</div>
+                </div>
+                <div class="chat_content wordWrap">
+               
+                <div class="chat_subtitle f12 wordWrap col_sub">
+                	{{if v.type==1}}
+                    <p style="color:#464646;" class="wordW">{{v.content}}</p>
+                 {{else if v.type==2}}
+                 <p style="color:#464646;" class="wordW">{{v.content}}</p>
+                 {{else if v.type==3}}
+                 <p style="color:#464646;" class="wordW">{{v.commentNumber}}个回答</p>
+                 {{/if}}
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="subListTitle r0">
+            <a class="subRight delete" onclick="model.del({{v.id}});event.stopPropagation()">删除</a>
+        </div>
+    </div>
+	{{/each}}
+</script>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/art-template.js"></script>
+<script type="text/javascript" src="inc/sideslipMob.js" ></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+
+<script>
+function pageload() {
+	
+		model.init();
+		loadtoch()
+	}
+ var model = {
+ 	edit:function(){
+ 		Comm.confirm('确认清除历史数据？',function(d){
+ 			if(d){
+ 				Comm.db('seeHistory','');
+ 				model.init();
+ 			}
+ 		})
+ 	},
+ 	go:function(id,type){
+ 		if(type==1){
+ 			Comm.go('articleDetail.html?newsId='+id);
+ 		}else if(type==2){
+ 			Comm.go('videoDetails.html?newsId='+id);
+ 		}else if(type==3){
+ 			Comm.go("qzAskDetail.html?newsId="+id);
+ 		}
+ 	},
+ 	init:function(){
+ 		var data = Comm.db('seeHistory');
+ 		for (var i=0;i<data.length;i++) {
+ 			data[i].content=data[i].content.replace(/<\/?.+?\/?>/g, "").replace(/<[^>]*>|<\/[^>]*>/gm, "")
+ 		}
+		if(data&&data.length>0){
+			$('.main').html(template('listTpl',data));
+		}else{
+			$('.main').html('<div class="mescroll-empty"><p class="empty-tip">没有更多数据啦~</p></div>');
+		}
+ 	},
+ 	del:function(id){
+ 		var data = Comm.db('seeHistory');
+ 		for (var i=0;i<data.length;i++) {
+ 			if(data[i].id==id){
+ 				data.splice(i,1);
+ 			}
+ 		}
+ 		$('#chatcell'+id).remove();
+ 		Comm.db('seeHistory',data);
+ 		
+ 	}
+ }
+
+</script>
+
+</html>

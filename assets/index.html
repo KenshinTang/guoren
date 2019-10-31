@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>首页</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+		<link rel="stylesheet" href="css/photo.css" />
+		<style>
+			* {
+				-webkit-text-size-adjust: 100%;
+			}
+			
+			html {
+				height: 100% !important;
+			}
+			
+			body {
+				width: 1px;
+				min-width: 100%;
+				height: 100% !important;
+			}
+			
+			b {
+				color: #464646;
+				font-size: 15px;
+				font-weight: 400;
+				line-height: 20px;
+				width: 100%;
+				/* word-break: normal;*/
+				word-wrap: break-word
+			}
+			
+			span {
+				vertical-align: top;
+			}
+			
+			.navItemIcon {
+				background-image: url('img/msg.png');
+				background-position: center right;
+				background-repeat: no-repeat;
+				background-size: auto 25px;
+			}
+			
+			.searchBar {
+				margin: 0 auto;
+			}
+			
+			.schoolMsg {
+				padding-bottom: 0px;
+			}
+			
+			.searchBar div {
+				width: 95%;
+				padding-left: 30px;
+				line-height: 30px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #F2F6F7;
+				border-radius: 18px;
+				background-image: url('img/search.png');
+				background-repeat: no-repeat;
+				background-size: 14px;
+				background-position: 10px center;
+				margin: 0 auto;
+				margin-left: 15px;
+			}
+			
+			.dian {
+				width: 20px;
+				height: 20px;
+				border-radius: 50%;
+				background-color: #CF2D28;
+				position: absolute;
+				right: 11px;
+				line-height: 20px;
+				top: 32px;
+				font-size: 12px;
+				color: #fff;
+				text-align: center;
+			}
+			
+			#hasNew .dian {
+				top: 2px;
+			}
+			
+			.noheight {
+				/* transition: display 0.3s; */
+				display: none;
+			}
+			
+			.visibility {
+				opacity: 0;
+			}
+			
+			#nav {
+				border-bottom: 1px solid #f4f4f4;
+			}
+			
+			.f15 {
+				font-size: 15px;
+			}
+			
+			.mescroll-totop {
+				position: fixed;
+				width: 36px;
+				height: 36px;
+				border-radius: 50%;
+				bottom: 60px;
+				right: 30px;
+				opacity: 1;
+				z-index: 99;
+			}
+			
+			section {
+				background-color: #F4F4F4;
+			}
+			
+			.order-t-c-active {
+				position: relative;
+			}
+			
+			.order-t-c-active span {
+				font-weight: bold;
+				color: #098E75;
+			}
+			
+			#scrollxContent li {
+				height: 44px;
+				height: 40px;
+				line-height: 43px;
+			}
+			
+			.order-t-c-active:after {
+				content: '';
+				position: absolute;
+				left: 45%;
+				top: 40px;
+				right: auto;
+				height: 2px;
+				width: 30px;
+				margin-left: -10px;
+				background-color: #098E75;
+			}
+			
+			.mescroll-empty {
+				display: none;
+			}
+			
+			.swiper-container-horizontal>.swiper-pagination-bullets {
+				bottom: 5px;
+			}
+			
+			.cunbtn {
+				font-size: 12px;
+				color: #098E75;
+				border: 1px solid #098E75;
+				padding: 0px 3px;
+				border-radius: 3px;
+				height: 17px;
+				line-height: 17px;
+				margin-top: 1px;
+				margin-right: 15px;
+				display: inline-block;
+				font-weight: 200;
+			}
+			
+			.PingFangHKLight1 span,
+			.PingFangHKLight1 font,
+			.conv_ div {
+				color: #464646;
+			}
+			.color505 div{
+				color: #464646;
+			}
+		</style>
+	</head>
+
+	<body style="height: 100%;">
+		<!-- 头部 -->
+		<header>
+			<div class="navBar" style="padding: 0;box-shadow: none;">
+				<div class="navItemIcon marr20 hasNew" style="height: 44px;" onclick="app.goMsg();">
+					<div class="dian hide">
+
+					</div>
+				</div>
+				<div class="nav-title block searchBar" onclick="Page.send('go','search.html?type=2&focus=1');" style="padding-top: 8px;width: calc(100% - 50px);height: 44px; margin: 0;">
+					<div id="id_searchInput" class="color999 tleft">请输入搜索的内容</div>
+
+				</div>
+			</div>
+
+			<div id="nav" style="height: 42px;">
+				<div class="scrollx mescroll-touch-x">
+					<div id="scrollxContent" class="scrollx-content">
+						<ul class="flex_wrap"></ul>
+					</div>
+				</div>
+			</div>
+
+		</header>
+		<section id="box">
+		</section>
+		<div style="width: 100%;height: 60px;"></div>
+	</body>
+	<div id="sinbox1" class="paddb10" wtd="sinboxTemp">
+		<div class="bg_white marb10 f16" style="border-radius: 10px;">
+			<div class="paddt15 paddb15" onclick="model.qx(1)">取消关注</div>
+			<div class="paddt15 paddb15" style="border-bottom: 1px solid #EBEBEB;border-top: 1px solid #EBEBEB;" onclick="model.bgxq(3)">不感兴趣</div>
+			<div class="paddt15 paddb15" onclick="model.jb(5)">举报</div>
+		</div>
+		<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+	</div>
+
+	<div id="sinbox1" class="paddb10" wtd="sinboxTemp3">
+		<div class="bg_white marb10 f16" style="border-radius: 10px;">
+			<div class="coloreb3 paddb15 paddt15" onclick="model.shanchu(1)">删除</div>
+		</div>
+		<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+	</div>
+
+	<div id="sinbox" class="" wtd="sinboxTempxz">
+		<div class="bg_white f16" style="border-radius: 10px; padding: 30px 10px;">
+			您还未完善信息，请先完善信息
+		</div>
+		<div class="bg_white paddt15 paddb15 f16 colorfff" style="background-color: #098E75;" onclick="Page.send('go','improveInfo.html?_type=0');">确定</div>
+	</div>
+	<div id="sinbox1" class="paddb10" wtd="sinboxTemp4">
+		<div class="bg_white marb10 f16" style="border-radius: 10px;">
+			<div class="coloreb3 paddb15 paddt15" onclick="model.shanchu(1)">删除</div>
+		</div>
+		<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+	</div>
+	<div id="sinbox1" class="paddb10" wtd="sinboxTemp1">
+		<div class="bg_white marb10 f16" style="border-radius: 10px;">
+			<div class="paddt15 paddb15" onclick="model.bgxq(3)">不感兴趣</div>
+			<div class="paddt15 paddb15" style="border-top: 1px solid #EBEBEB;" onclick="model.jb(5)">举报</div>
+		</div>
+		<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+	</div>
+	<div id="sinbox2" wtd="sinboxTemp2">
+		<div class="c9e tleft">您想发布什么？</div>
+		<div>
+			<div class="fb fl" onclick="Page.send('go','send3.html?disable=1');Comm.showWindow('')">
+				<img src="img/index/shuoshuo.png" />
+				<p class="mart5">说说</p>
+			</div>
+			<div class="fb fl" onclick="Page.send('go','send2.html?disable=1');Comm.showWindow('')">
+				<img src="img/index/wenzhang.png" />
+				<p class="mart5">日志</p>
+			</div>
+			<!--<div class="fb fl" onclick="top.Comm.go('send5.html');Comm.showWindow('')">
+				<img src="img/index/shipin.png" />
+				<p class="mart5">视频</p>
+			</div>-->
+			<!--<div class="fb fl" onclick="top.Comm.go('send4.html');Comm.showWindow('')">
+				<img src="img/index/suipai.png" />
+				<p class="mart5">随拍</p>
+			</div>-->
+			<div class="fb fl" onclick="Page.send('go','send1.html?disable=1');Comm.showWindow('')">
+				<img src="img/index/tiwen.png" />
+				<p class="mart5">问问</p>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div onclick="Comm.showWindow()"><img src="img/index/qx.png" width="30" /></div>
+	</div>
+
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/mescroll/mescroll.min.js"></script>
+	<script type="text/javascript" src="inc/mescroll/swiper.min.js"></script>
+	<script type="text/javascript" src="inc/picker.min.js"></script>
+	<script type="text/javascript" src="inc/art-template.js"></script>
+	<script type="text/javascript" src="inc/area.js"></script>
+	<script type="text/javascript" src="inc/tpl.js"></script>
+	<script type="text/javascript" src="inc/photo.js"></script>
+	<script type="text/javascript" src="inc/pages.js"></script>
+	<script>
+		var swiper = null;
+		var _token = '';
+		var _user = "";
+		var dbnewsId = "";
+		var shanchu = "";
+		var firsr = "";
+		var aid = "";
+
+		function pageload() {
+
+			Page.send('dbs', '_token', function(a) {
+				_token = a._token;
+				_user = a.user;
+				dbnewsId = a.dbnewsId;
+				shanchu = a.shanchu;
+				firsr = a.firsr;
+				if(firsr != 1) {
+					Page.send('goself', 'newLogin.html');
+				}
+				if(_user) {
+					aid = _user.customerId
+				} 
+				model.improveInfo();
+				//获取话题
+				model.topic(function() {
+					model.init();
+				});
+				model.showmsg();
+				model.dayLive();
+				model.shutup();
+			})
+
+		}
+
+		function getModel(m) {
+			if(m == 'refresh') {
+				$('#mescroll0').scrollTop(0);
+				$('#mescroll1').scrollTop(0)
+			}
+			model[m] && model[m]();
+
+		}
+
+		function pageresume() {
+			Page.send('dbs', '_token', function(a) {
+				_token = a._token;
+				_user = a.user;
+				dbnewsId = a.dbnewsId;
+				shanchu = a.shanchu;
+				firsr = a.firsr;
+				if(shanchu) {
+					$('#' + shanchu).remove();
+					Comm.db('shanchu', '')
+				}
+				if(_user) {
+					aid = _user.customerId
+				}
+				if(Comm.db('tzcb') == 1) {
+					model.swiper.slideTo(0); //以轮播的方式切换列表
+				} else if(dbnewsId) {
+					model.improveInfo();
+					model.refreshNUM();
+				}
+				if($('.flex_wrap').html()==""){
+					model.topic(function() {
+					model.init();
+				});
+				}
+				model.shutup();
+				Comm.resizeSection();
+				model.showmsg();
+				Comm.loading(false);
+				Comm.showWindow('');
+				Comm.bg(false);
+			})
+
+		}
+
+		var emun = {
+			"0": 1, //FOCUS_CONTENT(1, "关注列表")
+			"1": 2, //RECOMMEND_BANNER(2, "推荐banner")
+			"1.1": 3, //RECOMMEND_CONTENT(3, "推荐列表")
+			"2": 4, //VLOG_BANNER(4, "vlogbanner")
+			"3": 5, //FORUM_BANNER(5, "讲堂banner")
+		}
+
+		var model = {
+			customerId: _user.customerId,
+			shutup:function(){
+				AJAX.GET('/api/customer/shutup', function(d) {
+					if(d&&d.code==1){
+						
+					var user = {};
+					user = _user;
+					var aa = d.data;
+					user.shutup = aa;
+					Page.send('rdb',user);
+					//Comm.db('userinfo',user);
+					}
+				})
+			},
+			refreshNUM: function() {
+				AJAX.GET('/api/news/fieldInfo?newsId=' + dbnewsId + '&customerId=' + _user.customerId, function(d) {
+					if(d && d.code == 1) {
+						var imag = $('#zan' + dbnewsId).parent().children()[0]
+						if(d.data.isPraise == 0) {
+							$('#zan' + dbnewsId).parent().attr('onclick', 'model.zan("' + dbnewsId + '",this);event.stopPropagation()')
+							$(imag).attr('src', 'img/index/zan.png')
+						} else {
+							$('#zan' + dbnewsId).parent().attr('onclick', 'model.quxiao("' + dbnewsId + '",this);event.stopPropagation()')
+							$(imag).attr('src', 'img/index/zand.png')
+						}
+
+						$('#zan' + dbnewsId).html(d.data.praiseNumber);
+						$('#ping' + dbnewsId).html(d.data.commentNumber);
+						$('#shou' + dbnewsId).html(d.data.forwardNumber);
+					}
+				})
+			},
+			dayLive: function() {
+				AJAX.GET('/api/customer/dayLive', function(d) {
+
+				})
+			},
+			improveInfo: function() {
+				if(_user) {
+					AJAX.GET('/api/customer/checkUserInfo?customerId=' + _user.customerId, function(d) {
+						if(d && d.data == 0) {
+							Page.send('showWindow', {
+								model: 'index',
+								sinboxTemp4: 'sinboxTempxz'
+							});
+							// Comm.showWindow('sinboxTempxz');
+						}
+					})
+				}
+			},
+			showmsg: function() {
+				//判断消息个数
+				AJAX.GET('/api/mess/count?userType=1&type=1', function(a) {
+					if(a && a.code == 1) {
+						if(a.data > 0) {
+							$('.dian').html(a.data);
+							$('.dian').removeClass('hide');
+						} else {
+							$('.dian').addClass('hide');
+						}
+					}
+				})
+			},
+			topic: function(cb) {
+				//关注 随机获取4调话题
+				AJAX.GET('/api/topic/randList?topicType=1', function(d) {
+					if(d.code == 1) {
+						//话题数据
+						model.topicData = d.data;
+						cb && cb(d.data);
+					}
+				})
+			},
+			banner: function(position, cb) {
+				bannerTpl.adv(function(d) {
+					model['bannerData' + position] = d;
+					cb && cb()
+				}, emun[position], 100)
+			},
+			changeTalk: function() {
+				//获取话题
+				model.topic(function() {
+					$('#topic_').html(template('groupTpl', model.topicData))
+				})
+			},
+			follow: function() {
+				AJAX.GET('/api/customer/detail', function(d) {
+					if(d && d.code === 1) {
+						Page.send('go', 'follow.html');
+					}
+				});
+				//          app.checkIslogin(true, 'follow.html')
+			},
+			qh: function(id, type, user, uid) {
+				mid = id;
+				utype = user;
+				midd = uid;
+				AJAX.GET('/api/customer/detail', function(d) {
+					if(d && d.code === 1) {
+						if(type == 1) {
+							if(uid == _user.customerId) {
+								Page.send('showWindow', {
+									model: 'index',
+									sinboxTemp4: 'sinboxTemp4'
+								});
+								//                  top.showWindow(this, 'sinboxTemp4');
+							} else {
+								Page.send('showWindow', {
+									model: 'index',
+									sinboxTemp4: 'sinboxTemp1'
+								});
+								//                  top.showWindow(this, 'sinboxTemp1');
+							}
+						} else {
+							if(uid == _user.customerId) {
+								Page.send('showWindow', {
+									model: 'index',
+									sinboxTemp4: 'sinboxTemp3'
+								});
+								//                  top.showWindow(this, 'sinboxTemp3');
+							} else {
+								Page.send('showWindow', {
+									model: 'index',
+									sinboxTemp4: 'sinboxTemp'
+								});
+								//                  top.showWindow(this, 'sinboxTemp');
+							}
+						}
+
+					}
+				});
+
+				event.stopPropagation();
+			},
+			//删除日志
+			shanchu: function() {
+				Comm.showWindow('');
+				//          Comm.confirm('确认删除？', function(d) {
+				//          	console.log(d)
+				//              if (d) {
+				AJAX.GET('/api/news/del?newsId=' + mid, function(a) {
+					if(a && a.code == 1) {
+						Comm.message('删除成功');
+						$('#' + mid).remove();
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+				//              }
+				//          })
+			},
+			//添加关注
+			addFollow: function(id, type, e) {
+				event.stopPropagation();
+				var o = JSON.stringify([{
+					itemType: type,
+					itemId: id
+				}])
+				AJAX.POST('/api/customer/batchOfFocus', {
+					jsonData: o
+				}, function(d) {
+					if(d && d.code == 1) {
+						getListData({
+							num: 1,
+							size: 10
+						});
+						$(e).parent().html('<div class="f14 fr isJiaru"onclick="model.removeFollow(' + id + ',' + type + ',this)">已关注</div>')
+					}
+				})
+			},
+			//取消关注
+			removeFollow: function(id, type, e) {
+				AJAX.GET('/api/school/cancelFocus?schoolId=' + id + '&customerId=' + _user.customerId, function(a) {
+					if(a && a.code == 1) {
+
+						$(e).parent().html('<div class="f14 fr add-guan" onclick="model.addFollow(' + id + ',this)">关注</div>');
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+			changecurpage: 1,
+			changeSchool: function(cb) {
+				AJAX.GET('/api/customer/recommend?curpage=1' + '&pagesize=' + 5, function(d) {
+					if(d && d.code == 1) {
+
+						if(cb) {
+							cb && cb(d);
+							Comm.scorllDel();
+						} else {
+							$('#dataList0').html('');
+							d.data.curpage = d.curPage;
+							$('#dataList0').html(template('morelist', d.data));
+							Comm.scorllDel();
+						}
+
+					}
+				})
+			},
+
+			qx: function(type) {
+				console.log(midd)
+				var url = '';
+				var o = {};
+				o.customerId = _user.customerId;
+				if(utype == 0) {
+					url = '/api/fans/unfollow';
+					o.fid = midd;
+				} else if(utype == 1) {
+					url = '/api/school/cancelFocus';
+					o.schoolId = midd;
+				} else {
+					url = '/api/school/major/cancelFocus';
+					o.majorId = midd;
+				}
+				AJAX.POST(url, o, function(a) {
+					if(a && a.code == 1) {
+						//获取话题
+						//                  model.topic(function() {
+						//                      model.init();
+						//                  })
+						Comm.message('取消成功')
+						Comm.showWindow('');
+					} else {
+						Comm.message('已取消关注，请刷新页面');
+					}
+				})
+			},
+			bgxq: function(type) {
+				if(_user) {
+					AJAX.GET('/api/keyword/notLike?newsId=' + mid, function(a) {
+						if(a && a.code == 1) {
+							Comm.message('操作成功');
+							$('#' + mid).remove();
+							Comm.showWindow('');
+						} else {
+							Comm.message(a.msg);
+						}
+					})
+
+				} else {
+					Comm.confirm('您还未登录，请先登录', function(d) {
+						if(d) {
+							Page.send('go', 'newLogin.html');
+						}
+					});
+					return;
+				}
+			},
+			jb: function() {
+				Comm.showWindow('');
+				Page.send('go', 'report.html?itemId=' + mid);
+				// app.checkIslogin(true, 'report.html?itemId=' + mid)
+
+			},
+			close: function() {
+				Comm.showWindow('');
+			},
+			video: function(id) {
+				top.Comm.go('videoDetails.html?newsId=' + id);
+			},
+			geren: function(id, type) {
+				if(type == 0 || type == 3) {
+					Page.send('go', 'personal.html?customerId=' + id);
+				} else if(type == 1) {
+					Page.send('go', 'University.html?schoolId=' + id);
+				} else if(type == 2) {
+					Page.send('go', 'major.html?majorId=' + id);
+				} else if(type == 4) {
+					Page.send('go', 'postDetails.html?groupId=' + id);
+				} else if(type == 5) {
+					Page.send('go', 'talkDetail.html?topicId=' + id);
+				}
+				event.stopPropagation();　
+			},
+			zhuanfa: function(id) {
+				AJAX.GET('/api/customer/detail', function(d) {
+					if(d && d.code === 1) {
+						if(_user.shutup==1){
+					Comm.alert('您暂无权限~',function(){
+							
+						})
+					return false;
+					}
+						Page.send('go', 'zhuanfa.html?newsId=' + id);
+					}
+				});
+			},
+			zan: function(id, e) {
+				AJAX.GET('/api/news/praiseByNewsId?newsId=' + id, function(a) {
+					if(a && a.code == 1) {
+						$(e).attr('onclick', 'event.stopPropagation()');
+						setTimeout(function() {
+							$(e).attr('onclick', 'model.quxiao(' + id + ',this);event.stopPropagation()');
+						}, 200)
+						$(e).find('img')[0].src = 'img/index/zand.png';
+						$(e).find('img')[0].classList = 'donghua'
+						$(e).find('span')[0].innerHTML++;
+					}
+				})
+			},
+			quxiao: function(id, e) {
+				AJAX.GET('/api/news/cancelPraiseByNewsId?newsId=' + id, function(a) {
+					if(a && a.code == 1) {
+						$(e).attr('onclick', 'event.stopPropagation()');
+						setTimeout(function() {
+							$(e).attr('onclick', 'model.zan(' + id + ',this);event.stopPropagation()');
+						}, 200)
+						$(e).find('span')[0].innerHTML--;
+						$(e).find('img')[0].src = 'img/index/zan.png';
+						$(e).find('img')[0].classList = ''
+
+					}
+				})
+			},
+			init: function() {
+				//处理话题
+				model.navInit();
+			},
+			navInit: function() {
+				//0 关注  1 推荐 
+				model.nav = [{
+						id: 'guanzhu',
+						name: '关注',
+					}, {
+						id: 'tuijian',
+						name: '推荐',
+					}
+					/*, {
+					    id: 'Vlogo',
+					    name: 'Vlogo',
+					}, {
+					    id: 'jiatang',
+					    name: '讲堂',
+					}*/
+				];
+				for(var i = 0; i < model.nav.length; i++) {
+					if(i == 0) {
+						model.banner(i);
+					}
+				}
+				$('#nav ul').html(template('navTpl', model));
+				$('section').html(template('mainTpl', model));
+				model.swiperInit();
+				$('#tuijian').click();
+				model.showmsg();
+				
+			},
+			navclick: function(a) {
+				var i = Number($(a).index() - 1);
+				model.swiper.slideTo(i); //以轮播的方式切换列表
+			},
+			opt: [],
+			url: [],
+			mescrolls: [],
+			oldId: -1,
+			initmescroll: function(i) {
+				if(model.mescrolls[i] == null) {
+					if(i == 0) { //关注
+						model.url[i] = '/api/news/follow';
+						model.opt[i] = {};
+					} else if(i == 1) { //推荐
+						model.url[i] = '/api/news/recommend';
+						model.opt[i] = {
+							customerId: aid
+						};
+					} else if(i == 2) { //
+						model.url[i] = '/api/news/video';
+						model.opt[i] = {};
+					} else if(i == 3) { //
+						model.url[i] = '/api/news/hotVideo';
+						model.opt[i] = {
+							itemType: 1,
+							itemId: model.newsId
+						};
+					}
+					model.mere = new MERefresh('mescroll' + i + ',dataList' + i, {
+						pagesize: 10,
+						refreshUrl: model.url[i],
+						refreshTypeGet: true,
+						needHeadRefresh: true,
+						refresh_cb: true,
+						onScroll: model.onScroll,
+						onEnd: model.onEnd
+					});
+					model.mere.i = i;
+					model.mere.refreshOption.refreshParm = model.opt[i];
+					//页面 <刷新> 的回调
+					model.mere.refreshOption.refresh_cb = function(refresh, d) {
+
+						refresh.successEndRef(d.data && d.data.newsInfoVOList ? d.data.newsInfoVOList.length : 0, d.totalCount);
+						if(refresh.i == 0) { //关注
+							if(d.curPage == 1) {
+								$('#mescroll0').scrollTop(0)
+								Comm.resizeSection();
+							}
+							if(d.curPage == 1 && d.data.newsInfoVOList && d.data.newsInfoVOList.length == 0) {
+								model.changecurpage = 1;
+								model.changeSchool(function(d) {
+									console.log(d)
+									if(d.curPage && d.data) {
+										d.data.curpage = d.curPage;
+									}
+									$('#' + refresh.refreshOption.clearEmptyId).html('');
+									refresh.appendHtml(template('morelist', d.data));
+									Comm.scorllDel();
+									if(Comm.ios()) {
+										$('.keneng').css('padding-top', '2px');
+									}
+								})
+							} else {
+								$('.mescroll-empty').show();
+								//数据处理
+								var r = model.changeDeta(d.data);
+								var newNum = 0;
+								if(d.curPage == 1) {
+									$('#dataList0').html('');
+								}
+
+								for(var i = 0; i < r.length; i++) {
+									if(d.curPage == 1 && model.oldId == r[i].newsId) {
+										if(newNum == 0) {
+											Comm.message('暂无更新，左滑试试');
+										} else {
+											Comm.message('为您更新' + newNum + '条信息');
+
+										}
+									}
+									newNum++;
+
+									if(d.curPage == 1 && i == 2) {
+										refresh.appendHtml('<div id="topic_">' + template('groupTpl', model.topicData) + '</div>');
+									}
+
+									refresh.appendHtml(_Tpl._MAIN(r[i]));
+									r[i].ttype = 2;
+								}
+								if(r && r.length > 0) {
+									model.oldId = r[0].newsId;
+								}
+								var dbanner = model['bannerData' + refresh.i];
+								if(dbanner && dbanner.length >= d.curPage) {
+									var bnn = dbanner[d.curPage - 1];
+									if(bnn.adType == 2) {
+										refresh.appendHtml(bannerTpl.imghtml1(bnn));
+									} else {
+										refresh.appendHtml(bannerTpl.imghtml(bnn));
+									}
+								}
+							}
+							Comm.resizeSection();
+							resizeDom();
+						} else if(refresh.i == 1) { //推荐
+							$('.mescroll-empty').show();
+							//数据幻灯片数据处理
+							if(d.curPage == 1) {
+								$('#mescroll1').scrollTop(0)
+								$('#dataList1').html('');
+								Comm.resizeSection();
+								//banners(refresh);
+							}
+							var r = model.changeDeta(d.data);
+							for(var i = 0; i < r.length; i++) {
+								r[i].addTime = '';
+								r[i].ttype = 1;
+								refresh.appendHtml(_Tpl._MAIN(r[i]));
+
+							}
+						} else if(refresh.i == 2) {
+							if(d.curPage == 1) {
+								//banners(refresh);
+							}
+							refresh.appendHtml(template('videoListTpl', d.data));
+						} else
+						if(refresh.i == 3) {
+							//refresh.appendHtml(template('collectionListTpl', d.data));
+						}
+						Comm.scorllDel();
+						Comm.resizeSection();
+						resizeDom();
+
+					};
+
+					function banners(refresh) {
+						var dbanner = model['bannerData' + refresh.i];
+						var banner = "";
+						if(dbanner) {
+							banner = bannerTpl.inithtml(dbanner, refresh.i + 1);
+						}
+						refresh.appendHtml(banner);
+						bannerTpl.swiper(0, refresh.i + 1);
+						if(dbanner) {
+							getGroup(refresh.i, dbanner);
+						}
+					}
+
+					//初始化 Group
+					function getGroup(v, d) {
+						for(var i = 0; i < d.length; i++) {
+							if(d[i].adType == 6) {
+								bannerTpl.getGroupsHotList(v + "-" + i);
+							} else if(d[i].adType == 7) {
+								bannerTpl.getGroupsNewList(v + "-" + i);
+							}
+						}
+					}
+					model.mescrolls[i] = model.mere;
+				} else {
+					model.mere = model.mescrolls[i];
+					model.mere.i = i;
+				}
+				model.navcenter(i);
+				Comm.scorllDel();
+				Comm.resizeSection();
+				resizeDom();
+			},
+			navcenter: function(i) {
+				var curNavDom = $('#nav li')[i];
+				//菜单项居中动画
+				var scrollxContent = Comm.g("scrollxContent");
+				var star = scrollxContent.scrollLeft; //当前位置
+				var end = curNavDom.offsetLeft + curNavDom.clientWidth / 2 - document.body.clientWidth / 2; //居中
+				model.mere.MeRefScroll.getStep(star, end, function(step, timer) {
+					scrollxContent.scrollLeft = step; //从当前位置逐渐移动到中间位置,默认时长300ms
+				});
+				Comm.scorllDel();
+			},
+			refresh: function() {
+				model.banner(model.mere.i, function() {
+					if(model.mere.i == 0) {
+						if(_user == "") {
+							model.changecurpage = 1;
+							model.changeSchool(function(d) {
+								d.data.curpage = d.curPage;
+								$('#' + model.mere.refreshOption.clearEmptyId).html(template('morelist', d.data));
+								Comm.scorllDel();
+							})
+						} else {
+							//获取话题
+							model.topic(function() {
+								re()
+							})
+						}
+					} else {
+						re()
+					}
+					Comm.resizeSection();
+				});
+
+				function re() {
+					model.mere.refreshOption.refreshParm = model.opt[model.mere.i];
+					//重置列表数据
+					model.mere.MeRefScroll.resetUpScroll();
+					//隐藏回到顶部按钮
+					model.mere.MeRefScroll.hideTopBtn();
+				}
+			},
+			opacity: 0,
+			opacity1: 1,
+			y: 0,
+			onScroll: function(a, y, f) {
+				if(y > model.y) {
+					//往上
+					model.opacity = model.opacity + (y - model.y) / 100;
+					model.opacity1 = model.opacity1 - (y - model.y) / 100;
+					//Comm.message(model.y + "=====往上" + model.opacity + "===" + model.opacity1);
+
+				} else {
+					//往下
+					model.opacity = model.opacity - (model.y - y) / 100;
+					model.opacity1 = model.opacity1 + (model.y - y) / 100;
+					//Comm.message(model.y + "=====往下" + model.opacity1);
+				}
+				model.y = y;
+				if(0 <= model.opacity && model.opacity <= 1) {
+					$('li#searhi').css('opacity', model.opacity);
+					$('li#hasNew').css('opacity', model.opacity);
+					$("header .navBar").css('opacity', model.opacity1);
+				} else if(model.opacity < 0) {
+					model.opacity = 0;
+					model.opacity1 = 1;
+				} else if(model.opacity > 1) {
+					model.opacity = 1;
+					model.opacity1 = 0;
+				}
+
+				if(!model.bgdiv) {
+					clearTimeout(model.timerscroll);
+					model.bgdiv = true;
+					model.timerscroll = setTimeout(isScrollEnd, 500);
+					model.t1 = document.documentElement.scrollTop || document.body.scrollTop;
+
+					function isScrollEnd() {
+						model.t2 = document.documentElement.scrollTop || document.body.scrollTop;
+						if(model.t2 == model.t1) {
+							if(model.y > 110) {
+								if(!$('header>.navBar').hasClass('noheight')) {
+									$('header>.navBar').addClass('noheight');
+								}
+								Comm.resizeSection();
+								model.opacity = 1;
+								model.opacity1 = 0;
+								$('li#searhi').css('opacity', model.opacity);
+								$('li#hasNew').css('opacity', model.opacity);
+								$("header .navBar").css('opacity', model.opacity1);
+							} else {
+								if($('header>.navBar').hasClass('noheight')) {
+									$('header>.navBar').removeClass('noheight');
+									Comm.resizeSection();
+								}
+								model.opacity = 0;
+								model.opacity1 = 1;
+								$('li#searhi').css('opacity', model.opacity);
+								$('li#hasNew').css('opacity', model.opacity);
+								$("header .navBar").css('opacity', model.opacity1);
+							}
+							model.bgdiv = false;
+						}
+					}
+				}
+			},
+			onEnd: function(a, b, c) {
+				if(model.mere) {
+					//开启上拉刷新和下拉加载
+					if(!model.mere.MeRefScroll.options.down.use) {
+						model.mere.MeRefScroll.options.down.use = true;
+						$('.mescroll-downwarp').height(0)
+					}
+				}
+			},
+			swiperInit: function() {
+				model.opt = new Array(model.nav.length);
+				model.url = new Array(model.nav.length);
+				model.mescrolls = new Array(model.nav.length);
+				/*初始化轮播*/
+				swiper = model.swiper = new Swiper('#swiper', {
+					observer: true,
+					onTransitionEnd: function(swiper) {
+						//轮播切换完毕的事件
+						var i = swiper.activeIndex;
+						$('#nav li.order-t-c-active').removeClass('order-t-c-active');
+						$($('#nav li')[i + 1]).addClass('order-t-c-active');
+						//初始化数据
+						model.initmescroll(i);
+						wscroll.reg('mescroll' + i);
+						setTimeout(function() {
+							Comm.scorllDel();
+						}, 500)
+						Comm.scorllDel();
+					},
+					onTouchStart: function(swiper, even) {
+						if((swiper.activeIndex == 0 || swiper.activeIndex == $('#swiperWrapper>.swiper-slide').length - 1) && even) {
+							if(even.changedTouches && even.changedTouches.length > 0) {
+								_pageX = even.changedTouches[0].pageX;
+								if(swiper.activeIndex == $('#swiperWrapper>.swiper-slide').length - 1) {
+									_lasttransform = Comm.g('swiperWrapper').style.transform;
+								}
+							}
+						}
+					},
+					onTouchMove: function(swiper, even) {
+						if(model.mere) {
+							//关闭上拉刷新和下拉加载
+							//console.log(swiper.touches);
+							var x = swiper.touches.currentX - swiper.touches.startX;
+							x = x < 0 ? -x : x;
+							var y = swiper.touches.currentY - swiper.touches.startY;
+							y = y < 0 ? -y : y;
+							if(x > y) { //左右滑动
+								model.mere.MeRefScroll.options.down.use = false;
+							}
+						}
+						if(swiper.activeIndex == 0 && even) { //第一个
+							if(even.changedTouches && even.changedTouches.length > 0) {
+								if(_pageX < even.changedTouches[0].pageX) {
+									$('#swiperWrapper').addClass('notransform');
+								} else {
+									$('#swiperWrapper').removeClass('notransform');
+								}
+							}
+						}
+						if(swiper.activeIndex == $('#swiperWrapper>.swiper-slide').length - 1 && even) { //最后一个
+							if(even.changedTouches && even.changedTouches.length > 0) {
+								if(_pageX > even.changedTouches[0].pageX) {
+									Comm.g('swiperWrapper').style.transform = _lasttransform;
+								} else {}
+							}
+						}
+					},
+					onTouchEnd: function(swiper, even) {
+						if(model.mere) {
+							//开启上拉刷新和下拉加载
+							if(!model.mere.MeRefScroll.options.down.use) {
+								model.mere.MeRefScroll.options.down.use = true;
+								$('.mescroll-downwarp').height(0)
+							}
+						}
+						_lasttransform = "";
+						_pageX = 0;
+						$('#swiperWrapper').removeClass('notransform');
+					}
+				});
+				model.initmescroll(1);
+				wscroll.reg('mescroll0');
+				setTimeout(function() {
+					Comm.scorllDel();
+				}, 500)
+				Comm.scorllDel();
+			},
+
+			changeDeta: function(r) { //处理推荐、关注数据
+				var news = r.newsInfoVOList;
+				var forward = r.forward;
+				var top = r.topic;
+				var user = r.userInfo;
+				var resource = r.resource;
+				for(var i = 0; i < news.length; i++) {
+					//news[i].forwardId > 0 && 
+					if(news[i].resourceId > 0) {
+						for(var q = 0; q < resource.length; q++) {
+							if(news[i].resourceId == resource[q].newsId) {
+								news[i].yTitle = resource[q].title;
+								news[i].ynewsId = resource[q].newsId;
+								if(resource[q].subhead != "") {
+									news[i].yContent = resource[q].content ? resource[q].content : resource[q].subhead;
+									news[i].yContent = news[i].yContent.replace(/div/g, "b");
+								}
+								//                          else {
+								//                              news[i].yContent = resource[q].title;
+								//                          }
+								news[i].ynum = resource[q].forwardNumber;
+								news[i].ynewsType = resource[q].newsType;
+								news[i].yaddTime = resource[q].addTime;
+								news[i].ypic = resource[q].face.split(',');
+								for(var s = 0; s < user.length; s++) {
+
+									if(resource[q].customerId == user[s].customerId) {
+										news[i].yname = user[s].customerName;
+										if(resource[q].newsType == 7||resource[q].newsType == 8) {
+											news[i].yid = user[s].customerId;
+											news[i].yitemtype = 0;
+										} else if(resource[q].newsId == user[s].newsId) {
+											news[i].yid = user[s].customerId;
+											news[i].yitemtype = user[s].itemType;
+										}
+									}
+								}
+							}
+						}
+						if(news[i].topicId > 0) {
+							for(var j = 0; j < top.length; j++) {
+								if(news[i].topicId == top[j].topicId) {
+									news[i].tTitle = top[j].title;
+									news[i].tId = top[j].topicId;
+								}
+							}
+						}
+					}
+					if(news[i].topicId > 0) {
+						for(var j = 0; j < top.length; j++) {
+							if(news[i].topicId == top[j].topicId) {
+								news[i].tTitle = top[j].title;
+								news[i].tId = top[j].topicId;
+							}
+						}
+					}
+					if(news[i].itemType == 0) {
+						for(var l = 0; l < user.length; l++) {
+							if(news[i].customerId == user[l].customerId && news[i].itemType == user[l].itemType) {
+
+								news[i].uid = user[l].customerId;
+								news[i].uname = user[l].customerName;
+								news[i].uface = user[l].customerFace;
+								news[i].schoolName = user[l].schoolName;
+								news[i].enrollmentYear = user[l].enrollmentYear;
+								news[i].userType = user[l].userType;
+								news[i].officialCertification = user[l].officialCertification;
+
+							}
+						}
+
+					} else {
+						for(var c = 0; c < user.length; c++) {
+							if(news[i].newsId == user[c].newsId && news[i].itemType == user[c].itemType) {
+								if(news[i].newsType == 7) {
+									news[i].gid = user[c].userId;
+									news[i].gname = user[c].userName;
+									news[i].gface = user[c].face;
+									news[i].uid = user[c].customerId;
+									news[i].uname = user[c].customerName;
+									news[i].uface = user[c].customerFace;
+
+								} else {
+
+									if(news[i].resourceId > 0) {
+
+										news[i].uid = user[c].userId;
+										news[i].uname = user[c].userName;
+										news[i].uface = user[c].face;
+									} else {
+										news[i].uid = user[c].customerId;
+										news[i].uname = user[c].customerName;
+										news[i].uface = user[c].customerFace;
+										news[i].schoolName = user[c].schoolName;
+										news[i].enrollmentYear = user[c].enrollmentYear;
+										news[i].userType = user[c].userType;
+										news[i].officialCertification = user[c].officialCertification;
+									}
+								}
+							}
+						}
+					}
+					if(news[i].face) {
+						news[i].face = news[i].face.split(',');
+					}
+					if(news[i].content) {
+						if(news[i].newsType == 1 || news[i].newsType == 8) {
+							news[i].content = news[i].content.replace('font-family').replace('font-size').replace(/(\r\n|\n|\r)/gm, "<br/>").replace(/<div class='f14'>/gi, "<div>")
+						} else {
+							news[i].content = news[i].content.replace('font-family').replace('font-size').replace(/<div class="f14">/gi, "").replace(/<div class='f14'>/gi, "").replace(/(\r\n|\n|\r)/gm, "<br/>")
+						}
+
+					}
+					if(news[i].subhead) {
+						news[i].subhead = news[i].subhead.replace('font-family').replace('font-size').replace(/<div class="f14">/gi, "").replace(/<div class='f14'>/gi, "").replace(/<div>|<\/div>/gi, "").replace(/(\r\n|\n|\r)/gm, "<br/>")
+					}
+
+				}
+				console.log(news)
+				Comm.scorllDel();
+				return news;
+			},
+			talk:function(type){
+				if(_user.shutup==1){
+					Comm.alert('您暂无权限~',function(){
+							
+						})
+					return false;
+				}
+					Page.send('go','talk.html');
+				
+				
+			}
+		}
+	</script>
+
+	<script id="navTpl" type="text/html">
+		<li class="center visibility" style="width:25%;" id="searhi" onclick="Page.send('go','search.html');">
+			<div style="background-color: #F2F6F7;color: #999; height: 31px;line-height: 30px;padding-left: 1px; font-size: 14px;border-radius: 15px;margin: 6.5px 0px auto 15px;">
+				<img src="img/search.png" class="marr5" width="14" height="14" style="object-fit: contain; margin-top: -3px;">搜索
+			</div>
+		</li>
+		{{each nav v k}}
+		<li onclick="model.navclick(this)" class=" center {{k==1?'order-t-c-active':''}}" style="width:25%;" id="{{v.id}}">
+			<span class="color888 f15">{{v.name}}</span>
+		</li>
+		{{/each}}
+		<li class="hasNew visibility paddr20" id="hasNew" style="width:20%;position:relative;" onclick="app.goMsg()">
+			<div class="navItemIcon" style="height:44px;">
+				<div class="dian hide"></div>
+			</div>
+		</li>
+	</script>
+
+	<!--作者：851902553@qq.com
+    时间：2019-03-18
+    描述：果仁讨论
+-->
+	<script type="text/html" id="mainTpl">
+		<!--轮播-->
+		<div id="swiper" class="swiper-container">
+			<div id="swiperWrapper" class="swiper-wrapper">
+				{{each nav n k}}
+				<div id="mescroll{{k}}" class="swiper-slide mescroll">
+					<div id="dataList{{k}}" class="data-list"></div>
+				</div>
+				{{/each}}
+			</div>
+		</div>
+	</script>
+
+	<!--作者：851902553@qq.com
+    时间：2019-03-18
+    描述：果仁讨论
+-->
+	<script id="groupTpl" type="text/html">
+		<div class="schoolMsg">
+			<div class="heads paddt5 paddb5">
+				<div class="name-left fl bold f14 color333" style="height: 20px;line-height: 20px;">
+					果仁正在讨论
+				</div>
+				<div class="fr cunbtn" onclick="model.changeTalk()">换一批</div>
+				<div class="clearfix"></div>
+			</div>
+			<div id="talk">
+				{{each $data v k}}
+				<div class="talk wordW color333" onclick="Page.send('go','talkDetail.html?topicId={{v.topicId}}');">{{v.title}}</div>
+				{{/each}}
+			</div>
+			<div class="dflex paddt10 paddb10" style="border-top: #ebebeb 1px solid;">
+				<div class="cgreen" onclick="model.talk(1)"><img src="img/index/bi.png" style="margin-top: -1px;" width="12"><span class="color038" style="line-height: 20px;height: 20px;"> 发起话题</span></div>
+				<div class="cgreen" onclick="Page.send('go','moreTalk.html');">更多话题</div>
+			</div>
+		</div>
+	</script>
+
+	<!--
+    作者：851902553@qq.com
+    时间：2019-03-15
+    描述：您可能感兴趣
+-->
+	<script id="morelist" type="text/html">
+		<div class="tcenter paddt20 paddb20" style="border-bottom:10px solid #F5F5F4 ;">
+			<img src="img/index/wz.png" width="103" />
+			<p class="mart20 marb20">当前还没有关注的相关内容号、圈子等~</p>
+			<div class="btn-add" onclick="model.follow();">添加关注</div>
+		</div>
+		<div class="schoolMsg">
+			<div class="heads paddt5 paddb5">
+				<div class="name-left fl lh20 keneng">
+					您可能感兴趣
+				</div>
+				<div class="name-right fr lh20" onclick="model.changeSchool()">
+					<img src="img/index/hyp.png" width="14" height="14" />
+					<span class="f12" style="color: #888888">换一批</span>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+
+			<div id="schoolList"> {{each $data v k}}
+				<div class="schools" onclick="model.geren({{v.itemId}},{{v.itemType}})">
+					<div>
+						<div class="paddb10 paddt10 paddr10 paddl10 fl" style="width: 20%;">
+							<img src="{{OSS(v.face)}}" style="border-radius:50%;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="50" height="50" />
+						</div>
+						<div class="paddb10 paddt15 paddr10 paddl10 fr" style="width: 80%;border-bottom: 1px solid #EEEEEE;">
+							<div class="fl">
+								<p class="f14 wordW color333" style="width: 180px;">{{v.itemName}}</p>
+								<p class="f12 c9e mart5">{{conunm(v.customerNum)}}关注</p>
+							</div>
+
+							<div>
+								{{if(v.focus!=0)}}
+								<div class="name-right fr mart10 gz-btn" onclick="model.removeFollow({{v.itemId}},{{v.itemType}},this)">已关注</div>
+								{{/if}} {{if(v.focus==0)}}
+								<div class="name-right fr mart10 gz-btn" onclick="model.addFollow({{v.itemId,}},{{v.itemType}},this)">关注</div>
+								{{/if}}
+							</div>
+
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				{{/each}}
+			</div>
+		</div>
+	</script>
+
+	<script id="hotVideoTpl" type="text/html">
+		<div class="bold paddt15 paddl15 paddr15">热播视频</div>
+		<div class="paddb15 paddl10 paddr10 borderb">
+			{{each $data.vlog v k }}
+			<div class="rvodio fl marl5 mart10" onclick="model.video({{v.newsId}})">
+				<img class="vpic" src="{{OSS(v.face)}}" width="170" height="114" onerror="this.src='img/index/vpic.png';this.onerror=null;" />
+				<img class="vlog" src="img/index/vlog.png" />
+				<div class="vtime">
+					{{miaochange(v.subhead)}}
+				</div>
+				<div class="wordW bold mart5 lh20">{{v.title}}</div>
+				<div class="wordW c9e f12">{{conunm(v.playNumber)}}次播放 · {{conunm(v.praiseNumber)}}点赞</div>
+			</div>
+			{{/each}} {{each $data.video v k}}
+			<div class="rvodio fl marl5 mart10" onclick="model.video({{v.newsId}})">
+				<img class="vpic" src="{{OSS(v.face)}}" width="170" height="114" onerror="this.src='img/index/vpic.png';this.onerror=null;" />
+				<div class="vtime">
+					{{miaochange(v.subhead)}}
+				</div>
+				<div class="wordW bold mart5 lh20">{{v.title}}</div>
+				<div class="wordW c9e f12">{{conunm(v.playNumber)}}次播放 · {{conunm(v.praiseNumber)}}点赞</div>
+			</div>
+			{{/each}}
+			<div class="clearfix"></div>
+		</div>
+		<!--<div class="alvdio paddl15 paddt10">
+        <div class="vidos vido-active" id="10" onclick="changeTheme(10)">视频</div>
+        <div class="vidos" id="4" onclick="changeTheme(4)">随拍</div>
+    </div>-->
+		<div class="clearfix"></div>
+	</script>
+	<script id="videoListTpl" type="text/html">
+		<div id="videoList" class="mart5">
+			{{each $data v k }}
+			<div class="vido-ss" onclick="model.video({{v.newsId}})">
+				<div class="vidos-ssl">
+					<img class="vpic" src="{{OSS(v.face)}}" width="170" height="114" onerror="this.src='img/index/vpic.png';this.onerror=null;" />
+					<div class="vtime2">
+						{{miaochange(v.subhead)}}
+					</div>
+				</div>
+				<div class="vidos-ssr">
+					<div class="wordW bold mart5 lh20">{{v.title}}</div>
+					<div class="wordW c9e f12 mart15">{{conunm(v.playNumber)}}次播放 · {{sldate(v.addTime)}}</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			{{/each}}
+		</div>
+	</script>
+
+</html>

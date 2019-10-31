@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>修改绑定手机</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <style>
+        /* header */
+        /* section */
+        
+        .cellContent {
+            height: 50px;
+        }
+        
+        .masg {
+            padding: 9px 16px;
+            background: #F4F4F4;
+            font-size: 12px;
+            color: #999999;
+        }
+        
+        body {
+            background: #F4F4F4;
+        }
+        
+        #sinbox {
+            width: 280px;
+            height: 224px;
+            border-radius: 10px;
+            padding-left: 9px;
+            padding-right: 9px;
+            position: relative;
+        }
+        
+        #sinbox .code {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+        
+        #sinbox .code input {
+            width: 160px;
+            height: 50px;
+            padding-left: 20px;
+            border: 1px solid #C9C9C9;
+            border-radius: 5px;
+        }
+        
+        #sinbox .code div {
+            width: 95px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            color: #098E75;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #098E75;
+        }
+        
+        #sinbox .footer {
+            width: 100%;
+            height: 43px;
+            border-top: 1px solid #E7E7E7;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom-right-radius: 9px;
+            border-bottom-left-radius: 9px
+        }
+        
+        #sinbox .footer div {
+            width: 50%;
+            height: 100%;
+            line-height: 43px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">修改绑定手机</div>
+        </div>
+    </header>
+    <section id=''>
+        <p class="masg">果仁账户绑定的手机号，请进行身份验证</p>
+        <div class="paddl15 bg_white ">
+            <div class="cellContent indicator bottomBorder" onclick="Comm.showWindow('sinboxTemp',true);">
+                <!--telBind.html?v=2-->
+                <div class="label f14 icon_pre icon_wx">原手机号能接受验证码</div>
+                <span class="show-tip">
+                    <i class="show-tips"></i>
+                </span>
+            </div>
+        </div>
+        <div class="paddl15 bg_white ">
+            <div class="cellContent indicator " onclick="Comm.go('./updatePhone2.html')">
+                <!--telBind.html?v=2-->
+                <div class="label f14 icon_pre icon_wx">原手机号不能接收验证码</div>
+                <span class="show-tip">
+                    <i class="show-tips"></i>
+                </span>
+            </div>
+        </div>
+    </section>
+
+</body>
+<div id="sinbox" wtd="sinboxTemp">
+    <h4>验证手机号</h4>
+    <p class="f12" style="color:#666666;margin-top: 28px;" id="tailPhone">输入手机尾号2321接收到的短信验证码</p>
+    <div class="code">
+        <input type='tel' id="msgCode" maxlength="4" placeholder="短信验证码" oninput="model.codeChang(this)">
+        <div onclick="model.sendMsg(this)" id="getCode">发送验证码</div>
+    </div>
+    <div class="footer">
+        <div style="color:#999999;border-right: 1px solid #E7E7E7;" onclick="Comm.showWindow();">取消</div>
+        <div style="color:#098E75;" onclick="model.determine()">确定</div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script type="text/javascript" src="inc/picker.min.js"></script>
+<script type="text/javascript" src="inc/upimg/upload.js"></script>
+
+<script>
+    var phone = Comm.query('phone');
+    //取尾数4位号码
+    $('#tailPhone').html('输入手机尾号' + phone.substr(phone.length - 4) + '接收到的短信验证码');
+
+    function pageresume() {
+
+    }
+
+    function pageload() {
+
+    }
+    var model = {
+        countdown: 60, //倒计时时间上限
+        codeVal: '', //输入的code
+        code: '0000', //接收的code
+        //验证码倒计时
+        settime: function(el) {
+            var thih = this;
+            model.countdown = 60;
+            clearInterval(model.inter);
+            model.inter = setInterval(function() {
+                $(el).html(thih.countdown + '秒');
+                if (thih.countdown > 0) {
+                    thih.countdown -= 1;
+                } else {
+                    $(el).html('重新获取');
+                    thih.countdown = 60
+                    clearInterval(model.inter)
+                }
+            }, 1000)
+        },
+        //发送短信
+        sendMsg: function(el) {
+        	var type = 3; //1：注册 2：找回密码  5：手机验证
+       			 app.timeCountDown(el, phone, type);
+//          var that = this;
+//          AJAX.POST('/api/customer/sendMsg', {
+//              phone: phone,
+//              bo: 3
+//          }, function(d) {
+//              if (d && d.code == 1) {
+//                  that.settime(el)
+//                  that.code = d.data;
+//              } else {
+//                  Comm.message(d.msg || '网络错误')
+//              }
+//          })
+        },
+        //确定 开始验证验证码
+        determine: function(e) {
+            if (this.codeVal == '') {
+                Comm.message('验证码不能为空');
+                return;
+            }
+            AJAX.POST('/api/customer/checkPhoneBySelf', {
+                phone: phone,
+                code: this.codeVal
+            }, function(d) {
+                if (d && d.code) {
+                    Comm.showWindow('');
+                    Comm.go('bindNewPhone.html');
+                } else {
+                    Comm.message(d.msg);
+                }
+            })
+						//Comm.showWindow('');
+        },
+        //验证码输入事件
+        codeChang: function(e) {
+            this.codeVal = $(e).val()
+        }
+    }
+</script>
+
+</html>

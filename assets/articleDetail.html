@@ -1,0 +1,1869 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>资讯详情</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+    <link rel="stylesheet" href="css/photo.css" />
+<style>
+    body {
+        background-color: #f4f4f4;
+    }
+    
+    .content span {
+        vertical-align: baseline;
+    }
+    
+    section {
+        position: relative;
+    }
+    
+    .borderb {
+        border-bottom: 1px solid #f4f4f4;
+    }
+    
+    .f15 {
+        font-size: 15px;
+    }
+    
+    #swiper {
+        background-color: #f4f4f4;
+    }
+    
+    .swiper-container {
+        height: auto;
+    }
+    
+    .mescroll-empty {
+        background-color: #f4f4f4;
+    }
+    /* header */
+    
+    header .navItemIcon {
+        background: url(img/index/more.png) no-repeat;
+        background-position: center;
+        background-size: 70%;
+    }
+    
+    .nav-title {
+        float: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: calc(100% - 108px);
+        font-size: 12px;
+        margin: 0 10px;
+        height: 44px;
+    }
+    
+    .nav-title.hide {
+        display: none !important;
+    }
+    
+    .nav-title img {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    
+    .follow {
+        font-size: 10px;
+        color: #098E75;
+        border: 1px solid #098E75;
+        padding: 2px 6px;
+        border-radius: 5px;
+    }
+    
+    .cunbtn {
+        font-size: 12px;
+        color: #098E75;
+        border: 1px solid #098E75;
+        padding: 0px 3px;
+        border-radius: 3px;
+        margin-left: 5px;
+        font-weight: 200;
+    }
+    
+    .page>.top .issuer {
+        margin-top: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .issuer img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 15px;
+    }
+    
+    .issuer>div:nth-child(1) {
+        display: flex;
+    }
+    
+    .page .content {
+        line-height: 25px;
+        /*letter-spacing: 1px;*/
+    }
+    
+    .page .content img {
+        width: 100%;
+        height: auto;
+    }
+    
+    .order-t-c-active span {
+        position: relative;
+        /*font-weight: bold;*/
+        color: #098E75;
+    }
+    
+    .order-t-c-active span.inblock {
+        border-bottom: 2px solid #098E75;
+    }
+    
+    .commentList .item {
+        padding: 12px;
+        padding-right: 0;
+        background-color: #fff;
+        border-bottom: 1px solid #f4f4f4;
+    }
+    
+    .commentList .item .r {
+        width: calc(100% - 50px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        margin-left: 13px;
+    }
+    
+    .commentList .children {
+        margin-top: 10px;
+        border-top: 1px solid #f4f4f4;
+        padding: 10px;
+        padding-left: 0;
+    }
+    
+    .commentList .children .r {
+        width: calc(100% - 30px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        margin-left: 10px;
+    }
+    
+    .praiseList .item,
+    .forwardList .item,
+    .collectionList .item {
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        border-bottom: 1px solid #f4f4f4;
+        padding: 15px;
+    }
+    
+    .bar {
+        border-bottom: 1px solid #DBDBDB;
+        padding: 10px;
+        /* position: fixed; */
+        /* bottom: 0; */
+        /*margin-top: 15px;*/
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        padding-left: 15px;
+        background: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .bar .btn {
+        font-size: 14px;
+        width: 120px;
+        height: 36px;
+        border: 1px solid #f4f4f4;
+        border-radius: 18px;
+        line-height: 36px;
+        color: #999999;
+        text-align: left;
+        background: url(./img/xie.png)no-repeat center;
+        background-position-x: 10px;
+        background-size: 12%;
+        padding-left: 40px;
+    }
+    
+    .bar>div:nth-child(2) {
+        width: calc(100% - 165px);
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+    }
+    
+    .shared .bottom {
+        padding: 5px 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .shared .bottom .l {
+        width: 23px;
+        height: 23px;
+        /*background: url('./img/pinglun/xl.png')no-repeat center;*/
+        background-size: 100%;
+    }
+    
+    .shared .bottom .r {
+        color: #fff;
+        background: #098E75;
+        padding: 5px 15px;
+        border-radius: 5px;
+    }
+    
+    .shared {
+        font-size: 14px;
+        background: #fff;
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        
+    }
+    
+    .shared .inputBox {
+        padding: 5px 10px;
+        width: 100%;
+    }
+    
+    .shared .inputBox #huifu {
+        width: 100%;
+        font-size: 14px;
+        border: none;
+        max-height: 90px;
+        height: auto;
+    }
+    
+    .shared .top {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 10px;
+        border: none;
+    }
+    
+    .shared .top p {
+        color: #999999FF;
+    }
+    
+    .shared .top .enlarge {
+        height: 15px;
+        width: 15px;
+        background: url('./img/pinglun/fd.png')no-repeat center;
+        background-size: 100%;
+    }
+    
+    .pl {
+        background: url(img/xzd.png) no-repeat 0px center;
+        background-size: 16px;
+        text-align: left;
+        padding: 10px 0 10px 50px;
+        color: #444444;
+    }
+    
+    .jb {
+        background: url(img/index/jb.png) no-repeat 0px center;
+        background-size: 16px;
+        text-align: left;
+        padding: 10px 0 10px 50px;
+        color: #444444;
+    }
+    
+    #textarea {
+        display: block;
+        margin: 0 auto;
+        width: 100%;
+        font-size: 16px;
+        line-height: 20px;
+        padding: 2px;
+        max-height: 200px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-user-select: text;
+        word-wrap: break-word;
+    }
+    
+    #textarea:empty:before {
+        content: attr(placeholder);
+        color: #999;
+    }
+    
+    textarea {
+        outline: 0 none;
+        border: none;
+        /* box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6); */
+    }
+    
+    #shareWTD {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+    }
+    
+    #moreWTD {
+        position: absolute;
+        bottom: 0;
+        left: 5%;
+        width: 90%;
+    }
+    
+    .ybox {
+        width: 100px;
+        height: 100px;
+        background: url(img/ybox.png) no-repeat;
+        background-size: 100% 100%;
+        position: absolute;
+        top: 65px;
+        right: 11px;
+        padding: 8px;
+        z-index: 999;
+        text-align: center;
+    }
+    
+    span {
+        vertical-align: middle !important;
+    }
+    
+    span div {
+        color: #464646;
+    }
+    
+    #pp {
+        position: fixed;
+        bottom: -100px;
+        left: 10px;
+        height: 1px;
+        width: 1px;
+    }
+    
+    .content .wimg {
+        margin: 10px 0;
+    }
+    
+    .color505 div {
+        color: #464646;
+    }
+    .addHave span,.addHave div{
+    	color: #464646;
+    }
+    .paddb10,.paddr10,.scrollx-content span{
+    	-webkit-user-select:none;
+    }
+    .animg{
+    	object-fit: contain;
+    width: 20px;
+    height: 20px;
+    }
+</style>
+
+</head>
+<body>
+    <input id="pp" type="text" />
+    <header>
+        <div class="navBar" style="padding: 0;border: none;">
+            <div class="navBackIcon" style="height: 44px;" onclick="Comm.close()"></div>
+            <div class="navItemIcon marl5 marr10" style="height: 44px;" onclick="Comm.showWindow('sinboxTemp2',true);model.open=true;"></div>
+            <div class="nav-title block searchBar" style="height: 44px;" id="nav-title"></div>
+        </div>
+    </header>
+    <section class="mescroll-touch-y" id="box">
+        <div id="news">
+
+        </div>
+        <div id="main">
+
+        </div>
+    </section>
+    <footer class="shared" id="shared" style="">
+        <div class="hide relay">
+            <div class="top">
+                <p style="color:#ccc;">正在回复Enzo</p>
+            </div>
+            <div class="inputBox">
+                <div contenteditable="plaintext-only"  onpaste="model.copy()" oninput="editOninput(this)" onkeydown="zhuanfa.keydown(this)" id="textarea" placeholder="观点的碰撞，思想的火花"></div>
+            </div>
+            <div class="bottom">
+                <!--<div class="l"></div>-->
+                <div></div>
+                <div class="r jjs" onclick="model.release()">发布</div>
+            </div>
+        </div>
+        <div id="getCall" style="height: 100%;"></div>
+    </footer>
+    <div id="moreWTD" class="paddb10" wtd="sinboxTemp4">
+        <div class="bg_white marb10 f16" style="border-radius: 10px;">
+            <div class="paddt15 paddb15" onclick="Comm.showWindow('');Comm.showWindow('sinboxTemp2',true);model.open=true;">分享</div>
+            <div class="paddt15 paddb15" style="border-top: 1px solid #EBEBEB;" onclick="model.bianji()">编辑</div>
+            <div class="paddt15 paddb15 coloreb3" style="border-top: 1px solid #EBEBEB;" onclick="model.shanchu()">删除</div>
+        </div>
+        <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow()">取消</div>
+    </div>
+    <div id="moreWTD" class="paddb10" wtd="sinboxTemp5">
+        <div class="bg_white marb10 f16" style="border-radius: 10px;">
+            <div class="paddt15 paddb15" onclick="Comm.showWindow('');Comm.showWindow('sinboxTemp2',true);model.open=true;">分享</div>
+            <div class="paddt15 paddb15 coloreb3" style="border-top: 1px solid #EBEBEB;" onclick="Comm.showWindow('');model.shanchu()">删除</div>
+        </div>
+        <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow()">取消</div>
+    </div>
+    <div id="moreWTD" class="paddb10" wtd="sinboxTemp">
+        <div class="bg_white marb10 f16" style="border-radius: 10px;">
+            <div class="coloreb3 paddb15 paddt15" onclick="Comm.showWindow('');model.shanping()">删除</div>
+        </div>
+        <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow()">取消</div>
+    </div>
+    <div id="moreWTD" class="paddb10" wtd="sinboxTemp1">
+        <div class="bg_white marb10 f16" style="border-radius: 10px;">
+            <div class="paddt15 paddb15" onclick="model.Reply()">回复</div>
+            <div class="paddt15 paddb15" style="border-top: 1px solid #EBEBEB;" onclick="model.Report()">举报</div>
+        </div>
+        <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow()">取消</div>
+    </div>
+    <div id="moreWTD" class="paddb10" wtd="sinboxTemp3">
+        <div class="bg_white marb10 f16" style="border-radius: 10px;">
+            <div class="paddt15 paddb15" onclick="model.Reply()">回复</div>
+            <div class="paddt15 paddb15 coloreb3" style="border-top: 1px solid #EBEBEB;" onclick="Comm.showWindow(''); model.shanping()">删除</div>
+        </div>
+        <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow()">取消</div>
+    </div>
+    <div id="shareWTD" class="bg_white" wtd="sinboxTemp2">
+        <div class="dflex" style="border-bottom: #E5E5E5 1px solid;">
+            <div class="mart20 marb20" onclick="model.shear(1)">
+                <img src="img/index/wx.png" width="45" />
+                <p class="c9e mart10">微信好友</p>
+            </div>
+            <div class="mart20 marb20" onclick="model.shear(2)">
+                <img src="img/index/pyq.png" width="45" />
+                <p class="c9e mart10">朋友圈</p>
+            </div>
+            <div class="mart20 marb20" onclick="model.shear(3)">
+                <img src="img/index/qq.png" width="45" />
+                <p class="c9e mart10">QQ</p>
+            </div>
+            <div class="mart20 marb20" onclick="model.shear(4)">
+                <img src="img/index/qqkj.png" width="45" />
+                <p class="c9e mart10">QQ空间</p>
+            </div>
+            <div class="mart20 marb20" onclick="model.shear(5)">
+                <img src="img/index/wb.png" width="45" />
+                <p class="c9e mart10">微博</p>
+            </div>
+        </div>
+        <div class="dflex">
+            <div class="mart20 marb20" onclick="model.Reports()">
+                <img src="img/index/fjb.png" width="45" />
+                <p class="c9e mart10">举报</p>
+            </div>
+            <div class="mart20 marb20" onclick="model.copyText()">
+                <img src="img/index/fzlj.png" width="45" />
+                <p class="c9e mart10">复制链接</p>
+            </div>
+            <div class="mart20 marb20">
+                <img src="img/index/gengduo.png" width="45" />
+                <p class="c9e mart10">更多</p>
+            </div>
+            <!--	描述：占位div-->
+            <div>
+            </div>
+            <div>
+            </div>
+            <!--	描述：占位div-->
+        </div>
+        <div class="lh50 color666" style="border-top:#E5E5E5 1px solid;" onclick="Comm.showWindow()">
+            取消
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script type="text/javascript" src="inc/mescroll/mescroll.min.js"></script>
+<script type="text/javascript" src="inc/mescroll/swiper.min.js"></script>
+<script type="text/javascript" src="inc/art-template.js"></script>
+<script type="text/javascript" src="inc/xss.js"></script>
+<script type="text/javascript" src="inc/tpl.js"></script>
+<script type="text/javascript" src="inc/photo.js"></script>
+<script type="text/javascript" src="inc/dict.js"></script>
+<script>
+    var _pageX = 0;
+    var _lasttransform = '';
+    var type = '';
+    var itId;
+    var thisNewsType = '';
+    Comm.loading('加载中...');
+
+    function editOninput(a) {
+        //输入控制
+        zhuanfa.oninput(a);
+        console.log(zhuanfa.getlen(a))
+            //数字回写，没有数字限制不需要
+            //$('#num').html(zhuanfa.getlen(a));
+    }
+
+    function androidback() {
+        if (model.open == true) {
+            model.open = false;
+            Comm.showWindow();
+            Comm.bg(false);
+            model.clas();
+        } else {
+            Comm.close()
+        }
+    }
+
+    function pageload() {
+    		if(Comm.ios()){
+    			$('.shared').css('height','100px');
+    		}
+        //location.href = 'http://192.168.0.120:8848/test/66.html'
+        zhuanfa.suiji('textarea', 'plksj');
+        model.init();
+        Comm.db('newsID', Comm.query('newsId'));
+        Comm.resizeSection();
+
+    }
+
+    function pageresume() {
+        if (Comm.db('changNews') == 1) {
+            pageload();
+            Comm.db('changNews', '');
+            return false;
+        }
+        if (Comm.db('zhuanfa') == 1) {
+            zhuanfa.pageresume(Comm.g('textarea'));
+            Comm.db('zhuanfa', '9')
+        } else {
+            type = 1;
+//          model.numInit();
+//          model.refresh();
+            document.activeElement.blur();
+        }
+
+    }
+    var model = {
+        newsId: Comm.query('newsId'),
+        cont: Comm.query('cont'),
+        cid: app.getCid(),
+        copyText: function() {
+            Comm.showWindow('');
+            var src = config.webroot + 'shareArticle.html?id=' + model.newsId;
+            Comm.copyText(src);
+        },
+        init: function() {
+            //加载详情
+            AJAX.GET('/api/news/info?newsId=' + model.newsId + "&customerId=" + model.cid, function(d) {
+                if (d.code == 1) {
+                	
+                    model.articel = d.data;
+                    //model.articel.news.content = filterXSS(model.articel.news.content);
+
+                    console.log(model.articel.news.content)
+                        //model.articel.news.content = model.articel.news.content.replace(/<div class="f14"><br><\/div>/gi, "<div class='f14'><\/div>").replace(/<div>|<\/div>/gi, "").replace(/<div class='f14'>/gi, "<br>").replace(/<div class="f14">/gi, "<br>").replace(/<script/g, '').replace(/(\r\n|\n|\r)/gm, "<br/>").replace(/(?!img>)\s/g, "&nbsp;").replace(/&nbsp;src/g, " src").replace(/&nbsp;len/g, " len").replace(/&nbsp;old/g, " old").replace(/&nbsp;class/g, " class").replace(/&nbsp;onclick/g, " onclick");
+                    model.articel.news.content = model.articel.news.content.replace(/<div class="f14">/gi, '<div class="f16">').replace(/<div class='f14'>/gi, '<div class="f16">').replace(/<script/g, '').replace(/(\r\n|\n|\r)/gm, "<br/>");
+//.replace(/(?!img>)\s/g, "&nbsp;").replace(/&nbsp;src/g, " src").replace(/&nbsp;len/g, " len").replace(/&nbsp;old/g, " old").replace(/&nbsp;class/g, " class").replace(/&nbsp;onclick/g, " onclick")
+                    if (model.articel.resourceInfo) {
+                    	if(model.articel.resourceInfo.newsType==2||model.articel.resourceInfo.newsType==7){
+                    		model.articel.resourceInfo.content = model.articel.resourceInfo.content.replace(/<(img).*?>/g, "").replace(/<div class="f14">/gi, "").replace(/<div class='f14'>/gi, "").replace(/<div>|<\/div>/gi, "").replace(/(\r\n|\n|\r)/gm, "<br/>")
+                    	}else{
+                    		model.articel.resourceInfo.content = model.articel.resourceInfo.content.replace(/<(img).*?>/g, "").replace(/&nbsp;/g, "").replace(/<br>/gi, "")
+                    	}
+                        
+                    }
+
+                    model.articel.keyword = model.articel.keyword.replace(/#/g, "&nbsp;")
+                    model.articel.myId = model.cid;
+                    thisNewsType = d.data.news.newsType;
+
+                    $('#nav-title').html(template('headerTpl', model.articel));
+                    $('#news').html(template('newsTpl', model.articel));
+                    $('#getCall').html(template('footerTpl', model.articel));
+                    if (model.articel.news.customerId == model.cid) {
+                        if (model.articel.news.newsType == 2 || (model.articel.news.newsType == 7 && model.articel.news.resourceId == 0)) {
+                            $('.navItemIcon').attr('onclick', 'Comm.showWindow("sinboxTemp4",true)');
+                            $('.navItemIcon').css('background', 'url(img/index/more.png) no-repeat');
+                            $('.navItemIcon').css('background-size', '19px 4px');
+                            $('.navItemIcon').css('background-position', 'center');
+                        } else {
+                            $('.navItemIcon').attr('onclick', 'Comm.showWindow("sinboxTemp5",true)');
+                            $('.navItemIcon').css('background', 'url(img/index/more.png) no-repeat');
+                            $('.navItemIcon').css('background-size', '19px 5px');
+                            $('.navItemIcon').css('background-position', 'center');
+                        }
+                    }
+                    //设置转载
+                    if (d.data.news.allowedToReprint == 1) {
+                        $('.news-title').children().addClass('havemenu');
+                        $('.content').addClass('havemenu')
+                        $('.content').children().addClass('havemenu').addClass('f16').addClass('color505');
+                    }
+                    $('.content').children().addClass('lh25').addClass('f16').addClass('color505');
+					$('.content').children().css('word-break','normal');
+					$('.content').children().css('word-wrap','break-word');
+					$('.content').children().css('white-space','pre-wrap');
+					//$('.removefont').html($('.removefont').html().replace(/&nbsp;/g, ""));
+                    Comm.resizeSection();
+                    //处理历史浏览
+                    model.historys();
+                    model.inited();
+                    Comm.scorllDel();
+                    Comm.loading(false);
+                } else {
+                    Comm.loading(false);
+                    Comm.alert(d.msg, function() {
+                        Comm.close();
+                    })
+
+                }
+            })
+        },
+        navclick: function(a) {
+            var i = Number($(a).index());
+            model.swiper.slideTo(i); //以轮播的方式切换列表
+        },
+        inited: function() {
+            //0 回复  1 赞  2 转发  3 收藏
+            model.nav = [{
+                id: 'commentNumber',
+                name: '回复',
+                data: model.articel && model.articel.news.commentNumber > 0 ? app.conunm(model.articel.news.commentNumber) : '',
+            }, {
+                id: 'zan',
+                name: '赞',
+                data: model.articel && model.articel.news.praiseNumber > 0 ? app.conunm(model.articel.news.praiseNumber) : '',
+            }, {
+                id: 'zhuan',
+                name: '转发',
+                data: model.articel && model.articel.news.forwardNumber > 0 ? app.conunm(model.articel.news.forwardNumber) : '',
+            }, {
+                id: 'shou',
+                name: '收藏',
+                data: model.articel && model.articel.news.collectionNumber > 0 ? app.conunm(model.articel.news.collectionNumber) : '',
+            }];
+            $('#main').html(template('mainTpl', model));
+
+            model.opt = new Array(model.nav.length);
+            model.url = new Array(model.nav.length);
+            model.mescrolls = new Array(model.nav.length);
+            /*初始化轮播*/
+            model.swiper = new Swiper('#swiper', {
+                observer: true,
+                onTransitionEnd: function(swiper) {
+                    //轮播切换完毕的事件
+                    var i = swiper.activeIndex;
+                    $('#nav li.order-t-c-active').removeClass('order-t-c-active');
+                    $($('#nav li')[i]).addClass('order-t-c-active');
+                    if ($('#swiper').height() < $('section').height()) {
+                        //$('#swiper').height($('section').height() - 46.5);
+                        $('#swiper').css('min-height', $('section').height() - 46.5);
+                    } else {
+                        $('#swiper').css('height', 'auto');
+                    }
+                    //初始化数据
+                    model.initmescroll(i);
+                },
+                onTouchStart: function(swiper, even) {
+                    $("section").removeClass('mescroll');
+                    $("#mescroll" + swiper.activeIndex).addClass('mescroll');
+                    //$("#swiper")
+                    if ((swiper.activeIndex == 0 || swiper.activeIndex == $('#swiperWrapper .swiper-slide').length - 1) && even) {
+                        if (even.changedTouches && even.changedTouches.length > 0) {
+                            _pageX = even.changedTouches[0].pageX;
+                            if (swiper.activeIndex == $('#swiperWrapper .swiper-slide').length - 1) {
+                                _lasttransform = Comm.g('swiperWrapper').style.transform;
+                            }
+                        }
+                    }
+                },
+                onTouchMove: function(swiper, even) {
+                    if (swiper.activeIndex == 0 && even) { //第一个
+                        if (even.changedTouches && even.changedTouches.length > 0) {
+                            if (_pageX < even.changedTouches[0].pageX) {
+                                $('#swiperWrapper').addClass('notransform');
+                            } else {
+                                $('#swiperWrapper').removeClass('notransform');
+                            }
+                        }
+                    }
+                    if (swiper.activeIndex == $('#swiperWrapper .swiper-slide').length - 1 && even) { //最后一个
+                        if (even.changedTouches && even.changedTouches.length > 0) {
+                            if (_pageX > even.changedTouches[0].pageX) {
+                                Comm.g('swiperWrapper').style.transform = _lasttransform;
+                            } else {}
+                        }
+                    }
+                },
+                onTouchEnd: function(swiper, even) {
+                    $("#mescroll" + swiper.activeIndex).removeClass('mescroll');
+                    $("section").addClass('mescroll');
+                    _lasttransform = "";
+                    _pageX = 0;
+                    $('#swiperWrapper').removeClass('notransform');
+                }
+            });
+            if (model.cont == 1) {
+                //$('#swiper').height($('section').height() - $('#nav').height());
+                $('#swiper').css('min-height', $('section').height() - $('#nav').height());
+                Comm.g('maodian').scrollIntoView();
+            }
+            var loadii = 0;
+            $('#news .content img').each(function(i, e) {
+                if (model.cont == 1) {
+                    e.onload = function() {
+                        loadii++;
+                        if (loadii == $('#news .content img').length) {
+                            Comm.g('maodian').scrollIntoView();
+                            console.log('锚点有了')
+                        }
+                    }
+                }
+                $(e).addClass('wimg')
+                e.onclick = function() {
+                    Photo.show(this, false);
+                }
+                e.setAttribute('rsrc', e.src);
+            })
+            $('.wimg').attr('onclick', 'Photo.show(this,true)');
+            model.initmescroll(0);
+
+        },
+        opt: [],
+        url: [],
+        mescrolls: [],
+        initmescroll: function(i) {
+            if (model.mescrolls[i] == null) {
+                if (i == 0) { //回复
+                    model.url[i] = '/api/news/commentInfoByFid';
+                    model.opt[i] = {
+                        commentType: 1,
+                        newsId: model.newsId,
+                        customerId: model.cid
+                    };
+                } else if (i == 1) { //赞
+                    model.url[i] = '/api/news/praiseListById';
+                    model.opt[i] = {
+                        newsId: model.newsId
+                    };
+                } else if (i == 2) { //转发
+                    model.url[i] = '/api/forward/listById';
+                    model.opt[i] = {
+                        itemType: 1,
+                        itemId: model.newsId
+                    };
+                } else if (i == 3) { //收藏
+                    model.url[i] = '/api/collection/listById';
+                    model.opt[i] = {
+                        itemType: 1,
+                        itemId: model.newsId
+                    };
+                }
+
+                model.mere = new MERefresh('box,dataList' + i, {
+                    pagesize: 10,
+                    refreshUrl: model.url[i],
+                    refreshTypeGet: true,
+                    refresh_cb: true, //
+                    needHeadRefresh: false, //禁止下拉刷新
+                    onScroll: model.onScroll
+                });
+                model.mere.i = i;
+                model.mere.refreshOption.refreshParm = model.opt[i];
+                //页面 <刷新> 的回调
+                model.mere.refreshOption.refresh_cb = function(refresh, d) {
+                    refresh.successEndRef(d.data.length, d.totalCount);
+                    if (refresh.i == 0) {
+                        var r = {
+                            commentList: d.data,
+                            newsInfo: model.articel
+                        }
+                        console.log(r)
+                        
+                        refresh.appendHtml(template('commentTpl', r));
+                        if (d.totalCount == 0 && d.curPage == 1) {
+                            $('section .mescroll-empty .empty-tip').html('<span>没有更多数据啦~~</span><span style="color:#098E75;" onclick="model.Reply(\'' + model.articel.itemName + '\',' + model.newsId + ')">写回复</span>')
+                        }
+                        $('.addHave').addClass('havemenu');
+                        $('.addHave').children().addClass('havemenu');
+                    } else if (refresh.i == 1) {
+                        refresh.appendHtml(template('praiseListTpl', d.data));
+                    } else if (refresh.i == 2) {
+                        refresh.appendHtml(template('forwardListTpl', d.data));
+                    } else if (refresh.i == 3) {
+                        refresh.appendHtml(template('collectionListTpl', d.data));
+                    }
+                    $('#dataList' + refresh.i).after($('section>.mescroll-upwarp'));
+
+
+                    compre(refresh.i)
+                };
+                model.mescrolls[i] = model.mere;
+            } else {
+                model.mere = model.mescrolls[i];
+                model.mere.i = i;
+                compre(i)
+
+            }
+
+            function compre(i) {
+                if ($('#dataList' + i).height() + $("#nav").height() < $('section').height()) {
+                    //$('#swiper').height($('section').height() - $("#nav").height());
+                    $('#swiper').css('min-height', $('section').height() - $("#nav").height());
+                } else {
+                    //$('#swiper').css('height', $('#dataList' + i).height() + 50);
+                    $('#swiper').css('min-height', $('#dataList' + i).height() + 50);
+                }
+            }
+
+            model.navcenter(i);
+        },
+        navcenter: function(i) {
+            var curNavDom = $('#nav li')[i];
+            //菜单项居中动画
+            var scrollxContent = Comm.g("scrollxContent");
+            var star = scrollxContent.scrollLeft; //当前位置
+            var end = curNavDom.offsetLeft + curNavDom.clientWidth / 2 - document.body.clientWidth / 2; //居中
+            model.mere.MeRefScroll.getStep(star, end, function(step, timer) {
+                scrollxContent.scrollLeft = step; //从当前位置逐渐移动到中间位置,默认时长300ms
+            });
+        },
+        refresh: function() {
+            //model.mere.refreshOption.refreshUrl = model.url[model.mere.i];
+            model.mere.refreshOption.refreshParm = model.opt[model.mere.i];
+            //重置列表数据
+            model.mere.MeRefScroll.resetUpScroll(true);
+            //隐藏回到顶部按钮
+            model.mere.MeRefScroll.hideTopBtn();
+        },
+        //添加关注
+        addFocus: function() {
+            //学校
+            var that = this;
+            //用户
+            if (model.articel.itemType == 0) {
+                AJAX.POST('/api/fans/addFans', {
+                    customerId: model.cid,
+                    fid: model.articel.itemId
+                }, function(d) {
+                    if (d && d.code == 1) {
+                        model.articel.focus = 1;
+                        $('#focus').html('<div style="background-color: #ccc; border-radius: 20px;color: #FFF;line-height: 25px;padding: 1px 10px;" onclick="model.cancelFocus()">已关注</div>')
+                    }
+                })
+            }
+            if (model.articel.itemType == 1) {
+                AJAX.POST('/api/school/addFocus', {
+                    schoolIds: model.articel.itemId,
+                    customerId: model.cid
+                }, function(d) {
+                    if (d.code == 1) {
+                        model.pageData[0].newsInfo.focus = 1;
+                        $('#focus').html('<div style="background-color: #ccc; border-radius: 20px;color: #FFF;line-height: 25px;padding: 1px 10px;">已关注</div>');
+                        setTimeout(function() {
+                            $('#focus').html('<div style="background-color: #ccc; border-radius: 20px;color: #FFF;line-height: 25px;padding: 1px 10px;" onclick="model.cancelFocus()">已关注</div>')
+                        }, 500)
+
+                    }
+                })
+            }
+            //专业
+            if (model.articel.itemType == 2) {
+                AJAX.POST('/api/school/major/addFocus', {
+                    majorId: model.articel.itemId,
+                    customerId: model.cid
+                }, function(d) {
+                    if (d.code == 1) {
+                        model.articel.focus = 1;
+                        $('#focus').html('<div style="background-color: #ccc; border-radius: 20px;color: #FFF;line-height: 25px;padding: 1px 10px;">已关注</div>');
+                        setTimeout(function() {
+                            $('#focus').html('<div style="background-color: #ccc; border-radius: 20px;color: #FFF;line-height: 25px;padding: 1px 10px;" onclick="model.cancelFocus()">已关注</div>')
+                        }, 500);
+                    }
+                })
+            }
+        },
+        //取消关注
+        cancelFocus: function() {
+            var that = this;
+            Comm.confirm('是否确认取消关注？', function(d) {
+                if (d) {
+                    //用户
+                    if (model.articel.itemType == 0) {
+                        AJAX.POST('/api/fans/unfollow', {
+                            customerId: model.cid,
+                            fid: model.articel.itemId
+                        }, function(d) {
+                            if (d && d.code == 1) {
+                                model.articel.focus = 0;
+                                $('#focus').html('<div style="background-color: #098E75; border-radius: 20px;color: #FFF;line-height: 25px;padding: 1px 10px;">关注</div>')
+                                setTimeout(function() {
+                                    $('#focus').html('<div style="background-color: #098E75; border-radius: 20px;color: #FFF;line-height: 25px;padding: 1px 10px;" onclick="model.addFocus()">关注</div>')
+                                }, 500)
+                            } else {
+                                Comm.message(d.msg)
+                            }
+                        })
+                    }
+                    //学校
+                    if (model.articel.itemType == 1) {
+                        AJAX.POST('/api/school/cancelFocus', {
+                            schoolId: model.articel.itemId,
+                            customerId: model.cid
+                        }, function(d) {
+                            if (d.code == 1) {
+                                model.articel.focus = 0;
+                                $('#focus').html('<div style="background-color: #098E75; border-radius: 20px;color: #FFF;line-height: 25px;padding: 1px 10px;">关注</div>')
+                                setTimeout(function() {
+                                    $('#focus').html('<div style="background-color: #098E75; border-radius: 20px;color: #FFF;line-height: 25px;padding: 1px 10px;" onclick="model.addFocus()">关注</div>')
+                                }, 500)
+                            }
+                        })
+                    }
+                    //专业
+                    if (model.articel.itemType == 2) {
+                        AJAX.POST('/api/school/major/cancelFocus', {
+                            majorId: model.articel.itemId,
+                            customerId: model.cid
+                        }, function(d) {
+                            if (d.code == 1) {
+                                model.articel.focus = 0;
+                                $('#focus').html('<div style="background-color: #098E75; border-radius: 20px;color: #FFF;line-height: 25px;padding: 1px 10px;">关注</div>')
+                                setTimeout(function() {
+                                    $('#focus').html('<div style="background-color: #098E75; border-radius: 20px;color: #FFF;line-height: 25px;padding: 1px 10px;" onclick="model.addFocus()">关注</div>')
+                                }, 500)
+                            }
+                        })
+                    }
+                }
+
+            })
+        },
+        add: function() {
+            if ($(".ybox").hasClass('hide')) {
+                $(".ybox").removeClass('hide');
+            } else {
+                $(".ybox").addClass('hide');
+            }
+        },
+        //删除日志
+        shanchu: function() {
+            Comm.showWindow();
+            model.add();
+            Comm.confirm('确认删除？', function(d) {
+                if (d) {
+                    AJAX.GET('/api/news/del?newsId=' + model.newsId, function(a) {
+                        if (a && a.code == 1) {
+                            Comm.message('删除成功');
+                            Comm.db('shanchu', model.newsId);
+                            Comm.db('tzcb', '1')
+                            Comm.close();
+                            $('#swiper').css('min-height', 'auto');
+                        } else {
+                            Comm.message(a.msg);
+                        }
+                    })
+                }
+            })
+        },
+        //编辑
+        bianji: function() {
+            Comm.showWindow();
+            model.add();
+            if (model.articel.news.newsType == 7) {
+                Comm.go("send2.html?id=" + model.newsId + "&type=1&disable=1&groupId=" + model.articel.news.itemId);
+            } else {
+                Comm.go("send2.html?id=" + model.newsId + "&type=1&disable=1");
+            }
+
+        }, //更新title方法
+        updateTitle: function(isShow) {
+            if (isShow) {
+                $('#nav-title').removeClass('hide');
+            } else {
+                $('#nav-title').addClass('hide');
+            }
+        },
+        onScroll: function(a, b, c) {
+            if (b > 100) {
+                model.updateTitle(true);
+            } else {
+                model.updateTitle(true);
+            }
+        },
+        geren: function(id, type) {
+            event.stopPropagation();
+            if (type == 0) {
+                Comm.go('personal.html?customerId=' + id);
+            } else if (type == 1) {
+                Comm.go('University.html?schoolId=' + id);
+            } else if (type == 2) {
+                Comm.go('major.html?majorId=' + id);
+            } else if (type == 4) {
+                Comm.go('postDetails.html?groupId=' + id);
+            }
+        },
+        content: function(id) {
+            if (app.isLogin() == false) {
+                Comm.showWindow('')
+                top.Comm.confirm('您还未登录,请先登录', function(a) {
+                    if (a == 1) {
+                        Comm.go('newnewLogin.html')
+                    }
+                });
+                return false;
+            }
+            Comm.go('conDetail.html?newsId=' + id);
+        },
+        content1: function(id, conid, type) {
+            if (app.isLogin() == false) {
+                Comm.showWindow('')
+                top.Comm.confirm('您还未登录,请先登录', function(a) {
+                    if (a == 1) {
+                        Comm.go('newnewLogin.html')
+                    }
+                });
+                return false;
+            }
+            Comm.go('commentDetails.html?newsId=' + id + '&commentId=' + conid + '&type=' + type);
+        },
+        zhuanfa: function(id) {
+            if (app.isLogin() == false) {
+                Comm.showWindow('')
+                top.Comm.confirm('您还未登录,请先登录', function(a) {
+                    if (a == 1) {
+                        Comm.go('newLogin.html')
+                    }
+                });
+                return false;
+            }
+            if(Comm.db('userinfo').shutup==1){
+					Comm.alert('您暂无权限~',function(){
+							
+						})
+					return false;
+					}
+            Comm.go('zhuanfa.html?newsId=' + id);
+        },
+        //收藏视频
+        addVlgo: function(id, e) {
+            if (app.isLogin() == false) {
+                Comm.showWindow('')
+                top.Comm.confirm('您还未登录,请先登录', function(a) {
+                    if (a == 1) {
+                        Comm.go('newLogin.html')
+                    }
+                });
+                return false;
+            }
+            AJAX.POST('/api/collection/collect', {
+                itemType: 1,
+                itemId: id,
+                customerId: model.cid
+            }, function(d) {
+                if (d && d.code) {
+                    model.numInit();
+                    $(e).attr('src', 'img/index/shoud.png').attr('onclick', "model.RemoveVlgo(" + id + ",this);event.stopPropagation()");
+                    $(e).addClass('donghua');
+                    model.mere = model.mescrolls[3];
+                    model.mere.i = 3;
+                    model.refresh();
+                } else {
+                    Comm.message(d.msg)
+                }
+            })
+        },
+        //取消收藏视频
+        RemoveVlgo: function(id, e) {
+            AJAX.POST('/api/collection/deleteById', {
+                itemType: 1,
+                itemId: id,
+                customerId: model.cid
+            }, function(d) {
+                if (d && d.code) {
+
+                    model.numInit();
+                    $(e).attr('src', 'img/index/shou.png').attr('onclick', "");
+                    setTimeout(function() {
+                        $(e).attr('onclick', "model.addVlgo(" + id + ",this);event.stopPropagation()");
+                    }, 500)
+                    $(e).removeClass('donghua');
+                    model.mere = model.mescrolls[3];
+                    model.mere.i = 3;
+                    model.refresh();
+                } else {
+                    Comm.message(d.msg)
+                }
+            })
+        },
+        //给视频点赞
+        addPraise: function(id, e) {
+            if (app.isLogin() == false) {
+                Comm.showWindow('')
+                top.Comm.confirm('您还未登录,请先登录', function(a) {
+                    if (a == 1) {
+                        Comm.go('newLogin.html')
+                    }
+                });
+                return false;
+            }
+            AJAX.POST('/api/news/praiseByNewsId', {
+                newsId: id
+            }, function(d) {
+                if (d && d.code == 1) {
+                    model.numInit();
+                    $("footer #zan" + model.newsId).html(Number($("footer #zan" + model.newsId).html()) + 1);
+                    $(e).attr('src', 'img/index/zand.png').attr('onclick', "");
+                    setTimeout(function() {
+                        $(e).attr('onclick', "model.deletePraise(" + id + ",this);event.stopPropagation()");
+                    }, 500)
+                    $(e).addClass('donghua');
+
+                    model.mere = model.mescrolls[1];
+                    model.mere.i = 1;
+                    model.refresh();
+                } else {
+                    Comm.message(d.msg)
+                }
+            })
+        },
+        //取消点赞
+        deletePraise: function(id, e) {
+            AJAX.POST('/api/news/cancelPraiseByNewsId', {
+                newsId: id
+            }, function(d) {
+                if (d && d.code == 1) {
+                    model.numInit();
+                    $("footer #zan" + model.newsId).html(Number($("footer #zan" + model.newsId).html()) - 1);
+                    $(e).attr('src', 'img/index/zan.png').attr('onclick', "");
+                    setTimeout(function() {
+                        $(e).attr('onclick', "model.addPraise(" + id + ",this);event.stopPropagation()");
+                    }, 500)
+                    $(e).removeClass('donghua');
+                    model.mere = model.mescrolls[1];
+                    model.mere.i = 1;
+                    model.refresh();
+                } else {
+                    Comm.message(d.msg)
+                }
+            })
+
+        },
+        //回复点赞
+        addCommentPraise: function(id, e) {
+            if (app.isLogin() == false) {
+                Comm.showWindow('')
+                top.Comm.confirm('您还未登录,请先登录', function(a) {
+                    if (a == 1) {
+                        Comm.go('newLogin.html')
+                    }
+                });
+                return false;
+            }
+            AJAX.POST('/api/news/praiseByCommentId', {
+                commentId: id
+            }, function(d) {
+                if (d.code == 1) {
+                    $("#zan" + id).html($("#zan" + id).html() * 1 + 1);
+                    $(e).attr('src', 'img/index/zand.png').attr('onclick', '')
+                    setTimeout(function() {
+                        $(e).attr('onclick', 'model.deleteCommentPraise(' + id + ',this)');
+                    }, 500)
+                    $(e).addClass('donghua')
+                } else {
+                    Comm.message(d.msg)
+                }
+            })
+        },
+        //取消回复点赞
+        deleteCommentPraise: function(id, e) {
+            AJAX.POST('/api/news/cancelPraiseByCommentId', {
+                commentId: id
+            }, function(d) {
+                if (d.code == 1) {
+                    $("#zan" + id).html($("#zan" + id).html() * 1 - 1);
+                    $(e).attr('src', 'img/index/zan.png').attr('onclick', '');
+                    setTimeout(function() {
+                        $(e).attr('onclick', 'model.addCommentPraise(' + id + ',this)');
+                    }, 500)
+                    $(e).removeClass('donghua')
+                } else {
+                    Comm.message(d.msg)
+                }
+            })
+        },
+        numInit: function() {
+            AJAX.GET('/api/news/fieldInfo?newsId=' + model.newsId + '&customerId=' + model.cid, function(d) {
+                if (d && d.code == 1) {
+                    model.nav[0].data = d.data.commentNumber;
+                    model.nav[1].data = d.data.praiseNumber;
+                    model.nav[3].data = d.data.collectionNumber;
+                    model.nav[2].data = d.data.forwardNumber;
+                    $('#nav li').each(function(i, e) {
+                        $(e).find('.f10').html(model.nav[i].data > 0 ? model.nav[i].data : '');
+                    })
+                }
+            })
+
+        },
+        More: function(v, name, sid, pid) {
+            mid = v;
+            hname = name;
+            if (pid == model.cid && thisNewsType != 7) {
+                Comm.showWindow('sinboxTemp3', true);
+                model.open = true;
+            } else {
+                if (sid == model.cid) {
+                    Comm.showWindow('sinboxTemp', true);
+                    model.open = true;
+                } else {
+                    Comm.showWindow('sinboxTemp1', true);
+                    model.open = true;
+                }
+            }
+
+        },
+        setu: function(v, name, sid, ids) {
+            itId = ids;
+            type = 2;
+            mid = v;
+            hname = name;
+            model.Reply();
+
+        },
+        shanping: function() {
+            Comm.showWindow();
+            Comm.confirm('确认删除这条回复？', function(d) {
+                if (d) {
+                    AJAX.GET('/admin/comment/noenable?commentId=' + mid, function(a) {
+                        if (a && a.code == 1) {
+                            model.numInit();
+                            $("#" + mid).remove();
+                            Comm.message('删除成功');
+                            Comm.resizeSection();
+                            $('#swiper').css('min-height', 'auto');
+                        } else {
+                            Comm.message(a.msg);
+                        }
+                    })
+                }
+            })
+        },
+        Reply: function(name, id) {
+            if (app.isLogin() == false) {
+                Comm.showWindow('');
+                document.activeElement.blur();
+                top.Comm.confirm('您还未登录,请先登录', function(a) {
+                    if (a == 1) {
+                        Comm.go('newLogin.html')
+                    }
+                });
+                return false;
+            }
+            if(Comm.db('userinfo').shutup==1){
+					Comm.alert('您暂无权限~',function(){
+							
+						})
+					return false;
+					}
+            $('section').scrollTop($('.page').height())
+            if(Comm.ios()){
+    			$('.shared').css('height','auto');
+    		}
+            if (Comm.ios()) {
+            	
+            	document.body.addEventListener('touchmove', function(e) {
+					if(document.activeElement)
+						document.activeElement.blur();
+				}, {
+					passive: false
+				});
+                $('#pp').focus();
+                //setTimeout(function() {
+                if (id) {
+                    mid = '';
+                }
+                if (name) {
+                    hname = name;
+                }
+                Comm.showWindow();
+                commenType = 2; //修改回复规则 针对主回复进行回复
+                //显示回复框 并且聚焦
+                $('footer').attr('class', 'shared');
+                Comm.bg(true);
+
+                $('footer').css('z-index', 9999999)
+                $('section').css('background', '#f4f4f4');
+                $('footer .relay').removeClass('hide');
+                $('.bar').hide();
+                //$("#textarea").html('');
+                $('footer .top p').html('正在回复：' + hname);
+                //$("#textarea").focus();
+                //setTimeout(function() {
+                //Comm.resizeSection();
+                $("#textarea").focus();
+                Focus('textarea');
+                Comm.g('MainBg').addEventListener("touchstart", function() {
+                    Comm.bg(false);
+                    model.clas();
+                }, false);
+                //}, 150)
+
+                model.open = true;
+                //}, 100)
+            } else {
+                if (id) {
+                    mid = '';
+                }
+                if (name) {
+                    hname = name;
+                }
+                Comm.showWindow();
+                commenType = 2; //修改回复规则 针对主回复进行回复
+                //显示回复框 并且聚焦
+                $('footer').attr('class', 'shared');
+                Comm.bg(true);
+                Comm.g('MainBg').addEventListener("touchstart", function() {
+                    Comm.bg(false);
+                    model.clas();
+                }, false);
+                $('footer').css('z-index', 9999999)
+                $('section').css('background', '#f4f4f4');
+                $('footer .relay').removeClass('hide');
+                $('.bar').hide();
+                //$("#textarea").html('');
+                $('footer .top p').html('正在回复：' + hname);
+                //$("#textarea").focus();
+                //Comm.resizeSection();
+                $("#textarea").focus();
+                Focus('textarea');
+                model.open = true;
+            }
+            setInterval(function() {
+                if ($("#textarea").html().replace(/\s+/g, "").replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/[ ]|&nbsp;/g, '').length > 0) {
+                    $('.jjs').css('background', '#098E75');
+                    $('.jjs').attr('onclick', 'model.release()');
+                } else {
+                    $('.jjs').css('background', '#f4f4f4');
+                    $('.jjs').attr('onclick', '');
+                }
+            }, 1);
+//          $("#textarea").on("paste", function(e) {
+//              e.preventDefault();
+//              zhuanfa.copy = true;
+//              var text;
+//              var clp = (e.originalEvent || e).clipboardData;
+//              if (clp === undefined || clp === null) {
+//                  text = window.clipboardData.getData("text") || "";
+//                  if (text !== "") {
+//                      if (window.getSelection) {
+//                          var newNode = document.createElement("span");
+//                          newNode.innerHTML = text;
+//                          window.getSelection().getRangeAt(0).insertNode(newNode);
+//                      } else {
+//                          document.selection.createRange().pasteHTML(text);
+//                      }
+//                  }
+//              } else {
+//                  text = clp.getData('text/plain') || "";
+//                  if (text !== "") {
+//                      text = text.replace(/<\/?.+?\/?>/g, "").replace(/<[^>]*>|<\/[^>]*>/gm, "");
+//                      var div = document.createElement('div');
+//                      div.innerHTML = text;
+//                      document.execCommand('insertText', false, div.innerText);
+//                      zhuanfa.copy = false;
+//                  }
+//              }
+//          });
+        },
+        copy:function(){
+        	var e =event;
+        	 e.preventDefault();
+                zhuanfa.copy = true;
+                var text;
+                var clp = (e.originalEvent || e).clipboardData;
+                if (clp === undefined || clp === null) {
+                    text = window.clipboardData.getData("text") || "";
+                    if (text !== "") {
+                        if (window.getSelection) {
+                            var newNode = document.createElement("span");
+                            newNode.innerHTML = text;
+                            window.getSelection().getRangeAt(0).insertNode(newNode);
+                        } else {
+                            document.selection.createRange().pasteHTML(text);
+                        }
+                    }
+                } else {
+                    text = clp.getData('text/plain') || "";
+                    if (text !== "") {
+                        text = text.replace(/<\/?.+?\/?>/g, "").replace(/<[^>]*>|<\/[^>]*>/gm, "");
+                        var div = document.createElement('div');
+                        div.innerHTML = text;
+                        document.execCommand('insertText', false, div.innerText);
+                        
+                    }
+                }
+                zhuanfa.copy = false;
+        },
+        clas: function() {
+            $('.bar').show();
+            $('footer .relay').addClass('hide');
+            $('footer').css('z-index', 99)
+            $('section').css('background', '#f4f4f4');
+            $('footer .top p').html('正在回复：' + hname);
+//          $("#textarea").html('');
+            $("#textarea").blur();
+            if(Comm.ios()){
+    			$('.shared').css('height','100px');
+    			Comm.resizeDom();
+    		}
+            Comm.resizeSection();
+            model.open = false;
+        },
+        release: function() {
+            console.log($("#textarea").html())
+            if ($("#textarea").html().replace(/\s+/g, "").replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/[ ]|&nbsp;/g, '') == '') {
+                Comm.message('请输入回复内容')
+                return;
+            }
+            if($("#textarea").html().replace(/\s+/g, "").replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/[ ]|&nbsp;/g, '').length>500){
+            	Comm.message('回复内容最多输入500字，请重新编辑')
+                return;
+            }
+            var o = {};
+            o = {
+                newsId: model.newsId,
+                sid: mid,
+                content: '<span style="color:#464646;vertical-align: bottom;">' + $("#textarea").html().replace(/(\r\n|\n|\r)/gm, "<br/>") + '</span>',
+                commentType: 1,
+                ids: zhuanfa.ids.join(',')
+            }
+            Comm.loading('发布中...');
+            AJAX.POST('/admin/contentOfNo/saveComment', o, function(d) {
+                Comm.loading(false);
+                if (d && d.code == 1) {
+                    Comm.message('回复成功');
+                    Comm.bg(false);
+                    model.open = false;
+                    $('footer').css('z-index', 99)
+                    $('section').css('background', '#f4f4f4');
+                    $("#textarea").blur();
+                    $("#textarea").html('');
+                    $('.bar').show();
+                    $('footer .relay').addClass('hide');
+                    if (type == 2) {
+                        Comm.bg(false);
+                        model.content1(model.newsId, itId, 1);
+                    } else {
+                        model.refresh();
+                        model.numInit();
+                        Comm.bg(false);
+                    }
+                    if (Comm.ios()) {
+                        resizeDom();
+                    } else {
+                        Comm.resizeSection();
+                    }
+
+
+                } else {
+                    Comm.message(d.msg || '网络错误');
+                }
+            })
+        },
+        Report: function() {
+            Comm.showWindow('');
+            app.checkIslogin(true, 'report.html?itemType=2&itemId=' + mid)
+        },
+        Reports: function() {
+            Comm.showWindow('');
+
+            app.checkIslogin(true, 'report.html?itemType=1&itemId=' + model.newsId);
+        },
+        shear: function(platform) {
+            //分享资讯 -- 通用
+            event.stopPropagation();
+            var url = config.webroot + 'shareArticle.html?id=' + model.newsId;
+            var d = model.shareData();
+            Comm.shareUrl({
+                platform: platform,
+                pic: config.webroot + "img/logo.png",
+                title: d.shearTitle,
+                desc: d.shearContent,
+                url: url
+            }, function(d) {
+                if (d.code) {
+                    Comm.showWindow();
+                    Comm.message('分享成功！')
+                }
+            });
+        },
+        shareData: function() {
+            //处理分享数据
+            if (model.articel.news.newsType == 1) {
+                typs = '说说';
+            } else if (model.articel.news.newsType == 2) {
+                typs = '日志';
+            } else if (model.articel.news.newsType == 6) {
+                typs = '资讯';
+            } else if (model.articel.news.newsType == 7) {
+                typs = "帖子";
+            } else if (model.articel.news.newsType == 8) {
+                typs = "讨论";
+            } else if (model.articel.news.newsType == 0) {
+                typs = "转发";
+            }else if (model.articel.news.newsType == 11){
+            	 	typs = "动态";
+            }
+            var shearContent = "";
+            if (model.articel.news.title) {
+                shearContent = model.articel.news.title.replace(/<\/?[^>]*>/gim, "");
+            } else if (model.articel.news.subhead) {
+                shearContent = model.articel.news.subhead.replace(/<\/?[^>]*>/gim, "");
+            } else {
+                shearContent = '快来果仁看看吧~'
+            }
+            return {
+                shearId: model.articel.news.newsId,
+                shearTitle: model.articel.itemName + '的' + typs,
+                shearContent: shearContent
+            };
+        },
+        historys: function() { //处理历史浏览
+            if (model.articel.news.newsType == 6 || model.articel.news.newsType == 2 || model.articel.news.newsType == 7) {
+                var historys = {};
+                historys.content = model.articel.news.subhead;
+                historys.id = model.articel.news.newsId;
+                historys.type = 1;
+                historys.title = model.articel.news.title;
+                var his = [];
+                if (Comm.db('seeHistory')) {
+                    his = Comm.db('seeHistory');
+                }
+                if (his && his.length > 29) {
+                    his.pop();
+                }
+                var no = true
+                for (var i = 0; i < his.length; i++) {
+                    if (his[i].id == historys.id) {
+                        no = false;
+                    }
+                }
+                if (no) {
+                    his.unshift(historys);
+                }
+                Comm.db('seeHistory', his);
+            }
+        }
+    }
+    function Focus(id) {
+        // 始终聚焦在文本末尾
+        el = document.getElementById(id);
+        //el=el[0];  //jquery 对象转dom对象
+        el.focus();
+        if ($.support.msie) {
+            var range = document.selection.createRange();
+            this.last = range;
+            range.moveToElementText(el);
+            range.select();
+            document.selection.empty(); //取消选中
+        } else {
+            var range = document.createRange();
+            range.selectNodeContents(el);
+            range.collapse(false);
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
+    }
+</script>
+
+<script id="navTpl" type="text/html">
+    {{each $data v k}}
+    <li onclick="model.navclick(this)" class="brp inblock {{k==0?'order-t-c-active':''}} padrr20" style="width: {{k==1?'15.9%':'20%'}};" id="{{v.id}}">
+        <span class="color888 f15 inblock">{{v.name}}</span>
+        <span class="c9e f10">{{if v.data}} {{v.data}}{{/if}}</span>
+    </li>
+    {{/each}}
+</script>
+<script id="swiperWrapperTpl" type="text/html">
+    <div id="mescroll{{k}}" class="swiper-slide mescroll">
+        <div id="dataList{{k}}" class="data-list"></div>
+    </div>
+</script>
+
+<script type="text/html" id="mainTpl">
+    <div class="linebod"></div>
+    <a id="maodian" href="javascript:void(0);"></a>
+    <div class="scrollx mescroll-touch-x">
+        <div id="scrollxContent" class="scrollx-content">
+            <ul id="nav" class="flex_wrap bg_white lh45" style="padding-left: 13px;">
+                {{ include 'navTpl' nav }}
+            </ul>
+        </div>
+    </div>
+    <!--轮播-->
+    <div id="swiper" class="swiper-container">
+        <div id="swiperWrapper" class="swiper-wrapper">
+            {{each nav n k}}
+            <div id="mescroll{{k}}" class="swiper-slide mescroll-touch-y mescroll">
+                <div id="dataList{{k}}" class="data-list"></div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="commentTpl">
+    <div class="commentList">
+        {{each $data.commentList item index}}
+        <div class="item pad10" id="{{item.commentId}}">
+            <img onclick="model.geren({{item.customerId}},0)" src="{{OSS(item.face)}}" class="fl" width="36" height="36" style="border-radius:50%;">
+            <div class="fr r f15">
+                <div class="paddr10">
+                    <span class=" bold wordW color333" onclick="model.geren({{item.customerId}},0)">
+				{{item.customerName}}{{if item.customerId==$data.newsInfo.itemId&&$data.newsInfo.news.newsType==7}}<span style="vertical-align: bottom !important ;margin-top: -1px;" ><img src="img/index/louzhu.png" width="31"  style="margin-left: 8px;margin-top: -1px;"/></span>{{/if}}
+                    </span>
+                </div>
+                <div onclick="model.setu({{item.commentId}},'{{item.customerName}}',{{item.customerId}},{{item.commentId}})" class="mart5 paddr20 addHave" style="text-align:left;">{{item.content}}</div>
+                <div>
+                    <div class="mart10 f12 paddr10">
+                        <span class="fl" style="color:#8D8D8D;">{{sldate(item.addTime)}} </span>
+                        <div class="fr paddb5 paddl20 paddr5" onclick="model.More({{item.commentId}},'{{item.customerName}}',{{item.customerId}},{{item.publishCustomerId}})">
+                            <img src="img/index/more.png" width="15" />
+                        </div>
+                        {{if $data.newsInfo.news.newsType!=1&&$data.newsInfo.news.newsType!=8&&$data.newsInfo.news.newsType!=0}} {{if(item.isPraise==0)}}
+                        <div>
+                            <span class="c9e fr marl5" id="zan{{item.commentId}}">{{item.praiseNumber}}</span>
+                            <img onclick="model.addCommentPraise({{item.commentId}},this)" src="img/index/zan.png" class="fr animg">
+                        </div>
+                        {{else}}
+                        <div><span class="c9e fr marl5" id="zan{{item.commentId}}">{{item.praiseNumber}}</span>
+                            <img onclick="model.deleteCommentPraise({{item.commentId}},this)" src="img/index/zand.png" class="fr animg" ><!--width="19" -->
+
+                        </div>
+                        {{/if}} {{/if}}
+                    </div>
+                </div>
+                {{each item.nextList v k}} {{if 3>k}}
+                <div class="children" id="{{v.commentId}}">
+                    <div onclick="model.setu({{v.commentId}},'{{v.customerName}}',{{v.customerId}},{{item.commentId}})">
+                        {{if(v.customerName2 && v.parentContent)}}
+                        <div class="mart5 paddr20 addHave" style="text-align:left;">
+                        		<img src="{{OSS(v.face)}}" style="border-radius: 50%;" class="marr5" width="22" height="22"/>
+                            <span class="wordW color038" onclick="model.geren({{v.customerId}},0)">{{v.customerName}}</span>{{if v.customerId==item.publishCustomerId&&item.newsType==7}}<span style="vertical-align:bottom;margin-top: -1px;"><img src="img/index/louzhu.png" width="31"  style="margin-top: -3px;margin-left: 8px;margin-top: -1px;"/></span>{{/if}}
+                            <span>回复</span>
+                            <span class="color038" onclick="Comm.go('personal.html?customerId={{v.customerId2}}')">@{{v.customerName2}}</span>{{if v.customerId2==item.publishCustomerId&&item.newsType==7}}<span style="vertical-align:bottom;margin-top: -1px;"><img src="img/index/louzhu.png" width="31"  style="margin-top: -3px;margin-left: 8px;margin-right: 8px;"/></span>{{/if}}: 
+                            {{v.content}} <!--style="display: inline-block;"-->
+                        </div>
+                        {{else}}
+                        <div class="mart5 paddr20 addHave" style="text-align:left;"><img src="{{OSS(v.face)}}" width="22" height="22"/ style="margin-right: 8px;border-radius: 50%;"><span class="color038" onclick="model.geren({{v.customerId}},0)">{{v.customerName}}</span>{{if v.customerId==item.publishCustomerId&&item.newsType==7}}<span style="vertical-align:bottom;margin-top: -1px;"><img src="img/index/louzhu.png"  width="31" style="margin-top: -3px;margin-left: 8px;margin-right: 8px;"/></span>{{/if}}</span><span>: </span>{{v.content}}</div>
+                        {{/if}}
+                    </div>
+                    <div class="fr f12 r" style="width: 100%;">
+                        <div>
+                            <div class="mart10 f12 "><span class="fl" style="color:#8D8D8D;">{{sldate(v.addTime)}}</span>
+                            </div>
+                            <div class="fr paddb5 paddl20 paddr5" onclick="model.More({{v.commentId}},'{{v.customerName}}',{{v.customerId}},{{item.publishCustomerId}})">
+                                <img src="img/index/more.png" width="15" />
+                            </div>
+                            {{if $data.newsInfo.news.newsType!=1&&$data.newsInfo.news.newsType!=8&&$data.newsInfo.news.newsType!=0}} {{if(v.isPraise==0)}}
+                            <div><span class="c9e fr marl5" id="zan{{v.commentId}}">{{v.praiseNumber}}</span>
+                                <img onclick="model.addCommentPraise({{v.commentId}},this)" src="img/index/zan.png" class="fr animg">
+                            </div>
+                            {{else}}
+                            <div><span class="c9e fr marl5" id="zan{{v.commentId}}">{{v.praiseNumber}}</span>
+                                <img onclick="model.deleteCommentPraise({{v.commentId}},this)" src="img/index/zand.png" class="fr animg">
+                            </div>
+                            {{/if}}{{/if}}
+                        </div>
+                    </div>
+                </div>
+                {{/if}} {{/each}} {{if item.nextList.length>3}}
+                <div class="color038 center" onclick="model.content1({{item.newsId}},{{item.commentId}})">
+                    查看更多{{item.nextList.length-3}}条回复>>
+                </div>
+                {{/if}}
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        {{/each}}
+    </div>
+</script>
+
+<script id="praiseListTpl" type="text/html">
+    <div class="praiseList">
+        {{each $data item index}}
+        <div class="item">
+            <img class="fl" onclick="model.geren({{item.customerId}},0)" src="{{OSS(item.face)}}" width="36" height="36" style="border-radius:50%;">
+            <span class="marl15 bold f14">{{item.customerName}}</span>
+            <span class="marl15 f12" style="color:#999;">{{sldate(item.addTime)}}</span>
+        </div>
+        {{/each}}
+    </div>
+</script>
+
+<script id="forwardListTpl" type="text/html">
+    <div class="forwardList">
+        {{each $data item index}}
+        <div class="item">
+            <img class="fl" onclick="model.geren({{item.customerId}},0)" src="{{OSS(item.face)}}" width="36" height="36" style="border-radius:50%;">
+            <div class="marl15 tleft">
+                <div>
+                    <span class=" bold f14" onclick="model.geren({{item.customerId}},0)">{{item.customerName}}</span>
+                    <span class=" f12 marl15" style="color:#999;">{{sldate(item.addTime)}}</span>
+                </div>
+                <!-- <p class="f12" style="text-align:left;color:#999;">{{item.content}}</p>-->
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</script>
+
+<script id="collectionListTpl" type="text/html">
+    <div class="collectionList">
+        {{each $data item index}}
+        <div class="item">
+            <img class="fl" onclick="model.geren({{item.customerId}},0)" src="{{OSS(item.face)}}" width="36" height="36" style="border-radius:50%;">
+            <span class="marl15 bold f14" onclick="model.geren({{item.customerId}},0)">{{item.customerName}}</span>
+            <span class="marl15 f12" style="color:#999;">{{sldate(item.addTime)}}</span>
+        </div>
+        {{/each}}
+    </div>
+</script>
+
+<script type="text/html" id="newsTpl">
+    <div class="item page pad15 bg_white">
+        <div class="top bg_white" style="border: none;">
+            <div class="news-title bold f24 color141 lh30">
+                {{if news.newsRange==1}}<img width="19" src="img/nopel.png" /> {{else if news.newsRange==2}}
+                <img width="24" height="20" src="img/gfrend.png" />{{/if}} {{if news.newsType!=0}} {{if news.recommend==1&&news.newsType==2}}
+                <span class="cunbtn">推荐</span> {{/if}} <span class="color141">{{news.title}}</span>{{/if}}</div>
+            <div class="issuer" onclick="model.geren({{itemId}},{{itemType}})">
+                <div>
+                    <img src="{{OSS(itemFace)}}" onerror="this.src='img/my/mti.png';this.onerror=null;">
+                    <div class="flex-direction" style="margin-top: 3px;">
+                        <div class="f16">{{itemName}}</div>
+                        <div class="f12" style="color:#999;">{{sldate(news.addTime)}}</div>
+                    </div>
+                </div>
+            </div>
+            {{if news.newsType==8}}
+            <div class="f14 mart10 scl-dw" onclick="Comm.go('talkDetail.html?topicId={{topicInfo.topicId}}')">
+                {{topicInfo.title}}
+            </div>
+            {{/if}}
+            <div style="" class="content color505 f16 {{news.newsType==2||news.newsType==6?'mart15 marb15':'mart15'}} wimgbox">
+                {{news.content}}
+            </div>
+            {{if news.newsType==1||news.newsType==8}}
+            <div class="{{if news.face&&news.face.split(',').length==1}}mart10{{else}}mart5{{/if}}">
+                {{if (news.face)}} {{imgTpl(news.face.split(','),96)}} {{/if}}
+            </div>
+            {{/if}} {{if keyword!=''}}
+            <div>关键字：{{keyword}}</div>
+            {{/if}} {{if news.newsType==2}}
+            <p class="f12 color999 paddb20 mart10 borderb" style="font-size: 12px;">本文版权归该作者所有，任何形式转载请联系作者</p>
+            {{/if}} {{if news.newsType==2}}
+            <div class="paddt20 paddb10 f16 color999">相关推荐</div>
+            {{each tipList v k}}
+            <div class="paddb10 paddt10" style="border-bottom: 1px solid #f4f4f4; height: 90px;" onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}')">
+                <div class="f14 wordW2" style="{{v.face&&v.face!=''?'width: 65%;float: left;line-height: 23px;min-height: 46px;':'height:46px'}} "><span style="font-family: Arial;" class="f14 wordW2 color333">{{v.title}}</span></div>
+                {{if v.face&&v.face!=""}} {{set face=v.face.split(',')[0]}}
+                <div class="fr" style="width: 30%;" data="face">
+                    <img src="{{OSS(face)+'/480'}}" style="border-radius: 5px;" width="100%" height="66" />
+                </div>
+                {{/if}}
+                <div class="color999 mart10" style="{{v.face&&v.face!=''?'width: 65%;float: left;':''}} "><span class="color999 f12 marr20">{{v.customerName}}</span><span class="marl10 f12 color999">{{v.praiseNumber}}人赞</span></div>
+                <div class="clearfix"></div>
+            </div>
+            {{/each}} {{/if}} {{if (resourceInfo&&news.newsType==0)}}
+            <div class="pad10 bg_hui mart5" onclick="Comm.go('articleDetail.html?newsId={{resourceInfo.newsId}}')">
+                <div class="wordW f16 marb10" style="margin: 2px 0 12px 0;"><span onclick="model.geren({{resourceUserInfo.customerId}},0)" class="color038">{{resourceUserInfo.customerName}}</span><span>的{{if resourceInfo.newsType==1}}说说{{/if}}{{if resourceInfo.newsType==2}}日志{{/if}}{{if resourceInfo.newsType==7}}帖子{{/if}}{{if resourceInfo.newsType==8}}讨论{{/if}}</span>
+                </div>
+                <div class="">
+                    <div class="color31 {{if resourceInfo.title}}wordW3{{/if}}">{{if resourceInfo.title}}<span class="marr20 bold">{{resourceInfo.title}}   </span>{{/if}} <span class="color505">{{if resourceInfo.title}}{{resourceInfo.content}}{{else}} {{repcontent(resourceInfo.content,resourceInfo.newsId, '#fff')}}{{/if}}</span></div>
+                </div>
+                <div>
+                    {{if resourceInfo.face&&resourceInfo.face!=""}} {{imgTpl(resourceInfo.face.split(','),96)}} {{/if}}
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            {{else if resourceInfo==""&&news.newsType==0}}
+            <div class="pad10 bg_hui mart10">该动态已删除</div>
+        </div>
+        {{/if}}
+        {{if news.newsType==11}}
+            <div class="f14 mart10 scl-dw" onclick="Comm.go('talkDetail.html?topicId={{topicInfo.topicId}}')">
+                {{topicInfo.title}}
+            </div>
+            {{/if}}
+    </div>
+    <div class="clearfix"></div>
+</script>
+
+<!-- nav-title -->
+<script type="text/html" id="headerTpl">
+    {{if groupName==''}}
+    <div class="wordW" onclick="model.geren({{itemId}},{{itemType}})">
+        <img src="{{OSS($data.itemFace,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;">
+        <span class="wordW" style="color:#999;" id="name">{{$data.itemName}}</span>
+    </div>
+    {{if myId!=itemId}}
+    <div id="focus">
+        {{if($data.focus==1)}}
+        <div style="background-color: #ccc; border-radius: 20px;color: #FFF;line-height: 24px;padding: 1px 10px;" onclick="model.cancelFocus()">已关注</div>
+        {{/if}} {{if($data.focus==0)}}
+        <div style="background-color: #098E75; border-radius: 20px;color: #FFF;line-height: 24px;padding: 1px 10px;" onclick="model.addFocus()">关注</div>
+        {{/if}}
+    </div>
+    {{/if}} {{else}}
+    <div class="wordW" onclick="model.geren({{groupId}},4)">
+        <img style="border-radius: 5px;" src="{{OSS($data.groupFace,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;">
+        <span class="wordW" style="color:#999;" id="name">{{$data.groupName}}</span>
+    </div>
+    {{/if}}
+</script>
+<script type="text/html" id="footerTpl">
+    <div class="bar">
+        <input class="btn" readonly="readonly" onclick="model.Reply('{{itemName}}',{{news.newsId}})" placeholder="写回复..." />
+        <div class="paddr5">
+            {{if isPraise==1}}
+            <div>
+                <img id="isPraise" src="img/index/zand.png" onclick="model.deletePraise({{news.newsId}},this)" height="20" />
+                <span class="c9e" id="zan{{news.newsId}}">{{news.praiseNumber>0?news.praiseNumber:''}}</span>
+            </div>
+            {{else}}
+            <div>
+                <img id="isPraise" src="img/index/zan.png" onclick="model.addPraise({{news.newsId}},this)" height="20" />
+                <span class="c9e" id="zan{{news.newsId}}">{{news.praiseNumber>0?news.praiseNumber:''}}</span>
+            </div>
+            {{/if}}
+            <img src="img/index/zf.png" onclick="model.zhuanfa({{news.newsId}})" height="20" /> {{if isCollection>0}}
+            <img id="isCollection" src="img/index/shoud.png" onclick="model.RemoveVlgo({{news.newsId}},this)" height="20" /> {{else}}
+            <img id="isCollection" src="img/index/shou.png" onclick="model.addVlgo({{news.newsId}},this)" height="20" /> {{/if}}
+        </div>
+    </div>
+</script>
+
+</html>

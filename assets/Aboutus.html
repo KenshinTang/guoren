@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>关于我们</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+
+    <style>
+        body {
+            background: #f4f4f4;
+        }
+
+        section>div {
+            background: #fff;
+        }
+
+        .icon_left {
+            display: inline-block;
+            width: 6px;
+            height: 11px;
+            background: url('img/a/left.png')no-repeat center;
+            background-size: 100%;
+        }
+        .borb{
+            border-bottom: 1px solid #dedede;
+        }
+        .logo{
+            display: flex;
+            flex-direction:column;
+            justify-content: center;
+            align-items: center;
+            padding: 70px 0; 
+        }
+        .footer{
+            width: 100%;
+            background: #f4f4f4;
+            position: fixed;
+            bottom: 18px;
+        }
+        .footer>p{
+            color: #B8B8B8;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">关于我们</div>
+        </div>
+    </header>
+    <section>
+        <div class="logo borb">
+            <img src="img/logo.png" width="70" height="70" alt="">
+            <p class="f14 mart10" style="color:#535353">版本V1.0.2</p>
+        </div>
+        <div class="flex-between pad15 borb indicator">
+            <p class="f16" style="color:#222222;">联系我们</p>
+            <a id="tel">028-020-2230</a>
+        </div>
+        <div class="flex-between pad15 borb indicator" onclick="Comm.go('helpDetails.html?id=1')">
+            <p class="f16" style="color:#222222;">用户隐私政策</p>
+            <i class="icon_left"></i>
+        </div>
+        <div class="footer">
+            <p>鸿蒙致远(成都)教育科技有限公司  版权所有</p>
+            <p>Copyright©2013-2018 .All Rights reservec</p>
+        </div>
+    </section>
+</body>
+<script type="text/html" id="listTpl">
+
+</script>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+
+<script>
+    function pageload() {
+model.init()
+    }
+    var model={
+    	init:function(){
+    		AJAX.GET('/api/config/bykeys?keys=serviceNumber',function(a){
+        		if(a&&a.code==1){
+        			$('#tel').attr('href','tel:'+a.data[0].value);
+        			$('#tel').html(a.data[0].value)
+        		}
+        	})
+    	}
+    }
+</script>
+
+</html>

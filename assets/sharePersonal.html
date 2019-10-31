@@ -1,0 +1,2062 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>个人主页</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="inc/mescroll/swiper.min.css" />
+    <link rel="stylesheet" href="css/tpl.css" />
+</head>
+<style>
+    /* header */
+    
+    section {
+        z-index: 1;
+        background-size: 100% 250px;
+        background-position: center top;
+        background-repeat: no-repeat;
+    }
+    
+    header {
+        position: relative;
+    }
+    
+    .navt {
+        padding: 5px 12px;
+    }
+    
+    .mescroll-fade-in {
+        display: none;
+    }
+    
+    section header {
+        height: 250px;
+        position: relative;
+    }
+    
+    #header-img {
+        position: absolute;
+        width: 100%;
+        height: 250px;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        object-fit: cover;
+    }
+    
+    .navBackIcon {
+        background-image: url(img/fh.png);
+        background-size: auto 25px;
+    }
+    
+    .navBackIcon1 {
+        background-image: url(img/left.png);
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: auto 16px;
+    }
+    
+    .navBar {
+        position: absolute;
+        z-index: 2;
+    }
+    
+    .navItemIcon {
+        background-image: url(img/index/more.png);
+        background-size: 70%;
+    }
+    
+    header .camera {
+        width: 30px;
+        height: 24px;
+        background: url('img/geren/xiangji.png')no-repeat center;
+        background-size: 100%;
+        position: absolute;
+        z-index: 2;
+        padding: 10px;
+        right: 10px;
+        bottom: 10px;
+    }
+    
+    header input {
+        z-index: 5201314;
+    }
+    /* top */
+    
+    #top {
+        padding: 12px;
+        background: #fff;
+            margin-top: 45px;
+        border-bottom: 10px solid #f4f4f4;
+    }
+    
+    #history,
+    #mfrend {
+        /*padding: 12px;*/
+        background: #f4f4f4;
+    }
+    
+    #mfrend span {
+        display: inline-block;
+        width: 42px
+    }
+    
+    .mgod {
+        width: 19%;
+        height: 85px;
+        margin-right: 2%;
+        border-radius: 6px
+    }
+    
+    .mgod:last-child {
+        margin-right: 0;
+    }
+    
+    /*.schoolMsg {
+        padding-bottom: 0px;
+    }*/
+    
+    #top .top {
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        height: 30px;
+    }
+    
+    #top .top>div {
+        color: #098E75;
+        font-size: 12px;
+        width: 92px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        border: 1px solid #098E75;
+        border-radius: 15px;
+        background: url('img/index/xie.png')no-repeat center;
+        background-size: 15%;
+        background-position-x: 8px;
+        background-position-y: 8px;
+        padding-left: 14px;
+    }
+    
+    #top .user-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin-top: -40px;
+        position: relative;
+        z-index: 3;
+    }
+    
+    #top .list {
+        display: flex;
+        margin-top: 18px;
+    }
+    
+    #top .item {
+        flex-grow: 1;
+        text-align: center;
+        flex-basis: 24%;
+    }
+    
+    .top .addFollow {
+        font-size: 12px;
+        color: #098E75;
+        border: 1px solid #098E75;
+        padding: 5px 8px;
+        border-radius: 3px;
+    }
+    
+    .addFollow11 {
+        font-size: 12px;
+        color: #999;
+        border: 1px solid #999;
+        padding: 5px 8px;
+        border-radius: 3px;
+    }
+    
+    .top .letter {
+        display: inline-block;
+        background: url('img/xing.png')no-repeat center;
+        background-size: 100%;
+        width: 25px;
+        height: 23px;
+    }
+    /* tabs */
+    
+    #tabs {
+        background: #fff;
+        z-index: 9999999999;
+    }
+    
+    .order-t {
+        line-height: 20px;
+        text-align: center;
+        font-size: 12px;
+        height: 50px;
+    }
+    
+    .order-t-c {
+        width: 25%;
+        height: 100%;
+        float: left;
+        font-size: 15px;
+        color: #9B9B9B;
+    }
+    
+    .order-t-c span {
+        font-size: 12px;
+        color: #9B9B9B;
+    }
+    
+    .order-t-c-active {
+        color: #098E75;
+        position: relative;
+    }
+    
+    .order-t-c-active span {
+        color: #098E75;
+    }
+    
+    .order-t-c-active:after {
+        content: '';
+        position: absolute;
+        left: 25%;
+        top: 47px;
+        bottom: auto;
+        right: auto;
+        height: 2px;
+        width: 50%;
+        background-color: #098E75;
+    }
+    
+    #swiper {
+        padding-bottom: 324px;
+        /* height: 300px; */
+    }
+    /* 动态 说说 */
+    
+    .trends {
+        padding: 10px;
+        border-bottom: 1px solid #ddeedd;
+    }
+    
+    .trends-img1>div:nth-child(1) {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .trends-img1>div:nth-child(1) img {
+        width: 100%;
+        border-radius: 5px;
+    }
+    
+    .trends .b {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .imgList {
+        width: 100%;
+        height: 70px;
+        margin-top: 5px;
+    }
+    
+    .imgList img {
+        width: 30%;
+        height: 106px;
+        float: left;
+        margin: 5px 5px;
+        border-radius: 5px;
+    }
+    /* 日志 */
+    
+    .article {
+        padding: 10px;
+        border-bottom: 1px solid #ddeedd;
+    }
+    
+    .article .b {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .article-img1>div:nth-child(2) {
+        display: flex;
+        justify-content: space-between;
+    }
+    /* 问问 */
+    
+    .interrogate {
+        padding: 10px;
+        border-bottom: 10px solid #f4f4f4;
+    }
+    
+    .interrogate .b {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    /* 话题 */
+    
+    .word {
+        padding: 10px;
+        border-bottom: 1px solid #ddeedd;
+    }
+    /* 资讯 */
+    
+    .information {
+        padding: 10px;
+        border-bottom: 1px solid #ddeedd;
+    }
+    
+    .information .y-content {
+        background: #F5F5F4;
+        padding: 13px;
+        margin-top: 10px;
+        display: flex;
+    }
+    
+    .information .y-content img {
+        width: 55px;
+        height: 55px;
+        margin-right: 5px;
+        border-radius: 5px;
+    }
+    
+    .information .b {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    /* 视频 */
+    
+    .vlog-dome {
+        padding: 10px;
+        border-bottom: 1px solid #ddeedd;
+    }
+    
+    .vlog-dome .y-content {
+        background: #F5F5F4;
+        padding: 13px;
+        margin-top: 10px;
+        /* 清楚浮动 */
+        overflow: hidden;
+    }
+    
+    .vlog-dome .y-content .l {
+        float: left;
+        margin-right: 10px;
+        position: relative;
+    }
+    
+    .vlog-dome .y-content .r {
+        float: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 76px;
+        width: 55%;
+    }
+    
+    .vlog-dome .b {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .play-btn {
+        position: absolute;
+        height: 17px;
+        width: 44px;
+        bottom: 5px;
+        right: 5px;
+        background: rgba(0, 0, 0, .6);
+        text-align: right;
+        padding-right: 3px;
+        /* background-image: url('img/index/rjian.png'); */
+        color: #fff;
+        border-radius: 9px;
+    }
+    /* 话题 */
+    
+    .topic {
+        padding: 10px;
+        border-bottom: 1px solid #ddeedd;
+    }
+    
+    .scl-dw {
+        width: fit-content;
+        max-width: 80%;
+        border-radius: 20px;
+        background-color: #F6F6F6;
+        padding: 3px 10px 3px 25px;
+        background-image: url(img/index/fwz.png);
+        background-repeat: no-repeat;
+        color: #098E75;
+        background-size: 15px 15px;
+        background-position: 7px;
+    }
+    
+    .topic>div:nth-child(1) {
+        display: flex;
+        align-items: center;
+    }
+    /* 问答 */
+    
+    .questions {
+        padding: 10px;
+        border-bottom: 1px solid #ddeedd;
+    }
+    
+    #sinbox {
+        background-color: #fff;
+        padding: 10px 20px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+    
+    #sinbox1 {
+        position: absolute;
+        bottom: 0;
+        left: 5%;
+        width: 90%;
+    }
+    
+    .ybox {
+        width: 100px;
+        height: 100px;
+        background: url(img/ybox.png) no-repeat;
+        background-size: 100%;
+        position: absolute;
+        top: 50px;
+        right: 5px;
+        z-index: 999;
+    }
+    
+    .jb {
+        background: url(img/index/jb.png) no-repeat 0px center;
+        background-size: 16px;
+        text-align: left;
+        padding: 10px 0 10px 50px;
+        color: #444444;
+    }
+    
+    #main {
+        background: #fff;
+    }
+    
+    #bgj {
+        /*border-bottom: 1px solid red;*/
+        position: fixed;
+        top: 44px;
+        left: 0px;
+        right: 0px;
+        width: 100%;
+        height: 250px;
+        z-index: 0;
+    }
+    
+    #bgj img {
+        width: 100%;
+        height: 100%;
+    }
+    
+    section {
+        position: relative;
+    }
+    
+    section,
+    header {
+        z-index: 1;
+    }
+    
+    .mescroll {
+        background-color: initial;
+    }
+    
+    .add_transform {
+        transition: transform 960ms;
+        transform: scale(1) !important;
+        /*background-size: 100% 250px !important;*/
+    }
+    
+    .fangke {
+        width: 50px;
+        display: inline-block;
+        white-space: initial;
+    }
+    
+    .gob {
+        overflow: hidden;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .showFriend {
+        background: url(img/top.png) no-repeat right center #fff;
+        background-position-x: 97%;
+        background-size: 13px 7px;
+    }
+    
+    .hideFriend {
+        background: url(img/bottom.png) no-repeat right center #fff;
+        background-position-x: 97%;
+        background-size: 13px 7px;
+    }
+    
+    .mescroll-downwarp {
+        opacity: 0;
+    }
+    
+    .color505 div {
+        color: #464646;
+    }
+    
+    .imgcontainer {
+        margin-top: 10px;
+    }
+    
+    b {
+        color: #464646;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 21px;
+        width: 100%;
+        word-wrap: break-word;
+    }
+    
+    font{
+    		color: #464646;
+    }
+    
+    span {
+        vertical-align: top;
+    }
+</style>
+
+<body>
+	<div style="position: fixed;padding: 0px 0 0 0;height: 44px;width: 100%;z-index:99999" class="bg_white" id="headers"></div>
+    <div id="bgj" style=""></div>
+    <header style="padding: 0;">
+        <div class="navt hide" style="padding-top: 30px;">
+            <div id="nav" class="order-t ovf bb1" style="border-bottom: 1px solid #f4f4f4;">
+                <div class="order-t-c brp order-t-c-active" i='0' onclick="model.refresh(0,this);event.stopPropagation()"><span class=" msnum1">0</span></br><span>动态</span></div>
+                <div class="order-t-c brp" i='1' onclick="model.refresh(1,this);event.stopPropagation()"><span class=" msnum2">0</span></br><span>日志</span></div>
+                <!--<div class="order-t-c brp" i='2' onclick="model.refresh(2,this)">Vlog<span class="marl5 msnum3"></span></div>-->
+                <div class="order-t-c brp" i='2' onclick="model.refresh(2,this);event.stopPropagation()"><span class=" msnum4">0</span></br><span>话题</span></div>
+                <div class="order-t-c brp" i='3' onclick="model.refresh(3,this);event.stopPropagation()"><span class=" msnum5">0</span></br><span>问答</span></div>
+            </div>
+        </div>
+    </header>
+    <section id="id" class="mescroll">
+        <div id="ss">
+            <!--onclick="showBj()"-->
+            <header>
+
+            </header>
+            <div id="top">
+
+            </div>
+        </div>
+        <div id="history" class="bg_white">
+
+        </div>
+        <div class="mfrend" id="mfrend" style="border-bottom: 10px solid #f4f4f4;">
+
+        </div>
+        <div id="main">
+            <div class="navt">
+                <div id="nav" class="order-t ovf bb1" style="border-bottom: 1px solid #f4f4f4;">
+                    <div class="order-t-c brp order-t-c-active" i='0' onclick="model.refresh(0,this)"><span class=" msnum1">0</span></br><span>动态</span></div>
+                    <div class="order-t-c brp" i='1' onclick="model.refresh(1,this)"><span class=" msnum2">0</span></br><span>日志</span></div>
+                    <!--<div class="order-t-c brp" i='2' onclick="model.refresh(2,this)">Vlog<span class="marl5 msnum3"></span></div>-->
+                    <div class="order-t-c brp" i='2' onclick="model.refresh(2,this)"><span class=" msnum4">0</span></br><span>话题</span></div>
+                    <div class="order-t-c brp" i='3' onclick="model.refresh(3,this)"><span class=" msnum5">0</span></br><span>问答</span></div>
+                </div>
+            </div>
+            <div style="min-height: 100%;">
+                <div id="list0" class="paddb15 list">
+                    <div id="con0"></div>
+                </div>
+                <div id="list1" class="paddb15 list hide">
+                    <div id="con1"></div>
+                </div>
+                <div id="list2" class="paddb15 list hide">
+                    <div id="con2"></div>
+                </div>
+                <div id="list3" class="paddb15 list hide">
+                    <div id="con3"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="shared paddl10 paddr10">
+       
+    </footer>
+</body>
+<!-- header -->
+<script type="text/html" id="header">
+    
+    <!--<a onclick="showImgView(this)">
+			<img src="{{OSS($data.headImg)}}" id="header-img" onerror="this.src='img/geren/banner.png';this.onerror=null;" />
+		</a>-->
+</script>
+<!-- top -->
+<script type="text/html" id="pageTop">
+    <div class="top wimgbox">
+        <img src="{{OSS($data.face,'s')}}" rsrc="{{OSS($data.face)}}" onclick="Photo.show(this,true);" style="border: 1px solid #fff;" class="user-img wimg" onerror="this.src='img/my/mti.png';this.onerror=null;" alt=""> {{if($data.powerLimit==false)}}
+        <div class="edit" onclick="Comm.go('myData.html')">编辑资料</div>
+        {{else}}
+        
+        {{/if}}
+    </div>
+    <div class="f22 color333" name='{{$data.customerName}}'>{{$data.customerName}}{{if sex==0}}<img class="marl10" src="img/woman.png" height="15" />{{else}}<img class="marl10" src="img/man.png" height="15" />{{/if}}{{if isVip==1}}<img class="marl10" src="img/index/v.png" height="15" />{{/if}}{{if authentication==2}}<img
+            class="marl10" src="img/sm.png" height="15" />{{/if}}</div>
+    <p class="mart10 f12 wordW">
+        {{if userType==5}} {{officialCertification}} {{else}} {{if identify==1}}{{$data.highSchool}} {{format($data.enrollmentYear)}}级{{else if identify==2||identify==3}}{{$data.schoolName}} {{$data.collegeName}} {{$data.majorName}} {{format($data.enrollmentYear)}}级{{/if}}
+        {{/if}}
+
+    </p>
+    <p class="mart10 f12 wordW2" style="color:#8D8D8D;">{{$data.autograph||'这是一句生来就注定要被消灭的签名'}}</p>
+    <div class="list">
+        <div class="item">
+            <div class="f14 color333">{{$data.followNumber}}</div>
+            <div class="f12 mart5" style="color:#8D8D8D;">关注</div>
+        </div>
+        <div class="item">
+            <div class="f14 color333">{{$data.fansNumber}}</div>
+            <div class="f12 mart5" style="color:#8D8D8D;">粉丝</div>
+        </div>
+        <div class="item">
+            <div class="f14 color333">{{$data.praiseNumber}}</div>
+            <div class="f12 mart5" style="color:#8D8D8D;">获赞</div>
+        </div>
+        {{if($data.powerLimit==false)}}
+        <div class="item" onclick="Comm.go('drafts.html?customerId={{$data.customerId}}')">
+            <div class="f14 color333">{{$data.draftNumber}}</div>
+            <div class="f12 mart5" style="color:#8D8D8D;">草稿箱</div>
+        </div>
+        {{else}}
+        <div class="item">
+        </div>
+        {{/if}}
+    </div>
+</script>
+<!-- 动态 -->
+<script type="text/html" id="trends-dome">
+    {{each $data v k}} {{if v.newsType!=5}} {{if v.forwardId==0&&v.resourceId==0&&v.face!=''&&v.face[0]!=''&&v.face.length==1}}
+    <div class="schoolMsg" id="{{v.newsId}}">
+        <div class="heads">
+            <div class="name-left fl" style="width: 60%;">
+                <img class="fl" style="border-radius: 50%;" src="{{OSS(v.uface,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+                <div class="fl marl10 lh20" style="width: 68%;">
+                    <p class="f14">{{v.uname}}</p>
+                    <p class="f12 c9e wordW">{{if v.schoolName}}{{v.schoolName}}{{format(v.enrollmentYear)}}级{{/if}}</p>
+                </div>
+            </div>
+            <div class="name-right fr mart20 center" style="width: 40%;">
+               
+                <p class="f12 c9e fr marr10">{{sldate(v.addTime)}}</p>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        {{if(v.title)}}
+        <div class="f14 wordW2 bold mart10">
+            {{if v.newsRange==1}}<img width="14" style="margin-bottom: 3px;" src="img/nopel.png" />{{else if v.newsRange==2}}<img width="20" class="marb5" src="img/gfrend.png" />{{/if}} {{v.title}}</div>
+        {{/if}} {{if v.newsType!=1&&v.newsType!=8}}
+        <div class="mart5 wordW3 color505 lh20">
+            {{v.subhead}}
+        </div>
+        {{else if v.newsType==1||v.newsType==8}}
+        <div class="mart5 {{if(v.newsType!=1 && v.newsType!=8)}}wordW3{{/if}} color505 lh20">
+            {{if(v.newsType==1||v.newsType==8)}}{{repcontent(v.content,v.newsId,'#fff')}} {{else}} {{if v.newsType!=2&&v.newsType!=6&&v.newsType!=9}}{{v.content}}{{else}}{{v.subhead}}{{/if}} {{/if}}
+        </div>
+        {{/if}}
+        <div class="mart10">
+            {{imgTpl(v.face,96)}}
+        </div>
+        <!--<img  data="{{v.face}}" src="{{OSS(v.face[0],9)}}" onerror="this.src='img/index/scr.png';this.onerror=null;" width="60%" height="212" style="border-radius: 5px;" />-->
+
+        <div class="clearfix"></div>
+        {{if v.topicId>0}}
+        <div class="scl-dw mart10 wordW">{{v.tTitle}}</div>
+        {{/if}} {{if v.newsType==7}}
+        <div class="heads mart10">
+            <div class="name-left fl">
+                <img class="fl" src="{{OSS(v.gface)}}" style="border-radius: 5px;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20" />
+                <div class="fl marl10">
+                    <p class="f12 c9e wordW" style="width: 200px;">{{v.gname}}</p>
+                </div>
+
+            </div>
+            <!--<div class="name-right fr paddl30 paddr10" onclick="Comm.showWindow('{{if v.customerId==v.myId}}sinboxTemp{{else}}sinboxTemp1{{/if}}',true);model.qh({{v.newsId}});event.stopPropagation()">
+                    <img src="img/index/more.png" width="14" height="3" />
+                </div>-->
+            <div class="clearfix"></div>
+        </div>
+        {{/if}}
+        
+    </div>
+    {{/if}}
+    <!--
+        	作者：851902553@qq.com
+        	时间：2019-03-15
+        	描述：转发
+        -->
+    {{if v.forwardId!=0&&resourceId!=0&&v.videoId==''}}
+    <div class="schoolMsg" id="{{v.newsId}}">
+        <div class="heads">
+            <div class="name-left fl" style="width: 60%;">
+                <img class="fl" style="border-radius: 50%;" src="{{OSS(v.uface,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+                <div class="fl marl10 lh20" style="width: 68%;">
+                    <p class="f14">{{v.uname}}</p>
+                    <p class="f12 c9e wordW">{{if v.schoolName}}{{v.schoolName}}{{format(v.enrollmentYear)}}级{{/if}}</p>
+                </div>
+            </div>
+            <div class="name-right fr mart20 center" style="width: 40%;">
+              
+                <p class="f12 c9e fr marr10">{{sldate(v.addTime)}}</p>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="f14 mart10">转发{{if v.newsType==2}}：{{v.content}}{{else}}：{{v.content}}{{/if}}</div>
+        {{if(v.ypic)}}
+        <div class="mart5 scl-zf">
+            <div class="wordW f16 marb10"><span class="color038" style="display: inline-block;">{{v.yname}}</span></span>
+                <span>的{{if v.ynewsType==1}}说说{{/if}}{{if v.ynewsType==2}}日志{{/if}}{{if v.ynewsType==7}}帖子{{/if}}{{if v.ynewsType==8}}讨论{{/if}}</span>
+            </div>
+            <div class="">
+                <div class="color31 {{if v.yTitle}}wordW3{{/if}}">{{if v.yTitle}}<span class="bold color333 marr20">{{v.yTitle}}</span>{{/if}}<span class="color505">{{repcontent(v.yContent,v.ynewsId, '#fff')}}</span></div>
+            </div>
+            {{if v.ypic&&v.ypic!=''}} {{if v.ynewsType!=6&&v.ynewsType!=2}}{{imgTpl(v.ypic,96)}} {{else}}{{imgTpl(v.ypic,76)}}{{/if}} {{/if}}
+            <div class="clearfix"></div>
+        </div>
+        {{else}}
+        <div class="mart5 scl-zf">
+            <div>该动态已删除</div>
+            <div class="clearfix"></div>
+        </div>
+        {{/if}} {{if v.topicId>0}}
+        <div class="scl-dw mart10 wordW">{{v.tTitle}}</div>
+        {{/if}}
+        
+    </div>
+    {{/if}} {{if v.forwardId==0&&v.resourceId>0&&v.videoId==''}}
+    <div class="schoolMsg" id="{{v.newsId}}">
+        <div class="heads">
+            <div class="name-left fl" style="width: 60%;">
+                <img class="fl" style="border-radius: 50%;" src="{{OSS(v.uface,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+                <div class="fl marl10 lh20" style="width: 68%;">
+                    <p class="f14">{{v.uname}}</p>
+                    <p class="f12 c9e wordW">{{if v.schoolName}}{{v.schoolName}}{{format(v.enrollmentYear)}}级{{/if}}</p>
+                </div>
+            </div>
+            <div class="name-right fr mart20 center" style="width: 40%;">
+                <p class="f12 c9e fr marr10">{{sldate(v.addTime)}}</p>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="f14 wordW2 mart10">转发{{if v.content}}：{{v.content}}{{/if}}</div>
+        {{if(v.ypic)}}
+        <div class="mart5 scl-zf">
+            <div class="wordW f16 marb10"><span class="color038" style="display: inline-block;" onclick="model.geren({{v.yid}},{{v.yitemtype}});event.stopPropagation()">{{v.yname}}</span></span>
+                <span>的{{if v.ynewsType==1}}说说{{/if}}{{if v.ynewsType==2}}日志{{/if}}{{if v.ynewsType==7}}帖子{{/if}}{{if v.ynewsType==8}}讨论{{/if}}</span>
+            </div>
+            <div class="">
+                <div class="color31{{if v.yTitle}} wordW3{{/if}}">{{if v.yTitle}}<span class="bold color333 marr20">{{v.yTitle}}</span>{{/if}}<span class="color505">{{repcontent(v.yContent,v.ynewsId, '#fff')}}</span></div>
+            </div>
+            {{if v.ypic&&v.ypic!=''}} {{if v.ynewsType!=6&&v.ynewsType!=2}}{{imgTpl(v.ypic,96)}} {{else}}{{imgTpl(v.ypic,76)}}{{/if}} {{/if}}
+
+            <div class="clearfix"></div>
+        </div>
+        {{else}}
+        <div class="mart5 scl-zf">
+            <div>该动态已删除</div>
+            <div class="clearfix"></div>
+        </div>
+        {{/if}} {{if v.topicId>0}}
+        <div class="scl-dw mart10 wordW">{{v.tTitle}}</div>
+        {{/if}}
+      </div>
+    {{/if}}
+    <!--
+        	作者：851902553@qq.com
+        	时间：2019-03-15
+        	描述：视频
+        -->
+    {{if v.videoId!=''}}
+    <div class="schoolMsg" id="{{v.newsId}}">
+        <div class="heads">
+            <div class="name-left fl" style="width: 60%;">
+                <img class="fl" style="border-radius: 50%;" src="{{OSS(v.uface,'s')}}" onerror="this.src='img/index/scr.png';this.onerror=null;" width="40" height="40" />
+                <div class="fl marl10 lh20" style="width: 68%;">
+                    <p class="f14">{{v.uname}}</p>
+                    <p class="f12 c9e wordW">{{if v.schoolName}}{{v.schoolName}}{{format(v.enrollmentYear)}}级{{/if}}</p>
+                </div>
+            </div>
+            <div class="name-right fr mart20 center" style="width: 40%;">
+               
+                <p class="f12 c9e fr marr10">{{sldate(v.addTime)}}</p>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        {{if(v.title)}}
+        <div class="f14 wordW2 mart10">{{v.title}}</div>
+        {{/if}}
+        <!--<div class="f14 wordW4 mart5 lh20">
+				{{if v.newsType!=2}}{{v.content}}{{else}}{{v.subhead}}{{/if}}
+			</div>-->
+        <div class="mart10">
+            <video id="video" src="{{v.url}}" autoplay controls height="217px">
+
+				</video>
+        </div>
+      
+    </div>
+    {{/if}}
+    <!--
+        	作者：851902553@qq.com
+        	时间：2019-03-15
+        	描述：日志带图片
+        -->
+    {{if v.forwardId==0&&v.resourceId==0&&v.face!=''&&v.face[0]!=''&&v.face.length!=1&&v.videoId==""}}
+    <div class="schoolMsg" id="{{v.newsId}}">
+        <div class="heads">
+            <div class="name-left fl" style="width: 60%;">
+                <img class="fl" style="border-radius: 50%;" src="{{OSS(v.uface,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+                <div class="fl marl10 lh20" style="width: 68%;">
+                    <p class="f14">{{v.uname}}</p>
+                    <p class="f12 c9e wordW">{{if v.schoolName}}{{v.schoolName}}{{format(v.enrollmentYear)}}级{{/if}}</p>
+                </div>
+            </div>
+            <div class="name-right fr mart20 center" style="width: 40%;">
+               
+                <p class="f12 c9e fr marr10">{{sldate(v.addTime)}}</p>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        {{if(v.title)}}
+        <div class="f14 wordW2 bold mart10">
+            {{if v.newsRange==1}}<img width="14" style="margin-bottom: 3px;" src="img/nopel.png" />{{else if v.newsRange==2}}<img width="20" class="marb5" src="img/gfrend.png" />{{/if}} {{v.title}}
+        </div>
+        {{/if}}
+        <div class="f14 {{if(v.newsType!=1&&v.newsType!=8)}}wordW3{{/if}}color505 mart10 lh20">
+            {{if(v.newsType==1||v.newsType==8)}} {{repcontent(v.content,v.newsId,'#fff')}} {{else}} {{v.subhead}} {{/if}}
+        </div>
+        <div class="mart5">
+            {{if v.newsType!=6&&v.newsType!=2}}{{imgTpl(v.face,96)}} {{else}}{{imgTpl(v.face,76)}}{{/if}}
+            <div class="clearfix"></div>
+        </div>
+        {{if v.topicId>0}}
+        <div class="scl-dw mart10 wordW">{{v.tTitle}}</div>
+        {{/if}} {{if v.newsType==7}}
+        <div class="heads mart10">
+            <div class="name-left fl" >
+                <img class="fl" src="{{OSS(v.gface)}}" style="border-radius: 5px;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20" />
+                <div class="fl marl10">
+                    <p class="f12 c9e wordW" style="width: 200px;">{{v.gname}}</p>
+                </div>
+
+            </div>
+            <!--<div class="name-right fr paddl30 paddr10" onclick="Comm.showWindow('{{if v.customerId==v.myId}}sinboxTemp{{else}}sinboxTemp1{{/if}}',true);model.qh({{v.newsId}});event.stopPropagation()">
+                    <img src="img/index/more.png" width="14" height="3" />
+                </div>-->
+            <div class="clearfix"></div>
+        </div>
+        {{/if}}
+        
+    </div>
+    {{/if}}
+    <!--
+        	作者：851902553@qq.com
+        	时间：2019-03-15
+        	描述：日志不带图片
+        -->
+    {{if v.face==""&&v.videoId==''&&v.resourceId==0&&v.forwardId==0||v.face[0]==""&&v.videoId==''&&v.resourceId==0&&v.forwardId==0}}
+    <div class="schoolMsg" id="{{v.newsId}}">
+        <div class="heads">
+            <div class="name-left fl" style="width: 60%;">
+                <img class="fl" style="border-radius: 50%;" src="{{OSS(v.uface,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+                <div class="fl marl10 lh20" style="width: 68%;">
+                    <p class="f14">{{v.uname}}</p>
+                    <p class="f12 c9e wordW">{{if v.schoolName}}{{v.schoolName}}{{format(v.enrollmentYear)}}级{{/if}}</p>
+                </div>
+            </div>
+            <div class="name-right fr mart20 center" style="width: 40%;">
+               
+                <p class="f12 c9e fr marr10">{{sldate(v.addTime)}}</p>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        {{if(v.title)}}
+        <div class="f14 wordW2 bold mart10">
+            {{if v.newsRange==1}}<img width="14" style="margin-bottom: 3px;" src="img/nopel.png" />{{else if v.newsRange==2}}<img width="20" class="marb5" src="img/gfrend.png" />{{/if}} {{v.title}}
+        </div>
+        {{/if}}
+        <div class="f14 {{if(v.newsType!=1&&v.newsType!=8)}}wordW3{{/if}} mart5 color505 lh20">
+            {{if(v.newsType==1||v.newsType==8)}} {{repcontent(v.content,v.newsId,'#fff')}} {{else}} {{v.subhead}}{{/if}}
+        </div>
+        {{if v.topicId>0}}
+        <div class="scl-dw mart10 wordW">{{v.tTitle}}</div>
+        {{/if}} {{if v.newsType==7}}
+        <div class="heads mart10">
+            <div class="name-left fl">
+                <img class="fl" src="{{OSS(v.gface)}}" style="border-radius: 5px;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20" />
+                <div class="fl marl10">
+                    <p class="f12 c9e wordW" style="width: 200px;">{{v.gname}}</p>
+                </div>
+            </div>
+            <!--<div class="name-right fr paddl30 paddr10" onclick="Comm.showWindow('{{if v.customerId==v.myId}}sinboxTemp{{else}}sinboxTemp1{{/if}}',true);model.qh({{v.newsId}});event.stopPropagation()">
+                    <img src="img/index/more.png" width="14" height="3" />
+                </div>-->
+            <div class="clearfix"></div>
+        </div>
+        {{/if}}
+    </div>
+    {{/if}} {{else}}
+    <div class="mart10 borderb paddb10 paddl15 paddr15" id="{{if v.isAnswer==1}}{{v.commentId}}{{else}}{{v.newsId}}{{/if}}">
+        <div class="color333 f14 wordW fl" style="width:86%;font-family: Arial;">{{v.title}}</div>
+        
+        <div class="clearfix"></div>
+        <div>
+            <div class="mart5 marb5">
+                <div class="fl f12 color999" style="width:80%">热门回答 {{v.commentNumber}}</div>
+                <div class="fr f12 center" style="width:20%">
+                    <img src="img/index/{{if v.isPraise==1}}dzan{{else}}zan{{/if}}.png" width="14" height="12" class="" style="margin:4px 0;object-fit: contain;" />
+                    <span class="f12 color999" style="vertical-align: middle;">{{v.praiseNumber}}</span>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div>
+                <div style="width:85%" class="fl">
+                    <div class="color038 wordW f12" style="">
+                        <img src="{{OSS(v.uface,'s')}}" onerror="app.herrorimg(this)" style="border-radius:50%" width="15" height="15" />
+                        <span class="color038 f12 wordW" style="display:inline-block;max-width:20%;font-family: Arial;">{{v.uname}}：</span>
+                        <span class="color999 wordW f12" style="display:inline-block;width:65%;font-family: Arial;">{{v.content}}</span>
+                    </div>
+                </div>
+                <div style="width:15%" class="fr f12 color999">{{sldate(v.addTime)}}</div>
+            </div>
+            <div class="clearfix"></div>
+            {{if v.face&&v.face!=''}} {{imgTpl(v.face,1024)}} {{/if}}
+        </div>
+    </div>
+
+    {{/if}} {{/each}}
+</script>
+<!-- 日志 -->
+<script type="text/html" id="article-dome">
+    {{each $data v k}} {{if v.forwardId==0&&v.resourceId==0&&v.face!=''&&v.videoId==''&&v.face.length==1}}
+    <div class="schoolMsg" id="{{v.newsId}}">
+        <div class="heads">
+            <div class="name-left fl">
+                <img class="fl" style="border-radius: 50%;" src="{{OSS(v.uface,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+                <div class="fl marl10">
+                    <p class="f14">{{v.uname}}</p>
+                    <p class="f12 c9e">{{sldate(v.addTime)}}</p>
+                </div>
+            </div>
+            {{if v.mid != v.customerId}}
+            <div class="name-right fr paddl15 paddr15">
+                <img src="img/index/more.png" width="14" height="3" />
+            </div>
+            {{/if}}
+            <div class="clearfix"></div>
+        </div>
+        {{if v.title!=''}}
+        <div class="f14 wordW2 bold mart10">
+            {{if v.newsRange==1}}<img width="14" style="margin-bottom: 3px;" src="img/nopel.png" />{{else if v.newsRange==2}}<img width="20" class="marb5" src="img/gfrend.png" />{{/if}} {{v.title}}</div>
+        {{/if}}
+        <div class="mart5 wordW3 color505 lh20">
+            {{v.subhead}}
+        </div>
+        <div class="mart10">
+            {{imgTpl(v.face,96)}}
+        </div>
+        <div class="clearfix"></div>
+        {{if v.topicId>0}}
+        <div class="scl-dw mart10 wordW">{{v.tTitle}}</div>
+        {{/if}}
+        
+    </div>
+    {{/if}}
+    <!--
+        	作者：851902553@qq.com
+        	时间：2019-03-15
+        	描述：日志带图片
+        -->
+    {{if v.forwardId==0&&v.resourceId==0&&v.face!=''&&v.face.length!=1&&v.videoId==""}}
+    <div class="schoolMsg" id="{{v.newsId}}">
+        <div class="heads">
+            <div class="name-left fl">
+                <img class="fl" style="border-radius: 50%;" src="{{OSS(v.uface,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+                <div class="fl marl10">
+                    <p class="f14">{{v.uname}}</p>
+                    <p class="f12 c9e">{{sldate(v.addTime)}}</p>
+                </div>
+            </div>
+            {{if v.mid != v.customerId}}
+            <div class="name-right fr paddl15 paddr15">
+                <img src="img/index/more.png" width="14" height="3" />
+            </div>
+            {{/if}}
+            <div class="clearfix"></div>
+        </div>
+        {{if v.title!=''}}
+        <div class="f14 wordW2 bold mart10">
+            {{if v.newsRange==1}}<img width="14" style="margin-bottom: 3px;" src="img/nopel.png" />{{else if v.newsRange==2}}<img width="20" class="marb5" src="img/gfrend.png" />{{/if}} {{v.title}}
+        </div>
+        {{/if}}
+        <div class="f14 wordW2 mart10 lh20">
+            {{v.subhead}}
+        </div>
+        <div class="mart5">
+            {{if v.newsType!=6&&v.newsType!=2}}{{imgTpl(v.face,96)}} {{else}}{{imgTpl(v.face,76)}}{{/if}}
+            <div class="clearfix"></div>
+        </div>
+        {{if v.topicId>0}}
+        <div class="scl-dw mart10 wordW">{{v.tTitle}}</div>
+        {{/if}}
+        
+    </div>
+    {{/if}}
+    <!--
+        	作者：851902553@qq.com
+        	时间：2019-03-15
+        	描述：日志不带图片
+        -->
+    {{if v.face==""&&v.itemType==0&&v.videoId==''&&v.resourceId==0&&v.forwardId==0||v.face[0]==""&&v.itemType==0&&v.videoId==''&&v.resourceId==0&&v.forwardId==0}}
+    <div class="schoolMsg" id="{{v.newsId}}">
+        <div class="heads">
+            <div class="name-left fl">
+                <img class="fl" style="border-radius: 50%;" src="{{OSS(v.uface,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+                <div class="fl marl10">
+                    <p class="f14">{{v.uname}}</p>
+                    <p class="f12 c9e">{{sldate(v.addTime)}}</p>
+                </div>
+            </div>
+            {{if v.mid != v.customerId}}
+            <div class="name-right fr paddl15 paddr15">
+                <img src="img/index/more.png" width="14" height="3" />
+            </div>
+            {{/if}}
+            <div class="clearfix"></div>
+        </div>
+        {{if v.title!='' }}
+        <div class="f14 wordW2 bold mart10">
+            {{if v.newsRange==1}}<img width="14" style="margin-bottom: 3px;" src="img/nopel.png" />{{else if v.newsRange==2}}<img width="20" class="marb5" src="img/gfrend.png" />{{/if}} {{v.title}}
+        </div>
+        {{/if}}
+        <div class="f14 wordW2 mart5 lh20">
+            {{if(v.newsType==1)}} {{repcontent(v.content,v.newsId,'#fff')}} {{else}}{{v.subhead}}{{/if}}
+        </div>
+        {{if v.topicId>0}}
+        <div class="scl-dw mart10 wordW">{{v.tTitle}}</div>
+        {{/if}}
+        
+    </div>
+    {{/if}} {{/each}}
+</script>
+<!-- vlog -->
+<script type="text/html" id="vlog-dome">
+    {{each $data v k}}
+    <div class="vlog-dome">
+        <div class="y-content" style="padding:0;background:#fff;">
+            <div class="l">
+                {{if v.ypic[0]!=''}}
+                <img src="{{OSS(v.face)}}" alt="" width="112" height="76" onerror="this.src='img/my/mti.png';this.onerror=null;">
+                <div class="play-btn f10">18:22</div>
+                {{/if}}
+
+            </div>
+            <div class="r">
+                <div class=" f14 wordW2">{{v.content}}</div>
+                <p class="c60 f10"> {{sldate(v.addTime)}}发布</p>
+            </div>
+        </div>
+    </div>
+    {{/each]}}
+</script>
+<!-- 话题 -->
+<script type="text/html" id="topic-dome">
+    {{each $data v k}}
+    <div class="topic">
+        <div>
+            <img src="img/index/fwz.png" alt="" width="15" height="15" />
+            <div class="marl10">{{v.title}}</div>
+        </div>
+        <p class=" f12 mart10" style="color:#888">{{v.newsNumber}}篇 · {{v.customerNumber}}关注</p>
+    </div>
+    {{/each}}
+</script>
+<!-- 问答 -->
+<script type="text/html" id="questions-dome">
+    {{each $data v k}}
+    <div class="mart10 borderb paddb10 paddl15 paddr15" id="{{if v.isAnswer==1}}{{v.commentId}}{{else}}{{v.newsId}}{{/if}}">
+        <div class="color333 f14 wordW fl" style="width:86%;font-family: Arial;">{{v.title}}</div>
+        
+        <div class="clearfix"></div>
+        <div>
+            <div class="mart5 marb5">
+                <div class="fl f12 color999" style="width:80%">热门回答 {{v.commentNumber}}</div>
+                <div class="fr f12 center" style="width:20%">
+                    <img src="img/index/{{if v.isPraise==1}}dzan{{else}}zan{{/if}}.png" width="14" height="12" class="" style="margin:4px 0;object-fit: contain;" />
+                    <span class="f12 color999" style="vertical-align: middle;">{{v.praiseNumber}}</span>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div>
+                <div style="width:85%" class="fl">
+                    <div class="color038 wordW f12" style="">
+                        <img src="{{OSS(v.uface,'s')}}" onerror="app.herrorimg(this)" style="border-radius:50%" width="15" height="15" />
+                        <span class="color038 f12 wordW" style="display:inline-block;max-width:20%;font-family: Arial;">{{v.uname}}：</span>
+                        <span class="color999 wordW f12" style="display:inline-block;width:65%;font-family: Arial;">{{v.subhead}}</span>
+                    </div>
+                </div>
+                <div style="width:15%" class="fr f12 color999">{{sldate(v.addTime)}}</div>
+            </div>
+            <div class="clearfix"></div>
+            {{if v.face&&v.face!=''}} {{imgTpl(v.face.split(','),1024)}} {{/if}}
+        </div>
+    </div>
+    {{/each}}
+</script>
+<script id="historyTpl" type="text/html">
+    <div class="bg_white pad10">
+        <div class="color333">访客记录</div>
+        <div class="gob paddb10 paddt10" style="border-bottom:1px solid #f4f4f4">
+            {{each $data v k}}
+            <div class="marr10 fangke">
+                <img src="{{OSS(v.face,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" style="border-radius:50px" width="50" height="50" />
+                <p class="mart10 center wordW color333 f12" style="line-height: 18px;height: 18px;">{{v.customerName}}</p>
+            </div>
+            {{/each}} {{if $data.length == 10}}
+            <div class="marr10 fangke">
+                <img src="img/my/lookMore.png" style="border-radius:50px" width="50" height="50" />
+                <p class="mart10 center wordW color333 f12">查看更多</p>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+</script>
+<script id="mfriendTpl" type="text/html">
+    <div class="bg_white pad10 color333 hideFriend" id="fend">
+        我的密友
+    </div>
+    <div class="bg_hui flex paddt10 paddl10 paddr10" id="myfriend" style="height:95px;display:none">
+        {{if $data==''}}
+        <div class="bg_white paddt10 center mgod">
+            <img src="img/close.png" style="position:relative;top:0;right:0;" />
+            <img src="img/my/add.png" width="40" height="40" /> {{if miId==uid}}
+            <img class="mart5" src="img/my/nadd.png" width="49" style="object-fit: contain;border-radius: 40px;" height="16" /> {{/if}}
+        </div>
+        <div class="bg_white paddt10 center mgod">
+            <img src="img/my/add.png" width="40" height="40" /> {{if miId==uid}}
+            <img class="mart5" src="img/my/nadd.png" width="49" style="object-fit: contain;border-radius: 40px;" height="16" /> {{/if}}
+        </div>
+        <div class="bg_white paddt10 center mgod">
+            <img src="img/my/add.png" width="40" height="40" /> {{if miId==uid}}
+            <img class="mart5" src="img/my/nadd.png" width="49" style="object-fit: contain;border-radius: 40px;" height="16" /> {{/if}}
+        </div>
+        <div class="bg_white paddt10 center mgod">
+            <img src="img/my/add.png" width="40" height="40" /> {{if miId==uid}}
+            <img class="mart5" src="img/my/nadd.png" width="49" style="object-fit: contain;border-radius: 40px;" height="16" /> {{/if}}
+        </div>
+        <div class="bg_white paddt10 center mgod">
+            <img src="img/my/add.png" width="40" height="40" /> {{if miId==uid}}
+            <img class="mart5" src="img/my/nadd.png" width="49" style="object-fit: contain;border-radius: 40px;" height="16" /> {{/if}}
+        </div>
+        {{else}} {{mylist($data)}} {{/if}}
+    </div>
+</script>
+
+<!-- 依赖 -->
+<script src="./inc/jquery-1.11.1.js"></script>
+<script src="./inc/g.js"></script>
+<script src="./inc/comm.js"></script>
+<script src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script type="text/javascript" src="inc/tpl.js"></script>
+<script src="inc/refresh.js"></script>
+<script src="inc/upimg/upload.js"></script>
+<script type="text/javascript" src="inc/photo.js"></script>
+<script type="text/javascript" src="inc/share.js" ></script>
+<script>
+    var customerId = app.getCid(); //自己的
+    var shearId = '';
+    var _customerId = Comm.query('customerId'); //别人的
+    var powerLimit = false; //权力限制 
+    var shearTitle = '';
+    var myFace = '';
+    var headImg = '';
+    var shearContent = '这是一句生来就注定要被消灭的签名';
+    var set = '';
+    var newType = "";
+    //全屏图片
+    var showImgView = function showImgView(that) {
+        var oImgs = $(that).find('img');
+        var imgArr = new Array();
+        $.each(oImgs, function(i, e) {
+            imgArr.push(e.src);
+        });
+        Comm.db('imgView', imgArr);
+        Comm.go('imgView.html');
+    };
+
+    function setName() {
+        Comm.db('setName', $('.f22').attr('name'));
+    }
+    if (_customerId) {
+        if (_customerId != customerId) {
+            customerId = _customerId;
+            shearId = customerId
+            powerLimit = true; //开启限制
+            // console.log('123')
+        };
+    } else {
+        shearId = customerId
+    }
+
+    function pageresume() {
+
+        model.getUserInfo()
+        getmse();
+
+    }
+
+    function pageload() {
+        model.getUserInfo(function(d) {
+            model.init(0);
+        })
+        getmse();
+		 var header = tpl.gethead();
+		$('#headers').html(header);
+		var footer = tpl.foorers();
+		$('footer').html(footer);
+		Comm.resizeSection()
+    }
+
+    //  function showBj() {
+    //      console.log('ssa')
+    //  }
+
+    function getmse() {
+        AJAX.GET('/api/news/myListCount?customerId=' + customerId, function(a) {
+            if (a && a.code == 1) {
+                $('.msnum1').html(a.totalCount)
+
+                var data = a.data;
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].newsType == 2) {
+                        $('.msnum2').html(data[i].num)
+                    }
+                    if (data[i].newsType == 3) {
+                        $('.msnum3').html(data[i].num)
+
+                    }
+                    if (data[i].newsType == 8) {
+                        $('.msnum4').html(data[i].num)
+
+                    }
+                    if (data[i].newsType == 5) {
+                        $('.msnum5').html(data[i].num)
+
+
+                    }
+                }
+            }
+        })
+    }
+    var times = 0;
+    var goid = '';
+    var model = {
+        data: {
+
+        },
+        _data: {
+            upHeader: null,
+        },
+        sstart: function(id) {
+            if (customerId == app.getCid()) {
+                goid = id;
+                setJump = setInterval(function() {
+                    times++;
+                    if (times >= 3) {
+                        $('.delMf').show();
+                        $('#ing').attr('onclick', 'model.outTui()');
+                        clearInterval(setJump);
+                    }
+                }, 1000);
+            } else {
+                if ($('.delMf').hide()) {
+                    Comm.go('personal.html?customerId=' + id);
+                }
+            }
+        },
+        outTui: function() {
+            $('.delMf').hide();
+            times = 0;
+            $('#ing').attr('onclick', '');
+        },
+        send: function() {
+            clearInterval(setJump);
+            if (times >= 3) {
+                $('.delMf').show();
+                $('#ing').attr('onclick', 'model.outTui()');
+            } else {
+                Comm.go('personal.html?customerId=' + goid);
+            }
+
+        },
+        remMf: function(id) {
+            event.stopPropagation();
+            Comm.confirm('确认删除该密友？', function(d) {
+                if (d) {
+                    AJAX.GET('/api/customer/delCrony?cronyId=' + id, function(a) {
+                        if (a && a.code == 1) {
+                            Comm.message('操作成功');
+                            model.getUserInfo();
+                        } else {
+                            Comm.message(a.msg);
+                        }
+                        times = 0;
+                    })
+                }
+            })
+
+        },
+        changFriend: function(a) {
+            if ($(a).hasClass('hideFriend')) {
+                $("#myfriend").show();
+                set = 1;
+                $(a).removeClass('hideFriend');
+                $(a).addClass('showFriend');
+            } else {
+                $("#myfriend").hide();
+                set = '';
+                $(a).addClass('hideFriend');
+                $(a).removeClass('showFriend');
+            }
+        },
+        addGo: function(type) {
+            if (customerId == app.getCid()) {
+                Comm.go('addMyFriend.html?location=' + type);
+            }
+        },
+        copyText: function() {
+            var src = config.webroot + 'sharePersonal.html?customerId=' + shearId;
+            Comm.copyText(src);
+            Comm.showWindow('');
+        },
+        newsType: '',
+        isscrollend: false,
+        scrolltop: false,
+        init: function(i) {
+            var h = 250,
+                scale = 0,
+                ms = 0;
+            model.mere = new MERefresh('id,con0', {
+                pagesize: 10,
+                refreshUrl: "/api/news/myList",
+                refreshTypeGet: true,
+                needHeadRefresh: true,
+                refresh_cb: true,
+                afterLoading: 0,
+                onScroll: function(a, top, c) {
+                    model.scrolltop = top;
+                    if (!model.isscrollend) {
+                        clearTimeout(model.timerscroll);
+                        model.timerscroll = setTimeout(isScrollEnd, 100);
+                        model.isscrollend = true;
+
+                        function isScrollEnd() {
+                            console.log(model.scrolltop + "-" + top)
+                                //t2 = document.documentElement.scrollTop || document.body.scrollTop;
+                                //if (t2 == t1) {
+                            model.isscrollend = false;
+                            if (model.mj) {
+                                hj()
+                            }
+                            //    }
+                        }
+                    }
+                    if (!model.mj) {
+                        hj()
+                    }
+
+                    function hj() {
+                        model.mj = false;
+                        console.log('来了' + model.scrolltop)
+                        if (model.scrolltop > 695) {
+                            $('header .navt').show();
+                            //$('section').css('background-image', 'initial');
+                            $('#bgj').hide()
+                            Comm.resizeSection();
+                        } else if (model.scrolltop < 695) {
+                            $('header .navt').hide();
+                            //$('section').css('background-image', 'url(' + headImg + ')');
+                            $('#bgj').show()
+                            Comm.resizeSection();
+                        }
+                        setTimeout(function() {
+                            $("#list" + model.mere.refreshOption.i).css('min-height', $('section').height() + "px");
+                        }, 100)
+                    }
+                },
+                onMoving: function(a, b, c) {
+                    lasth = c;
+                    var hh = (c * 2 + h);
+                    hh = hh < 250 ? 250 : hh;
+                    var ww = (hh / h);
+                    /*
+                    $('section').css('background-size', ww + '% ' + hh + 'px');
+                    */
+                    $('#bgj').css('transform', "scale(" + ww + ")");
+                    $('#bgj').removeClass('add_transform');
+                    scale = ww - 1;
+                    ms = (scale / (lasth / 300) * 2 * 100);
+                },
+                onEnd: function(a) {
+                    //model.send()
+                    $('#bgj').addClass('add_transform');
+                }
+            });
+            model.mere.refreshOption.i = i;
+            model.mere.refreshOption.refreshParm = {
+                newsType: model.newsType,
+                customerId: customerId
+            };
+            //页面 <刷新> 的回调
+            model.mere.refreshOption.refresh_cb = function(refresh, d) {
+                this.clearEmptyId = 'con' + this.i;
+                var r = d.data || [];
+                //动态
+                var listStr = '';
+                if (this.i == 0) {
+                    //                  if (r.newsInfoVOList) {
+                    //                      for(var k=0;k<r.newsInfoVOList.length;k++){
+                    //              			r.newsInfoVOList[k].customerName = d.data.customerName
+                    //              		}
+                    //                  }
+                    if (r && r.newsInfoVOList && r.newsInfoVOList.length == 0) {
+                        r = []
+                        r = r;
+                    } else {
+                        r = [r]
+                        r = changeDeta(r[0])
+                        listStr = template('trends-dome', r);
+                    }
+                } else {
+                    for (var k = 0; k < r.length; k++) {
+                        r[k].customerName = d.data.customerName
+                    }
+                }
+                // 日志
+                if (this.i == 1) {
+                    for (var k = 0; k < r.length; k++) {
+                        r[k].face = r[k].face.split(',');
+                        r[k].uname = model.info.customerName;
+                        r[k].uface = model.info.face;
+                        r[k].uid = model.info.customerId;
+                    }
+                    listStr = template('article-dome', r);
+                }
+                // vlog
+                //					if(this.i == 2) {
+                //						listStr = template('vlog-dome', r);
+                //					}
+                //话题
+                if (this.i == 2) {
+                    listStr = template('topic-dome', r);
+                }
+                // 问答
+                if (this.i == 3) {
+                    for (var j = 0; j < r.length; j++) {
+                        r[j].subhead = r[j].subhead.replace(/<\/?.+?>/g, "").replace(/ /g, "");
+                        r[j].uface = model.face;
+                        r[j].uname = model.name;
+                    }
+                    listStr = template('questions-dome', r);
+                }
+
+                refresh.successEndRef(r.length, d.totalCount);
+                this['totalCount' + this.i] = d.totalCount;
+
+                $("#list" + this.i + " #con" + this.i).append(listStr);
+                $('.wimg').attr('onclick', 'Photo.show(this,true)');
+                var _this = this;
+
+                var dow = $("section>.mescroll-upwarp").clone();
+                $("#list" + _this.i).find('.mescroll-upwarp').remove();
+                $("#list" + _this.i).append(dow);
+                $("section>.mescroll-upwarp").css('visibility', 'hidden');
+                if (!this['isdata' + this.i]) {
+                    this['isdata' + this.i] = true;
+                    $('.list').addClass('hide');
+                    $("#list" + this.i).removeClass('hide');
+                }
+                setTimeout(function() {
+                    Comm.resizeSection();
+                    //model.mj = false;
+                }, 300);
+            };
+        },
+        old: [],
+        refresh: function(i, a) {
+            if (!$(a).hasClass('order-t-c-active')) {
+                model.mj = true;
+                model.old[model.mere.refreshOption.i] = {
+                    refreshParm: model.mere.refreshOption.refreshParm,
+                    num: model.mere.MeRefScroll.optUp.page.num,
+                    clearEmptyId: model.mere.MeRefScroll.optUp.clearEmptyId,
+                    clearId: model.mere.MeRefScroll.optUp.clearId,
+                };
+
+                $("section #nav div").removeClass('order-t-c-active');
+                $("header #nav div").removeClass('order-t-c-active');
+                $($("section #nav div")[i]).addClass('order-t-c-active');
+                $($("header #nav div")[i]).addClass('order-t-c-active');
+                if (model.mere.refreshOption['isdata' + i]) {
+                    $('.list').addClass('hide');
+                    $("#list" + i).removeClass('hide');
+                    var old = model.old[i];
+                    model.mere.refreshOption.refreshParm = old.refreshParm;
+                    model.mere.MeRefScroll.optUp.clearEmptyId = old.clearEmptyId;
+                    model.mere.MeRefScroll.optUp.clearId = old.clearId;
+                    model.mere.MeRefScroll.optUp.page.num = old.num;
+                    model.mere.refreshOption.i = i;
+                    if (model.mere.refreshOption['totalCount' + i] == 1) {
+                        model.mere.MeRefScroll.triggerUpScroll();
+                    }
+                    Comm.resizeSection();
+                    if (i == 0) {
+                        setTimeout(function() {
+                            $("#list" + i).css('min-height', $('section').height() + "px");
+                        }, 300)
+                    }
+                    return;
+                }
+                Comm.resizeSection();
+                $("#list" + i).css('min-height', $('section').height() + "px");
+
+                model.mere.MeRefScroll.optUp.clearEmptyId = 'con' + i;
+                model.mere.MeRefScroll.optUp.clearId = 'con' + i;
+                model.mere.MeRefScroll.optUp.page.num = 1;
+                model.mere.MeRefScroll.emptyDom = null;
+                if (i == 0) {
+                    model.newsType = ''
+                } else if (i == 1) {
+                    model.newsType = 2
+                } else if (i == 2) {
+                    model.newsType = 8
+                } else if (i == 3) {
+                    model.newsType = 5
+                }
+
+                model.mere.refreshOption.i = i;
+                model.mere.refreshOption.refreshParm = {
+                    newsType: model.newsType,
+                    customerId: customerId,
+                };
+                //重置列表数据
+                //model.mere.MeRefScroll.resetUpScroll();
+                model.mere.MeRefScroll.triggerDownScroll(true);
+                //隐藏回到顶部按钮
+                //model.mere.MeRefScroll.hideTopBtn();
+
+                $('section #nav').scrollLeft(a.offsetLeft - $('section #nav').width() / 2);
+                $('header #nav').scrollLeft(a.offsetLeft - $('header #nav').width() / 2);
+            }
+        },
+        getHistory: function() {
+            AJAX.GET('/api/customer/visitRecordList?customerId=' + customerId + '&curpage=1&pagesize=10', function(a) {
+                if (a && a.code == 1) {
+                    if (a.data && a.data != '') {
+                        a.data.customerId = customerId;
+                        $('#history').html(template('historyTpl', a.data));
+                    }
+
+                }
+            })
+        },
+        getMfriend: function() {
+            AJAX.GET('/api/customer/cronyList?customerId=' + customerId + '&curpage=1&pagesize=5', function(a) {
+                if (a && a.code == 1) {
+                    a.data.miId = app.getCid();
+                    a.data.uid = customerId;
+                    $('#mfrend').html(template('mfriendTpl', a.data));
+                    if (set == 1) {
+                        if (customerId == app.getCid()) {
+                            $("#myfriend").show();
+                        }
+                    } else {
+                        if (customerId != app.getCid()) {
+                            $("#fend").removeClass('hideFriend');
+                            $("#fend").addClass('showFriend');
+                            $("#myfriend").show();
+                            $("#fend").html('TA的密友');
+                        }
+                    }
+
+                }
+            })
+        },
+        siopen: true,
+        face: '',
+        name: '',
+        //获取基本信息
+        getUserInfo: function(cb) {
+            // var that = this;
+            AJAX.GET('/api/customer/info?customerId=' + customerId + '&curCustomerId=' + app.getCid(), function(d) {
+                if (d && d.code == 1) {
+                    if (d.data.visible == 0) {
+                        isInit = false;
+                        $('body').html('')
+                        Comm.alert('您没有权限查看此用户的个人主页！', function() {
+                            Comm.close()
+                        });
+                        return;
+                    }
+                    if (d.data.isBlack == 1) {
+
+                    }
+                    shearTitle = d.data.customerName;
+                    if (d.data.autograph) {
+                        shearContent = d.data.autograph;
+                    }
+                    d.data.powerLimit = powerLimit;
+                    d.data.focus = d.data.focus;
+                    myFace = Comm.OSS.getImgUrl(d.data.face, 'm');
+                    model.face = d.data.face;
+                    model.name = d.data.customerName;
+                    headImg = Comm.OSS.getImgUrl(d.data.headImg);
+                    d.data.mid = Comm.db('userinfo') ? Comm.db('userinfo').customerId : '';
+                    $('#bgj').html('<img src="' + headImg + '" onerror="this.src=\'img/pbg.png\'" width="100%" height="100%"/>');
+                    $('section header').html(template('header', d.data));
+                    $('#top').html(template('pageTop', d.data));
+                    model.info = d.data;
+                    if (cb) {
+                        cb(d)
+                    }
+                   
+                    model.getHistory();
+                    model.getMfriend();
+
+                    //$('section').css('background-image', 'url(' + headImg + ')');
+                }
+            })
+        },
+        
+        //添加关注
+        addFollow: function(e) {
+            AJAX.POST('/api/fans/addFans', {
+                customerId: app.getCid(),
+                fid: customerId
+            }, function(d) {
+                if (d && d.code == 1) {
+                    $(e).attr('style', 'background: #f4f4f4; border:none;padding:0;color:#999;').attr('onclick', 'model.deleteFollow(this)').html('<img src="img/isAdd.png" width="100%"/>')
+                    Comm.db('noGuan', '');
+                } else {
+                    Comm.message(d.msg || '网络错误')
+                }
+            })
+        },
+        //取消关注
+        deleteFollow: function(e) {
+            Comm.confirm('是否确认取消关注？', function(a) {
+                if (a) {
+                    AJAX.GET('/api/fans/unfollow?customerId=' + app.getCid() + '&fid=' + customerId, function(d) {
+                        if (d && d.code == 1) {
+                            $(e).attr('style', 'border:none;padding:0;').attr('onclick', 'model.addFollow(this)').html('<img src="img/add.png" width="100%"/>');
+                            Comm.db('noGuan', customerId)
+                        } else {
+                            Comm.message(d.msg || '网络错误')
+                        }
+                    })
+                }
+            })
+
+        },
+        jb: function() {
+            Comm.showWindow('');
+            setTimeout(function() {
+                Comm.confirm('你确定要拉黑此用户吗？', function(d) {
+                    if (d) {
+                        if (app.getCid() == _customerId || _customerId == null) {
+                            Comm.message('不能拉黑自己哦');
+                            return false;
+                        }
+                        AJAX.GET('/api/blacklist/addBlacklist?customerId=' + app.getCid() + '&rachelId=' + _customerId, function(a) {
+                            if (a && a.code == 1) {
+                                Comm.message('拉黑成功');
+                                //Comm.close();
+                                model.getUserInfo();
+                                Comm.showWindow('');
+
+                            }
+                        })
+                    }
+                })
+            }, 100)
+
+
+        },
+        shear: function(platform) {
+            Comm.showWindow('');
+            //分享资讯 -- 通用
+            event.stopPropagation();
+            var url = config.webroot + 'sharePersonal.html?customerId=' + shearId;
+            Comm.shareUrl({
+                platform: platform,
+                pic: myFace,
+                title: shearTitle,
+                desc: shearContent,
+                url: url
+            }, function(d) {
+                if (d.code) {
+
+                    //Comm.message('分享成功！')
+                }
+            });
+            Comm.showWindow('')
+                //Comm.go('shareArticle.html')
+        },
+        zhuanfa: function(id) {
+            Comm.go('zhuanfa.html?newsId=' + id);
+        },
+        zan: function(id, e) {
+            AJAX.GET('/api/news/praiseByNewsId?newsId=' + id, function(a) {
+                if (a && a.code == 1) {
+                    $(e).attr('onclick', 'model.quxiao(' + id + ',this);event.stopPropagation()');
+                    $(e).find('img')[0].src = 'img/index/zand.png';
+                    $(e).find('span')[0].innerHTML++;
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+        },
+        quxiao: function(id, e) {
+            AJAX.GET('/api/news/cancelPraiseByNewsId?newsId=' + id, function(a) {
+                if (a && a.code == 1) {
+                    $(e).attr('onclick', 'model.zan(' + id + ',this);event.stopPropagation()');
+                    $(e).find('img')[0].src = 'img/index/zan.png';
+                    $(e).find('span')[0].innerHTML--;
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+        }, //删除日志
+        shanchu: function() {
+            Comm.showWindow('');
+            Comm.confirm('确认删除？', function(d) {
+                if (d) {
+                    if (newType == 'hui') {
+                        AJAX.GET('/admin/comment/noenable?commentId=' + mid, function(a) {
+                            if (a && a.code == 1) {
+                                Comm.message('删除成功');
+                                $('#' + mid).remove();
+                            } else {
+                                Comm.message(a.msg);
+                            }
+                        })
+                    } else {
+                        AJAX.GET('/api/news/del?newsId=' + mid, function(a) {
+                            if (a && a.code == 1) {
+                                Comm.message('删除成功');
+                                $('#' + mid).remove();
+                            } else {
+                                Comm.message(a.msg);
+                            }
+                        })
+                    }
+
+
+                }
+            })
+        },
+        jubao: function() {
+            Comm.showWindow('');
+            Comm.go('report.html?itemId=' + mid + '&itemType=3');
+
+        },
+        qh: function(id, type, user, uid) {
+            console.log(type)
+            newType = type;
+            mid = id;
+            utype = user;
+            midd = uid;
+            if (uid == Comm.db('userinfo').customerId) {
+                Comm.showWindow('sinboxTemp3', true);
+            } else {
+                Comm.showWindow('sinboxTemp1', true);
+            }
+
+            event.stopPropagation();
+        },
+        add: function(id, bl) {
+            mid = id;
+            Comm.showWindow('');
+            if (Comm.db('userinfo').customerId == id || id == 1 || id == 2) {
+                Comm.showWindow('sinboxTemp4', true);
+            } else {
+                if (bl == 0) {
+                    Comm.showWindow('sinboxTemp5', true);
+                } else {
+                    Comm.showWindow('sinboxTemp6', true);
+                }
+
+            }
+        },
+        geren: function(id, type) {
+            if (type == 0) {
+                top.Comm.goself('personal.html?customerId=' + id);
+            } else if (type == 1) {
+                top.Comm.go('University.html?schoolId=' + id);
+            } else if (type == 2) {
+                top.Comm.go('major.html?majorId=' + id);
+            }
+
+            event.stopPropagation();　
+        },
+        jiechu: function() {
+            Comm.showWindow('');
+            setTimeout(function() {
+                Comm.confirm('是否确认移出黑名单？', function(a) {
+                    if (a) {
+                        AJAX.POST('/api/blacklist/relieveBlacklist', {
+                            blackId: mid
+                        }, function(d) {
+                            if (d && d.code == 1) {
+                                model.getUserInfo();
+                            } else {
+                                Comm.message(d.msg || '网络错误')
+                            }
+                        })
+                    }
+                })
+            }, 100)
+
+        },
+    }
+
+    function changeDeta(r) { //处理推荐、关注数据
+        var news = r.newsInfoVOList;
+        var forward = r.forward;
+        var top = r.topic;
+        var user = r.userInfo;
+        var resource = r.resource;
+        for (var i = 0; i < news.length; i++) {
+            if (news[i].forwardId > 0 && news[i].resourceId > 0) {
+                for (var q = 0; q < resource.length; q++) {
+                    if (news[i].resourceId == resource[q].newsId) {
+                        news[i].yTitle = resource[q].title;
+                        news[i].ynewsId = resource[q].newsId;
+                        if (resource[q].subhead != "") {
+                            news[i].yContent = resource[q].content ? resource[q].content : resource[q].subhead;
+                            news[i].yContent = news[i].yContent.replace(/div/g, "b");
+                        } else {
+                            news[i].yContent = resource[q].title;
+                        }
+                        news[i].ynum = resource[q].forwardNumber;
+                        news[i].ynewsType = resource[q].newsType;
+                        news[i].yaddTime = resource[q].addTime;
+                        news[i].ypic = resource[q].face.split(',');
+                        for (var s = 0; s < user.length; s++) {
+                            if (resource[q].customerId == user[s].customerId) {
+                                news[i].yname = user[s].customerName;
+                                if (resource[q].newsType == 7) {
+                                    news[i].yid = user[s].customerId;
+                                    news[i].yitemtype = 0;
+                                } else {
+                                    news[i].yid = user[s].userId;
+                                    news[i].yitemtype = user[s].itemType;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (news[i].topicId > 0) {
+                    for (var j = 0; j < top.length; j++) {
+                        if (news[i].topicId == top[j].topicId) {
+                            news[i].tTitle = top[j].title;
+                            news[i].tId = top[j].topicId;
+                        }
+                    }
+                }
+            } else if (news[i].resourceId > 0 && news[i].forwardId == 0) {
+                if (news[i].topicId > 0) {
+                    for (var j = 0; j < top.length; j++) {
+                        if (news[i].topicId == top[j].topicId) {
+                            news[i].tTitle = top[j].title;
+                            news[i].tId = top[j].topicId;
+
+                        }
+                    }
+                }
+                for (var ql = 0; ql < resource.length; ql++) {
+                    if (news[i].resourceId == resource[ql].newsId) {
+                        news[i].yTitle = resource[ql].title;
+                        news[i].ynewsId = resource[ql].newsId;
+                        if (resource[ql].subhead != "") {
+                            news[i].yContent = resource[ql].content ? resource[ql].content : resource[ql].subhead;
+                            news[i].yContent = news[i].yContent.replace(/div/g, "b");
+                        } else {
+                            news[i].yContent = resource[ql].subhead;
+                        }
+                        news[i].ynum = resource[ql].forwardNumber;
+                        news[i].yaddTime = resource[ql].addTime;
+                        news[i].ynewsType = resource[ql].newsType;
+                        news[i].yvideoId = resource[ql].videoId;
+                        news[i].ypic = resource[ql].face.split(',');
+                        for (var s = 0; s < user.length; s++) {
+                            if (user[s].newsId == resource[ql].newsId) {
+                                news[i].yname = user[s].customerName;
+                                if (resource[ql].newsType == 7) {
+                                    news[i].yid = user[s].customerId;
+                                    news[i].yitemtype = 0;
+                                } else {
+                                    news[i].yid = user[s].userId;
+                                    news[i].yitemtype = user[s].itemType;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (news[i].topicId > 0) {
+                for (var j = 0; j < top.length; j++) {
+                    if (news[i].topicId == top[j].topicId) {
+                        news[i].tTitle = top[j].title;
+                        news[i].tId = top[j].topicId;
+                    }
+                }
+            }
+            if (news[i].itemType == 0) {
+
+                for (var l = 0; l < user.length; l++) {
+                    if (news[i].customerId == user[l].customerId && news[i].itemType == user[l].itemType) {
+                        if (news[i].newsType == 7) {
+                            news[i].gid = user[l].userId;
+                            news[i].gname = user[l].userName;
+                            news[i].gface = user[l].face;
+                            news[i].uid = user[l].customerId;
+                            news[i].uname = user[l].customerName;
+                            news[i].uface = user[l].customerFace;
+                        } else {
+                            if (news[i].resourceId > 0) {
+                                if (news[i].newsId == user[l].newsId) {
+                                    news[i].uid = user[l].userId;
+                                    news[i].uname = user[l].userName;
+                                    news[i].uface = user[l].face;
+                                }
+
+                            } else {
+                                news[i].uid = user[l].userId;
+                                news[i].uname = user[l].customerName;
+                                news[i].uface = user[l].customerFace;
+                            }
+
+                        }
+
+                        news[i].schoolName = user[l].schoolName;
+                        news[i].enrollmentYear = user[l].enrollmentYear;
+                    }
+                }
+
+            } else {
+                for (var c = 0; c < user.length; c++) {
+
+                    console.log(user[c].customerName)
+                    if (news[i].newsId == user[c].newsId && news[i].itemType == user[c].itemType) {
+                        if (news[i].newsType == 7) {
+                            news[i].gid = user[c].userId;
+                            news[i].gname = user[c].userName;
+                            news[i].gface = user[c].face;
+                            news[i].uid = user[c].customerId;
+                            news[i].uname = user[c].customerName;
+                            news[i].uface = user[c].customerFace;
+                        } else {
+
+                            if (news[i].resourceId > 0) {
+
+                                news[i].uid = user[c].userId;
+                                news[i].uname = user[c].userName;
+                                news[i].uface = user[c].face;
+                            } else {
+                                news[i].uid = user[c].userId;
+                                news[i].uname = user[c].customerName;
+                                news[i].uface = user[c].customerFace;
+                            }
+                        }
+                        news[i].schoolName = user[c].schoolName;
+                        news[i].enrollmentYear = user[c].enrollmentYear;
+                    }
+                }
+            }
+            if (news[i].face) {
+                news[i].face = news[i].face.split(',');
+            }
+            if (news[i].content) {
+                news[i].content = news[i].content.replace('font-family').replace('font-size').replace(/<div class="f14">/gi, "").replace(/<div class='f14'>/gi, "").replace(/<div>|<\/div>/gi, "").replace(/(\r\n|\n|\r)/gm, "<br/>");
+            }
+            if (news[i].subhead) {
+                news[i].subhead = news[i].subhead.replace('font-family').replace('font-size').replace(/div/g, "b").replace(/(\r\n|\n|\r)/gm, "<br/>")
+            }
+            if (news[i].newsType == 5) {
+                news[i].content = news[i].content.replace(/<\/?.+?>/g, "").replace(/ /g, "");
+            }
+        }
+        console.log(news)
+        return news;
+    }
+    template.defaults.imports.mylist = function(data) {
+        var html = '';
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].location && data[i].location == i + 1) {
+                html += '<div class="bg_white center paddt10 mgod" style="position: relative;">';
+                html += '<img src="img/close.png" class="delMf" style="position:absolute;top:0;right:0;width: 20px;display:none;"onclick="model.remMf(' + data[i].cronyId + ');event.stopPropagation()"/>';
+                html += '<img id="ing" src="' + Comm.OSS.getImgUrl(data[i].face, 's') + '" style="border-radius: 40px;" width="40" height="40" />';
+                html += '<p class="color333 f12 mart5"><span class="wordW">' + data[i].customerName + '</span><img src="' + (data[i].sex == 1 ? 'img/man.png' : 'img/woman.png') + '" height="13" width="13" /></p>';
+                html += '</div>';
+                continue;
+            } else {
+                html += '<div class="bg_white paddt10 center mgod" onclick="model.addGo(' + (i + 1) + ')">';
+
+                html += '<img src="img/my/add.png" width="40" height="40" />';
+                if (data.miId == data.uid) {
+                    html += '<img class="mart5" src="img/my/nadd.png" width="49" style="object-fit: contain;border-radius: 40px;" height="16" />';
+                }
+                html += '</div>';
+            }
+
+        }
+        return html;
+    }
+</script>
+
+</html>

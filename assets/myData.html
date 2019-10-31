@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <style>
+        .navTitle {
+            font-weight: normal;
+        }
+
+        /* header */
+        /* section */
+        .cellContent {
+            height: 50px;
+        }
+
+        .icon_pre {
+            /* padding-left: 25px; */
+            background-repeat: no-repeat;
+            background-position: left 2px;
+            background-size: auto 15px;
+        }
+
+        .head,
+        .head>img {
+            height: 40px;
+            width: 40px;
+        }
+
+        .head {
+            overflow: hidden;
+        }
+
+        .cellContent input {
+            text-align: right;
+            font-size: 15px;
+            height: 30px;
+            color: #999;
+        }
+
+        .cellContent input,
+        #wx_id,
+        #sex,
+        #sj_id {
+            color: black;
+        }
+
+        /* footer */
+        .quit {
+            height: 45px;
+            line-height: 45px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navItem f16 marr10" id="edit" style="color: #098E75" onclick="model.edit()">保存</div>
+            <div class="navTitle">个人中心</div>
+        </div>
+    </header>
+    <section id='' class="bg_hui ">
+    </section>
+
+</body>
+<script type="text/html" id="userInfo">
+    <div class="linebod"></div>
+    <!--基本信息-->
+    <div class="paddl15 bg_white">
+        <div class="cellContent  indicator " onclick="Comm.go('./setUserImg.html')">
+            <div class="label f14 icon_pre icon_tx">编辑头像</div>
+            <div class="head" style="border-radius: 50%; position: relative;">
+                <div id="faceImg">
+                    <img id="imghead" width="40" height="40" src="{{OSS($data.face)}}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="linebod "></div>
+
+    <div class="paddl15 bg_white ">
+        <div class="cellContent bottomBorder ">
+            <div class="label f14 icon_pre icon_name ">姓名</div>
+            <input type="text" id="customerName" value="{{$data.customerName}}" maxlength="10" name="customerName" data-reg='empty' placeholder="快填写姓名吧" style="color:#888;" >
+        </div>
+    </div>
+    <!--<div class="paddl15 bg_white">
+        <div class="cellContent bottomBorder ">
+            <div class="label f14 icon_pre icon_name ">会员头衔</div>
+            <p style="color:#888;">{{userLevel}}</p>
+        </div>
+    </div>-->
+    <div class="paddl15 bg_white ">
+        <div class="cellContent indicator bottomBorder" onclick="model.updatePhone()">
+            <!--telBind.html?v=2-->
+            <div class="label f14 icon_pre icon_wx">手机号码</div>
+            <span class="show-tip" style="color:#888;">
+                {{phones($data.phone)}}
+                <i class="show-tips"></i>
+            </span>
+        </div>
+    </div>
+    <div class="paddl15 bg_white">
+        <div class="cellContent  " style="height:70px;">
+            <div class="label f14 icon_pre icon_name " style="margin-top: -40px;">个性签名</div>
+            <textarea id="autograph" oninput="length()" style="width: 240px; font-size: 14px; height:60px;line-height: 20px;border: none; " placeholder="这是一句生来就注定要被消灭的签名">{{$data.autograph}}</textarea>
+        </div>
+    </div>
+
+    <div class="linebod "></div>
+    <!--************************************************************************-->
+    <div class="paddl15 bg_white">
+        <div class="cellContent bottomBorder ">
+            <div class="label f14 icon_pre icon_name ">注册时间</div>
+            <p class="f14" style="color:#888;">{{$data.registerTime}}</p>
+        </div>
+    </div>
+    <div class="paddl15 bg_white ">
+        <div class="cellContent indicator bottomBorder sm" onclick="Comm.go('./realname.html')">
+            <!--telBind.html?v=2-->
+            <div class="label f14 icon_pre icon_wx">实名认证</div>
+            <span class="show-tip">
+            		<span id="types"></span>
+                <i class="show-tips"></i>
+            </span>
+        </div>
+    </div>
+    <div class="paddl15 bg_white ">
+        <div class="cellContent indicator bottomBorder" onclick="Comm.go('improveInfo.html?_type=1')">
+            <!--telBind.html?v=2-->
+            <div class="label f14 icon_pre icon_wx">完善信息</div>
+            <span class="show-tip">
+                <i class="show-tips"></i>
+            </span>
+        </div>
+    </div>
+    <div class="paddl15 bg_white ">
+        <div class="cellContent indicator " onclick="model.updatePsw()">
+            <!--telBind.html?v=2-->
+            <div class="label f14 icon_pre icon_wx">修改密码</div>
+            <span class="show-tip">
+                <i class="show-tips"></i>
+            </span>
+        </div>
+    </div>
+
+    <div class="linebod" style='height:12px'></div>
+</script>
+
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script type="text/javascript" src="inc/picker.min.js"></script>
+<script type="text/javascript" src="inc/upimg/upload.js"></script>
+
+<script>
+    var userinfo = Comm.db("userinfo");
+    var sex =null;
+    var isfirst =1;
+    function pageresume() {
+        pageload()
+    }
+    function pageload() {
+        model.getUserInfo()
+    }
+    function length(){
+    	if($('#autograph').val().length>=50&&isfirst==1){
+    		Comm.message('个性签名最多输入50字')
+    		isfirst=2;
+    	}
+    }
+    var model = {
+        userData:{},
+        //点击保存按钮
+        edit: function () {
+            var that = this;
+            var d = {}
+            if($('#customerName').val() == ''||$('#customerName').val().replace(/\s+/g, "")==""){
+                Comm.message('姓名不能为空');
+                return;
+            }
+            if($('#autograph').val().length>50){
+            	 Comm.message('个性签名最长50字，请重新编辑');
+                return;
+            }
+            d.customerName = $('#customerName').val();
+            d.identity = this.userData.identity
+            d.phone = this.userData.phone;
+            d.autograph = $('#autograph').val();
+            d.sex = sex;
+            
+            AJAX.POST('/api/customer/updateByCenter',d,function(d){
+                if(d&&d.code==1){
+                    Comm.message('修改成功');
+                    that.getUserInfo();
+                    setTimeout(function(){
+                        Comm.close()
+                    },1500)
+                }else{
+                	Comm.message(d.msg);
+                }
+            })
+        },
+        updatePhone:function(){
+            Comm.go('updatePhone.html?phone='+this.userData.phone)
+        },
+        updatePsw:function(){
+            Comm.go('./updatePsw.html?phone='+this.userData.phone)
+        },
+       
+        //获取用户基础信息
+        getUserInfo: function () {
+            var that = this;
+            AJAX.GET('/api/customer/detail', function (d) {
+                if (d && d.code == 1) {
+                    that.userData = d.data
+                    sex = d.data.sex;
+                    $('section').html(template('userInfo', d.data))
+                    if(d.data.authentication==0){
+                    	$("#types").text('未填写');
+                    }
+                     if(d.data.authentication==1){
+                    	$("#types").text('审核中');
+                    	$('.sm').attr('onclick','');
+                    }
+                     if(d.data.authentication==2){
+                    	$("#types").text('已通过');
+                    }
+                       if(d.data.authentication==3){
+                    	$("#types").text('已拒绝');
+                    }
+                }
+            })
+        }
+
+    }
+
+
+</script>
+
+</html>

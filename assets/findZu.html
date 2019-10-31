@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>收索</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+
+		<style>
+			.searchBar {
+				margin: 0 auto;
+			}
+			
+			.searchBar input {
+				width: 95%;
+				padding-left: 30px;
+				line-height: 30px;
+				height: 30px;
+				font-size: 14px;
+				color: #8891A7;
+				background-color: #F2F6F7;
+				border-radius: 18px;
+				background-image: url('img/search.png');
+				background-repeat: no-repeat;
+				background-size: 14px;
+				background-position: 10px center;
+				margin: 0 auto;
+				margin-left: 2.5%;
+			}
+			
+			.order-t {
+				
+				text-align: center;
+				font-size: 12px;
+			}
+			
+			.scrollx {
+				height: 50px;
+				overflow: hidden;
+			}
+			
+			.scrollx-content {
+				width: 100%;
+				overflow-x: auto;
+				white-space: nowrap;
+			}
+			
+			.order-t-c {
+				width: 17%;
+				height: 100%;
+				font-size: 15px;
+				/*font-weight: bold;*/
+				color: #888888;
+				display: inline-block;
+				margin-bottom: 30px;
+				/*把水平滚动条撑到外面,达到隐藏的目的*/
+				vertical-align: middle;
+			}
+			
+			.order-t-c-active {
+				color: #000;
+				border-bottom: 2px solid #000000;
+				color: #000;
+			}
+			
+			.mescroll-totop {
+				bottom: 80px;
+				right: 30px;
+				opacity: 1;
+				z-index: 99;
+			}
+			
+			.swiper-container2 {
+				height: 170px;
+				width: 80%;
+			}
+			
+			.navItemIcon {
+				background: inherit;
+			}
+			
+			.swiper-container2 .swiper-wrapper {
+				left: 15%;
+			}
+			
+			.isselatesku-item {
+				position: relative;
+			}
+			
+			.getmor {
+				background: url(img/my/left.png) no-repeat 97% center;
+				background-size: 8px 14px;
+				border-bottom: 1px solid #f4f4f4;
+			}
+			
+			.isJiaru {
+				background: #D3D3D3;
+				padding: 3px 7px;
+				color: #fff;
+				border-radius: 4px;
+			}
+			.add-guan {
+            color: #098E75;
+            width: 65px;
+            height: 25px;
+            text-align: center;
+            line-height: 25px;
+            background: #fff;
+            border: 1px solid #098E75;
+            border-radius: 15px;
+            padding: 0px;
+        }
+			input[type=search]::-webkit-search-cancel-button {
+				-webkit-appearance: none;
+			}
+			
+			.schoolMsg {
+				border-bottom: 0px;
+			}
+			.data-list{
+				background: inherit;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar" style="padding: 0;box-shadow: none;">
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+				<div class="navItemIcon marl5 marr10" onclick="getListData({num:1, size:10})">搜索</div>
+				<div class="nav-title block searchBar" style="width: calc(100% - 100px);height: 44px;">
+					<form action="javascript:return true;" onsubmit="model.search()" style="position: relative;">
+						<input id="id_searchInput" type="search" oninput="model.search()" autocomplete="off" placeholder="输入关键字">
+						<img src="img/index/qxgz.png" onclick="model.clear()" width="15" style="position: absolute;right: 15px;top: 15px;" />
+					</form>
+				</div>
+			</div>
+		</header>
+		<section>
+
+			<!--轮播-->
+			<div id="swiper" class="swiper-container">
+				<div id="swiperWrapper" class="swiper-wrapper">
+					<!--全部-->
+					<div id="mescroll0" class="swiper-slide mescroll">
+						<div id="dataList0" class="data-list">
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer class="shared">
+
+		</footer>
+	</body>
+	<script type="text/html" id="listTpl">
+		<div>
+			{{each $data v k}}
+			<div class="paddt15 paddb15 paddr25 paddl25 borderb bg_white" id="{{v.groupId}}">
+				<div class="heads">
+					<div class="name-left fl" style="width: 75%; position: relative;" onclick="Comm.go('postDetails.html?groupId={{v.groupId}}')">
+						<img class="fl" src="{{OSS(v.face,'s')}}" style="border-radius: 50%;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+						<div class="fl marl10" style="width: 70%;">
+							<p class="f14 bold wordW" style="height: 22px;">{{v.groupName}}</p>
+							<p class="f12 c9e" style="height: 16px;">帖子{{conunm(v.newsNum)}} · 成员 {{conunm(v.customerNum)}}</p>
+						</div>
+					</div>
+					<div id="isAdd">
+						{{if v.focus==0}}
+						<div class=" add-guan fr" style="margin-top: 8px;" onclick="model.add({{v.groupId}},this)">加入</div>
+						{{else}}
+						<div class="f14 fr isJiaru" onclick="model.remove({{v.groupId}},this)">退出</div>
+						{{/if}}
+					</div>
+					<div class="clearfix"></div>
+
+				</div>
+			</div>
+			{{/each}}
+		</div>
+	</script>
+
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="./inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+
+	<script>
+		Comm.db('userGroup','1');
+		if(Comm.db('userinfo')) {
+			var customerId = app.getCid();
+		} else {
+			var customerId = "";
+		}
+		$("#id_searchInput").val(Comm.query('keyWord'));
+
+		function pageload() {
+			mescrollRefreshFn({
+				menuNumber: 1,
+			});
+			Comm.db('groups',1);
+		}
+
+		function pageresume() {
+
+		}
+		var mid = "";
+		var model = {
+			qh: function(id) {
+				swiper.slideTo(id);
+			},
+			clear: function() {
+				$("#id_searchInput").val('');
+			},
+			add: function(groupsId, e) {
+				AJAX.GET('/api/school/groups/addFocus?groupsId=' + groupsId + '&customerIds=' + customerId, function(a) {
+					if(a && a.code == 1) {
+						Comm.message('加入成功');
+						$('#'+groupsId).remove();
+						getListData({num:1, size:50});
+						$(e).removeClass('add-guan').addClass('isJiaru').attr('onclick', 'event.stopPropagation();model.remove(' + groupsId + ',this)').html('退出')
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+			remove: function(groupsId, e) {
+				Comm.confirm('是否确认退出？', function(d) {
+					if(d) {
+						AJAX.GET('/api/school/groups/cancelFocus?groupsId=' + groupsId + '&customerIds=' + customerId, function(a) {
+							if(a && a.code == 1) {
+								Comm.message('退出成功');
+								$(e).removeClass('isJiaru').addClass('add-guan').attr('onclick', 'event.stopPropagation();model.add(' + groupsId + ',this)').html('加入')
+							} else {
+								Comm.message(a.msg);
+							}
+						})
+					}
+				})
+
+			},
+			search:function(){
+				getListData({num:1, size:10});
+				//document.activeElement.blur();
+			},
+
+		}
+
+		/*设置列表数据
+		 * pageData 当前页的数据
+		 * dataIndex 数据属于哪个nav */
+		function setListData(pageData, dataIndex) {
+			var listDom = document.getElementById("dataList" + dataIndex),
+				listStr = "";
+				
+				pageData.dataIndex = dataIndex;
+				listStr = template('listTpl', pageData);
+				if(pageData.curPage==1&&pageData.length==0){
+					listDom.innerHTML='<div class="mescroll-empty"><img class="empty-icon" src="img/noData.png"><p class="empty-tip">这里空空如也，去看看别的</p></div>'
+				}else{
+					if(pageData.curPage > 1) {
+					listDom.innerHTML += listStr;
+				} else {
+					listDom.innerHTML = listStr
+				};
+			
+				}
+				Comm.scorllDel();
+
+		}
+
+		/*联网加载列表数据
+		 在您的实际项目中,请参考官方写法: http://www.mescroll.com/api.html#tagUpCallback
+		 请忽略getListDataFromNet的逻辑,这里仅仅是在本地模拟分页数据,本地演示用
+		 实际项目以您服务器接口返回的数据为准,无需本地处理分页.
+		 * */
+		var htmlData = [];
+
+		function getListDataFromNet(curNavIndex, pageNum, pageSize, successCallback, errorCallback) {
+			var title = $("#id_searchInput").val();
+			var o = {};
+			o.keyword = title;
+			o.curpage = pageNum;
+			o.pagesize = 50;
+			o.type = 2;
+			o.customerId = customerId;
+			var url='';
+			if(Comm.query('more')==3){
+				url="/api/school/groups/myList";
+			}else{
+				url="/api/school/groups/allByNotFocus";
+			}
+			AJAX.POST(url, o, function(a) {
+				if(a && a.code == 1) {
+					var r = a.data || [];
+					htmlData = r;
+					totalSize = a.totalCount;
+					htmlData.curPage = a.curPage;
+					successCallback && successCallback(htmlData, totalSize);
+				} else {
+					Comm.message(a.msg);
+					errorCallback && errorCallback();
+				}
+			});
+		}
+	</script>
+
+</html>

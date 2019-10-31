@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>参与讨论</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+    <style>
+    	div {
+    -webkit-user-select: text;
+}
+
+div * {
+    -webkit-user-select: text
+}
+        .navItemIcon {
+            width: 50px;
+            background: none;
+        }
+        
+        .jjs {
+            background-color: #f4f4f4;
+            border-radius: 5px;
+            color: #FFF;
+            line-height: 22px;
+            padding: 1px 10px;
+        }
+        
+        .search {
+            padding: 10px 25px;
+            background-color: #F3F3F3;
+            background-image: url(img/index/down.png);
+            background-repeat: no-repeat;
+            background-size: 6px 3px;
+            background-position: 98% center;
+        }
+        
+        .inp {
+            width: 100%;
+            background-color: #F3F3F3;
+        }
+        
+        #content {
+            width: 100%;
+            height: 150px;
+            border: none;
+            color: #464646;
+			font-size: 16px;
+            -webkit-user-select: text;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        #content:empty:before{
+            content: attr(placeholder);
+            color:#bbb;
+        		}
+        .whosee {
+            border-bottom: 1px solid #BFBFBF;
+            border-top: 1px solid #BFBFBF;
+            padding: 25px 20px;
+        }
+        
+        .who {
+            background: url(img/index/per.png) no-repeat left center;
+            background-size: 19px;
+            color: #222222;
+        }
+        
+        .see {
+            background: url(img/index/bac-r.png) no-repeat right center;
+            background-size: 6px 11px;
+            color: #888888;
+        }
+        
+        #sinbox {
+            width: 300px;
+            border-radius: 10px;
+        }
+        
+        .qxgz {
+            background-size: 16px;
+            text-align: center;
+            padding: 20px;
+            color: #444444;
+        }
+        
+        .closeimg {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+        }
+        
+        div#conimg .left img.closeimg {
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar" style="padding: 0;box-shadow: none;">
+
+            <div class="navBackIcon" onclick="model.close()"></div>
+
+            <div class="navItemIcon marl5 marr10">
+                <div class="jjs mart10">发布</div>
+            </div>
+            <div class="f16 nav-title block searchBar marl25" style="width: calc(100% - 85px);height: 44px;">
+                参与讨论
+            </div>
+        </div>
+    </header>
+    <section>
+
+        <div class="paddl15 paddr25">
+            <div class="cgreen marb10 mart5 title"></div>
+            <div contenteditable="plaintext-only" id="content" onkeydown="zhuanfa.keydown(this)" oninput="length(this)" maxlength="3000"></div>
+            <p class="tright"><span id="nums" class="color038">0</span><span class="color666">/3000</span></p>
+            <div class="paddt5 bg_white refund-price">
+                <div class="bg_white  paddr10">
+                    <div class="fl" id="conimg">
+                        <div class="left" id="upm">
+                            <img src="./img/my/xztp.png" width="80" height="80" id="imgupimg" />
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+
+            </div>
+        </div>
+        <!--<div class="whosee" onclick="Comm.showWindow('sinboxTemp',true)">
+            <div class="who fl paddl20">谁可以看</div>
+            <div class="see fr paddr10" id="3">所有人</div>
+            <div class="clearfix"></div>
+        </div>-->
+    </section>
+    <footer class="shared">
+
+    </footer>
+    <div id="sinbox" wtd="sinboxTemp">
+        <div class="qxgz" style="border-bottom: 1px solid #F4F4F4;" onclick="model.see(3)">所有人</div>
+        <div class="qxgz" style="border-bottom: 1px solid #F4F4F4;" onclick="model.see(1)">仅我可见</div>
+        <div class="qxgz" onclick="model.see(2)">仅好友可见</div>
+    </div>
+</body>
+<script id="imgTpl" type="text/html">
+    {{each $data v k}}
+    <div class="left marr10 marb10" style="position:relative;">
+        <img src="./img/close.png" width="20" data='{{v.img}}' class="closeimg" onclick="removeimg(this)" />
+        <img class="upimg1" src="{{OSS(v.img)}}" width="80" height="80" data="{{v.img}}" />
+    </div>
+    {{/each}}
+</script>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="./inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script type="text/javascript" src="./inc/upimg/upload.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+<script type="text/javascript" src="inc/tpl.js"></script>
+<script type="text/javascript" src="inc/dict.js" ></script>
+<script>
+    var whyPicker;
+    var upHeader = null;
+    var cimgUrl = [];
+    var cimgUrl1 = [];
+    var topicId = Comm.query('topicId');
+    var picNum = 0; //图片数量
+    var isfirst = 1;
+    //移除凭证
+    function removeimg(a) {
+        //			Comm.confirm('是否删除该图片', function(d) {
+        //				if(d) {
+        $(a).parent().remove();
+        var imgData = $(a).attr('data');
+        for (var i = 0; i < cimgUrl1.length; i++) {
+            if (cimgUrl1[i].img == imgData) {
+                cimgUrl1.splice(i, 1)
+                imgUploader.prototype.del(i);
+                picNum--;
+            }
+        }
+        $("#upm").show().find('.moxie-shim').width(80).height(80);
+
+        //				}
+        //			})
+    }
+    			if(Comm.ios()){
+    			$("section").scroll(function() {
+					document.activeElement.blur();
+					event.stopPropagation();
+				});	
+    			}
+			
+    function length(a) {
+        var ss = $('#content').html().replace(/\s+/g, "").replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/[ ]|&nbsp;/g, '').length;
+        if (ss > 0||$('#conimg .upimg1').length>0) {
+            $('.jjs').css('background', '#098E75');
+            $('.jjs').parent().attr('onclick', 'model.add()');
+        } else {
+            $('.jjs').css('background', '#f4f4f4');
+            $('.jjs').parent().attr('onclick', '');
+        }
+
+        zhuanfa.oninput(a, 3000);
+        //数字回写，没有数字限制不需要
+        $('#nums').html(zhuanfa.getlen(a));
+    }
+
+    function pageload() {
+    		zhuanfa.suiji('content','sssj');
+        upHeader = new imgUploader('conimg', 9, "imgupimg");
+        upHeader.success = function(arr) {
+            if (arr.length > 0) {
+                cimgUrl = [];
+                picNum += arr.length;
+                for (var k = 0; k < arr.length; k++) {
+                    cimgUrl1.push({
+                        img: arr[k]
+                    })
+                    cimgUrl.push({
+                        img: arr[k]
+                    })
+
+                }
+            }
+            $("#upm").before(template('imgTpl', cimgUrl))
+            $('.jjs').css('background', '#098E75');
+            $('.jjs').parent().attr('onclick', 'model.add()');
+
+            if (picNum == 9) {
+                $("#upm").hide();
+            } else {
+                $("#upm").show().find('.moxie-shim').width(80).height(80);
+            }
+        }
+        if(Comm.ios()){
+        	setTimeout(function(){
+        		$('#content').focus();
+        Comm.PopUpKeyboard({
+            code: 1
+        });
+        	},500);
+        	document.body.addEventListener('touchmove', function(e) {
+					if(document.activeElement)
+						document.activeElement.blur();
+				}, {
+					passive: false
+				});
+        }else{
+       	setTimeout(function(){
+        		$('#content').focus();
+        Comm.PopUpKeyboard({
+            code: 1
+        });
+        	},500)
+        }
+        
+        $('.title').html('<div class="scl-dw">' + Comm.db('topicName') + '<div>')
+    }
+
+    function pageresume() {
+        if (Comm.db('zhuanfa') == 1) {
+            //回调页面刷新
+            setTimeout(function(){
+            	zhuanfa.pageresume(Comm.g('content'), 3000);
+            	$('#nums').html(zhuanfa.getlen(Comm.g('content')));
+            	Comm.db('zhuanfa', '')
+            },500)
+            //数字回写，没有数字限制不需要
+           
+           
+        }
+    }
+
+    function androidback() {
+        if (parseInt(Comm._pageinfo.android_home) === 0) {
+            if ($('#content').html().replace(/\s+/g, "") == '' || $('#conimg').find('img').length > 1) {
+                Comm.close();
+            } else {
+                model.close();
+            }
+
+        } else {
+            if (parseInt(Comm._pageinfo.android_home) === 1) {
+                Comm._pageinfo.android_home = 2;
+                Comm.confirm("您确定要退出应用？", function(a) {
+                    if (a == 1) Comm.close();
+                    else Comm._pageinfo.android_home = 1;
+                });
+            }
+        }
+    }
+    var mid = "";
+    var model = {
+        close: function() {
+        	document.activeElement.blur();
+				Comm.resizeSection();
+				setTimeout(function(){
+				 if ($('#content').html() != '' || $('#conimg').find('img').length > 1) {
+                Comm.confirm('是否确认退出？', function(d) {
+                    if (d) {
+                        Comm.close();
+                    }
+                })
+            } else {
+                Comm.close();
+            }	
+				},200)
+           
+
+        },
+        see: function(type) {
+            if (type == 3) {
+                $('.see').html('所有人');
+                $('.see').attr('id', '3');
+                Comm.showWindow('');
+            } else if (type == 1) {
+                $('.see').html('仅自己可见');
+                $('.see').attr('id', '1');
+                Comm.showWindow('');
+            } else {
+                $('.see').html('仅好友可见');
+                $('.see').attr('id', '3');
+                Comm.showWindow('');
+            }
+        },
+        add: function() {
+            var o = {};
+            var title = '';
+            var content = $('#content').html();
+            var imgArr1 = $('#conimg .upimg1');
+            console.log($('#conimg'))
+            o.urls = '';
+            //				if(content.length > 50) {
+            //					title = content.slice(0, 50);
+            //				} else {
+            //					title = content;
+            //				}
+            if (imgArr1.length == 1) {
+                $.each(imgArr1, function() {
+                    o.urls += $(this).attr('data');
+                })
+            }
+            if (imgArr1.length > 1) {
+                $.each(imgArr1, function() {
+                    o.urls += $(this).attr('data') + ',';
+                })
+            }
+            o.topicId = topicId;
+            o.newsType = 8;
+            o.title = title;
+            o.content = '<div>'+ content.replace(/\n/g, "<br/>") +'</div>';
+            o.subhead = $("#content").text().substring(0, 100);
+            //o.subhead = content.replace(/<\/?.+?>/g, "").replace(/ /g, "").substring(0, 100);
+            o.videoId = "";
+            o.isdraft = 0;
+            o.itemType = 5;
+            o.itemId = topicId;
+            o.keywordIds = '';
+            o.ids = zhuanfa.ids.join(',');
+            o.newsRange = 3;
+            if (o.content.replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/[ ]|[&nbsp;]/g, '') == "" && o.urls == "") {
+                Comm.message('请输入讨论内容');
+                return false;
+            }
+            Comm.loading('发布中...');
+            AJAX.POST('/api/news/sub', o, function(a) {
+                Comm.loading(false)
+                if (a && a.code == 1) {
+                	document.activeElement.blur();
+                    Comm.message('操作成功');
+                    Comm.gotop('ifrm.html');
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+        }
+    }
+</script>
+
+</html>

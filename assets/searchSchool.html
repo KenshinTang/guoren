@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>首页</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+
+		<style>
+			.searchBar {
+				margin: 0 auto;
+			}
+			
+			.searchBar input {
+				width: 95%;
+				padding-left: 30px;
+				line-height: 30px;
+				height: 30px;
+				font-size: 14px;
+				color: #8891A7;
+				background-color: #F2F6F7;
+				border-radius: 18px;
+				background-image: url('img/search.png');
+				background-repeat: no-repeat;
+				background-size: 14px;
+				background-position: 10px center;
+				margin: 0 auto;
+				margin-left: 2.5%;
+			}
+			
+			.order-t {
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				font-size: 12px;
+			}
+			
+			.scrollx {
+				height: 50px;
+				overflow: hidden;
+			}
+			
+			.scrollx-content {
+				width: 100%;
+				overflow-x: auto;
+				white-space: nowrap;
+			}
+			
+			.order-t-c {
+				width: 50%;
+				height: 100%;
+				font-size: 15px;
+				/*font-weight: bold;*/
+				color: #888888;
+				display: inline-block;
+				margin-bottom: 30px;
+				/*把水平滚动条撑到外面,达到隐藏的目的*/
+				vertical-align: middle;
+			}
+			
+			.order-t-c-active {
+				color: #000;
+				border-bottom: 2px solid #000000;
+				color: #000;
+			}
+			
+			.mescroll-totop {
+				bottom: 80px;
+				right: 30px;
+				opacity: 1;
+				z-index: 99;
+			}
+			
+			.swiper-container2 {
+				height: 170px;
+				width: 80%;
+			}
+			
+			.navItemIcon {
+				background: inherit;
+			}
+			
+			.swiper-container2 .swiper-wrapper {
+				left: 15%;
+			}
+			
+			.isselatesku-item {
+				position: relative;
+			}
+			
+			.getmor {
+				background: url(img/my/left.png) no-repeat 97% center;
+				background-size: 8px 14px;
+				border-bottom: 1px solid #f4f4f4;
+			}
+			
+			.isJiaru {
+				border: 1px solid #D3D3D3;
+				color: #fff;
+				border-radius: 4px;
+			}
+			
+			.schoolMsg1 {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			
+			.schoolMsg1 .left {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			
+			.lagList>span {
+				display: inline-block;
+				width: 35px;
+				height: 16px;
+				font-size: 10px;
+				color: #888888;
+				background: #EEEEEE;
+				text-align: center;
+				line-height: 16px;
+			}
+			
+			.schoolMsg1 .cancel {
+				width: 62px;
+				height: 26px;
+				text-align: center;
+				line-height: 26px;
+				font-size: 12px;
+				color: #888888;
+				border: 1px solid #CBCBCB;
+				border-radius: 3px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar" style="padding: 0;box-shadow: none;">
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+				<div class="navItemIcon marl5 marr10" onclick="getListData({num:1, size:10})">搜索</div>
+				<div class="nav-title block searchBar" style="width: calc(100% - 100px);height: 44px;">
+					<form action="javascript:return true;" onsubmit="model.search()" style="position: relative;">
+						<input id="id_searchInput" autocomplete="off" type="text" placeholder="输入关键字">
+						<img src="img/index/qxgz.png" onclick="model.clear()" width="15" style="position: absolute;right: 15px;top: 15px;" />
+					</form>
+				</div>
+			</div>
+			<div class="scrollx mescroll-touch-x">
+				<div id="scrollxContent" class="scrollx-content">
+					<div id="nav" class="order-t ovf bb1" style="border-bottom: 1px solid #F0F0F0;">
+						<div class=" order-t-c brp" i='0'>学校</div>
+						<div class=" order-t-c brp" i='1'>专业</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<section>
+
+			<!--轮播-->
+			<div id="swiper" class="swiper-container">
+				<div id="swiperWrapper" class="swiper-wrapper">
+					<!--全部-->
+					<div id="mescroll0" class="swiper-slide mescroll">
+						<div id="dataList0" class="data-list" style="border-top: 5px solid #F4F4F4;">
+						</div>
+					</div>
+					<!--旗舰店-->
+					<div id="mescroll1" class="swiper-slide mescroll">
+						<div id="dataList1" class="data-list" style="border-top: 5px solid #F4F4F4;">
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer class="shared">
+
+		</footer>
+	</body>
+	<script type="text/html" id="listTpl">
+		{{if $data.dataIndex==0}} {{each $data item index}}
+		<div class="schoolMsg1 pad15">
+			<div class="left" onclick="Comm.go('./University.html?schoolId={{item.schoolId}}')">
+				<div class="schoolImg">
+					<img src="{{OSS(item.schoolLogo)}}" width="50" height="50" style="border-radius:50%;" alt="">
+				</div>
+				<div class="marl20">
+					<p class="bold f14">{{item.schoolName}}</p>
+					<p class="f12" style="color:#888888;margin:5px 0;">{{item.cityName}} · 关注{{item.customerNum}}</p>
+					<div class="lagList">
+						<span>211</span>
+						<span>985</span>
+					</div>
+				</div>
+			</div>
+			{{if(item.focus==0)}}
+			<div class="cancel" style="color:#098E75;border:1px solid #098E75;" onclick="model.addFocus({{item.schoolId}})">关注</div>
+			{{else}}
+			<div class="cancel" onclick="model.cancelFocus({{item.schoolId}})">取消关注</div>
+			{{/if}}
+		</div>
+		{{/each}} {{/if}} {{if $data.dataIndex==1}}
+		<div class="">
+			{{each $data v k}}
+			<div class="schoolMsg">
+				<div class="heads">
+					<div class="name-left fl" style="width: 80%;" onclick="Comm.go('major.html?majorId={{v.majorId}}');">
+						<img class="fl" src="{{OSS(v.face)}}" style="border-radius: 50%;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+						<div class="fl marl10" style="width: 70%;">
+							<p class="f14 bold wordW">{{v.majorName}}</p>
+							<p class="f12 c9e wordW">{{v.autograph}}</p>
+							<p class="f12 c9e">粉丝{{conunm(v.customerNum)}} · 学校{{v.schoolNum}} </p>
+						</div>
+					</div>
+					<div id="isAdd">
+						{{if v.focus==0}}
+						<div class=" add-guan fr mart10" onclick="model.add({{v.majorId}})">+ 关注</div>
+						{{else}}
+						<div class="f14 fr isJiaru" onclick="model.remove({{v.majorId}})">取消关注</div>
+						{{/if}}
+					</div>
+					<div class="clearfix"></div>
+
+				</div>
+			</div>
+			{{/each}}
+		</div>
+
+		{{/if}}
+	</script>
+
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="./inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+
+	<script>
+		if(Comm.db('userinfo')) {
+			var customerId = app.getCid();
+		} else {
+			var customerId = "";
+		}
+		$("#id_searchInput").val(Comm.query('keyWord'));
+
+		function pageload() {
+			mescrollRefreshFn({
+				menuNumber: 2
+
+			});
+
+		}
+
+		function pageresume() {
+
+		}
+		var mid = "";
+		var model = {
+			qh: function(id) {
+				swiper.slideTo(id);
+			},
+			clear: function() {
+				$("#id_searchInput").val('');
+			},
+			add: function(majorId) {
+				AJAX.GET('/api/school/major/addFocus?majorId=' + majorId + '&customerId=' + customerId, function(a) {
+					if(a && a.code == 1) {
+						getListData({
+							num: 1,
+							size: 10
+						});
+						$("#isAdd").html('<div class="f14 fr isJiaru"onclick="model.remove(' + majorId + ')">取消关注</div>');
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+			remove: function(majorId) {
+				Comm.confirm('是否确认取消关注？', function(d) {
+				AJAX.GET('/api/school/major/cancelFocus?majorId=' + majorId + '&customerId=' + customerId, function(a) {
+					if(a && a.code == 1) {
+						getListData({
+							num: 1,
+							size: 10
+						});
+						$("#isAdd").html('<div class="f14 fr add-guan" onclick="model.add(' + majorId + ')">关注</div>');
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+				})
+			},
+			//关注学校
+			addFocus: function(schoolIds) {
+				var that = this
+				AJAX.POST('/api/school/addFocus', {
+					schoolIds: schoolIds,
+					customerId: customerId
+				}, function(d) {
+					if(d.code == 1) {
+						getListData({
+							num: 1,
+							size: 10
+						});
+						Comm.message('添加关注成功');
+					} else {
+						Comm.message(d.msg)
+					}
+				})
+			},
+			//取消关注
+			cancelFocus: function(schoolId) {
+				Comm.confirm('是否确认取消关注？', function(d) {
+					if(d) {
+						var that = this
+						AJAX.POST('/api/school/cancelFocus', {
+							schoolId: schoolId,
+							customerId: customerId
+						}, function(d) {
+							if(d.code == 1) {
+								getListData({
+									num: 1,
+									size: 10
+								});
+								Comm.message('已取消关注')
+							} else {
+								Comm.message(d.msg)
+							}
+						})
+					}
+				})
+
+			}
+
+		}
+
+		/*设置列表数据
+		 * pageData 当前页的数据
+		 * dataIndex 数据属于哪个nav */
+		function setListData(pageData, dataIndex) {
+			var listDom = document.getElementById("dataList" + dataIndex),
+				listStr = "";
+			if(pageData.length > 0) {
+				pageData.dataIndex = dataIndex;
+				console.log(pageData)
+				listStr = template('listTpl', pageData);
+				if(pageData.curPage > 1) {
+					listDom.innerHTML += listStr;
+				} else {
+					listDom.innerHTML = listStr
+				};
+			} else {
+				listDom.innerHTML = '<div class="mescroll-empty"><p class="empty-tip">没有更多数据啦~</p></div>';
+			}
+
+		}
+
+		/*联网加载列表数据
+		 在您的实际项目中,请参考官方写法: http://www.mescroll.com/api.html#tagUpCallback
+		 请忽略getListDataFromNet的逻辑,这里仅仅是在本地模拟分页数据,本地演示用
+		 实际项目以您服务器接口返回的数据为准,无需本地处理分页.
+		 * */
+		var htmlData = [];
+
+		function getListDataFromNet(curNavIndex, pageNum, pageSize, successCallback, errorCallback) {
+			var type = '';
+			if(curNavIndex == 0) {
+				type = 8;
+			} else if(curNavIndex == 1) {
+				type = 9
+			}
+			var title = $("#id_searchInput").val();
+			var o = {};
+			o.title = title;
+			o.curpage = pageNum;
+			o.pagesize = pageSize;
+			o.type = type;
+			o.customerId = customerId;
+			AJAX.POST("/api/news/getVagueList", o, function(a) {
+				if(a && a.code == 1) {
+					var r = a.data || [];
+					htmlData = r;
+					totalSize = a.totalCount;
+					htmlData.curPage = a.curPage;
+					successCallback && successCallback(htmlData, totalSize);
+				} else {
+					Comm.message(a.msg);
+					errorCallback && errorCallback();
+				}
+			});
+		}
+	</script>
+
+</html>

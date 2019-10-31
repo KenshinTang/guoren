@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加关注</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+		<style>
+			.navItemIcon{
+				width: 50px;
+				background: none;
+			}
+			.jjs{
+			background-color: #098E75;
+			border-radius: 5px;
+			color: #FFF;
+			line-height: 22px;
+			padding: 1px 10px;	
+			}
+			.search{
+				padding: 10px 25px;
+				background-color: #F3F3F3;
+				background-image: url(img/index/down.png);
+				background-repeat: no-repeat;
+				background-size: 6px 3px;
+				background-position: 98% center;
+			}
+			.inp{
+				width: 100%;
+				background-color: #F3F3F3;
+			}
+			.isJiaru {
+				border: 1px solid #D3D3D3;
+    color: #fff;
+    border-radius: 4px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar" style="padding: 0;box-shadow: none;">
+
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+<!--
+				<div class="navItemIcon marl5 marr10"  onclick="Comm.go('getAsk.html')">
+					<div class=" cgreen">提问</div>
+				</div>-->
+				<div class="nav-title block searchBar marl25" style="width: calc(100% - 85px);height: 44px;">
+					更多专家
+				</div>
+			</div>
+		</header>
+		<section class="mescroll" id="box">
+			<div id="list"></div>
+			
+		</section>
+		<footer class="shared">
+		
+		</footer>
+	</body>
+	<script id="listTpl" type="text/html">
+		{{each $data v k}}
+		<div class="schoolMsg">
+			<div class="heads">
+				<div class="name-left fl" style="width: 80%; position: relative;" onclick="Comm.go('personal.html?customerId={{v.customerId}}')">
+					<img class="fl" src="{{OSS(v.head)}}" style="border-radius: 50%;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+					<img class="pos-v" src="img/index/v.png" width="15" />
+					<div class="fl marl10" style="width: 70%;">
+						<p class="f14 bold wordW">{{v.customerName}}</p>
+						<p class="f12 c9e wordW">{{v.title}}</p>
+						<p class="f12 c9e">关注{{conunm(v.followNumber)}}万 粉丝{{conunm(v.fansNumber)}} 获赞{{conunm(v.praiseNumber)}} </p>
+					</div>
+				</div>
+				<div id="isAdd">
+				{{if v.followId==0}}
+				<div class=" add-guan fr mart10" onclick="model.add({{v.customerId}})">
+					 关注
+				</div>
+				{{else}}
+				<div class="f14 fr isJiaru" onclick="model.remove({{v.customerId}})">已关注</div>
+				{{/if}}
+				</div>
+				<div class="clearfix"></div>
+
+			</div>
+		</div>
+		{{/each}}
+	</script>
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="./inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script type="text/javascript" src="./inc/upimg/upload.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+	<script>
+		
+		var customerId = app.getCid();
+		function pageload() {
+			model.init();
+		}
+
+		function pageresume() {
+
+		}
+		var mid = "";
+		var model = {
+			init:function(){
+				if (!model.mere) {
+                model.mere = new MERefresh('box,list', {
+                    pagesize: 10,
+                    refreshUrl: '/api/expert/expertlist',
+                    refreshTypeGet: true
+                });
+
+                model.mere.refreshOption.refreshParm = {
+                };
+
+                //页面 <刷新> 的回调
+                model.mere.refreshOption.refresh_cb = function (refresh, d) {
+                    refresh.successEndRef(d.data.length, d.totalCount);
+                    refresh.appendHtml(template('listTpl', d.data));
+                };
+            } else {
+                model.mere.refreshOption.refreshParm = {
+                };
+                //重置列表数据
+                model.mere.MeRefScroll.resetUpScroll();
+                //model.mere.MeRefScroll.triggerDownScroll();
+                //隐藏回到顶部按钮
+                model.mere.MeRefScroll.hideTopBtn();
+
+            }
+			},
+			add:function(fid) {
+				AJAX.GET('/api/fans/addFans?fid='+fid+'&customerId='+customerId, function(a) {
+					if(a && a.code == 1) {
+						$("#isAdd").html('<div class="f14 fr isJiaru"onclick="model.remove(' + fid + ')">已关注</div>');
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+			remove:function(fid) {
+				AJAX.GET('/api/fans/unfollow?fid='+fid+'&customerId='+customerId, function(a) {
+					if(a && a.code == 1) {
+						$("#isAdd").html('<div class="f14 fr add-guan" onclick="model.add(' + fid + ')">关注</div>');
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			}
+			
+		}
+	</script>
+
+</html>

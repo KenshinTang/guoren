@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加关注</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+		<style>
+			.navItemIcon{
+				width: 50px;
+				background: none;
+			}
+			.jjs{
+			background-color: #098E75;
+			border-radius: 5px;
+			color: #FFF;
+			line-height: 22px;
+			padding: 1px 10px;	
+			}
+			.search{
+				padding: 10px 25px;
+				background-color: #F3F3F3;
+				background-image: url(img/index/down.png);
+				background-repeat: no-repeat;
+				background-size: 6px 3px;
+				background-position: 98% center;
+			}
+			.inp{
+				width: 100%;
+				background-color: #F3F3F3;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar" style="padding: 0;box-shadow: none;">
+
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+
+				<div class="navItemIcon marl5 marr10" onclick="Comm.go('getAsk.html')">
+					<div class=" cgreen">提问</div>
+				</div>
+				<div class="nav-title block searchBar marl25" style="width: calc(100% - 85px);height: 44px;">
+					相关问答
+				</div>
+			</div>
+		</header>
+		<section class="mescroll" id="box">
+			<div id="cons"></div>
+			<div id="list"></div>
+		</section>
+		<footer class="shared">
+		
+		</footer>
+	</body>
+	<script type="text/html" id="listTpl">
+		<div class="schoolMsg" style="border-bottom: 10px solid #E9E9E9;">
+			<div class="heads">
+				<div class="name-left fl" onclick="Comm.go('personal.html?customerId={{expertinfo.customerId}}')">
+					<img class="fl"  src="{{OSS(expertinfo.head)}}" style="border-radius: 50%;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+					<div class="fl marl10">
+						<p class="f14 bold">{{expertinfo.customerName}}</p>
+						<p class="f12 c9e">{{expertinfo.title}}</p>
+					</div>
+				</div>
+				
+				<div class="clearfix"></div>
+			</div>
+			<div class="f14 wordW4 mart15">简介：{{expertinfo.introduce}}</div>
+			
+		</div>
+	</script>
+	<script id="listTpl1" type="text/html">
+	{{each $data v k}}
+		<div class="schoolMsg" onclick="Comm.go('askDetail.html?forumId={{v.forumId}}')">
+				<div class="wordW2 bold">
+					{{v.content}}
+				</div>
+				<div class="paddt10 paddb10">
+					<div class="lh25">
+						<img src="img/index/biao.png" class="fl" style="border-radius: 50%;" width="40" />
+						<div class="yipin fl mart5 marl10">
+							<img src="img/index/bf1.png" width="24" class="fl" style="margin: 2px 0 0 2px;" />
+							<!--<img class="fl marl10" src="img/index/dong.gif" width="30" />-->
+							<p class="colorfff fr f12" style="margin: 2px 10px 0 0;">{{v.auditPrice}}积分旁听</p>
+						</div>
+						<div class="c9e f12 fl mart5 marl10">
+							{{miaochange(v.timeLength)}}
+						</div>
+						<div class="f14 fr mart5" style="color: #FE8B3E;">
+							{{v.price}}积分
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="mart10">
+						<p class="fl"><span>{{$data.cons.expertinfo.customerName}}</span> <span class="c9e">| {{$data.cons.expertinfo.title}}</span></p>
+						<p class="fr c9e f12">{{v.addTime}}</p>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="clearfix"></div>
+			</div>
+			{{/each}}
+	</script>
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="./inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script type="text/javascript" src="./inc/upimg/upload.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+	<script>
+		var expert = Comm.db('expert');
+		var expertId=Comm.query('expertId');
+		function pageload() {
+			model.init();
+			$('.navItemIcon').attr('onclick','Comm.go("getAsk.html?price='+expert.expertinfo.price+'&expertInfoId='+expert.expertinfo.expertInfoId+'&customerId='+expert.expertinfo.customerId+'&head='+expert.expertinfo.head+'")');
+		}
+
+		function pageresume() {
+
+		}
+		var model = {
+			init:function(){
+				if (!model.mere) {
+                model.mere = new MERefresh('box,list', {
+                    pagesize: 10,
+                    refreshUrl: '/api/expert/ralequiz',
+                    refreshTypeGet: true
+                });
+
+                model.mere.refreshOption.refreshParm = {
+                    expertId: expertId,
+                };
+
+                //页面 <刷新> 的回调
+                model.mere.refreshOption.refresh_cb = function (refresh, d) {
+                    refresh.successEndRef(d.data.length, d.totalCount);
+                    d.data.cons = expert;
+                    refresh.appendHtml(template('listTpl1', d.data));
+                    $('#cons').html(template('listTpl', expert));
+                };
+            } else {
+                model.mere.refreshOption.refreshParm = {
+                    expertId: expertId,
+                };
+                //重置列表数据
+                model.mere.MeRefScroll.resetUpScroll();
+                //model.mere.MeRefScroll.triggerDownScroll();
+                //隐藏回到顶部按钮
+                model.mere.MeRefScroll.hideTopBtn();
+
+            }
+			}
+		}
+	</script>
+
+</html>

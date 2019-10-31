@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="./css/g.css" />
+		<link rel="stylesheet" href="./css/comm.css" />
+		<style>
+			body i {
+				display: inline-block;
+			}
+			
+			body {
+				width: 1px;
+				min-width: 100%;
+			}
+			
+			header {
+				height: 250px;
+				width: 100%;
+				background-image: url(img/my/mybg.png);
+				background-repeat: no-repeat;
+				background-size: 100% 26%;
+				background-position-y: 100%;
+			}
+			/*section {
+            background: url("http://guoren-app.oss-cn-shenzhen.aliyuncs.com/2019_07/ame8auufr83hv16ak.jpg/250") 0% 0% / 100% 250px no-repeat;
+        }*/
+			
+			section>div {
+				background: #fff;
+			}
+			
+			.icon_wenti {
+				width: 20px;
+				height: 20px;
+				margin-right: 10px;
+				background: url('./img/my/wenti.png')no-repeat center;
+				background-size: auto 100%;
+			}
+			
+			.icon_jiesuan {
+				width: 20px;
+				height: 20px;
+				margin-right: 10px;
+				background: url('./img/my/jiesuan.png')no-repeat center;
+				background-size: auto 100%;
+			}
+			
+			.icon_vipdj {
+				width: 20px;
+				height: 20px;
+				margin-right: 10px;
+				background: url('./img/my/txl.png')no-repeat center;
+				background-size: 100% 100%;
+			}
+			
+			.icon_msg {
+				width: 20px;
+				height: 20px;
+				margin-right: 10px;
+				background: url('./img/my/message.png')no-repeat center;
+				background-size: 100% 100%;
+			}
+			
+			.icon_zuji {
+				width: 20px;
+				height: 20px;
+				margin-right: 10px;
+				background: url('./img/my/zuji.png')no-repeat center;
+				background-size: 100% 100%;
+			}
+			
+			.icon_huanchun {
+				width: 20px;
+				height: 20px;
+				margin-right: 10px;
+				background: url('./img/my/huanchun.png')no-repeat center;
+				background-size: 100% 100%;
+			}
+			
+			.icon_fenxiang {
+				width: 20px;
+				height: 20px;
+				margin-right: 10px;
+				background: url('./img/my/fenxiang.png')no-repeat center;
+				background-size: 100% 100%;
+			}
+			
+			.icon_lahei {
+				width: 20px;
+				height: 20px;
+				margin-right: 10px;
+				background: url('./img/my/lahei.png')no-repeat center;
+				background-size: 100% 100%;
+			}
+			
+			.icon_sezi {
+				width: 20px;
+				height: 20px;
+				margin-right: 10px;
+				background: url('./img/my/sezi.png')no-repeat center;
+				background-size: 100% 100%;
+			}
+			
+			.icon_top {
+				width: 9px;
+				height: 5px;
+				background: url('./img/my/top.png')no-repeat center;
+				background-size: auto 100%;
+				margin-right: 10px;
+			}
+			
+			.icon_bottom {
+				width: 9px;
+				height: 5px;
+				background: url('./img/my/bottom.png')no-repeat center;
+				background-size: auto 100%;
+				margin-right: 10px;
+			}
+			
+			.navItemIcon {
+				background-image: url('img/my/sao.png');
+				background-position: center right;
+				background-repeat: no-repeat;
+				background-size: auto 20px;
+			}
+			
+			.searchBar {
+				margin: 0 auto;
+			}
+			
+			.searchBar input {
+				width: 95%;
+				padding-left: 30px;
+				line-height: 30px;
+				height: 30px;
+				font-size: 14px;
+				color: #8891A7;
+				background-color: #F2F6F7;
+				border-radius: 18px;
+				background-image: url('img/search.png');
+				background-repeat: no-repeat;
+				background-size: 14px;
+				background-position: 10px center;
+				margin: 0 auto;
+				margin-left: 2.5%;
+			}
+			
+			.banner {
+				width: 100%;
+				padding: 19px 16px;
+				position: relative;
+			}
+			
+			#heiImg {
+				width: 100%;
+				height: 93px;
+				position: absolute;
+				top: 0;
+				left: 0;
+				;
+			}
+			
+			.userImg {
+				width: 60px;
+				height: 60px;
+			}
+			
+			.userImg img {
+				width: 100%;
+				height: 100%;
+				box-shadow: 0px 4px 13px #d0d0d5;
+				margin-top: 20px;
+			}
+			
+			.userData {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				/* align-items: center; */
+			}
+			
+			.userData>p {
+				text-align: center;
+				color: #222;
+				font-size: 20px;
+			}
+			
+			.userLv {
+				color: #fff;
+				border: 1px solid #fff;
+				padding: 1px 5px;
+				text-align: center;
+				border-radius: 20px;
+				line-height: 15px;
+				font-size: 10px;
+			}
+			
+			.personal {
+				display: flex;
+				align-items: center;
+			}
+			
+			.personal span {
+				font-size: 12px;
+				color: #fff;
+			}
+			
+			.icon_left {
+				background: url('./img/my/left.png') no-repeat center;
+				background-size: 100% 100%;
+				width: 10px;
+				height: 15px;
+			}
+			
+			.top-top {
+				position: relative;
+				/*padding: 15px 0px;*/
+				border-bottom: 12px solid #f0f0f0;
+			}
+			
+			.top-function,
+			.top-function1 {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 17px 0px;
+				position: relative;
+				/*border-bottom: 1px solid #f4f4f4;*/
+			}
+			
+			.top-function:after {
+				content: '';
+				position: absolute;
+				left: 9%;
+				bottom: 0;
+				right: auto;
+				height: 1px;
+				width: 83%;
+				/* background-color: #f4f4f4;*/
+			}
+			
+			.top-function span,
+			.top-function1 span {
+				font-size: 14px;
+				margin-top: 5px;
+			}
+			
+			.top-function img,
+			.top-function1 img {
+				height: 31px;
+				object-fit: contain;
+			}
+			
+			.top-function p,
+			.top-function1 p {
+				font-size: 14px;
+			}
+			
+			.top-function>div,
+			.top-function1>div {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: column;
+			}
+			
+			.myMsg {
+				border-bottom: 1px solid #f4f4f4;
+				padding: 13px 0px;
+				margin: 0 10px;
+				display: flex;
+				justify-content: space-between;
+			}
+			/*.icon_msg {
+            width: 18px;
+            height: 15px;
+            display: inline-block;
+            background: url('./img/my/msg.png')no-repeat center;
+            background-size: 18px 15px;
+            margin-right: 10px;
+        }*/
+			
+			.myMsg span {
+				color: #444444;
+				font-size: 14px;
+			}
+			
+			.msgpo {
+				position: relative;
+			}
+			
+			#msgs {
+				position: absolute;
+				right: 20px;
+				top: -15px;
+			}
+			
+			.msgNum {
+				width: 18px;
+				height: 18px;
+				display: inline-block;
+				background: #E0313F;
+				text-align: center;
+				border-radius: 50%;
+				color: #fff;
+				font-size: 12px;
+			}
+			
+			.main {
+				font-size: 14px;
+				padding: 0 10px;
+				position: relative;
+			}
+			
+			.main>div {
+				/*border-bottom: 1px solid #f4f4f4;*/
+				position: relative;
+				padding: 13px 0;
+				display: flex;
+				justify-content: space-between;
+			}
+			
+			.main>div:after {
+				content: '';
+				position: absolute;
+				left: 12%;
+				top: 45px;
+				right: auto;
+				height: 1px;
+				width: 94%;
+				margin-left: -10px;
+				background-color: #f4f4f4;
+			}
+			
+			.main>div:last-child:after {
+				content: '';
+				position: absolute;
+				left: 12%;
+				top: 45px;
+				right: auto;
+				height: 2px;
+				width: 94%;
+				margin-left: -10px;
+				background-color: #fff;
+			}
+			
+			.icon_maozi {
+				display: inline-block;
+				width: 19px;
+				height: 17px;
+				margin-right: 10px;
+				background: url('./img/my/maozi.png')no-repeat center;
+				background-size: 100%;
+			}
+			
+			input[type="checkbox"]+label {
+				display: inline-block;
+				width: 40px;
+				height: 20px;
+				position: relative;
+				-webkit-transition: 0.3s;
+				transition: 0.3s;
+				box-sizing: border-box;
+			}
+			
+			input[type="checkbox"]+label:after {
+				content: '';
+				display: block;
+				position: absolute;
+				left: 0px;
+				top: 0px;
+				width: 20px;
+				height: 20px;
+				-webkit-transition: 0.3s;
+				transition: 0.3s;
+				cursor: pointer;
+			}
+			
+			#simple_1:checked+label.red,
+			#simple_2:checked+label.red,
+			#simple_3:checked+label.red,
+			#simple_4:checked+label.red,
+			#simple_5:checked+label.red {
+				background: #098E75;
+			}
+			
+			#simple_1:checked+label:after,
+			#simple_2:checked+label:after,
+			#simple_3:checked+label:after,
+			#simple_4:checked+label:after,
+			#simple_5:checked+label:after {
+				left: calc(100% - 20px);
+			}
+			
+			#simple_1+label,
+			#simple_2+label,
+			#simple_3+label,
+			#simple_4+label,
+			#simple_5+label {
+				background: #ddd;
+				border-radius: 20px;
+				box-shadow: 1px 1px 3px #aaa;
+			}
+			
+			#simple_1+label:after,
+			#simple_2+label:after,
+			#simple_3+label:after,
+			#simple_4+label:after,
+			#simple_5+label:after {
+				background: #fff;
+				border-radius: 50%;
+				box-shadow: 1px 1px 3px #aaa;
+			}
+			
+			#sinbox {
+				background-color: #fff;
+				padding: 10px 20px;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+			}
+			
+			#sinbox1 {
+				width: 300px;
+				padding: 0;
+				border-radius: 10px;
+				background-color: #fff;
+				position: relative;
+			}
+			
+			.for {
+				width: 25%;
+			}
+			
+			#bgj {
+				/*border-bottom: 1px solid red;*/
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				right: 0px;
+				width: 100%;
+				height: 249px;
+				z-index: 0;
+			}
+			
+			.jianbans {
+				background: url(img/huidu.png) no-repeat;
+				background-size: 100% 100%;
+				top: 0;
+				height: 90px;
+				position: absolute;
+				width: 100%;
+			}
+			
+			header {
+				position: relative;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="bgj">
+			<img src="http://guoren-app.oss-cn-shenzhen.aliyuncs.com/2019_07/ame8auufr83hv16ak.jpg/400" width="100%" height="100%" />
+			<div class="jianbans"></div>
+		</div>
+		<!-- 头部 -->
+		<section>
+
+		</section>
+		<!--<footer class="shared"></footer>-->
+
+	</body>
+
+	<script type="text/javascript" src="./inc/z.js"></script>
+	<script type="text/javascript" src="./inc/g.js"></script>
+	<script type="text/javascript" src="./inc/comm.js"></script>
+	<script type="text/javascript" src="./inc/picker.min.js"></script>
+	<script type="text/javascript" src="./inc/area.js"></script>
+	<script type="text/javascript" src="inc/art-template.js"></script>
+	<script type="text/javascript" src="inc/pages.js"></script>
+	<script type="text/html" id="weiLogin">
+		<header class="paddt20" onclick="Page.send('go','newLogin.html');event.stopPropagation()">
+			<div class="navBar" style="box-shadow: none;position: fixed;top: 30px;">
+				<div class="personal fr marr10" onclick="Page.send('go','newLogin.html');event.stopPropagation()">
+					<span>个人主页</span>
+					<img src="img/my/back.png" height="12" class="marl10" />
+				</div>
+			</div>
+			<div class="banner" style="margin-top: 60px;">
+				<div style="position: relative;z-index: 999;top: 35px;">
+					<div class="userImg" style="margin: 0 auto;width:90px; height: 90px;">
+						<img id="userface" src="img/my/mti.png" alt="" style="border-radius: 50%;margin-top: 10px;box-shadow: none;">
+					</div>
+					<div class="userData mart10">
+						<p class="paddt5" style="" id="customerName">未登录</p>
+
+					</div>
+
+				</div>
+			</div>
+		</header>
+		<div class="top-top">
+			<div class="top-function">
+				<div class="center for" onclick="Page.send('go','newLogin.html');event.stopPropagation()">
+					<p id="followNumber" class="color333"></p>
+					<span class="color999">关注</span>
+				</div>
+				<div class="center for" onclick="Page.send('go','newLogin.html');event.stopPropagation()">
+					<p id="fansNumber" class="color333"></p>
+					<span class="color999">粉丝</span>
+				</div>
+				<div class="center for" onclick="Page.send('go','newLogin.html');event.stopPropagation()">
+					<p id="collectionNumber" class="color333"></p>
+					<span class="color999">收藏</span>
+				</div>
+				<div class="center for" onclick="Page.send('go','newLogin.html');event.stopPropagation()">
+					<p id="draftNumber" class="color333"></p>
+					<span class="color999">草稿箱</span>
+				</div>
+			</div>
+
+			<!--<div class="top-function1" style="margin: 0;border-bottom: 10px solid #f4f4f4;">
+            <div class="center for msgpo" onclick="Page.send('go','newLogin.html');event.stopPropagation()">
+                <img src="img/my/msg.png" alt="">
+                <span>消息</span>
+                <div id="msgs">
+                    <span class="msgNum" id="MsgNumber" style="display: none;color:#fff"></span>
+                </div>
+            </div>-->
+			<!--<div class="center for" onclick="Page.send('go','newLogin.html');event.stopPropagation()">
+                <img src="img/my/qianbao.png" width="35" height="27" alt="">
+                <span>钱包</span>
+            </div>
+
+            <div class="center for" onclick="Page.send('go','newLogin.html');event.stopPropagation()">
+                <img src="img/my/vip.png" width="35" height="31" alt="">
+                <span>VIP会员</span>
+            </div>-->
+			<!--<div class="center for" onclick="Page.send('go','newLogin.html');event.stopPropagation()">
+                <img src="img/my/jilu.png" width="31" height="31" alt="">
+                <span>足迹 </span>
+            </div>
+        </div>-->
+		</div>
+		<div class="main">
+			<div onclick="Page.send('go','newLogin.html');event.stopPropagation()">
+				<div>
+					<i class="icon_msg"></i>
+					<span style="color:#444;">我的消息</span>
+				</div>
+				<div>
+					<i class="icon_left"></i>
+				</div>
+			</div>
+			<div onclick="Page.send('go','newLogin.html');event.stopPropagation()">
+				<div>
+					<i class="icon_zuji"></i>
+					<span style="color:#444;">我的足迹</span>
+				</div>
+				<div>
+					<i class="icon_left"></i>
+				</div>
+			</div>
+			<div onclick="Page.send('go','newLogin.html');event.stopPropagation()">
+				<div>
+					<i class="icon_vipdj"></i>
+					<span style="color:#444;">手机通讯录</span>
+				</div>
+				<div>
+					<i class="icon_left"></i>
+				</div>
+			</div>
+			<div onclick="Page.send('go','newLogin.html');event.stopPropagation()">
+				<div>
+					<i class="icon_fenxiang"></i>
+					<span style="color:#444;">APP分享</span>
+				</div>
+				<div>
+					<i class="icon_left"></i>
+				</div>
+			</div>
+			<div onclick="Page.send('go','newLogin.html');event.stopPropagation()">
+				<div>
+					<i class="icon_huanchun"></i>
+					<span style="color:#444;">清理缓存</span>
+				</div>
+				<div>
+					<i class="icon_left"></i>
+				</div>
+			</div>
+			<div onclick="Page.send('go','newLogin.html');event.stopPropagation()">
+				<div>
+					<i class="icon_lahei"></i>
+					<span style="color:#444;">黑名单</span>
+				</div>
+				<div>
+					<i class="icon_left"></i>
+				</div>
+			</div>
+			<div onclick="Page.send('go','newLogin.html');event.stopPropagation()">
+				<div>
+					<i class="icon_sezi"></i>
+					<span style="color:#444;">系统设置</span>
+				</div>
+				<div>
+					<i class="icon_left"></i>
+				</div>
+			</div>
+			<div style="height: 60px;"></div>
+		</div>
+	</script>
+	<script id="login" type="text/html">
+		<header class="paddt20" style="position:relative;z-index:0;">
+
+			<div class="navBar" style="box-shadow: none;position:fixed;z-index:999;top: 30px;">
+				<div class="personal fr marr10" onclick="Page.send('go','personal.html')">
+					<span>个人主页</span>
+					<img src="img/my/back.png" height="12" class="marl10" />
+				</div>
+			</div>
+			<div class="banner" style="position:relative;top:60px;z-index:2;">
+				<div style="position: relative;z-index: 999;top: 35px;">
+					<div class="userImg" style="margin: 0 auto;position: relative;">
+						<div style="width: 90px;height: 90px;position: absolute; top: 3px; left: -16px;" id="colorFace"></div>
+						<img id="userface" src="img/my/mti.png" alt="" style="border-radius: 50%;border: 1px solid #fff;width: 62px;height: 62px;box-shadow: 0px 4px 13px #d0d0d5;margin-top: 17px;margin-left: -2px;">
+					</div>
+					<div class="userData mart30">
+						<p class="paddt5" style="" id="customerName"></p>
+
+					</div>
+
+				</div>
+				<!-- <img src="" id="heiImg" alt=""> -->
+			</div>
+		</header>
+		<div class="top-top">
+			<div class="top-function">
+				<div class="center for" onclick="Page.send('go','my_follow.html')">
+					<p id="followNumber" class="color333"></p>
+					<span class="color999">关注</span>
+				</div>
+				<div class="center for" onclick="Page.send('go','Fans.html')">
+					<p id="fansNumber" class="color333"></p>
+					<span class="color999">粉丝</span>
+				</div>
+				<div class="center for" onclick="Page.send('go','Collection.html')">
+					<p id="collectionNumber" class="color333"></p>
+					<span class="color999">收藏</span>
+				</div>
+				<div class="center for" onclick="Page.send('go','drafts.html')">
+					<p id="draftNumber" class="color333"></p>
+					<span class="color999">草稿箱</span>
+				</div>
+			</div>
+
+			<!--<div class="top-function1" style="margin: 0;border-bottom: 10px solid #f4f4f4;">
+            <div class="center for msgpo" onclick="Page.send('go','newsList.html')">
+                <img src="img/my/msg.png" alt="">
+                <span>消息</span>
+                <div id="msgs">
+                    <span class="msgNum" id="MsgNumber" style="display: none;color:#fff"></span>
+                </div>
+            </div>-->
+			<!--<div class="center for" onclick="Page.send('go','wallet.html')">
+                <img src="img/my/qianbao.png" width="35" height="27" alt="">
+                <span>钱包</span>
+            </div>
+
+            <div class="center for" onclick="Page.send('go','vip.html')">
+                <img src="img/my/vip.png" width="35" height="31" alt="">
+                <span>VIP会员</span>
+            </div>-->
+			<!--<div class="center for" onclick="Page.send('go','BrowseRecord.html')">
+                <img src="img/my/jilu.png" width="31" height="31" alt="">
+                <span>足迹 </span>
+            </div>
+        </div>-->
+		</div>
+		<!--<div class="myMsg" onclick="top.Comm.go('newsList.html')">
+        <div>
+            <i class="icon_msg"></i>
+            <span>我的消息</span>
+        </div>
+       
+    </div>-->
+		<div class="main">
+			<!--<div>
+                <div>
+                    <i class="icon_maozi"></i>
+                    <span style="color:#444;">屏蔽非学生用户</span>
+                </div>
+                <div>
+                    <input type="checkbox" id="simple_1" oninput="input(1,this)">
+                    <label for="simple_1" class="red"></label>
+                </div>
+            </div>-->
+			<!--<div style="border:none;display: block;padding-bottom: 0;" id="Shield" class="hide">
+                <div onclick="shieldIsShow()">
+                    <i class="icon_top" id="isShowbTN"></i>
+                    <!-- <i class="icon_bottom"></i> -->
+			<!--<span style="color:#888888;">选择您要屏蔽的用户群体 </span>
+                </div>
+                <div id="shieldList">
+                    <div class="flex-between" style="padding:10px 0;margin-left:48px;border-bottom: 1px solid #f4f4f4; ">
+                        <span style="color:#444444;">家长</span>
+                        <div>
+                            <input type="checkbox" id="simple_2" oninput="input(5)" data-id="5">
+                            <label for="simple_2" class="red"></label>
+                        </div>
+                    </div>
+                    <div class="flex-between" style="padding:10px 0;margin-left:48px;border-bottom: 1px solid #f4f4f4; ">
+                        <span style="color:#444444;">毕业生</span>
+                        <div>
+                            <input type="checkbox" id="simple_3" data-id="3" oninput="input(3)">
+                            <label for="simple_3" class="red"></label>
+                        </div>
+                    </div>
+                    <div class="flex-between" style="padding:10px 0;margin-left:48px;border-bottom: 1px solid #f4f4f4; ">
+                        <span style="color:#444444;">教师</span>
+                        <div>
+                            <input type="checkbox" id="simple_4" data-id="4" oninput="input(4)">
+                            <label for="simple_4" class="red"></label>
+                        </div>
+                    </div>
+                    <div class="flex-between" style="padding:10px 0;padding-left:48px;border-bottom: 1px solid #f4f4f4; ">
+                        <span style="color:#444444;">其他</span>
+                        <div>
+                            <input type="checkbox" id="simple_5" data-id="6" oninput="input(6)">
+                            <label for="simple_5" class="red"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+			<!--<div id="myque" onclick="top.Comm.go('problem.html')">
+                <div>
+                    <i class="icon_wenti"></i>
+                    <span style="color:#444;">我的问题</span>
+                </div>
+                <div>
+                    <i class="icon_left"></i>
+                </div>
+            </div>
+            <div id="jsmx" onclick="top.Comm.go('Settlement.html')">
+                <div>
+                    <i class="icon_jiesuan"></i>
+                    <span style="color:#444;">结算明细</span>
+                </div>
+                <div>
+                    <i class="icon_left"></i>
+                </div>
+            </div>-->
+			<div onclick="Page.send('go','newsList.html');event.stopPropagation()">
+				<div>
+					<i class="icon_msg"></i>
+					<span style="color:#333;" class="f14">我的消息</span>
+				</div>
+				<div>
+					<i class="icon_left"></i>
+				</div>
+			</div>
+			<div onclick="Page.send('go','BrowseRecord.html');event.stopPropagation()">
+				<div>
+					<i class="icon_zuji"></i>
+					<span style="color:#333;" class="f14">我的足迹</span>
+				</div>
+				<div>
+					<i class="icon_left"></i>
+				</div>
+			</div>
+			<div onclick="Page.send('go','tongxunlu.html')">
+				<div>
+					<i class="icon_vipdj"></i>
+					<span style="color:#333;" class="f14">手机通讯录</span>
+				</div>
+				<div>
+					<i class="icon_left"></i>
+				</div>
+			</div>
+			<div onclick="Page.send('showWindow', {model: 'my',sinboxTemp4: 'sinboxTempfx'});">
+				<div>
+					<i class="icon_fenxiang"></i>
+					<span style="color:#333;" class="f14">APP分享</span>
+				</div>
+				<div>
+					<i class="icon_left"></i>
+				</div>
+			</div>
+			<div onclick="Page.send('clearh',null);">
+				<div>
+					<i class="icon_huanchun"></i>
+					<span style="color:#333;" class="f14">清理缓存</span>
+				</div>
+				<div>
+					<i class="icon_left"></i>
+				</div>
+			</div>
+			<div onclick="Page.send('go','Blacklist.html')">
+				<div>
+					<i class="icon_lahei"></i>
+					<span style="color:#333;" class="f14">黑名单</span>
+				</div>
+				<div>
+					<i class="icon_left"></i>
+				</div>
+			</div>
+			<div onclick="Page.send('go','Setup.html')">
+				<div>
+					<i class="icon_sezi"></i>
+					<span style="color:#333;" class="f14">系统设置</span>
+				</div>
+				<div>
+					<i class="icon_left"></i>
+				</div>
+			</div>
+			<div style="height: 60px;"></div>
+		</div>
+	</script>
+	<div id="sinbox1" class="" wtd="sinboxTempxz">
+		<div class="bg_white f16" style="border-radius: 10px; padding: 30px 10px;">
+			您还未完善信息，请先完善信息
+		</div>
+		<div class="bg_white paddt15 paddb15 f16 colorfff" style="background-color: #098E75;" onclick="Page.send('go','improveInfo.html?_type=0');">确定</div>
+	</div>
+	<div id="sinbox" wtd="sinboxTemps">
+		<h4>确认删除？</h4>
+
+		<div class="footer">
+			<div style="color:#999999;border-right: 1px solid #E7E7E7;" onclick="Comm.showWindow();">取消</div>
+			<div style="color:#098E75;" onclick="shanchu()">确定</div>
+		</div>
+	</div>
+	<script id="noLogin" type="text/html">
+
+	</script>
+
+	<script type="text/javascript">
+		var visible = []; //屏蔽的用户
+		var isShow = true; //控制屏蔽的显示与隐藏
+		var _token = '';
+		var _user = "";
+		var dbnewsId = "";
+		var shanchu = "";
+		var firsr = "";
+		var html = $('#shieldList').html();
+
+		//Comm = top.Comm;
+		function getModel(m) {
+			model[m] && model[m]();
+		}
+
+		function pageload() {
+//				if(Comm.ios()){
+//  		$('section').css('padding-bottom','60px');
+//  	}
+			//	document.body.style.width=document.documentElement.offsetWidth+'px';
+			Page.send('dbs', '_token', function(a) {
+				_token = a._token;
+				_user = a.user;
+				dbnewsId = a.dbnewsId;
+				shanchu = a.shanchu;
+				firsr = a.firsr;
+				if(!_user) {
+					$('section').html(template('weiLogin', _user));
+				} else {
+					$('section').html(template('login', _user));
+					model.init();
+				}
+
+				if(_user && _user.userType != 4) {
+					$('#myque').hide();
+					$('#jsmx').hide();
+				}
+				if(_user) {
+					AJAX.GET('/api/customer/checkUserInfo?customerId=' + _user.customerId, function(d) {
+						if(d && d.data == 0) {
+							Page.send('showWindow', {
+								model: 'my',
+								sinboxTemp4: 'sinboxTempxz'
+							});
+						}
+					})
+				}
+				          Comm.storage("isX", function(d) {
+				          if (d) {
+				              $(".navBar").css("top", "30px");
+				             
+				          }
+				      });
+
+			})
+
+		}
+
+		function pageresume() {
+			//	document.body.style.width=document.documentElement.offsetWidth+'px';
+			Page.send('dbs', '_token', function(a) {
+				_token = a._token;
+				_user = a.user;
+				dbnewsId = a.dbnewsId;
+				shanchu = a.shanchu;
+				firsr = a.firsr;
+				if(!_user) {
+					$('section').html(template('weiLogin', _user));
+
+				} else {
+					showmsg();
+					model.init();
+				}
+
+				if(_user && _user.userType != 4) {
+					$('#myque').hide();
+					$('#jsmx').hide();
+				}
+
+			})
+
+		}
+
+		shieldIsShow()
+
+		function shieldIsShow() {
+			if(isShow) {
+				$('#shieldList').hide();
+				$('#isShowbTN').attr('class', 'icon_bottom');
+				isShow = false;
+			} else {
+				$('#shieldList').show();
+				$('#isShowbTN').attr('class', 'icon_top');
+				isShow = true;
+			}
+		};
+
+		function toscan() {
+			Comm.scanf(function(r) {
+				console.log(r);
+			})
+
+		}
+
+		function getUserInfo() {
+			if(_user != "") {
+				model.getUserInfo();
+			}
+		}
+
+		function showmsg() {
+			if(_user != "") {
+				model.getMsgNumber();
+			}
+		}
+
+		var model = {
+			userinfo: {},
+			//用户信息
+			init: function init() {
+
+				this.getUserInfo();
+
+			},
+			//获取用户信息
+			getUserInfo: function() {
+
+				var that = this;
+				AJAX.GET('/api/customer/detail', function(d) {
+					if(d.code === 1) {
+						$('section').html(template('login', ''));
+						that.userinfo = d.data;
+						if(d.data.face != "") {
+							$('#userface').attr('src', Comm.OSS.getImgUrl(d.data.face));
+							$('#heiImg').attr('src', Comm.OSS.getImgUrl(d.data.headImg))
+						}
+						if(d.data.colorUrl){
+							$('#colorFace').css('background-image', 'url('+Comm.OSS.getImgUrl(d.data.colorUrl)+')');
+							$('#colorFace').css('background-size', '100% 100%');
+						}
+						$('#customerName').html(d.data.customerName || '未完善'); //名称
+						if(d.data.headImg != "") {
+							headImg = Comm.OSS.getImgUrl(d.data.headImg, 'd');
+							$('#bgj').html('<img src="' + headImg + '" width="100%" height="100%"/><div class="jianbans"></div>');
+							//                      $('section').css('background', 'url(' + Comm.OSS.getImgUrl(d.data.headImg, 'm') + ') no-repeat');
+							//                      $('section').css('background-size', '100% 250px')
+						}
+						$('#viplevel').html(d.data.userLevel); //等级
+
+						$('#followNumber').html(d.data.followNumber); //关注
+						$('#fansNumber').html(d.data.fansNumber); //粉丝
+
+						$('#collectionNumber').html(d.data.collectionNumber); //收藏
+
+						$('#draftNumber').html(d.data.draftNumber); //草稿箱
+						model.getMsgNumber();
+						//                  visible = d.data.visible.split(',');
+						//                  for (var i = 0; i < visible.length; i++) {
+						//                      if (!visible[i] || visible[i] == '') {
+						//                          visible.splice(i, 1);
+						//                          i--;
+						//                      }
+						//                  }
+						//                  console.log(visible)
+						//                  var arr = visible;
+						//                  visible = arr;
+						//                  $('#simple_1').attr('isChecked', 'false')
+						//                  for (var i = 1; i <= 5; i++) {
+						//                      for (var k = 0; k < arr.length; k++) {
+						//                          $('#simple_1').attr('checked', 'true');
+						//                          $('#simple_1').attr('isChecked', 'true')
+						//                          if ($('#simple_' + i).attr('data-id') == arr[k]) {
+						//                              $('#simple_' + i).attr('checked', 'true')
+						//                          }
+						//                      }
+						//                  };
+						//
+						//                  if ($('#simple_1').is(':checked')) {
+						//                      $('#Shield').attr('class', '');
+						//                  } else {
+						//                      $('#Shield').attr('class', 'hide'); //局部刷新
+						//                      $('#shieldList').html(html);
+						//                  }
+
+					}
+				});
+
+			},
+			//获取未读消息数量
+			getMsgNumber: function() {
+				AJAX.GET('/api/mess/count?userType=1&type=1', function(d) {
+					if(d && d.code == 1) {
+						if(d.data && d.data > 0) {
+							console.log(d.data)
+							setTimeout(function() {
+								$('#MsgNumber').css('display', 'inline-block');
+								$('#MsgNumber').html(d.data);
+							}, 100)
+
+						} else {
+							console.log('ssds')
+							$('#MsgNumber').hide();
+						}
+
+					}
+				});
+			},
+
+			clear: function() {
+				Comm.loading('清理中...');
+				setTimeout(function() {
+					Comm.message('清理成功');
+					Comm.loading(false);
+				}, 500)
+			}
+		};
+
+		function input(t, e) {
+			if(t == 1) {
+				if($(e).attr('isChecked') == 'true') {
+					$('#simple_1').attr('isChecked', 'false')
+					AJAX.POST('/api/customer/updateCustomerPower', {
+						codes: ''
+					}, function(d) {
+						if(d && d.code) {
+							model.getUserInfo();
+						}
+					})
+				} else {
+					$('#simple_1').attr('isChecked', 'true');
+					AJAX.POST('/api/customer/updateCustomerPower', {
+						codes: ',5,3,4,6,'
+					}, function(d) {
+						if(d && d.code) {
+							model.getUserInfo();
+						}
+					})
+				}
+
+				return;
+			}
+			updateCustomerPower(t)
+		}
+
+		function updateCustomerPower(c, e) {
+			c = c + '';
+			if(visible.indexOf(c) == -1) {
+				visible.splice(visible.length - 1, 0, c);
+			} else {
+				visible.splice(visible.indexOf(c), 1)
+			}
+			for(var i = 0; i < visible.length; i++) {
+				if(!visible[i] || visible[i] == '') {
+					visible.splice(i, 1);
+					i--;
+
+				}
+			}
+
+			AJAX.POST('/api/customer/updateCustomerPower', {
+				codes: ',' + visible.join(',') + ','
+			}, function(d) {
+				if(d && d.code) {
+					if(visible == '') {
+						$('#simple_1').attr('isChecked', 'false')
+						$('#simple_1').attr('checked', 'false');
+					}
+					model.getUserInfo()
+				}
+			})
+		}
+	</script>
+
+</html>

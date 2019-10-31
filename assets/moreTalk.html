@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加关注</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+
+		<style>
+			.searchBar {
+				margin: 0 auto;
+			}
+			.schoolMsg{
+				padding: 10px 15px;
+			}
+			.searchBar input {
+				width: 95%;
+				padding-left: 30px;
+				line-height: 30px;
+				height: 30px;
+				font-size: 14px;
+				color: #8891A7;
+				background-color: #F2F6F7;
+				border-radius: 18px;
+				background-image: url('img/search.png');
+				background-repeat: no-repeat;
+				background-size: 14px;
+				background-position: 10px center;
+				margin: 0 auto;
+				margin-left: 2.5%;
+			}
+			
+			.order-t {
+				
+				text-align: center;
+				font-size: 12px;
+			}
+			
+			.order-t-c {
+				width: 20%;
+				height: 100%;
+				float: left;
+				font-size: 15px;
+				/*font-weight: bold;*/
+				color: #888888;
+			}
+			
+			.order-t-c-active {
+				/*border-bottom: 2px solid #000000;*/
+				position: relative;
+				/*font-weight: bold;*/
+				color: #098E75;
+			}
+			
+			.order-t-c-active:after {
+				content: '';
+				position: absolute;
+				left: 25%;
+				bottom: auto;
+				right: auto;
+				height: 2px;
+				width: 50%;
+				background-color: #098E75;
+			}
+			.schoolMsg{
+				border-bottom: 1px solid #f4f4f4;
+				padding: 10px 15px 10px 5px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar bottomShadow" style="padding: 0;">
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+				<div class="nav-title block searchBar f16" style="width: calc(100% - 70px);height: 44px;">
+					全部话题
+				</div>
+			</div>
+			<div class="scrollx mescroll-touch-x">
+				<div id="scrollxContent" class="scrollx-content">
+					<div id="nav" class="order-t ovf bb1" style="border-bottom: 1px solid #f4f4f4;">
+						<div class="order-t-c brp order-t-c-active" id="1" i='0'>最热</div>
+						<div class="order-t-c brp" id="2" i='1'>最新</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<section>
+
+			<!--轮播-->
+			<div id="swiper" class="swiper-container">
+				<div id="swiperWrapper" class="swiper-wrapper">
+					<!--全部-->
+					<div id="mescroll0" class="swiper-slide mescroll">
+						<div id="dataList0" class="data-list">
+						</div>
+					</div>
+					<!--旗舰店-->
+					<div id="mescroll1" class="swiper-slide mescroll">
+						<div id="dataList1" class="data-list">
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="mescroll-totop" onclick="Comm.showWindow('sinboxTemp2',true);">
+			<img src="img/index/bj.png" width="45" />
+		</div>
+		<footer class="shared bg_hui" onclick="model.talk()">
+			<div class="center lh50"><img src="img/index/bi.png" width="13" height="13"/>
+				<span style="color: #098E75;" class="f16">发起话题</span>
+			</div>
+		</footer>
+	</body>
+	<script type="text/html" id="listTpl">
+		{{each $data v k}}
+		<div class="schoolMsg" onclick="Comm.go('talkDetail.html?topicId={{v.topicId}}')">
+			<div class="heads">
+				<div class="name-left fl">
+					<div class="marl10">
+						<p class="f15 wordW" style="width: 300px"><img src="img/index/fwz.png"class="marb5" width="15"/> {{v.title}}</p>
+						<p class="f12 c9e paddl5" style="height: 14px;">{{v.newsNumber}}篇 · {{v.customerNumber}}关注</p>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		{{/each}}
+	</script>
+
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="./inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+
+	<script>
+		function pageload() {
+			mescrollRefreshFn({
+				menuNumber: 2
+			});
+			 Comm.storage("isX", function(d) {
+            if (d) {
+                $("footer").css("padding-bottom", "10px");
+                Comm.resizeSection();
+            }
+        });
+		}
+
+		function changeTheme(status) {
+			$(".vidos").removeClass("vido-active");
+			$(event.target).addClass("vido-active");
+		}
+
+		function pageresume() {
+
+		}
+		var model = {
+				talk:function(){
+					if(Comm.db('userinfo').shutup==1){
+					Comm.alert('您暂无权限~',function(){
+							
+						})
+					return false;
+				}
+					Comm.go('talk.html')
+				}
+		}
+
+		/*设置列表数据
+		 * pageData 当前页的数据
+		 * dataIndex 数据属于哪个nav */
+		function setListData(pageData, dataIndex) {
+			var swiper = document.getElementById("swiper");
+			var listDom = document.getElementById("dataList" + dataIndex),
+				listStr = "";
+			if(pageData.length > 0) {
+				pageData.dataIndex = dataIndex;
+				console.log(pageData)
+				listStr = template('listTpl', pageData);
+				if(pageData.curPage>1){
+					listDom.innerHTML += listStr;
+				}else{
+					listDom.innerHTML = listStr;
+				}
+				
+			}
+Comm.scorllDel();
+		}
+
+		/*联网加载列表数据
+		 在您的实际项目中,请参考官方写法: http://www.mescroll.com/api.html#tagUpCallback
+		 请忽略getListDataFromNet的逻辑,这里仅仅是在本地模拟分页数据,本地演示用
+		 实际项目以您服务器接口返回的数据为准,无需本地处理分页.
+		 * */
+		var htmlData = [];
+
+		function getListDataFromNet(curNavIndex, pageNum, pageSize, successCallback, errorCallback) {
+			var topicType = $('.order-t-c-active')[0].id;
+			var o ={};
+			o.curpage=pageNum;
+			o.pagesize = 15;
+			o.topicType =topicType;
+			AJAX.POST("/api/topic/list",o,function(a) {
+				if(a && a.code == 1) {
+					var r = a.data || [];
+						htmlData = r;
+						totalSize = a.totalCount;
+						htmlData.curPage = a.curPage;
+					successCallback && successCallback(htmlData, totalSize);
+				} else {
+					Comm.message(a.msg);
+					errorCallback && errorCallback();
+				}
+			});
+		}
+	</script>
+
+</html>

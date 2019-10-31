@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加关注</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+		<link rel="stylesheet" href="css/edit.css" />
+		<style>
+			.navItemIcon {
+				width: 50px;
+				background: none;
+			}
+			
+			.jjs {
+				background-color: #f4f4f4;
+				border-radius: 5px;
+				color: #FFF;
+				line-height: 22px;
+				padding: 1px 8px;
+			}
+			
+			.search {
+				padding: 10px 25px;
+				background-color: #F3F3F3;
+				background-image: url(img/index/down.png);
+				background-repeat: no-repeat;
+				background-size: 6px 3px;
+				background-position: 98% center;
+			}
+			
+			.inp {
+				width: 100%;
+				background-color: #F3F3F3;
+			}
+			
+			#title {
+				display: none;
+			}
+			
+			#content div {
+				text-align: left !important;
+				font-size: 16px !important;
+			}
+			
+			#content:empty:before {
+				content: attr(placeholder);
+				color: #999;
+				font-size: 16px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar" style="padding: 0;box-shadow: none;">
+
+				<div class="navBackIcon" onclick="model.close()"></div>
+
+				<div class="navItemIcon marl5 marr10">
+					<div class="jjs mart10">提交</div>
+				</div>
+				<!--width: calc(100% - 85px);-->
+				<div class="nav-title wordW block searchBar marl25" style="height: 44px;font-family: arial;">
+
+				</div>
+			</div>
+		</header>
+		<section>
+			<div class="paddl15 paddr15 paddt10">
+				<div id="weditbox"></div>
+			</div>
+		</section>
+		<footer class="shared" style="background-color: #fff;">
+
+			<div class="mart10 paddb10 paddl20 add-pic">
+				<img id="imgupimg" class="fl" src="img/index/pics.png" width="23" height="21" />
+				<!--<img class="fl marl20" src="img/index/emjs.png" width="24" />-->
+				<div class="clearfix"></div>
+			</div>
+		</footer>
+	</body>
+
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script type="text/javascript" src="inc/edit.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="./inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script type="text/javascript" src="./inc/upimg/upload.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+	<script type="text/javascript" src="inc/dict.js"></script>
+	<script type="text/javascript" src="inc/tpl.js"></script>
+
+	<script>
+		var plId = Comm.query('plId');
+
+		function pageload() {
+			zhuanfa.suiji('content', 'hdksj');
+			wedit.init();
+			Comm.resizeSection();
+			if(plId) {
+				model.init()
+			}
+			$('#content').css('-webkit-user-modify', 'read-write-plaintext-only')
+			$('.nav-title').html(Comm.db('qzTitle'));
+			upHeader = new imgUploader("imgupimg", 99, "imgupimg");
+			upHeader.success = function(arr) {
+				var cimgUrl = arr.length > 0 ? arr : 'img/error.png';
+				wedit.addImg(arr);
+//				setTimeout(function() {
+//					$('#content').html($('#content').html().replace(/<img>/gi, "<br>"));
+//				}, 1000)
+			}
+			if(Comm.ios()) {
+				setTimeout(function() {
+					var elem = document.getElementById('content');
+					$(elem).focus();
+
+					Comm.PopUpKeyboard({
+						code: 1
+					});
+					setTimeout(function() {
+						document.getElementById('imgupimg').style.display = 'block';
+						Comm.resizeSection();
+					}, 300)
+				}, 500)
+			} else {
+				var elem = document.getElementById('content');
+				$(elem).focus();
+
+				Comm.PopUpKeyboard({
+					code: 1
+				});
+				setTimeout(function() {
+					document.getElementById('imgupimg').style.display = 'block';
+					Comm.resizeSection();
+				}, 300)
+			}
+			model.len();
+		}
+
+		function androidback() {
+			if(parseInt(Comm._pageinfo.android_home) === 0) {
+				if($('textarea').val() == '' && $('#box').find('div').length > 1) {
+					Comm.close();
+				} else {
+					model.close();
+				}
+
+			} else {
+				if(parseInt(Comm._pageinfo.android_home) === 1) {
+					Comm._pageinfo.android_home = 2;
+					Comm.confirm("您确定要退出应用？", function(a) {
+						if(a == 1) {
+							Comm.close();
+						} else {
+							Comm._pageinfo.android_home = 1;
+							Comm.resizeSection();
+						}
+					});
+				}
+			}
+		}
+
+		function pageresume() {
+			//		editor.init();
+			//		model.addImg();
+
+			Comm.resizeSection();
+		}
+		var model = {
+			len: function() {
+				var data = "";
+				setInterval(function() {
+					data = wedit.getData().content;
+					if((data.replace(/<div>|<\/div>/gi, "").replace(/(\r\n|\n|\r)/gm, "").replace(/\s+/g, "").replace(/<(?!img).*?>/g, "").replace(/ /g, "").replace(/[ ]|&nbsp;/g, '').length > 0 && wedit.getData().img.length > 0) || (data.replace(/<div>|<\/div>/gi, "").replace(/(\r\n|\n|\r)/gm, "").replace(/\s+/g, "").replace(/<(?!img).*?>/g, "").replace(/ /g, "").replace(/[ ]|&nbsp;/g, '').length > 0&&wedit.getData().img.length == 0) ) {
+						$('.jjs').css('background', '#098E75');
+						$('.jjs').parent().attr('onclick', 'model.submission()');
+
+					} else {
+						$('.jjs').css('background', '#f4f4f4');
+						$('.jjs').parent().attr('onclick', '');
+					}
+				}, 1000)
+
+			},
+			close: function() {
+				document.activeElement.blur();
+				Comm.resizeSection();
+				setTimeout(function() {
+					if($('textarea').val() != '' || $('#box').find('div').length > 1) {
+						Comm.confirm('是否确认退出？', function(d) {
+							if(d) {
+								Comm.close();
+							}
+						})
+					} else {
+						Comm.close();
+					}
+				}, 200)
+
+			},
+			submission: function() {
+				var data = wedit.getData(3);
+				var content = "<div>" + data.content + '</div>';
+				var newsId = Comm.query('newsId');
+				if(data.content.replace(/[ ]|&nbsp;/g, '').replace(/(\r\n|\n|\r)/gm, "") == "" || content == "<div></div>") {
+					Comm.message('请输入答案');
+					return false;
+				}
+
+				var o = {};
+				o.newsId = newsId;
+				o.fullContent = content;
+				o.content = '<div>' + data.content.replace(/<\/?.+?>/g, "").replace(/ /g, "") + '</div>';
+				o.commentType = 1;
+				o.url = data.img;
+				Comm.loading('发布中...');
+				if(plId) {
+					o.commentId = plId;
+					AJAX.POST('/api/comment/updateCommentInfoById', o, function(a) {
+						Comm.loading(false);
+						if(a && a.code == 1) {
+							Comm.message('操作成功');
+							Comm.db('qzTitle', '');
+							Comm.goself('anwser.html?newsId=' + newsId + '&commentId=' + plId);
+						} else {
+							Comm.message(a.msg);
+						}
+					})
+				} else {
+					AJAX.POST('/admin/contentOfNo/saveComment', o, function(a) {
+						Comm.loading(false);
+						if(a && a.code == 1) {
+							Comm.message('操作成功');
+							Comm.db('qzTitle', '');
+							Comm.goself('anwser.html?newsId=' + newsId + '&commentId=' + a.data);
+
+						} else {
+							Comm.message(a.msg);
+						}
+					})
+				}
+
+			},
+			init: function() {
+				AJAX.GET('/api/comment/commentInfoById?commentId=' + plId, function(a) {
+					if(a && a.code == 1) {
+						wedit.fill({
+							content: a.data.fullContent
+						});
+						if(a.data.url) {
+							img = a.data.url.split(',');
+						}
+						$('.jjs').css('background', '#098E75');
+						$('.jjs').parent().attr('onclick', 'model.submission()');
+					}
+
+				})
+			}
+		}
+	</script>
+
+</html>

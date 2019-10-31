@@ -1,0 +1,124 @@
+* {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: 1none;
+	user-select: none;
+	font-size: 16px;
+	outline: none;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+
+#weditbox {
+	position: relative;
+	left: 0;
+	top: 0;
+	box-sizing: border-box;
+	overflow-x: hidden;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+	width: 100%;
+	height: 100%;
+}
+
+#weditbox::-webkit-scrollbar {
+	display: none;
+}
+
+#weditbox>div {
+	user-modify: read-write-plaintext-only;
+	-webkit-user-select: text;
+	width: 100%;
+	/*line-height: 150%;*/
+	box-sizing: border-box;
+	outline: none;
+	word-break: break-all;
+}
+
+#weditbox>div img {
+	max-width: 100%;
+	display: block;
+	margin: 20px 0px;
+	text-align: center;
+	border: 1px solid transparent;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+}
+
+img.cur {
+	border-radius: 5px;
+	border: 1px solid red !important;
+}
+
+img.cur:after {
+	content: "hhh";
+	position: absolute;
+	display: block;
+	top: 15px;
+	background: red;
+	left: 50px;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	line-height: 20px;
+	font-size: 18px;
+	z-index: 9999999;
+}
+
+.title {
+	border-bottom: 1px solid #e6e6e6;
+	-webkit-user-modify: read-write-plaintext-only;
+	font-size: 18px;
+	min-height: 28px;
+	/*line-height: 20px !important;*/
+}
+
+.content {
+	padding-bottom: 85px !important;
+	position: relative;
+	font-size: 16px;
+	padding-top: 10px;
+	text-align: left;
+}
+
+#weditbox mark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 9999;
+	display: none;
+	width: 30px;
+	line-height: 30px;
+	font-size: 12px;
+	overflow: hidden;
+	text-align: center;
+	border-radius: 50%;
+	border: 1px solid red;
+	background: rgba(255, 255, 255, .8);
+}
+
+section {
+	position: fixed;
+	width: 100%;
+	height: calc(100% - 45px);
+}
+
+
+/*footer{
+				width: 100%;
+				text-align: right;
+				padding: 5px 10px;
+				background: #DDD;
+				position: fixed;
+				left: 0;
+				bottom: 0;
+				height: 80px;
+			}*/

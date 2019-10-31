@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>分享</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/tpl.css" />
+		<style>
+			.downApp{
+				border-radius: 20px;
+				background-color: #098E75;
+				border: none;
+				color: #FFF;
+				padding: 5px 10px;
+			}
+			body{
+				background: url(img/abg.png) no-repeat;
+				background-size: 100% 100%;
+			}
+			.box{
+				width: 80%;
+				height: 265px;
+				background-color: #fff;
+				position: absolute;
+				left:10%;
+				top: 35%;
+				z-index: 9999;
+				border-radius: 5px;
+			}
+			 section>form {
+            padding: 0 15px;
+            background: #fff;
+
+        }
+
+        section form div {
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(220, 220, 220, 1);
+        }
+
+        section form label {
+            display: inline-block;
+            font-size: 16px;
+            color: #444;
+        }
+
+        section form input {
+            margin-left: 10px;
+            font-size: 16px;
+            color: #444444;
+
+        }
+
+        .pw i {
+            position: absolute;
+            padding: 0 5px;
+            width: 30px;
+            right: 10px;
+            top: 0;
+            bottom: 0;
+        }
+
+        .pw i>img {
+            vertical-align: middle;
+        }
+        footer{
+        	border: none;
+        }
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header class="bg_white" style="padding: 0;">
+			
+		</header>
+		<section>
+			<div class="box pad5">
+				<form>
+            <div class="ph">
+                <label class="marl5"><img src="img/sj.png" width="13" height="18" style="object-fit: contain;"/></label>
+                <input number id="phone" value="" onfocus="fou()"onblur="nfou()" onkeydown="Comm.resizeSection();" name="phone" data-reg='m' type="tel" placeholder="输入11位手机号码"
+                    maxlength="11">
+            </div>
+            <div class="cd">
+                <label class="marl5"><img src="img/yz.png" width="15" height="21" style="object-fit: contain;" /> </label>
+                <input number id="code" value="" name="code" onfocus="fou()"onblur="nfou()" onkeydown="Comm.resizeSection();" data-reg='m' type="tel" placeholder="输入短信验证码"
+                    maxlength="4" style="width: 44%;">
+                <span style="color:#098E75;" class="fr marr5" onclick="model.getCode(this)">获取验证码</span>
+            </div>
+            <div class="pw" style="position: relative;">
+                <label class="marl5"><img src="img/sl.png" width="13" height="18" style="object-fit: contain;"/></label>
+                <input number id="Password" value="" onfocus="fou()"onblur="nfou()" onkeydown="Comm.resizeSection();" name="Password" data-reg='m' type="Password" placeholder="输入登录密码">
+                <i>
+                    <img class="imgContain" src="./img/login/yanjin.png">
+                </i>
+            </div>
+        </form>
+        <div class="flex-justify-center mart20">
+            <button id="redBtn" style="background:#098E75;border:none;" onclick="model.reg()">确认</button>
+        </div>
+			</div>
+			
+		</section>
+		<footer class="shared paddl15 paddr15" style="position: fixed;">
+			
+		</footer>
+	</body>
+
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script type="text/javascript" src="inc/share.js" ></script>
+	<script>
+		var first =1;
+		//点击眼睛显示或隐藏密码
+    $('.imgContain').on('click', function (e) {
+        if ($('#Password').attr('type') == 'Password') {
+            $('#Password').attr('type', 'text');
+            $('.imgContain').attr('src', './img/login/yanjin1.png');
+        } else {
+            $('#Password').attr('type', 'Password');
+            $('.imgContain').attr('src', './img/login/yanjin.png');
+        };
+    });
+		function pageload() {
+		var header = tpl.gethead();
+		$('header').html(header);
+		var footer = tpl.foorers();
+		$('footer').html(footer);
+		Comm.resizeSection()
+		}
+		function pageresume() {
+
+		}
+		function fou(){
+			if(!Comm.ios()){
+			$('footer').hide();
+			Comm.resizeSection();
+			}
+			
+		}
+		function nfou(){
+			if(!Comm.ios()){
+			$('footer').show();
+			Comm.resizeSection();
+			}
+			setTimeout(function(){
+			document.activeElement.blur();
+			Comm.resizeSection();	
+			},100)
+			
+		}
+		var model = {
+			countdown: 60,
+        code: '0000',//获取的验证码
+        //发送验证码倒计时
+        settime: function (el) {
+            var thih = this
+            var i = setInterval(function () {
+                el.html(thih.countdown + '秒');
+                if (thih.countdown > 0) {
+                    thih.countdown -= 1;
+                } else {
+                    el.html('重新获取');
+                    thih.countdown = 60;
+                    first=1;
+                    clearInterval(i);
+                }
+            }, 1000)
+        },
+        //获取验证码
+        getCode:function(el) {
+        		if(first==1){
+        			first=2;
+        			 var that = this;
+            var phone = $('#phone').val();
+            //未填写手机号
+            if (phone == '') {
+                Comm.message('请填写手机号');
+                return;
+            };
+            if (phone.length != 11) {
+                Comm.message('请填写正确手机号');
+                return;
+            };
+            AJAX.POST('/api/customer/sendMsg', { phone: phone, bo: 1 }, function (d) {
+                if (d && d.code == 1) {
+                    that.code = d.data;
+                    that.settime($(el))
+                } else {
+                    Comm.message(d.msg || '网络错误');
+                    first=1;
+                }
+            })
+        		}
+           
+        },
+        //注册
+        reg: function () {
+            if ($('#phone').val().length != 11) {
+                Comm.message('请填写正确手机号');
+                return;
+            };
+            //未填写验证码
+            if ($('#code').val() == '') {
+                Comm.message('请填写验证码');
+                return;
+            };
+            //未填写密码
+            if ($('#Password').val() == '') {
+                Comm.message('请填写密码');
+                return;
+            };
+
+            AJAX.POST('/api/customer/addCustomer', {
+                phone: $('#phone').val(),
+                password: $('#Password').val(),
+                code: $('#code').val()
+            }, function (d) {
+                //如果注册成功
+                if (d.code === 1) {
+                    Comm.message('注册成功，请前往APP登录完善信息~~');
+                    
+                } else {
+                    Comm.message(d.msg);
+                }
+            })
+        }
+		}
+	</script>
+
+</html>

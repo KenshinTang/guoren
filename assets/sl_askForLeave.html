@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+    <link rel="stylesheet" href="css/photo.css" />
+    <style>
+        body {
+            width: 1px;
+            min-width: 100%;
+        }
+        
+        .navItemIcon {
+            background-image: url('img/msg.png');
+            background-position: center right;
+            background-repeat: no-repeat;
+            background-size: auto 25px;
+        }
+        
+        .swiper-container {
+            width: 100%;
+            height: 220px;
+        }
+        
+        .swiper-slide {
+            width: 90%;
+            padding: 0 10px;
+        }
+        
+        .searchBar {
+            margin: 0 auto;
+        }
+        
+        .searchBar div {
+            width: 95%;
+            padding-left: 30px;
+            line-height: 30px;
+            height: 30px;
+            font-size: 14px;
+            background-color: #F2F6F7;
+            border-radius: 18px;
+            background-image: url('img/search.png');
+            background-repeat: no-repeat;
+            background-size: 14px;
+            background-position: 10px center;
+            margin: 0 auto;
+            margin-left: 15px;
+        }
+        
+        .mrpx {
+            color: #9B9B9B;
+            padding-right: 15px;
+            width: 75px;
+            background: url(img/index/down.png) no-repeat right center;
+            background-size: 8px;
+        }
+        
+        .dian {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #CF2D28;
+            position: absolute;
+            right: 11px;
+            line-height: 20px;
+            top: 32px;
+            font-size: 12px;
+            color: #fff;
+            text-align: center;
+        }
+        
+        #sinbox {
+            width: 300px;
+            padding: 0;
+            border-radius: 10px;
+        }
+        
+        #sinbox1 {
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+            width: 90%;
+        }
+        
+        .qxgz {
+            background: url(img/index/qxgz.png) no-repeat 0px center;
+            background-size: 16px;
+            text-align: left;
+            padding: 10px 0 10px 50px;
+            color: #444444;
+        }
+        
+        .bgxq {
+            background: url(img/index/bgxq.png) no-repeat 0px center;
+            background-size: 16px;
+            text-align: left;
+            padding: 10px 0 10px 50px;
+            color: #444444;
+            border-bottom: 1px solid #f4f4f4;
+        }
+        
+        .jb {
+            background: url(img/index/jb.png) no-repeat 0px center;
+            background-size: 16px;
+            text-align: left;
+            padding: 10px 0 10px 50px;
+            color: #444444;
+        }
+        
+        #sinbox2 {
+            width: 100%;
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            padding: 20px;
+            background-color: #fff;
+        }
+        
+        .getmor {
+            background: url(img/my/left.png) no-repeat 97% center;
+            background-size: 8px 14px;
+            border-bottom: 1px solid #f4f4f4;
+        }
+        
+        .god {
+            width: 18%;
+            display: inline-block;
+            white-space: initial;
+            vertical-align: top;
+            padding-top: 10px;
+        }
+        
+        .isselatesku,
+        .isselatesku::after {
+            width: 2.5em;
+        }
+        
+        .isselatesku {
+            width: 25px;
+            height: 30px;
+        }
+        
+        .txtleft {
+            margin-left: 5%;
+            width: 94%;
+            float: left;
+        }
+        
+        .isselatesku {
+            left: 14px;
+        }
+        
+        .schoolMsg {
+            border-bottom: 1px solid #f4f4f4;
+        }
+        
+        .sc-l {
+            width: 73%
+        }
+        
+        .sc-r {
+            width: 25%
+        }
+        
+        .myGroup {
+            border-radius: 6px;
+            background: url(img/mygroup.png) no-repeat;
+            background-size: 100% 100%;
+            height: 160px;
+        }
+        
+        .icon_left {
+            background: url('./img/my/left.png') no-repeat center right;
+            background-size: 5px 9px;
+            padding-right: 10px;
+        }
+        
+        .banner {
+            height: 160px;
+            border-radius: 6px;
+            margin-top: 7px;
+        }
+        
+        .addnow {
+            width: 80px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            margin: 10px auto;
+        }
+        
+        .yanjing {
+            width: 100px;
+            border-radius: 20px;
+            margin: 0 auto;
+            background: #098E75;
+            height: 28px;
+            line-height: 28px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar" style="padding: 0;box-shadow: none;">
+            <div class="navItemIcon marr20 hasNew" style="height: 44px;" onclick="app.goMsg();">
+                <div class="dian hide">
+
+                </div>
+            </div>
+            <div class="nav-title block searchBar" onclick="Page.send('go','search.html?type=2&focus=1');" style="padding-top: 8px;width: calc(100% - 50px);height: 44px; margin: 0;">
+                <div id="id_searchInput" class="color999 tleft">请输入您搜索的帖子</div>
+               
+            </div>
+        </div>
+    </header>
+    <section id="section" class="mescroll" style="height: 400px;">
+        <div id="myGroup" class="bg_hui pad15">
+
+        </div>
+        <div id="tuiList" class="bg_white paddt10">
+
+        </div>
+        <div id="list" class="bg_white paddb20">
+
+        </div>
+    </section>
+    <!--<div id="send" class="mescroll-totop" onclick="top.Comm.go('send1.html');">
+        <img src="img/index/bj.png" width="45" />
+    </div>-->
+    <!--<footer class="shared">
+
+    </footer>-->
+</body>
+
+
+<div id="sinbox1" class="paddb10" wtd="sinboxTemp">
+    <div class="bg_white marb10 f16" style="border-radius: 10px;">
+        <div class="coloreb3 paddb15 paddt15" onclick="model.shanchu(1)">删除</div>
+    </div>
+    <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+</div>
+<div id="sinbox1" class="paddb10" wtd="sinboxTemp1">
+    <div class="bg_white marb10 f16" style="border-radius: 10px;">
+        <!--<div class="paddt15 paddb15" onclick="model.bgxq(3)">不感兴趣</div>-->
+        <div class="paddt15 paddb15" onclick="model.jb(5)">举报</div>
+    </div>
+    <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+</div>
+<div id="sinbox" class="" wtd="sinboxTempxz">
+    <div class="bg_white f16" style="border-radius: 10px; padding: 30px 10px;">
+        您还未完善信息，请先完善信息
+    </div>
+    <div class="bg_white paddt15 paddb15 f16 colorfff" style="background-color: #098E75;" onclick="Page.send('go','improveInfo.html?_type=0');">确定</div>
+</div>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/mescroll/swiper.min.js"></script>
+<script type="text/javascript" src="inc/mescroll/mescroll.min.js"></script>
+
+<script type="text/javascript" src="inc/art-template.js"></script>
+<script type="text/javascript" src="inc/refresh.js" charset="utf-8"></script>
+<script type="text/javascript" src="inc/tpl.js"></script>
+<!--<script type="text/javascript" src="inc/photo.js"></script>-->
+<script src="inc/pages.js"></script>
+<script>
+    var customerId = "";
+    var _user = '';
+    var _token = "";
+    var dbnewsId = "";
+    var shanchu = "";
+
+
+
+    function pageload() {
+	if(Comm.ios()){
+    		$('section').css('padding-bottom','60px');
+    	}
+        Page.send('dbs', '_token', function(a) {
+            _token = a._token;
+            _user = a.user;
+            if(_user){
+            	customerId = _user.customerId;
+            }
+            dbnewsId = a.dbnewsId;
+            shanchu = a.shanchu;
+            firsr = a.firsr;
+            if (firsr != 1) {
+                Page.send('go', 'newLogin.html');
+            }
+            if (_user) {
+                AJAX.GET('/api/customer/checkUserInfo?customerId=' + _user.customerId, function(d) {
+                    if (d && d.data == 0) {
+                        Page.send('showWindow', {
+                            model: 'sl_askForleave',
+                            sinboxTemp4: 'sinboxTempxz'
+                        });
+                    }
+                })
+            }
+            model.getGroup();
+            model.getTui();
+            showmsg();
+            //Foot.init(); //底部
+            $("#id_searchInput").on('keypress', function(e) {
+                var keycode = e.keyCode;
+                //获取搜索框的值
+                var searchContent = $(this).val();
+                if (keycode == '13') {
+                    e.preventDefault();
+                    //请求搜索接口
+                    if (searchContent == '') {
+                        Comm.message('请输入搜索内容')
+                    } else {
+                        Page.send('go', 'searchQz.html?keyWord=' + searchContent);
+                    }
+                }
+            });
+			
+        })
+
+
+    }
+
+    function showmsg() {
+        //判断消息个数
+        AJAX.GET('/api/mess/count?userType=1&type=1', function(a) {
+            if (a && a.code == 1) {
+                if (a.data > 0) {
+                    $('.dian').html(a.data)
+                    $('.dian').removeClass('hide');
+                } else {
+                    $('.dian').addClass('hide');
+                }
+            }
+        })
+    }
+
+    function getModel(m) {
+    	if(m=='refresh'){
+        	$('section').scrollTop(0);
+        }
+        model[m]&&model[m]();
+    }
+
+    function pageresume() {
+        Page.send('dbs', '_token', function(a) {
+            _token = a._token;
+            _user = a.user;
+            dbnewsId = a.dbnewsId;
+            shanchu = a.shanchu;
+            firsr = a.firsr;
+			if(_user){
+            	customerId = _user.customerId;
+            }
+            showmsg();
+            model.getGroup();
+            model.getTui();
+            //model.refresh();
+            if(Comm.db('tzcb')){
+            		model.refresh();
+            		Comm.db('tzcb','');
+            }
+            if (shanchu) {
+                $('#' + shanchu).remove();
+                Comm.db('shanchu', '');
+            }
+
+            if (dbnewsId) {
+                AJAX.GET('/api/news/fieldInfo?newsId=' + dbnewsId + '&customerId=' + customerId, function(d) {
+                    if (d && d.code == 1) {
+                        $('#ping' + dbnewsId).html(d.data.commentNumber);
+                    }
+                })
+            }
+        })
+
+    }
+    var mid = "";
+    var merefresh = null;
+    var model = {
+        qh: function(id) {
+            mid = id
+        },
+        getmore: function(type) {
+        AJAX.GET('/api/customer/detail', function(d) {
+            if (d && d.code === 1) {
+                if (type) {
+                    Page.send('go', 'findZu.html?more=' + type);
+                } else {
+                    Page.send('go', 'findZu.html');
+                } 
+            }
+        });    
+        },
+        admin: function() {
+            if (_user == "") {
+                Page.send('go', 'newLogin.html');
+            } else {
+                Page.send('go', 'manage.html');
+            }
+        },
+        shanchu: function(type) {
+            Comm.showWindow('');
+            Comm.confirm('确认删除？', function(d) {
+                if (d) {
+                    AJAX.GET('/api/news/del?newsId=' + mid, function(a) {
+                        if (a && a.code == 1) {
+                            Comm.message('删除成功');
+                            $('#' + mid).remove();
+                        } else {
+                            Comm.message(a.msg);
+                        }
+                    })
+                }
+            })
+        },
+        add: function(groupsId) {
+            AJAX.GET('/api/school/groups/addFocus?groupsId=' + groupsId + '&customerIds=' + customerId, function(a) {
+                if (a && a.code == 1) {
+                    Comm.message('加入成功');
+                    model.getTui();
+                    model.getGroup();
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+        },
+        bgxq: function(type) {
+            AJAX.GET('/api/keyword/notLike?newsId=' + mid, function(a) {
+                if (a && a.code == 1) {
+                    $('#' + mid).remove();
+                    Comm.showWindow('');
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+            console.log(type, mid);
+        },
+        jb: function(type) {
+        		Comm.showWindow('');
+            if (type == 5) {
+                Page.send('go', 'report.html?itemId=' + mid);
+            }
+            console.log(type, mid);
+        },
+        getGroup: function() {
+            AJAX.GET('/api/school/groups/myList?curpage=1&pagesize=6&customerId=' + customerId, function(a) {
+                if (a && a.code == 1) {
+                    a.data.first = 1;
+                    $('#myGroup').html(template('groupTpl', a.data));
+                }
+                model.init();
+            })
+        },
+        init: function() {
+            if (merefresh == null) {
+                merefresh = new MERefresh('section,list', {
+                    pagesize: 10,
+                    refreshUrl: '/api/news/dynamicStateList',
+                    refreshTypeGet: true
+                });
+                //网络请求参数
+                merefresh.refreshOption.refreshParm = {};
+                //页面 <刷新> 的回调
+                merefresh.refreshOption.refresh_cb = function(refresh, d) {
+                    // console.info(d)
+                    d.data.curPage = d.curPage;
+                    d.data.customerId = customerId;
+                    d.data = changeDeta(d.data);
+                    console.log(d.data)
+                    if(Comm.ios()){
+                    	resizeDom();
+                    }
+                    refresh.successEndRef(d.data.length, d.totalCount);
+                    refresh.appendHtml(template('msgTpl', d.data));
+                    if(d.curPage==1){
+                    	if(Comm.ios()){
+                    	resizeDom();
+                    }
+                      $('section').scrollTop(0);
+                      if(Comm.ios()){
+                    	resizeDom();
+                    }
+                    }
+                    Comm.scorllDel();
+                    Comm.resizeSection();
+                    if(Comm.ios()){
+                    	resizeDom();
+                    }
+//                  Comm.resizeDom();
+                };
+            }
+        },
+        refresh: function() {
+            if (merefresh != null) {
+                merefresh.refreshOption.refreshParm = {
+
+                };
+                //重置列表数据
+                merefresh.MeRefScroll.resetUpScroll();
+                //merefresh.MeRefScroll.triggerDownScroll();
+                //隐藏回到顶部按钮
+                merefresh.MeRefScroll.hideTopBtn();
+                if(Comm.ios()){
+                    	resizeDom();
+                    }
+            }
+        },
+        getTui: function() {
+            AJAX.GET('/api/school/groups/recommendList?customerId=' + customerId + '&curpage=1' + '&pagesize=5', function(a) {
+                if (a && a.code == 1) {
+                	console.log('ss')
+                    $('#tuiList').html(template('tuiTpl', a.data));
+                    var mySwiper = new Swiper('.swiper-container', {
+                        autoplay: 5000, //可选选项，自动滑动
+                    })
+                }
+                model.init();
+            })
+        }
+
+    }
+
+    function changeDeta(r) { //处理推荐、关注数据
+        // console.log(r)
+        var news = r.newsInfoVOList || r;
+        var forward = r.forward || [];
+        var top = r.topic || [];
+        var user = r.userInfo || [];
+        var resource = r.resource || [];
+
+        for (var i = 0; i < news.length; i++) {
+            if (news[i].forwardId > 0 && news[i].resourceId > 0) {
+                for (var k = 0; k < forward.length; k++) {
+                    if (news[i].forwardId == forward[k].newsId) {
+                        news[i].fContent = forward[k].content;
+                        news[i].fCname = forward[k].customerName;
+                        news[i].fCid = forward[k].customerId;
+                        for (var q = 0; q < resource.length; q++) {
+                            if (news[i].resourceId == resource[q].newsId) {
+                                news[i].yTitle = resource[q].title;
+                                news[i].ynewsId = resource[q].newsId;
+                                news[i].yContent = resource[q].subhead;
+                                news[i].ynum = resource[q].forwardNumber;
+                                news[i].yaddTime = resource[q].addTime;
+                                news[i].ypic = resource[q].face.split(',');
+                                for (var s = 0; s < user.length; s++) {
+                                    if (user[s].newsId == resource[q].newsId) {
+                                        news[i].yname = user[s].userName
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (news[i].topicId > 0) {
+                    for (var j = 0; j < top.length; j++) {
+                        if (news[i].topicId == top[j].topicId) {
+                            news[i].tTitle = top[j].title;
+                            news[i].tId = top[j].topicId;
+                        }
+                    }
+                }
+            } else if (news[i].resourceId > 0 && news[i].forwardId == 0) {
+                if (news[i].topicId > 0) {
+                    for (var j = 0; j < top.length; j++) {
+                        if (news[i].topicId == top[j].topicId) {
+                            news[i].tTitle = top[j].title;
+                            news[i].tId = top[j].topicId;
+                        }
+                    }
+                }
+                for (var ql = 0; ql < resource.length; ql++) {
+                    if (news[i].resourceId == resource[ql].newsId) {
+                        news[i].yTitle = resource[ql].title;
+                        news[i].ynewsId = resource[ql].newsId;
+                        news[i].yContent = resource[ql].subhead;
+                        news[i].ynum = resource[ql].forwardNumber;
+                        news[i].yaddTime = resource[ql].addTime;
+                        news[i].ypic = resource[ql].face.split(',');
+                        for (var s = 0; s < user.length; s++) {
+                            if (user[s].newsId == resource[ql].newsId) {
+                                news[i].yname = user[s].userName
+                            }
+                        }
+                    }
+                }
+            }
+            if (news[i].topicId > 0) {
+                for (var j = 0; j < top.length; j++) {
+                    if (news[i].topicId == top[j].topicId) {
+                        news[i].tTitle = top[j].title;
+                        news[i].tId = top[j].topicId;
+                    }
+                }
+            }
+            if (news[i].itemType == 0) {
+                for (var l = 0; l < user.length; l++) {
+                    if (news[i].customerId == user[l].userId && news[i].itemType == user[l].itemType) {
+                        news[i].uid = user[l].userId;
+                        news[i].uname = user[l].userName;
+                        news[i].uface = user[l].face;
+
+                    }
+                }
+
+            } else {
+                for (var c = 0; c < user.length; c++) {
+                    if (news[i].newsId == user[c].newsId && news[i].itemType == user[c].itemType) {
+                        news[i].uid = user[c].userId;
+                        news[i].uname = user[c].userName;
+                        news[i].uface = user[c].face;
+                    }
+                }
+            }
+            news[i].face = news[i].face.split(',');
+            news[i].myId = customerId;
+            //          if (news[i].subhead) {
+            //              var aa = news[i].title.length;
+            //
+            //              news[i].subhead = news[i].subhead.slice(aa, news[i].subhead.length);
+            //          }
+        }
+        return news;
+    }
+</script>
+<script id="tuiTpl" type="text/html">
+    <div class="paddl15 mart10">
+        <div class="flex">
+            <div class="f16 color333" style="flex-basis:80%">果仁精选推荐</div>
+            <div class="icon_left f12 color999" onclick="model.getmore()">查看更多</div>
+        </div>
+        <div class="f12 color999 mart5">最适合你的都在这了</div>
+    </div>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+			{{if $data==""}}
+			<div class="paddl10 mart10 paddr10" style="width: 100%;">
+			<div class="banner" style="background:url(img/wu.png) no-repeat;	background-size:100% 100%;width:100%;height:200px">
+                    
+                </div>
+            </div>
+			{{else}}
+            {{each $data v k}}
+            <div class="swiper-slide" data-swiper-autoplay="2000" style="width:100%" onclick="event.stopPropagation();Page.send('go','postDetails.html?groupId={{v.groupId}}');">
+                <div class="banner" style="background:url({{OSS(v.headImg,'f')}}) no-repeat;	background-size:cover;">
+                    <div class="f20 lh40 colorfff center paddt30 wordW" style="text-shadow: 1px 1px 1px #000;">{{v.groupName}}</div>
+                    <div class="addnow color999 lh20 center" onclick="event.stopPropagation();model.add({{v.groupId}})"><span class="colorfff" style="text-shadow: 1px 1px 1px #000;">立即加入</span></div>
+                </div>
+                <div class="marl15 marr15 paddb5 flex mart10 borderb" onclick="event.stopPropagation();Page.send('go','postDetails.html?groupId={{v.groupId}}');">
+                    <img src="{{OSS(v.face,'s')}}" style="border-radius:5px;" width="35" height="35" />
+                    <div class="marl15">
+                        <div class="color666 f12 wordW">{{v.autograph}}</div>
+                        <div class="color666 f12">成员{{conunm(v.customerNum)}}人</div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+            {{/if}}
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="groupTpl">
+    <div class="myGroup">
+        <div class="flex pad10">
+            <div class="tleft f16 color333" style="flex-basis:50%">我的圈子</div>
+            <div class="tright icon_left f12 color999" style="flex-basis:50%" onclick="model.admin()">查看更多</div>
+        </div>
+        <div class="flex-between paddl15 paddr15 paddb15 paddt10" style="flex-wrap: wrap; ">
+            {{if $data!=''}} {{each $data v k}}
+            <div style="width:40%" class="flex lh25" onclick="Page.send('go','postDetails.html?groupId={{v.groupId}}');">
+                <img src="{{OSS(v.face,'s')}}" style="flex-basis:15%;margin: auto 0;border-radius: 5px;" width="18" height="18" />
+                <div class="wordW f12 color333 marl15" style="flex-basis:70%;">{{v.groupName}}</div>
+            </div>
+            {{/each}} {{else}}
+            <div class="f18 color333 center mart20" style="width:100%">您还没有加入圈子哦~</div>
+            {{/if}}
+        </div>
+        <!--{{if $data==''||6>$data.length}}
+        <div class="center yanjing" {{if $data.length==5}}style="margin-top:-10px" {{/if}}onclick="model.getmore()">
+            <span><img src="img/yanjing.png" style="margin-top:-4px" width="27"/></span>
+            <span class="colorfff f12">发现更多</span>
+        </div>
+        {{else}}
+        <div class="f12 color999 center" onclick="model.admin(3)">
+            查看更多
+        </div>
+        {{/if}}-->
+    </div>
+</script>
+<script type="text/html" id="msgTpl">
+    {{each $data v k }}
+    <div class="schoolMsg" id="{{v.newsId}}" onclick="event.stopPropagation();Page.send('go','articleDetail.html?type=qz&newsId='+{{v.newsId}});">
+        <div class="fl center" style="width: 8%;">
+            <img src="img/ly.png" width="18" />
+            <p class="mart5 color333 f12" id="ping{{v.newsId}}">{{conunm(v.commentNumber)}}</p>
+        </div>
+        <div style="width: 90%;" class="fl marl5">
+            <div class=" {{if v.face&&v.face[0]!=''}}sc-l fl{{/if}}">
+                <div class="f14 wordW2 color333"style="font-family: Arial;">{{v.title}}</div>
+                <div class="heads mart10">
+                    <div class="name-left fl" style="width:100%">
+                        <img onclick="event.stopPropagation();Page.send('go','postDetails.html?groupId={{v.uid}}');" class="fl" src="{{OSS(v.uface,'s')}}" style="border-radius: 5px;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20" />
+                        <div class="fl marl10 lh20" style="max-width:35%">
+                            <p class="f12 color505 wordW">{{v.uname}}</p>
+                        </div>
+                        <div class="fl f12 color999 marl15 lh20">更新于{{sldate(v.lastCommentTime)}}</div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+            </div>
+            {{if v.face&&v.face[0]!=''}}
+            <div class="fr sc-r">
+                {{imgTpl(v.face[0].split(','),56)}}
+            </div>
+            {{/if}}
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+    </div>
+    {{/each}}
+
+</script>
+</html>

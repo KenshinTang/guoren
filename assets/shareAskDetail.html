@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>回答详情</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+    <style>
+        .navItemIcon {
+            width: 50px;
+            background: none;
+        }
+        
+        header {
+            border-bottom: 1px solid #dedede;
+        }
+        
+        section {
+            background: #f4f4f4;
+        }
+        
+        .father {}
+        
+        .item {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            background: #fff;
+            border-bottom: 1px solid #dedede;
+        }
+        
+        .item>.l {
+            display: flex;
+        }
+        
+        .item>.l img {
+                width: 36px;
+    height: 36px;
+    border: 1px solid #dedede;
+    border-radius: 36px;
+    margin-right: 12px;
+    flex-basis: 36px;
+        }
+        .img{
+        	 width: 36px;
+    height: 36px;
+    border: 1px solid #dedede;
+    border-radius: 36px;
+    margin-right: 12px;
+    flex-basis: 36px;
+        }
+        .item>.r {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .main {
+            margin-top: 10px;
+        }
+        
+        .footer1 {
+            justify-content: space-between;
+            padding: 10px 15px;
+            background: #fff;
+            text-align: center;
+            align-items: center;
+        }
+        
+        .txt-div {
+            width: 120px;
+            height: 36px;
+            border: 1px solid #dbdbdb;
+            border-radius: 18px;
+            line-height: 36px;
+            color: #999999;
+            text-align: left;
+            background: url('./img/xie.png')no-repeat center;
+            background-position-x: 10px;
+            background-size: 12%;
+            padding-left: 40px;
+        }
+        
+        #textarea {
+            display: block;
+            margin: 0 auto;
+            overflow: hidden;
+            width: 100%;
+            font-size: 14px;
+            height: 23px;
+            line-height: 28px;
+            padding: 2px;
+            max-height: 200px;
+            overflow-y: scroll;
+        }
+        
+        .footer2 {
+            padding: 5px 15px;
+            background: #fff;
+        }
+        
+        textarea {
+            outline: 0 none;
+            border: none;
+        }
+        
+        .footer2 .bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+            margin-top: 5px;
+        }
+        
+        .footer2 .bottom .l {
+            width: 23px;
+            height: 23px;
+            background: url('./img/pinglun/xl.png')no-repeat center;
+            background-size: 100%;
+        }
+        
+        .footer2 .bottom .r,
+        .footer2 .bottom .ll {
+            color: #098E75;
+        }
+        
+        .bgxq {
+            background: url(img/index/bgxq.png) no-repeat 0px center;
+            background-size: 16px;
+            text-align: left;
+            padding: 10px 0 10px 50px;
+            color: #444444;
+            /* border-bottom: 1px solid #f4f4f4; */
+        }
+        
+        .jb {
+            background: url(img/index/jb.png) no-repeat 0px center;
+            background-size: 16px;
+            text-align: left;
+            padding: 10px 0 10px 50px;
+            color: #444444;
+        }
+        
+        #sinbox1 {
+            background-color: #fff;
+            padding: 10px 20px;
+            position: relative;
+            width: 300px;
+            border-radius: 10px;
+        }
+        
+        .pl {
+            background: url(img/xzd.png) no-repeat 0px center;
+            background-size: 16px;
+            text-align: left;
+            padding: 10px 0 10px 50px;
+            color: #444444;
+        }
+        .listData img{
+        	width:100%
+        }
+    </style>
+</head>
+
+<body>
+	<header></header>
+    <section class="mescroll" id="box">
+        <div class="bg_white">
+           <div class="schoolMsg">
+                <div class="color333  bold" id="newsTitle"></div>
+                <div class="data mart10" id="goGeren">
+                    <img class="img fl" id="face" src="img/my/topxiang.png" style="border-radius: 30px;" width="30" height="30" />
+                    <div class="fl">
+                        <p class="bold lh30 marl10" id="name"></p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="color666 mart10" id="newsContent"></div>
+            </div>
+            
+        </div>
+        <div id="top">
+
+        </div>
+        <div class="main">
+            <p style="padding:10px;background: #fff;font-size: 14px;border-bottom: 1px solid #dedede;" id="commentNumber"></p>
+            <div id="list">
+
+            </div>
+        </div>
+    </section>
+    <footer class="shared paddl10 paddr10">
+        
+    </footer>
+</body>
+
+<script id="footTpl" type="text/html">
+    
+</script>
+<script type="text/html" id="demo">
+    {{each $data.nextList as item index}}
+    <div class="item">
+        <div class="l">
+            <img src="{{OSS(item.face)}}" />
+            <div class="data">
+                <p class="bold">{{item.customerName}}</p>
+                <p class="mart10 marb10" style="color:#444444;">
+                    {{item.content}} {{if(item.customerName2 && item.parentContent)}}
+                    <a style="color:#ccc;">//@{{item.customerName2}}</a> {{item.parentContent}} {{/if}}
+                </p>
+                <p style="color:#8D8D8D;">{{sldate(item.addTime)}}</p>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</script>
+
+<script type="text/html" id="demo1">
+    <div class="item">
+        <div>
+            <img class="img" src="{{OSS($data.face)}}"  />
+            <span class="bold">{{$data.customerName}}</span>
+            <div class="data listData">
+                <p class="mart10 marb10" style="color:#444444;">{{$data.fullContent}} </p>
+                <p style="color:#8D8D8D;">{{sldate($data.addTime)}}</p>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="./inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+<script type="text/javascript" src="inc/share.js" ></script>
+<script>
+    var customerId = app.getCid();
+    var commentId = Comm.query('commentId'); //主回复id
+    var newsId = Comm.query('newsId');
+    var merefresh = null;
+    var data = []
+
+    function pageload() {
+        myrefresh();
+        model.gteNweInfo();
+        var header = tpl.gethead();
+		$('header').html(header);
+		var footer = tpl.foorers();
+		$('footer').html(footer);
+		Comm.resizeSection()
+    }
+
+    function myrefresh() {
+        if (merefresh == null) {
+            merefresh = new MERefresh('box,list', {
+                refreshUrl: '/api/news/commentInfoByCommentId',
+                refreshTypeGet: true
+            });
+            //网络请求参数
+            merefresh.refreshOption.refreshParm = {
+                customerId: customerId,
+                commentId: commentId,
+                commentType: 1
+            };
+            //页面 <刷新> 的回调
+            merefresh.refreshOption.refresh_cb = function(refresh, d) {
+                refresh.successEndRef(d.data && d.data.nextList ? d.data.nextList.length : 0, d.totalCount);
+                //渲染主回复
+                $('#top').html(template('demo1', d.data));
+                $('#commentNumber').html(d.data.nextList.length + '条回复');
+
+                if (d.curPage == 1) {
+                    //渲染副回复
+                    $('footer #bar').html(template('footTpl', d.data));
+                    Comm.resizeSection();
+                }
+                //渲染副回复
+                refresh.appendHtml(template('demo', d.data));
+                data = d.data
+            };
+        } else {
+
+            merefresh.refreshOption.refreshParm = {
+                customerId: customerId,
+                commentId: commentId,
+                commentType: 1
+            };
+            //重置列表数据
+            merefresh.MeRefScroll.resetUpScroll();
+            //model.mere.MeRefScroll.triggerDownScroll();
+            //隐藏回到顶部按钮
+            merefresh.MeRefScroll.hideTopBtn();
+        }
+
+    }
+    var mid = ''; //回复id
+    var customerName = ''; //主回复名字
+    var customerName2 = ''
+    var model = {
+        txt: '', //回复的内容
+        type: 1,
+        //获取详情
+        gteNweInfo() {
+            AJAX.GET("/api/news/info?newsId=" + newsId, function(d) {
+                if (d.code == 1) {
+                    model.title = d.data.news.title;
+                    $('#newsTitle').html(d.data.news.title)
+                    $('#newsContent').html(d.data.news.content);
+                     $('#face').attr('src', Comm.OSS.getImgUrl(d.data.itemFace));
+                    $('#goGeren').attr('onclick', "Comm.go('personal.html?customerId=" + d.data.itemId + "')");
+                    $('#name').html('<span>' + d.data.itemName + '</span>')
+                }
+            })
+        },
+        anwserqz: function() {
+            Comm.go('anwserqz.html?newsId=' + newsId + '&title=' + model.title + '')
+        },
+        //点击回复的更多选项
+        More: function(v, name) {
+            mid = v;
+            customerName2 = name;
+            Comm.showWindow('sinboxTemp1', true)
+        },
+        //给回复点赞
+        praiseByCommentId: function(e, commentId) {
+            var isPraise = $(e).attr('data-isPraise'); //是否点赞了
+            //没点赞
+            if (isPraise == 0) {
+                AJAX.POST('/api/news/praiseByCommentId', {
+                    commentId: commentId
+                }, function(d) {
+                    if (d.code == 1) {
+                        Comm.message('成功点赞');
+                        $(e).attr('src', 'img/index/zand.png').attr('data-isPraise', '1')
+                    } else {
+                        Comm.message(d.msg)
+                    }
+                })
+                return;
+            }
+            //点赞了
+            if (isPraise == 1) {
+                AJAX.POST('/api/news/cancelPraiseByCommentId', {
+                    commentId,
+                    commentId
+                }, function(d) {
+                    if (d.code == 1) {
+                        Comm.message('取消点赞');
+                        $(e).attr('src', 'img/index/zan.png').attr('data-isPraise', '0')
+                    } else {
+                        Comm.message(d.msg)
+                    }
+                })
+            }
+
+        },
+        addPraise: function(id, e) { //点赞
+            AJAX.GET('/api/news/praiseByCommentId?commentId=' + id, function(a) {
+                if (a && a.code == 1) {
+                    //Comm.message('点赞成功');
+                    $(e).attr('onclick', 'model.removePraise(' + id + ',this)');
+                    var num = $('.zan').html();
+                    $('.zan').html(Number(num) + 1);
+                    var aa = $(e).children();
+                    $(aa[0]).attr('src', 'img/index/zand.png');
+                    myrefresh();
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+        },
+        addLike: function(id, e) { //喜欢
+            AJAX.GET('/api/comment/addLike?commentId=' + id, function(a) {
+                if (a && a.code == 1) {
+                    //Comm.message('操作成功');
+                    $(e).attr('onclick', 'model.romeveLike(' + id + ',this)');
+                    var aa = $(e).children();
+                    $(aa[0]).attr('src', 'img/index/xind.png');
+                    myrefresh();
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+        },
+        addCollection: function(id, e) { //收藏
+            AJAX.GET('/api/collection/collect?itemId=' + id + '&customerId=' + app.getCid() + '&itemType=2', function(a) {
+                if (a && a.code == 1) {
+                    //Comm.message('操作成功');
+                    $(e).attr('onclick', 'model.removeCollection(' + id + ',this)');
+                    var aa = $(e).children();
+                    $(aa[0]).attr('src', 'img/index/shoud.png');
+                    myrefresh();
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+        },
+        addTrample: function(id, e) { //踩
+            AJAX.GET('/api/comment/addTrample?commentId=' + id, function(a) {
+                if (a && a.code == 1) {
+                    //Comm.message('操作成功');
+                    $(e).attr('onclick', 'model.removeTrample(' + id + ',this)');
+                    var aa = $(e).children();
+                    $(aa[0]).attr('src', 'img/index/caid.png');
+                    myrefresh();
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+        },
+        removePraise: function(id, e) { //取消点赞
+            AJAX.GET('/api/news/cancelPraiseByCommentId?commentId=' + id, function(a) {
+                if (a && a.code == 1) {
+                    //Comm.message('操作成功');
+                    $(e).attr('onclick', 'model.addPraise(' + id + ',this)');
+                    var aa = $(e).children();
+                    var num = $('.zan').html();
+                    $('.zan').html(Number(num) - 1);
+                    $(aa[0]).attr('src', 'img/index/zan.png');
+                    myrefresh();
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+        },
+        romeveLike: function(id, e) { //取消喜欢
+            AJAX.GET('/api/comment/cancelLike?commentId=' + id, function(a) {
+                if (a && a.code == 1) {
+                    //Comm.message('操作成功');
+                    $(e).attr('onclick', 'model.addLike(' + id + ',this)');
+                    var aa = $(e).children();
+                    $(aa[0]).attr('src', 'img/index/xin.png');
+                    myrefresh();
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+        },
+        removeCollection: function(id, e) { //取消收藏
+            AJAX.GET('/api/collection/deleteById?itemId=' + id + '&customerId=' + app.getCid() + '&itemType=2', function(a) {
+                if (a && a.code == 1) {
+                    //Comm.message('操作成功');
+                    $(e).attr('onclick', 'model.addCollection(' + id + ',this)');
+                    var aa = $(e).children();
+                    $(aa[0]).attr('src', 'img/index/shou.png');
+                    myrefresh();
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+        },
+        removeTrample: function(id, e) { //取消踩
+            AJAX.GET('/api/comment/cancelTrample?commentId=' + id, function(a) {
+                if (a && a.code == 1) {
+                    //Comm.message('操作成功');
+                    $(e).attr('onclick', 'model.addTrample(' + id + ',this)');
+                    var aa = $(e).children();
+                    $(aa[0]).attr('src', 'img/index/cai.png');
+                    myrefresh();
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+        },
+        //举报
+        Report: function() {
+            Comm.go('./report.html?itemType=2&itemId=' + mid)
+        },
+        //点击添加回复
+        showReviews: function() {
+            this.type = 1;
+            $('footer .footer2').removeClass('hide');
+            $('footer .footer1').addClass('hide');
+            //输入框聚焦
+            $('textarea').focus();
+            $('footer .footer2>p').html('正在回复:' + data.customerName);
+            Comm.resizeSection();
+        },
+        //输入框失去焦点
+        loseBlur: function() {
+            if (this.txt == '') {
+                //隐藏回复框
+                $('footer .footer2').addClass('hide');
+                $('footer .footer1').removeClass('hide');
+                Comm.resizeSection();
+            }
+        },
+        //输入框输入事件
+        texInput: function() {
+            this.txt = $('textarea').val()
+        },
+        //点击发布
+        release: function() {
+            var that = this;
+            if ($('textarea').val().replace(/\s+/g, "") == '') {
+                Comm.message('请输入回复内容')
+                return;
+            }
+            var o = {};
+            if (this.type == 1) {
+                o = {
+                    newsId: newsId,
+                    sid: commentId,
+                    content: $('textarea').val(),
+                    commentType: 1
+                }
+            }
+            if (this.type == 2) {
+                o = {
+                    newsId: newsId,
+                    sid: mid,
+                    content: $('textarea').val(),
+                    commentType: 1
+                }
+            }
+            Comm.loading('发布中...');
+            AJAX.POST('/admin/contentOfNo/saveComment', o, function(d) {
+
+                Comm.loading(false);
+                if (d && d.code == 1) {
+                    Comm.message('回复成功');
+                    that.txt = '';
+                    $('textarea').val('');
+                    that.loseBlur()
+                    merefresh.refreshFunction()
+                } else {
+                    Comm.message(d.msg || '网络错误');
+                }
+            })
+        },
+        //点击二级回复
+        Reply: function() {
+            Comm.showWindow();
+            this.showReviews();
+            this.type = 2; //修改回复规则 针对回复进行回复
+            $('footer .top').show();
+            $('footer>p').html('正在回复:' + customerName2);
+        },
+    }
+</script>
+
+</html>

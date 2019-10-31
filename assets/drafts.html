@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>草稿箱</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+
+		<style>
+			.order-t {
+				text-align: center;
+				font-size: 12px;
+			}
+			
+			.order-t-c {
+				width: 33%;
+				height: 100%;
+				float: left;
+				font-size: 15px;
+				/*font-weight: bold;*/
+				color: #888888;
+			}
+			
+			.order-t-c-active {
+				/*border-bottom: 2px solid #000000;*/
+				position: relative;
+				color: #098E75;
+			}
+			
+			.order-t-c-active:after {
+				content: '';
+    position: absolute;
+    left: 38%;
+    bottom: auto;
+    right: auto;
+    height: 2px;
+    width: 30px;
+    background-color: #098E75;
+			}
+			
+			.mescroll-totop {
+				bottom: 80px;
+				right: 30px;
+				opacity: 1;
+			}
+			
+			.swiper-container2 {
+				height: 170px;
+				width: 300px;
+			}
+			
+			.swiper-container2 .swiper-wrapper {
+				left: 15%;
+			}
+			
+			.div_radio {
+				width: 77px;
+				height: 17px;
+				margin-left: 22px;
+				border-radius: 50%;
+				border: 1px solid #CBCBCB;
+			}
+			
+			.schoolMsg {
+				background-color: #fff;
+			}
+			
+			.schoolMsg .sel {
+				position: absolute;
+				z-index: 1000;
+				top: 50%;
+				margin-top: -20px;
+				left: -25px;
+				width: 20px;
+			}
+			
+			.delete {
+				position: fixed;
+				z-index: 99999999;
+				bottom: 0px;
+				width: 100%;
+				background: #fff;
+				border-top: 1px solid #dedede;
+			}
+			
+			.deleteBtn {
+				width: 70px;
+				height: 30px;
+				background: #098E75;
+				border-radius: 15px;
+				text-align: center;
+				line-height: 30px;
+				color: #fff;
+			}
+			
+			.demo1,
+			.demo2 {
+				padding: 15px;
+				border-bottom: 5px solid #f4f4f4;
+				position: relative;
+			}
+			
+			.icon_bianji {
+				display: inline-block;
+				width: 10px;
+				height: 10px;
+				background: url('img/my/bainji.png')no-repeat center;
+				background-size: 100%;
+			}
+			
+			.hide {
+				display: none !important;
+			}
+			
+			.data-list {
+				background-color: #f4f4f4;
+			}
+			.schoolMsg1{
+        	border:none !important;
+        }
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar ">
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+				<div class="navItem f14 marr10" id="edit" onclick="model.edit()">编辑</div>
+				<div class="navTitle">草稿箱</div>
+			</div>
+			<div class="scrollx mescroll-touch-x">
+				<div id="scrollxContent" class="scrollx-content">
+					<div id="nav" class="order-t ovf bb1" style="border-bottom: 1px solid #f4f4f4;">
+						<div class="order-t-c brp order-t-c-active" i='0'>帖子 <span id="num1"></span></div>
+						<div class="order-t-c brp" i='1'>日志 <span id="num2"></span></div>
+						<!--<div class="order-t-c brp" i='2'>Vlog <span id="num3"></span></div>-->
+						<div class="order-t-c brp" i='2'>问问 <span id="num4"></span></div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<section>
+			<!--轮播-->
+			<div id="swiper" class="swiper-container">
+				<div id="swiperWrapper" class="swiper-wrapper">
+					<!--全部-->
+					<div id="mescroll0" class="swiper-slide mescroll">
+						<div id="dataList0" class="data-list">
+						</div>
+						<!--<div class="flex-between delete hide" style="padding:15px;">
+							<div class="flex-between">
+								<img src="img/my/no.png" style="width: 20px;height: 20px;margin-right: 20px;" class="selAll" id="" onclick="model.it(this)" />全选
+							</div>
+							<div class="deleteBtn" onclick="model.delete()">删除</div>
+						</div>-->
+					</div>
+					<!--旗舰店-->
+					<div id="mescroll1" class="swiper-slide mescroll">
+						<div id="dataList1" class="data-list">
+						</div>
+						<!--<div class="flex-between delete hide" style="padding:15px;">
+							<div class="flex-between">
+								<img src="img/my/no.png" style="width: 20px;height: 20px;margin-right: 20px;" class="selAll" id="" onclick="model.it(this)" />全选
+							</div>
+							<div class="deleteBtn" onclick="model.delete()">删除</div>
+						</div>-->
+					</div>
+					<!--优享店-->
+					<div id="mescroll2" class="swiper-slide mescroll">
+						<div id="dataList2" class="data-list">
+						</div>
+						<!--<div class="flex-between delete hide" style="padding:15px;">
+							<div class="flex-between">
+								<img src="img/my/no.png" style="width: 20px;height: 20px;margin-right: 20px;" class="selAll" id="" onclick="model.it(this)" />全选
+							</div>
+							<div class="deleteBtn" onclick="model.delete()">删除</div>
+						</div>-->
+					</div>
+					<!--快取店-->
+					<!--<div id="mescroll3" class="swiper-slide mescroll">
+						<div id="dataList3" class="data-list">
+						</div>
+						<div class="flex-between delete hide" style="padding:15px;">
+							<div class="flex-between">
+								<img src="img/my/no.png" style="width: 20px;height: 20px;margin-right: 20px;" class="selAll" id="" onclick="model.it(this)" />全选
+							</div>
+							<div class="deleteBtn" onclick="model.delete(this)">删除</div>
+						</div>
+					</div>-->
+				</div>
+			</div>
+		</section>
+		<footer class="shared hide" style="z-index: 999;background-color: #fff;">
+			<div class="flex-between" style="padding:15px 15px 15px 5px;">
+				<div class="flex-between">
+					<img src="img/my/no.png" style="width: 20px;height: 20px;margin-right: 20px;" class="selAll" id="" onclick="model.it(this)" />全选
+				</div>
+				<div class="deleteBtn" onclick="model.delete(this)">删除</div>
+			</div>
+		</footer>
+	</body>
+
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+	<script type="text/html" id="listTpl">
+		{{each $data v k}}
+		<div class="schoolMsg" {{if isbianji==1}} style="margin-left: 30px;" {{/if}}>
+			<div class="demo2"{{if isbianji==1&&(k+1)==$data.length}} style="border:none;" {{/if}}>
+				<img src="img/my/no.png" style=";" class="sel" id="{{v.newsId}}" onclick="model.it(this)" />
+				<div style="color:#333;font-size:14px;" class="wordWrap bold">{{v.title}}</div>
+				<div class="flex-between" style="margin-top:12px;">
+					<div class="wordW3" style="color:#5F5F5F;font-size:14px;width:100%;">{{v.content}}</div>
+				</div>
+				<div class="flex-between" style="margin-top:12px;">
+					<div class="f12">
+						<span style="color:#5F5F5F;">{{sldate(v.addTime)}}</span>
+					</div>
+					{{if v.newsType==5}}
+					<div onclick="Comm.go('send1.html?id={{v.newsId}}&disable=1&dra=1')">
+						<i class='icon_bianji'></i>
+						<span class="f12" style="margin-left:5px;color:#098E75;">编辑</span>
+					</div>
+					{{else if v.newsType==7}}
+					<div onclick="Comm.go('send2.html?id={{v.newsId}}&disable=1&dra=1&groupId={{v.itemId}}')">
+						<i class='icon_bianji'></i>
+						<span class="f12" style="margin-left:5px;color:#098E75;">编辑</span>
+					</div>
+					{{else if v.newsType==3}}
+					<div onclick="Comm.go('send1.html?id={{v.newsId}}&disable=1&dra=1')">
+						<i class='icon_bianji'></i>
+						<span class="f12" style="margin-left:5px;color:#098E75;">编辑</span>
+					</div>
+					{{else}}
+					<div onclick="Comm.go('send2.html?id={{v.newsId}}&disable=1&dra=1')">
+						<i class='icon_bianji'></i>
+						<span class="f12" style="margin-left:5px;color:#098E75;">编辑</span>
+					</div>
+					{{/if}}
+				</div>
+			</div>
+		</div>
+		{{/each}}
+	</script>
+	<script>
+		function pageload() {
+			mescrollRefreshFn({
+				menuNumber: 3
+			});
+
+		}
+
+		function pageresume() {
+			var page = {
+				num: 1,
+				size: 10
+			};
+			getListData(page);
+		}
+		var chose = [];
+		var model = {
+			dataIndex: 0,
+
+			//弹出编辑操作
+			edit: function() {
+				this.dataIndex = $('.order-t-c-active').attr('i');
+				//判断当前所在的选项
+				if(this.dataIndex == 0) { //资讯页
+					if($('#dataList' + this.dataIndex + ' .schoolMsg').length < 1) {
+						return Comm.message('当前没有记录不能编辑哦！');
+					}
+					if($('#dataList0 .schoolMsg').css('marginLeft') == '30px') {
+						$('#dataList0 .schoolMsg').css('marginLeft', 0);
+						$('footer').attr('class', ' shared hide');
+						$('#edit').html('编辑');
+						$('.data-list').css('background-color','initial');
+						var ilens = $('#dataList0').children().length;
+						$($('#dataList0').children()[ilens-1]).children().css('border-bottom','5px solid #f4f4f4')
+					} else {
+						$('#dataList0 .schoolMsg').css('marginLeft', 30);
+						$('footer').attr('class', 'shared');
+						$('#edit').html('取消');
+						$('.data-list').css('background-color','#fff');
+						var ilens = $('#dataList0').children().length;
+						$($('#dataList0').children()[ilens-1]).children().css('border','none')
+					}
+				} else if(this.dataIndex == 1) { //帖子页
+					if($('#dataList' + this.dataIndex + ' .schoolMsg').length < 1) {
+						return Comm.message('当前没有记录不能编辑哦！');
+					}
+					if($('#dataList1 .schoolMsg').css('marginLeft') == '30px') {
+						$('#dataList1 .schoolMsg').css('marginLeft', 0);
+						$('footer').attr('class', ' shared hide');
+						$('#edit').html('编辑');
+						$('.data-list').css('background-color','initial');
+						var ilens = $('#dataList1').children().length;
+						$($('#dataList1').children()[ilens-1]).children().css('border-bottom','5px solid #f4f4f4')
+					} else {
+						$('#dataList1 .schoolMsg').css('marginLeft', 30);
+						$('footer').attr('class', 'shared');
+						$('#edit').html('取消');
+						var ilens = $('#dataList1').children().length;
+						$($('#dataList1').children()[ilens-1]).children().css('border','none')
+						$('.data-list').css('background-color','#fff');
+					}
+				} else if(this.dataIndex == 2) { //问问页
+					if($('#dataList' + this.dataIndex + ' .schoolMsg').length < 1) {
+						return Comm.message('当前没有记录不能编辑哦！');
+					}
+					if($('#dataList2 .schoolMsg').css('marginLeft') == '30px') {
+						$('#dataList2 .schoolMsg').css('marginLeft', 0);
+						$('footer').attr('class', ' shared hide');
+						$('#edit').html('编辑');
+						var ilens = $('#dataList2').children().length;
+						$($('#dataList2').children()[ilens-1]).children().css('border-bottom','5px solid #f4f4f4')
+						$('.data-list').css('background-color','initial');
+					} else {
+						$('#dataList2 .schoolMsg').css('marginLeft', 30);
+						$('footer').attr('class', 'shared');
+						$('#edit').html('取消');
+						var ilens = $('#dataList2').children().length;
+						$($('#dataList2').children()[ilens-1]).children().css('border','none')
+						$('.data-list').css('background-color','#fff');
+					}
+				}
+				//				else if(this.dataIndex == 3) { //视频页
+				//					if($('#dataList' + this.dataIndex+' .schoolMsg').length < 1) {
+				//						return Comm.message('当前没有记录不能编辑哦！');
+				//					}
+				//					if($('#dataList3 .schoolMsg').css('marginLeft') == '30px') {
+				//						$('#dataList3 .schoolMsg').css('marginLeft', 0);
+				//						$('#mescroll3 .delete').attr('class', 'flex-between delete hide');
+				//						$('#edit').html('编辑');
+				//					} else {
+				//						$('#dataList3 .schoolMsg').css('marginLeft', 30);
+				//						$('#mescroll3 .delete').attr('class', 'flex-between delete');
+				//						$('#edit').html('取消');
+				//					}
+				//				};
+				Comm.resizeSection();
+			},
+			//选择删除项
+			it: function(thih) {
+				var data = $('#dataList' + this.dataIndex + ' .sel');
+				var leng = $("#dataList" + this.dataIndex).children();
+				if($(thih).attr('src') == 'img/my/yese.png') {
+					$(thih).attr('src', 'img/my/no.png');
+					if($(thih).attr('class') == 'selAll') {
+						data.attr('src', 'img/my/no.png');
+						chose = []
+					} else {
+						chose.pop($(thih)[0].id);
+					}
+					if(leng.length == chose.length) {
+						$('.selAll').attr('src', 'img/my/yese.png');
+					} else {
+						$('.selAll').attr('src', 'img/my/no.png');
+					}
+				} else {
+					$(thih).attr('src', 'img/my/yese.png');
+					if($(thih).attr('class') == 'selAll') {
+						data.attr('src', 'img/my/yese.png');
+						for(var i = 0; i < data.length; i++) {
+							chose.push(data[i].id);
+						}
+					} else {
+						chose.push($(thih)[0].id);
+					}
+					if(leng.length == chose.length) {
+						$('.selAll').attr('src', 'img/my/yese.png');
+					}
+
+				}
+				console.log(chose)
+			},
+			//删除
+			delete: function() {
+				Comm.confirm('确认删除？',function(d){
+					if(d){
+					newsIds = chose.join(',');
+				AJAX.GET('/admin/news/deleteOfBatch?newsIds=' + newsIds, function(a) {
+					if(a && a.code == 1) {
+						Comm.message('删除成功');
+						$('.selAll').attr('src', 'img/my/no.png');
+						$('#edit').click();
+						var page = {
+							num: 1,
+							size: 10
+						};
+						getListData(page);
+					}
+				})	
+					}
+				})
+				
+
+			},
+			init: function() {
+				AJAX.GET('/api/news/getDraftsCount', function(a) {
+					if(a && a.code == 1) {
+						var data = a.data;
+						$('#num1').html();
+						$('#num2').html();
+						$('#num3').html();
+						$('#num4').html();
+					}
+				})
+			}
+
+		}
+
+		/*设置列表数据
+		 * pageData 当前页的数据
+		 * dataIndex 数据属于哪个nav */
+		function setListData(pageData, dataIndex) {
+			var swiper = document.getElementById("swiper");
+			var listDom = document.getElementById("dataList" + dataIndex),
+				nowStr = "",
+				listStr = "",
+				name = "";
+				if(pageData.curPage==1){
+        $('#edit').html('编辑');
+        $('.data-list').css('background-color', 'initial');
+        chose = [];
+        for (var c = 0; c < 4; c++) {
+            $('#dataList' + c + ' .schoolMsg').css('marginLeft', 0);
+            $('footer').attr('class', 'shared hide');
+            $('.sel').attr('src', 'img/my/no.png');
+            $('.selAll').attr('src', 'img/my/no.png');
+        }
+        Comm.resizeSection();
+        }else{
+        	var ilens = $('#dataList'+dataIndex).children().length;
+		$($('#dataList'+dataIndex).children()[ilens-1]).children().css('border-bottom','5px solid #f4f4f4')
+        		for (var c = 0; c < 4; c++) {
+            $('.sel').attr('src', 'img/my/no.png');
+            $('.selAll').attr('src', 'img/my/no.png');
+        }
+        Comm.resizeSection();
+        }
+				if(pageData.curPage==1&&pageData.length==0){
+					listDom.innerHTML='<div class="mescroll-empty"><img class="empty-icon" src="img/noData.png"><p class="empty-tip">这里空空如也，去看看别的</p></div>'
+				}else{
+					if(pageData.length > 0) {
+				pageData.dataIndex = dataIndex;
+				model.dataIndex = dataIndex
+				if($("#edit").html() == '取消') {
+					pageData.isbianji = 1;
+				} else {
+					pageData.isbianji = 0;
+				}
+				listStr = template('listTpl', pageData);
+				if(pageData.curPage > 1) {
+					listDom.innerHTML += nowStr + name + listStr;
+				} else {
+					listDom.innerHTML = nowStr + name + listStr;
+				}
+
+			} else {
+				listDom.innerHTML = '<div class="mescroll-empty"><p class="empty-tip">没有更多数据啦~~</p></div>'
+			}
+				}
+			Comm.scorllDel();
+
+		}
+
+		/*联网加载列表数据
+		 在您的实际项目中,请参考官方写法: http://www.mescroll.com/api.html#tagUpCallback
+		 请忽略getListDataFromNet的逻辑,这里仅仅是在本地模拟分页数据,本地演示用
+		 实际项目以您服务器接口返回的数据为准,无需本地处理分页.
+		 * */
+		var htmlData = [];
+
+		function getListDataFromNet(curNavIndex, pageNum, pageSize, successCallback, errorCallback) {
+			var type = '';
+			if(curNavIndex == 0) {
+				type = 7;
+			} else if(curNavIndex == 1) {
+				type = 2;
+			} else if(curNavIndex == 2) {
+				type = 5;
+			}
+			var o = {};
+			o.curpage = pageNum;
+			o.pagesize = pageSize;
+			o.type = type;
+			AJAX.POST("/api/news/getDraftsList", o, function(a) {
+				if(a && a.code == 1) {
+					var r = a.data || [];
+					if(r){
+						for(var i=0;i<r.length;i++){
+							r[i].content = r[i].content.replace(/<[^>]+>/g, "");
+						}
+					}
+					htmlData = r;
+					totalSize = a.totalCount;
+					htmlData.curPage = a.curPage;
+					successCallback && successCallback(htmlData, totalSize);
+				} else {
+					Comm.message(a.msg);
+					errorCallback && errorCallback();
+				}
+			});
+		}
+
+		function changePage(i) {
+
+			if(curNavIndex != i) {
+				//更改列表条件
+				var curNavDom; //当前菜单项
+				$("#nav div").each(function(n, dom) {
+					if(dom.getAttribute("i") == i) {
+						dom.classList.add("order-t-c-active");
+						curNavDom = dom;
+						//_type_ = dom.getAttribute("data-type");
+					} else {
+						dom.classList.remove("order-t-c-active");
+					}
+				});
+				//菜单项居中动画
+				var scrollxContent = document.getElementById("scrollxContent");
+				var star = scrollxContent.scrollLeft; //当前位置
+				var end = curNavDom.offsetLeft + curNavDom.clientWidth / 2 - document.body.clientWidth / 2; //居中
+				mescrollArr[curNavIndex].getStep(star, end, function(step, timer) {
+					scrollxContent.scrollLeft = step; //从当前位置逐渐移动到中间位置,默认时长300ms
+				});
+				//隐藏当前回到顶部按钮
+				mescrollArr[curNavIndex].hideTopBtn();
+				//取出菜单所对应的mescroll对象,如果未初始化则初始化
+				if(mescrollArr[i] == null) {
+					mescrollArr[i] = initMescroll(i, s);
+				} else {
+					//检查是否需要显示回到到顶按钮
+					var curMescroll = mescrollArr[i];
+					var curScrollTop = curMescroll.getScrollTop();
+					if(curScrollTop >= curMescroll.optUp.toTop.offset) {
+						curMescroll.showTopBtn();
+					} else {
+						curMescroll.hideTopBtn();
+					}
+				}
+				//更新标记
+				curNavIndex = i;
+			}
+			$('#edit').html('编辑');
+			$('.data-list').css('background-color','initial');
+			chose = [];
+			for(var c = 0; c < 4; c++) {
+				$('#dataList' + c + ' .schoolMsg').css('marginLeft', 0);
+				$('footer').attr('class', 'shared hide');
+				$('.sel').attr('src', 'img/my/no.png');
+				$('.selAll').attr('src', 'img/my/no.png');
+			}
+			Comm.resizeSection();
+		}
+	</script>
+
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>问答详情</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+    <style>
+        .navItemIcon {
+            width: 50px;
+            background: none;
+        }
+        
+        .jjs {
+            background-color: #098E75;
+            border-radius: 5px;
+            color: #FFF;
+            line-height: 22px;
+            padding: 1px 10px;
+        }
+        
+        .search {
+            padding: 10px 25px;
+            background-color: #F3F3F3;
+            background-image: url(img/index/down.png);
+            background-repeat: no-repeat;
+            background-size: 6px 3px;
+            background-position: 98% center;
+        }
+        
+        .inp {
+            width: 100%;
+            background-color: #F3F3F3;
+        }
+        
+        .mrpx {
+            color: #9B9B9B;
+            padding-right: 15px;
+            width: 75px;
+            background: url(img/index/down.png) no-repeat right center;
+            background-size: 8px;
+        }
+        
+        #sinbox1 {
+            background-color: #fff;
+            padding: 20px;
+            position: relative;
+            width: 300px;
+            border-radius: 10px;
+        }
+        
+        .jb {
+            background: url(img/index/jb.png) no-repeat 0px center;
+            background-size: 16px;
+            text-align: left;
+            padding: 10px 0 10px 50px;
+            color: #444444;
+        }
+        
+        .pl {
+            background: url(img/xzd.png) no-repeat 0px center;
+            background-size: 16px;
+            text-align: left;
+            padding: 10px 0 10px 50px;
+            color: #444444;
+        }
+        
+        .ybox {
+            width: 100px;
+            height: 100px;
+            background: url(img/ybox.png) no-repeat;
+            background-size: 100%;
+            position: absolute;
+            top: 45px;
+            right: 15px;
+            z-index: 2;
+        }
+    </style>
+</head>
+
+<body>
+	<header></header>
+    <section class="mescroll" id="box">
+        <div class="schoolMsg bg_white">
+            <div class="color333 wordW bold" id="newsTitle"></div>
+            <div class="color666 mart10 marb10" id="newsContent"></div>
+        </div>
+        <div class="paddb10 paddt10 paddl10 paddr10" style="background-color: #F4F4F4;position: relative;z-index:1;">
+            <div class="fl" style="color: #9B9B9B;" id="commentNumber">
+
+            </div>
+            <div class="mrpx fr changes" onclick="$('.ybox').removeClass('hide')">
+                默认排序
+            </div>
+            <div class="ybox hide">
+                <div class="flex paddl15 paddt15" onclick="model.changes(1,'默认排序')">
+                    <div class="colorfff paddl10 paddb10" style="border-bottom: #7C7C7C 1px solid;width: 100%;">默认排序</div>
+                </div>
+                <div class="flex paddl15 paddt15" onclick="model.changes(2,'按点赞数')">
+                    <div class="colorfff paddl10 paddb10" style="width: 100%;">按点赞数</div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div id="list">
+
+        </div>
+    </section>
+    <footer class="shared paddl10 paddr10">
+       
+    </footer>
+</body>
+<script type="text/html" id="listTpl">
+    {{each $data v k}}
+    <div class="schoolMsg bg_white">
+        <div class="heads">
+            <div class="name-left fl" style="width: 100%;">
+                <img class="fl" style="border-radius: 50%;"src="{{OSS(v.face)}}" onerror="this.src='img/index/scr.png';this.onerror=null;" width="40" height="40" />
+                <div class="fl marl10 paddb5" style="width: 50%;">
+                    <p class="f14 c9e">
+                        {{v.customerName}}
+                    </p>
+                </div>
+                
+                <div class="paddl10 wordW3 fl" style="width: 80%;">
+                    {{v.content}}
+                </div>
+                <div class="clearfix"></div>
+                <div class="fl marl30 paddl20 mart10 paddb5" style="width: 30%;">
+                    <p class="f12 c9e">{{sldate(v.addTime)}}</p>
+                </div>
+                
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    {{/each}}
+</script>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="./inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script type="text/javascript" src="./inc/upimg/upload.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+<script type="text/javascript" src="./inc/picker.min.js"></script>
+<script type="text/javascript" src="inc/share.js" ></script>
+<script>
+    var newsId = Comm.query('newsId'); //id
+    var sort = 1;
+    var customerId = app.getCid();
+
+    function pageload() {
+        model.gteNweInfo();
+        model.init();
+         var header = tpl.gethead();
+		$('header').html(header);
+		var footer = tpl.foorers();
+		$('footer').html(footer);
+		Comm.resizeSection()
+    }
+
+    function pageresume() {
+        model.init();
+    }
+
+    var mid = "";
+    var model = {
+        changes: function(sid, name) {
+            sort = sid;
+            var page = {
+                num: 1,
+                size: 10
+            };
+            model.init();
+            $('.changes').html(name);
+            $('.ybox').addClass('hide')
+        },
+        qh: function(id) {
+            mid = id
+        },
+        //获取详情
+        gteNweInfo() {
+            AJAX.GET("/api/news/info?newsId=" + newsId, function(d) {
+                if (d.code == 1) {
+                    $('#newsTitle').html(d.data.news.title)
+                    $('#newsContent').html(d.data.news.content);
+                   
+                }
+            })
+        },
+        init: function() {
+            if (!model.mere) {
+                model.mere = new MERefresh('box,list', {
+                    pagesize: 10,
+                    refreshUrl: '/api/news/commentInfoByFid',
+                    refreshTypeGet: true
+                });
+
+                model.mere.refreshOption.refreshParm = {
+                    newsId: newsId,
+                    commentType: 1,
+                    sort: sort,
+                    customerId: customerId
+                };
+
+                //页面 <刷新> 的回调
+                model.mere.refreshOption.refresh_cb = function(refresh, d) {
+                    refresh.successEndRef(d.data.length, d.totalCount);
+                    $("#commentNumber").html(d.data.length + '个回答');
+                    refresh.appendHtml(template('listTpl', d.data));
+                };
+            } else {
+                model.mere.refreshOption.refreshParm = {
+                    newsId: newsId,
+                    commentType: 1,
+                    sort: sort,
+                    customerId: customerId
+                };
+                //重置列表数据
+                model.mere.MeRefScroll.resetUpScroll();
+                //model.mere.MeRefScroll.triggerDownScroll();
+                //隐藏回到顶部按钮
+                model.mere.MeRefScroll.hideTopBtn();
+
+            }
+        },
+
+    }
+</script>
+
+</html>

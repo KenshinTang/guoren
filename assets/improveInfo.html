@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>完善信息</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="./css/g.css" />
+    <link rel="stylesheet" href="./css/comm.css" />
+    <style>
+        body {
+            /*background: url('img/login1/bg.png') no-repeat;
+            background-size: 100% 100%;*/
+        }
+        
+        body>header {
+            background-color: transparent;
+        }
+        
+        .navBackIcon {
+            /*background-image: url('css/stIconfile/back_w.png')*/
+        }
+        
+        section {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .main {
+            padding: 0 15px 0 20px;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+        
+        .main .isok {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #AAAAAA;
+            border-radius: 50%;
+        }
+        
+        .onUserType {
+            background: #57cddb;
+            color: #fff !important;
+        }
+        
+        .userType {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background-color: rgba(255, 255, 255, 0.35);
+            color: #999;
+            border: 1px solid #999;
+            border-radius: 10px;
+            width: calc(100% - 90px);
+        }
+        
+        .bgopt {
+            background-color: rgba(255, 255, 255, 0.35);
+            border: 1px solid #999;
+            border-radius: 10px;
+        }
+        
+        button.active {
+            border: 1px solid #2A735D;
+            background-color: #098e75;
+            color: #fff;
+        }
+        
+        input {
+            width: 72%;
+            height: 32px;
+            line-height: 20px;
+            border-radius: 21px;
+            font-size: 16px;
+            background: #F6F6F6;
+        }
+        
+        input::-webkit-input-placeholder,
+        textarea::-webkit-input-placeholder {
+            color: #E2E2E2;
+        }
+        
+        .inpline {
+            background: transparent;
+            border-bottom: 1px solid #fff;
+            border-radius: initial;
+            font-size: 15px;
+            color: #333;
+            width: 100%;
+            border-bottom: 1px solid #ccc;
+        }
+        
+        input.inpline::-webkit-input-placeholder,
+        textarea.inpline::-webkit-input-placeholder {
+            color: #E0E0E0;
+        }
+        
+        .main i {
+            display: inline-block;
+            position: absolute;
+        }
+        
+        .user_icon {
+            width: 14px;
+            height: 14px;
+            left: 16px;
+            top: 50%;
+            margin-top: -10px;
+        }
+        
+        .userName input {
+            padding-left: 40px;
+        }
+        
+        #upimg .img {
+            height: 78px;
+            width: 78px;
+            border-radius: 78px;
+            margin-top: 0;
+        }
+        
+        .cc {
+            width: 80px;
+            height: 80px;
+            border: 1px solid #efefef;
+            border-radius: 80px;
+            margin: 0 auto;
+        }
+        
+        .cc1 {
+            /*opacity: 0.35;*/
+            border-radius: 10px;
+            margin: 0 auto;
+            line-height: 37px;
+            margin-left: 10px;
+            border:1px solid #999;
+            background-color: rgba(255, 255, 255, 0.35);
+            width: 105px;
+            height: 40px;
+            color: #999;
+        }
+        
+        .cc1.ac {
+            background-color: #098e75;
+            border: 1px solid #2A735D;
+        }
+        .cc1.ac span{
+        	color: #FFFFFF !important; 
+        }
+        .footer {
+            background-color: transparent;
+        }
+        
+        .footer button {
+            width: calc(100% - 90px);
+            background-color: #098e75;
+        }
+        
+        .selschool {
+            position: absolute;
+            width: 80%;
+            left: 10%;
+            top: 75px;
+            height: 110px;
+            background-color: #EFC978;
+            z-index: 2;
+            border-radius: 10px;
+        }
+        
+        .selschool::after {
+            position: absolute;
+            /*box-shadow: 0px 0px 0px 1px #E4E4E4;*/
+            left: 50px;
+            top: -4px;
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-right: 1px solid #EFC978;
+            border-top: 1px solid #EFC978;
+            background-color: #EFC978;
+            transform: rotate(45deg);
+            content: ' ';
+        }
+        
+        .btsapn {
+            display: inline-block;
+            height: 25px;
+            line-height: 25px;
+            background-color: rgba(255, 255, 255, 0.35);
+            border-radius: 10px;
+            color: #fff;
+            width: 100%;
+            padding: 0px 3px;
+            font-size: 12px;
+        }
+        .borderb{
+        	border-bottom: 1px solid #ccc;
+        }
+        .f15{
+        	font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navBar">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle"></div>
+        </div>
+    </header>
+    <section>
+        <div class="">
+            <p class="paddl15" style="font-size: 24px;text-align: left;margin: 26px 0 22px 0;"><span class="color333 f24">完善信息,发现同道中人(</span><span class="color333" id="_type"></span><span class="color333">/5)</span></p>
+            <!--<p class="paddl15" style="color:#999;font-size: 14px;text-align: left;">以帮您发现推荐的符合您的信息</p>-->
+        </div>
+        <div id="main"></div>
+    </section>
+</body>
+
+<script type="text/html" id="type1Tpl">
+    <div class="main">
+        <div style="margin-top:20px;">
+            <div class="marb30 center">
+                <span style="color:#999;font-size: 15px;margin-left: 5px;">选择身份（必选）</span>
+            </div>
+            <div class="center">
+                <button class="marb25 hide {{type==1?'active':''}}" onclick="model.sel(this,1)">高中生</button>
+                <button class="marb25 {{type==2?'active':''}}" onclick="model.sel(this,2)">大学生</button>
+                <button class="marb25 {{type==3?'active':''}}" onclick="model.sel(this,3)">毕业生</button>
+                <button class="marb25 hide {{type==4?'active':''}}" onclick="model.sel(this,4)">教师</button>
+                <button class="marb25 hide {{type==5?'active':''}}" onclick="model.sel(this,5)">家长</button>
+                <!--<button class="{{type==6?'active':''}}" onclick="model.sel(this,6)">其他</button>-->
+            </div>
+        </div>
+    </div>
+    <div class="center footer" style="border: 0px; margin-top:90px;">
+        <button onclick="model.next()" style="border-radius: 10px;" class="marb10 f17 ">下一步</button>
+    </div>
+    <img id="butimg" src="img/login1/tu.png" width="130" height="76" style="position: absolute; right: 40px; bottom: 0;" />
+</script>
+<script type="text/html" id="type-1Tpl">
+    <div class="main" style="margin-top:0px;">
+        <div style="margin-top:20px;">
+            <div class="marb20">
+                <span class="isok" id="isok2" style="background:#57cddb"></span>
+                <span style="color:#222222;font-size: 15px;margin-left: 5px;">高中学校（必填）</span>
+            </div>
+            <div class="school lh40" style="position: relative;">
+                <input id="school" type="text" maxlength="20" placeholder="请搜索输入高中学校名称" class=" center">
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="type2Tpl">
+    <div class="main">
+        <div style="margin-top:20px;">
+            <div class="marb20 center">
+                <span style="color:#fff;font-size: 15px;margin-left: 5px;">选择城市（必选）</span>
+            </div>
+            <div class="city lh40 center" style="position: relative;">
+                <input id="city" style="height:40px" onfocus="model.butimg(1)" onblur="model.butimg(2)" type="text" maxlength="20" placeholder="请输入城市名称" class="center color333 bgopt" value="{{city&&city.curcity?city.curcity.n:''}}">
+            </div>
+            <div style="">
+                <ul id="cityul" class="center" style="width:72%; margin:0 auto;max-height:100px;overflow: auto;"></ul>
+            </div>
+        </div>
+        <div style="margin-top:20px;position:relative;">
+            <div class="marb20 center">
+                <span style="color:#fff;font-size: 15px;margin-left: 5px;">入学年份（必选）</span>
+            </div>
+            <div class="year lh40 center" style="position: relative;">
+                <input id="year" style="height:40px" onfocus="model.butimg(1)" onblur="model.butimg(2)" type="text" maxlength="20" placeholder="请选择入学年份" class="center color333 bgopt" value="{{years&&years.year?years.year:''}}">
+            </div>
+            <div class="">
+                <ul id="yearul" class="center" style="width:72%; margin:0 auto;max-height:100px;overflow: auto;"></ul>
+            </div>
+        </div>
+    </div>
+    <div class="center footer" style="border: 0px; margin-top:60px;">
+        <button onclick="model.next()" style="border-radius: 10px;" class="marb10 f17">下一步</button>
+    </div>
+    <img id="butimg" src="img/login1/tu.png" width="130" height="76" style="position: absolute; right: 40px; bottom: 0;" />
+</script>
+<script type="text/html" id="type3Tpl">
+    <div class="main" style="position:relative;padding-left: 0;">
+        <div style="margin-left: 15px;margin-top:20px;">
+            <div class="marb10 ">
+                <span style="color:#999;font-size: 15px;">大学学校（必选）</span>
+            </div>
+            <div class="school lh30 marb20" style="position: relative;">
+                <input id="school" onfocus="model.butimg(1)" onblur="model.butimg(2)" type="text" maxlength="20" placeholder="请输入大学名称" class="inpline" value="{{curschool?curschool.n:''}}">
+            </div>
+             <!--<div class="selschool hide">
+                <ul id="schoolul" class="center flex_wrap" style="max-height:110px;overflow: auto;padding:5px;">
+                    
+                </ul>
+            </div>-->
+            
+             <div class="">
+                <ul id="schoolul" class="" style="margin:0 auto;max-height:100px;overflow: auto;"></ul>
+            </div>
+           
+            <div class="marb10 ">
+                <span style="color:#999;font-size: 15px;">学院名称（必选）</span>
+            </div>
+            <div class="lh30 marb20" style="position: relative;">
+                <input id="conName" onfocus="model.butimg(1)" onblur="model.butimg(2)" type="text" maxlength="20" placeholder="请选择标准学院名称" class="inpline" value="{{collegeName?collegeName:''}}">
+            </div>
+            <div class="">
+                <ul id="conul" class="" style="margin:0 auto;max-height:100px;overflow: auto;"></ul>
+            </div>
+            <div class="marb10 ">
+                <span style="color:#999;font-size: 15px;">专业名称（选填）</span>
+            </div>
+            <div class="lh30 marb20" style="position: relative;">
+                <input id="majorName" onfocus="model.butimg(1)" onblur="model.butimg(2)" type="text" maxlength="20" placeholder="请填写专业标准名称" class="inpline" value="{{majorName?majorName:''}}">
+            </div>
+        </div>
+    </div>
+    <div class="center footer" style="border: 0px; margin-top:60px;">
+        <button onclick="model.next()" style="border-radius: 10px;" class="marb10 f17">下一步</button>
+    </div>
+    <img id="butimg" src="img/login1/tu.png" width="130" height="76" style="position: absolute; right: 40px; bottom: 0;" />
+</script>
+<script type="text/html" id="type-4Tpl">
+    <div class="main" style="margin-top:0px;">
+        <div style="margin-top:20px;">
+            <div class="marb20">
+                <span class="isok" id="isok2" style="background:#57cddb"></span>
+                <span style="color:#222222;font-size: 15px;margin-left: 5px;">入学年份（必选）</span>{{if(year)}}
+                <span style="color:#222222;font-size: 15px;margin-left: 5px;">当前选择：{{year}}年</span> {{/if}}
+            </div>
+            <div class="year lh40" style="position: relative;">
+                <input id="year" onfocus="model.butimg(1)" onblur="model.butimg(2)" type="text" maxlength="20" placeholder="请搜索入学年份" class=" center">
+            </div>
+            <div class="">
+                <ul id="yearul">
+                    {{ include 'yearTpl' $data }}
+                </ul>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="cityTpl">
+    {{each $data v k}}
+    <li class="lh40 borderb f14 color999" onclick="model.selcity('{{v.cityName}}','{{v.cityId}}')">{{v.cityName}}</li>
+    {{/each}}
+</script>
+<script type="text/html" id="collegeTpl">
+    {{each $data v k}}
+    <li class="lh40 borderb f12 color999" onclick="model.selcollege('{{v.userCollegeName}}','{{v.userCollegeId}}')">{{v.userCollegeName}}</li>
+    {{/each}}
+    <li class="marb20"></li>
+</script>
+
+<script type="text/html" id="schoolTpl">
+	 {{each $data v k}}
+    <li class="lh40 borderb f12 color999" onclick="model.selschool('{{v.schoolName}}','{{v.userschoolId}}')">{{v.schoolName}}</li>
+    {{/each}}
+    <li class="marb20"></li>
+    <!--{{each $data v k}}
+    <li class="lh30 f14 colorfff {{(k+2)%3==0?'marl5 marr5':''}}" style="width:calc((100% - 10px)/3);">
+        <span class="wordW btsapn" onclick="model.selschool('{{v.schoolName}}','{{v.userschoolId}}')">{{v.schoolName}}</span>
+    </li>
+    {{/each}}-->
+</script>
+
+<script type="text/html" id="yearTpl">
+    {{each $data v k}}
+    <li class="lh40 borderb f14 color999" onclick="model.selyear({{v}})">{{v}}年</li>
+    {{/each}}
+</script>
+
+<script type="text/html" id="type4Tpl">
+    <div class="">
+        <p class="tleft mart20 marb5"><span class="marl15" style="color:#333;font-size: 16px;">学籍确认</span></p>
+        <p style="color:#999;font-size: 12px;text-align: left;"class="paddl15">学籍信息是重要的基础，请核对确认</p>
+    </div>
+    <div class="main" style="margin: 0 auto 0 0;padding-left: 15px;">
+        <div>
+            <div class=" borderb lh30" style="margin-top: 13px;">
+                <span class="color999 f15" style="margin-right:40px;">选择身份</span> {{if(type==1)}}
+                <span class="color333 f15">高中生</span> {{else if(type==2)}}<span class="color333 f15">大学生</span> {{else if(type==3)}}<span class="color333 f15">毕业生</span> {{else if(type==6)}}<span class="color333 f15">其他</span> {{/if}}
+            </div>
+        </div>
+        {{if(city&&city.n)}}
+        <div>
+            <div class="borderb lh30 " style="margin-top: 13px;">
+                <span class="marr15 color999 f15" style="margin-right:40px;">选择城市</span>
+                <span class=" color333 f15"> {{city.n}}</span>
+            </div>
+        </div>{{/if}} {{if(school&&school.n)}}
+        <div>
+            <div class=" borderb lh30 " style="margin-top: 13px;">
+                <span class="marr15 color999 f15" style="margin-right:40px;">大学学校</span>
+                <span class=" color333 f15"> {{school.n}}</span>
+            </div>
+        </div>{{/if}} {{if(collegeName)}}
+        <div>
+            <div class=" borderb lh30 " style="margin-top: 13px;">
+                <span class="marr15 color999 f15" style="margin-right:40px;">学院名称</span>
+                <span class=" color333 f15"> {{collegeName}}</span>
+            </div>
+        </div>{{/if}} {{if(majorName)}}
+        <div>
+            <div class=" borderb lh30 " style="margin-top: 13px;">
+                <span class="marr15 color999 f15" style="margin-right:40px;">专业名称</span>
+                <span class=" color333 f15"> {{majorName}}</span>
+            </div>
+        </div>{{/if}}{{if(school)}}
+        <div>
+            <div class=" borderb lh30 " style="margin-top: 13px;">
+                <span class="marr15 color999 f15" style="margin-right:40px;">入学年份</span>
+                <span class=" color333 f15"> {{year}}年</span>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+    <div class="center footer" style="border: 0px; margin-top:30px;">
+        <button onclick="model.next()" style="border-radius: 10px;" class="marb10 f17">下一步</button>
+    </div>
+    <img id="butimg" src="img/login1/tu.png" width="130" height="76" style="position: absolute; right: 40px; bottom: 0;" />
+</script>
+
+<script type="text/html" id="type5Tpl">
+    <div class="main" style="margin:0 auto;width:72%;">
+        <div style="margin-top:30px;">
+            <div class="center cc" id="upimg" style="background-color:#EDF2F5;">
+                {{if(face)}}
+                <img src="{{OSS(face)}}" class="img" />
+                <div class="mart5 color999">编辑头像</div>
+                {{else}}
+                <img src="img/login1/jh.png" class="mart15 img" />
+                <div class="mart5 color999">上传头像</div>
+                {{/if}}
+            </div>
+        </div>
+        <div style="margin-top:30px;" class="flex_wrap lh30 borderb">
+            <div class="">
+                <span class="color999 f15" style="margin-right:32px;">姓名</span>
+            </div>
+            <div class="userName" style="position: relative;width:calc(100% - 70px);">
+                <input id="userName" onfocus="model.butimg(1)" onblur="model.butimg(2)" type="text" maxlength="10" style="width:100%;height:30px;padding:0px;border-radius: 0; background:transparent;color:#333;font-size:15px;font-family:Microsoft YaHei;" placeholder="请填写真实姓名" value="{{customerName?customerName:''}}">
+            </div>
+        </div>
+        <div style="margin-top:10px;" class="flex_wrap lh45">
+            <div class="">
+                <span class="marr5 color999">性别</span>
+                <span class="f12" style="color:#999;">(设置后无法更改)</span>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top:30px;">
+        <div class="center">
+            <div class="inblock cc1 {{sex==1?'ac':''}}" style="margin-right: 20px;" onclick="model.selsex(1,this)">
+                <span class="color999 f14">男</span>
+            </div>
+            <div class="inblock cc1 {{sex==0?'ac':''}}" style="margin-left: 20px;" onclick="model.selsex(0,this)">
+                <span class="color999 f14">女</span>
+            </div>
+        </div>
+    </div>
+    <div class="center footer" style="border: 0px; margin-top:30px;">
+        {{if(_type!="1")}}
+        <button onclick="model.sub()" style="border-radius: 10px;" class="marb10 f17">注册完成，立即登录</button> {{else}}
+        <button onclick="model.sub()" style="border-radius: 10px;" class="marb10 f17">保存更改</button> {{/if}}
+        <img id="butimg" src="img/login1/tu.png" width="130" height="76" style="position: absolute; right: 40px; bottom: 0;" />
+    </div>
+</script>
+<script type="text/javascript" src="./inc/z.js"></script>
+<script type="text/javascript" src="./inc/g.js"></script>
+<script type="text/javascript" src="./inc/comm.js"></script>
+<script type="text/javascript" src="./inc/picker.min.js"></script>
+<script type="text/javascript" src="./inc/area.js"></script>
+<script type="text/javascript" src="inc/art-template.js"></script>
+<script type="text/javascript" src="inc/mui/js/pingyin.js"></script>
+<script type="text/javascript" src="inc/upimg/upload.js"></script>
+
+<script type="text/javascript">
+    function pageload() {
+        $('#_type').html(model.n);
+        model.init()
+    }
+    var isckick =0;
+    var model = {
+        _type: Comm.query('_type') || -1,
+        n: Comm.query('n') || 1,
+        i: 1,
+        sel: function(a, i) {
+            if (!$(a).hasClass('.active')) {
+                $(a).parent().find('button').removeClass('active');
+                $(a).addClass('active');
+                model.i = i;
+            }
+        },
+        butimg:function(id){
+            	if(id==1){
+			$('#butimg').hide();
+		}else{
+			$('#butimg').show();
+		}
+            },
+        selcity: function(n, i) {
+            model.veinfo.city = {
+                n: n,
+                i: i
+            }
+            Comm.db('veinfo', model.veinfo);
+
+            $('#city').val(n)
+            $('#cityul').html('')
+                //model.n = parseInt(model.n) + 1;
+                //Comm.go('improveInfo.html?n=3');
+
+        },
+        selschool: function(n, i) {
+            event.stopPropagation();
+            model.veinfo.school = {
+                n: n,
+                i: i
+            }
+            Comm.db('veinfo', model.veinfo);
+            $('.selschool').hide();
+            $('#school').val(n);
+            $('#schoolul').html('');
+            model.initmconName(i);
+            //Comm.go('improveInfo.html?n=4');
+        },
+        selyear: function(n) {
+            model.veinfo.year = n;
+            $('#year').val(n)
+            $('#yearul').html('')
+            Comm.db('veinfo', model.veinfo);
+            //Comm.go('improveInfo.html?n=5');
+        },
+        selsex: function(sex, a) {
+            if (model.veinfo._type == "1") {
+                Comm.message('性别不能更改')
+                return
+            }
+            model.veinfo.sex = sex;
+            $(".cc1").removeClass('ac');
+            $(a).addClass('ac');
+            //$(".cc1").css('background-color', 'rgba(255, 255, 255)').css('border', "0");
+           //$(a).css('background-color', '#098e75').css('border', "1px solid #2A735D");
+        },
+        veinfo: Comm.db('veinfo'),
+        next: function() {
+            if (model.n == 1) {
+                model.veinfo.type = model.i;
+                model.veinfo._type = model._type;
+                if (model.veinfo.type == "0") {
+                    Comm.message('请选择身份')
+                    return
+                }
+            } else if (model.n == 2) {
+                if (!model.veinfo.city || model.veinfo.city && model.veinfo.city.n == "") {
+                    Comm.message('请选择地址')
+                    return
+                }
+                if (!model.veinfo.year) {
+                    Comm.message('请选择入学年')
+                    return
+                }
+            } else if (model.n == 3) {
+                if (!model.veinfo.school) {
+                    Comm.message('请选择学校')
+                    return
+                }
+
+                model.veinfo.collegeName = $('#conName').val();
+                if (!model.veinfo.collegeName || model.veinfo.collegeId == "0"||!model.veinfo.collegeId) {
+                    Comm.message('请选择标准学院名称')
+                    return
+                }
+                model.veinfo.majorName = $('#majorName').val();
+                //console.log(Comm.query('_type'))
+                if (model.veinfo._type != "1") {
+                model.veinfo.sex =null;
+            }
+                
+            }
+            Comm.db('veinfo', model.veinfo);
+
+            if (model.n == 1) {
+                if (model.i == 6) {
+                    Comm.go('improveInfo.html?n=' + 5);
+                } else {
+                    Comm.go('improveInfo.html?n=' + 2);
+                }
+            } else if (model.n == 2) {
+                Comm.go('improveInfo.html?n=' + 3);
+            } else if (model.n == 3) {
+            	AJAX.GET('api/customer/checkCollege?collegeId='+model.veinfo.collegeId+'&collegeName='+model.veinfo.collegeName,function(a){
+            		if(a&&a.code==1){
+            			if(a.data==true){
+            				Comm.go('improveInfo.html?n=' + 4);
+            			}else{
+            				Comm.message('请选择标准学院名称')
+            			}
+          			
+            		}else{
+            			Comm.message('请选择标准学院名称')
+            		}
+              	})
+                
+            } else if (model.n == 4) {
+                Comm.go('improveInfo.html?n=' + 5);
+            } else if (model.n == 5) {
+                Comm.go('improveInfo.html?n=' + 5);
+            }
+        },
+        sub: function() {
+            var userName = $('#userName').val();
+            if (!userName||userName.replace(/\s+/g, "")=="") {
+                Comm.message('请填写姓名');
+                return;
+            }
+            if (!model.veinfo.face) {
+                Comm.message('请上传头像');
+                return;
+            }
+            if (model.veinfo.sex != 0 && model.veinfo.sex != 1) {
+                Comm.message('请选择性别');
+                return;
+            }
+            var data = {
+                customerName: userName,
+                face: model.veinfo.face,
+                sex: model.veinfo.sex,
+                identity: model.veinfo.type,
+                enrollmentYear: model.veinfo.year,
+                majorName: model.veinfo.majorName,
+                collegeName: model.veinfo.collegeName,
+                collegeId: model.veinfo.collegeId
+            }
+            if (data.identity == 1) {
+                data.highSchoolCityId = model.veinfo.city.i;
+                data.highSchool = model.veinfo.school.n;
+            }
+            if (data.identity == 2 || data.identity == 3) {
+                data.universityId = model.veinfo.school.i;
+                data.universityCityId = model.veinfo.city.i;
+            }
+            console.log(data);
+            AJAX.POST('/api/customer/update', data, function(d) {
+                if (d.code === 1) {
+                    Comm.message('信息完善成功');
+                    setTimeout(function() {
+                        Comm.db('veinfo', null);
+                        if (model.veinfo._type == 0) {
+                            Comm.gotop('recommend.html');
+                        } else if (model.veinfo.type == 6) {
+                            Comm.close(2)
+                        } else {
+                            Comm.close(6)
+                        }
+                    }, 1500)
+                } else {
+                    Comm.message(d.msg);
+                }
+            })
+        },
+        init: function() {
+            if (!model.veinfo) {
+                model.veinfo = {
+                    type: model.i
+                }
+            }
+            if (model._type == 1 || model._type == 0) {
+                AJAX.GET('/api/customer/detail', function(d) {
+                    if (d && d.code == 1) {
+                        model.i = d.data.identity;
+                        model.veinfo = {
+                            _type: model._type,
+                            customerName: d.data.customerName,
+                            face: d.data.face,
+                            sex: d.data.sex,
+                            type: d.data.identity,
+                            year: d.data.enrollmentYear ? d.data.enrollmentYear : '',
+                            majorName: d.data.majorName,
+                            collegeName: d.data.collegeName,
+                            collegeId: d.data.collegeId,
+                        }
+                        if (d.data.universityCityId != "0") {
+                            model.veinfo.city = {
+                                i: d.data.universityCityId,
+                                n: Area.getArea(d.data.universityCityId)
+                            }
+                        }
+                        if (d.data.identity == 1) {
+                            model.veinfo.school = {
+                                i: d.data.highSchoolCityId,
+                                n: d.data.highSchool
+                            }
+                        } else if (d.data.identity == 2 || d.data.identity == 3) {
+                            model.veinfo.school = {
+                                i: d.data.universityId
+                            }
+                            model.initmconName(model.veinfo.school.i);
+                        }
+                    }
+                    Comm.db('veinfo', model.veinfo);
+                    init();
+                })
+            } else {
+                init();
+            }
+
+            function init() {
+                if (model.n == 2) {
+                    model.inityear();
+                    model.initcity();
+                } else if (model.n == 3) {
+                    model.initschool();
+                } else if (model.n == 5) {
+                    $('section #main').html(template('type' + model.n + 'Tpl', model.veinfo));
+                    model.upimg = new imgUploader("upimg", 10);
+                    model.upimg.success = function() {
+                        var uimg = this.imgList[0];
+                        console.log(uimg)
+                        model.veinfo.face = uimg;
+                        $("#upimg div").remove();
+                        $("#upimg img").addClass('img');
+                    }
+                } else {
+                    $('section #main').html(template('type' + model.n + 'Tpl', model.veinfo))
+                }
+            }
+        },
+        inityear: function() {
+            var year = new Date().getFullYear();
+            //year++;
+            var years = [];
+            for (var i = year; i >= 1970; i--) {
+                years.push(i);
+            }
+            years.year = model.veinfo.year;
+            model.years = years;
+            //$('section #main').html(template('type' + model.n + 'Tpl', years));
+        },
+        initschool: function() {
+            AJAX.POST('/api/customer/userSchool', {
+                //cityId: model.veinfo.city.i,
+                //schoolName: name
+                pagesize:100
+            }, function(d) {
+                if (d && d.code == 1) {
+                    model.school = d.data;
+                    if (model.veinfo.school) {
+                        var sc = getiddata(model.veinfo.school.i);
+                        model.veinfo.school.n = sc ? sc.schoolName : '';
+                        d.data.curschool = model.veinfo.school;
+                    }
+                    d.data.majorName = model.veinfo.majorName;
+                    d.data.collegeName = model.veinfo.collegeName;
+
+                    $('section #main').html(template('type' + model.n + 'Tpl', d.data));
+                    if (model.veinfo.College) {
+                        model.College = model.veinfo.College;
+                        model.changeconName()
+                    }
+
+                    var temp = "";
+                    $('#school').click(function() {
+                        event.stopPropagation();
+                        $(".selschool").show()
+                    });
+                    $('section').click(function() {
+                        event.stopPropagation();
+                        $(".selschool").hide()
+                    })
+                    $('#school').on('input', function() {
+                        var v = $('#school').val();
+                        if (v != temp) {
+                            var t = getdata(v);
+                            if (t.length > 0) {
+                                temp = v;
+                                $("#schoolul").html(template('schoolTpl', t));
+                            } else {
+                                temp = "";
+                                getdata(null);
+                                //$("#schoolul").html(template('schoolTpl', model.school));
+                                $("#schoolul").html('')
+                                model.veinfo.school = null;
+                            }
+                        }
+                    })
+
+                    function getdata(v) {
+                        var t = [];
+                        for (var i = 0; i < model.school.length; i++) {
+                            var c = model.school[i];
+                            if (v) {
+                                if (c.schoolName.indexOf(v) >= 0 || chineseToPinYin(c.schoolName).toLowerCase().indexOf(v.toLowerCase()) >= 0) {
+                                    t.push(c);
+                                }
+                            }
+                        }
+                        return t;
+                    }
+
+                    function getiddata(id) {
+                        for (var i = 0; i < model.school.length; i++) {
+                            var c = model.school[i];
+                            if (id == c.userschoolId) {
+                                return c
+                            }
+                        }
+                    }
+                }
+            })
+        },
+        initcity: function() {
+            AJAX.GET('/api/city/list', function(d) {
+                if (d) {
+                    model.city = d.data;
+                    if (model.veinfo.city && !model.veinfo.city.n) {
+                        for (var i = 0; i < model.city.length; i++) {
+                            if (model.veinfo.city.i == model.city[i].cityId) {
+                                model.veinfo.city.n = model.city[i].cityName;
+                            }
+                        }
+                    }
+                    model.city.curcity = model.veinfo.city;
+                    $('section #main').html(template('type' + model.n + 'Tpl', model))
+                }
+
+                var temp = "";
+                $('#city').on('input', function() {
+                    var v = $('#city').val();
+                    if (v != temp) {
+                        var t = getdata(v);
+                        if (t.length > 0) {
+                            temp = v;
+                            $("#cityul").html(template('cityTpl', t));
+                        } else {
+                            temp = "";
+                            getdata(null);
+                            //$("#cityul").html(template('cityTpl', model.city));
+                            $("#cityul").html('')
+                            model.veinfo.city = null;
+                        }
+                    }
+                })
+                var tempyear = "";
+                $('#year').on('input', function() {
+                    var v = $('#year').val();
+                    if (v != tempyear) {
+                        var t = getdatayear(v);
+                        if (t.length > 0) {
+                            tempyear = v;
+                            $("#yearul").html(template('yearTpl', t));
+                        } else {
+                            tempyear = "";
+                            getdatayear(null);
+                            //$("#yearul").html(template('yearTpl', years));
+                            $("#yearul").html('');
+                            model.veinfo.year = '';
+                        }
+                    }
+                });
+            });
+
+            function getdata(v) {
+                var t = [];
+                for (var i = 0; i < model.city.length; i++) {
+                    var c = model.city[i];
+                    if (v) {
+                        if (c.cityName.indexOf(v) >= 0 || chineseToPinYin(c.cityName).toLowerCase().indexOf(v.toLowerCase()) >= 0) {
+                            t.push(c);
+                        }
+                    }
+                }
+                return t;
+            }
+
+
+            function getdatayear(v) {
+                var t = [];
+                for (var i = 0; i < model.years.length; i++) {
+                    var c = model.years[i];
+                    if (v) {
+                        if (c.toString().indexOf(v) >= 0) {
+                            t.push(c);
+                        }
+                    }
+                }
+                
+                return t;
+            }
+        },
+        selcollege: function(n, i) {
+        		isckick=1;
+            model.veinfo.collegeId = i;
+            model.veinfo.collegeName = n;
+            Comm.db('veinfo', model.veinfo);
+            $('#conName').val(n);
+            $('#conul').html('');
+        },
+        initmconName: function(schoolid) {
+            //conul
+            AJAX.POST('/api/customer/userCollege', {
+                userSchoolId: schoolid,
+            }, function(d) {
+                if (d.code == 1) {
+                    model.College = d.data;
+                    model.veinfo.College = model.College;
+                    model.changeconName()
+
+                }
+            });
+        },
+        changeconName: function() {
+
+            var temp = '';
+            $('#conName').on('input', function() {
+                var v = $('#conName').val();
+                if (v != temp) {
+                    var t = getdata(v);
+                    if (t.length > 0) {
+                        temp = v;
+                        $("#conul").html(template('collegeTpl', t));
+                    } else {
+                        temp = "";
+                        getdata(null);
+                        //$("#cityul").html(template('cityTpl', model.city));
+                        $("#conul").html('')
+                        model.veinfo.collegeName = null;
+                    }
+                }
+            })
+
+            function getdata(v) {
+                var t = [];
+                for (var i = 0; i < model.College.length; i++) {
+                    var c = model.College[i];
+                    if (v) {
+                        if (c.userCollegeName.indexOf(v) >= 0 || chineseToPinYin(c.userCollegeName).toLowerCase().indexOf(v.toLowerCase()) >= 0) {
+                            t.push(c);
+                        }
+                    }
+                }
+                return t;
+            }
+        }
+    }
+</script>
+
+</html>

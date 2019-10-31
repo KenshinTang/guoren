@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>帮助说明</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+
+    <style>
+        body {}
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">系统消息</div>
+        </div>
+    </header>
+    <section>
+        <div class="pad15">
+            <h4 class="marb25" id="title"></h4>
+            <div id="list">
+            	
+            </div>
+        </div>
+    </section>
+</body>
+<script type="text/html" id="listTpl">
+
+</script>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+
+<script>
+    function pageload() {
+		model.init();
+    }
+    var id = Comm.query('id');
+   
+    var model ={
+    	init:function(){
+    		AJAX.GET('/api/mess/sysInfo?messId='+Comm.query('id')+'&setRead=1',function(a){
+    			if(a&&a.code==1){
+    				$('#list').html(a.data.content);
+    			}
+    		})
+    	}
+    }
+</script>
+
+</html>

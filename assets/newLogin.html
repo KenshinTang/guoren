@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="./css/g.css" />
+    <link rel="stylesheet" href="./css/comm.css" />
+    <link rel="stylesheet" href="css/tpl.css" />
+    <style>
+        body {
+            /*background: url(img/login1/bg.png) no-repeat;
+            background-size: 100% 100%;*/
+           background: #fff;
+        }
+        
+        body>header {
+            background-color: inherit;
+        }
+        
+        button,
+        input {
+            border: 0px solid white;
+        }
+        
+        section>div,
+        section>button,
+        footer>button {
+            width: 90%;
+            margin: 0 auto;
+        }
+        
+        section>div.logo {
+            line-height: 45px;
+            font-size: 18px;
+            width: 60%;
+            color: #D3D3D3;
+        }
+        
+        section>div input {
+            width: 90%;
+            height: 32px;
+            font-size: 12px;
+            margin-left: 15px;
+            color: #111;
+            line-height: 20px;
+            /*padding-left: 5%;*/
+            background-repeat: no-repeat;
+            background-size: auto 20px;
+            background-position: left center;
+        }
+        
+        .ph {
+            width: 90%;
+            height: 40px;
+            border-radius:0;
+            /*border-radius: 20px;*/
+            line-height: 40px;
+            /*background-color: #cec1b5;*/
+        }
+        
+        #phone {
+           /* background: url('img/login1/ren.png') no-repeat left center;*/
+            /*padding-left: 30px;*/
+           margin-left: 20px;
+    			width: 85%;
+    			border-radius: 0;
+           border-bottom: 1px solid #ccc;
+            
+        }
+        
+        #code {
+            /*background: url('img/login1/yzm.png') no-repeat left center;*/
+            /*padding-left: 30px;*/
+            border-bottom: 1px solid #ccc;
+           border-radius: 0;
+            width: 60%;
+            margin-left: 17px;
+        }
+        
+        .getCode {
+                width: 30%;
+    color: #098e75;
+    position: relative;
+    right: 0;
+    height: 37px;
+    border-bottom: #ccc solid 1px;
+    margin-top: -5px;
+        }
+        
+        #password {
+            /*background: url('img/login1/suo.png') no-repeat left center;
+            padding-left: 20px;
+            background-size: 13px 15px;
+            	color: rgba(153,153,153,0.7);
+            opacity: 1;
+            width: 70%*/
+            margin-left: 20px;
+    			width: 85%;
+    			border-radius: 0;
+           border-bottom: 1px solid #ccc;
+        }
+        
+        #phone::-webkit-input-placeholder,
+        #code::-webkit-input-placeholder,
+        #password::-webkit-input-placeholder {
+            	color: rgba(153,153,153,0.7);
+        }
+        
+        section>div>input::-webkit-input-placeholder {
+            line-height: 21px;
+           	color: rgba(153,153,153,0.7);
+        }
+        
+        .forget {
+            line-height: 42px;
+            height: 42px;
+            font-size: 14px;
+            border: none;
+            text-align: left;
+        }
+        
+        .colorABABAB {
+            color: #ABABAB;
+        }
+        
+        section>button,
+        footer>button {
+            margin-top: 45px;
+            display: block;
+            height: 44px;
+            color: #fff;
+            font-size: 17px;
+            text-align: center;
+            line-height: 44px;
+        }
+        
+        .ph i>img,
+        .pw i>img {
+            vertical-align: middle;
+        }
+        
+        .code>input {
+            width: 60%;
+        }
+        
+        .code>button {
+            color: #fff;
+            width: 40%;
+            height: 33px;
+            float: right;
+            line-height: 33px;
+            font-size: 14px;
+            margin-top: 7px;
+        }
+        
+        input {
+            border: none;
+        }
+        
+        .sign-wx {
+            height: 40px;
+        }
+        
+        .sign-wx img {
+            width: 64px;
+            height: 64px;
+        }
+        
+        .now {
+            font-weight: 600;
+        }
+        
+        .btnbg1 {
+            background-color: rgba(9, 142, 117, 1);
+            border-radius: 10px;
+        }
+        
+        .linebg {
+            color: rgba(153,153,153,0.7);
+            background-repeat: no-repeat;
+            background-image: url(img/login1/bgling.png);
+            background-size: 100% auto;
+            background-position: center;
+        }
+        .colorrgb{
+        	color: rgba(153,153,153,0.7);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+    </header>
+    <section>
+        <div class="fr marr20 hasNew" style="background: none;width: 50px;height:50px" onclick="jump()">跳过 ></div>
+        <div class="color333 tleft f24" style="margin: 80px 20px 60px 20px;">
+           欢迎来到果仁
+        </div>
+        <div class="ph">
+        		<img src="img/login1/ren.png" class="fl" style="margin-top: 5px;" width="22" height="25" />
+            <input number id="phone" onfocus="model.butimg(1)" onblur="model.butimg(2)" value="" class="fl f16" name="phone" data-reg='m' type="tel" reg.m placeholder="请输入手机号" oninput="model.isSureLogin()" maxlength="11" />
+        		<div class="clearfix"></div>
+        </div>
+        <div id="yzm">
+            <div class="ph mart15 flex-between" style="width:100%;padding-right: 8px;">
+            	<img src="img/login1/yzm.png" style="margin-top: 2px;" class="fl" width="25" height="20" />
+                <input number id="code" onfocus="model.butimg(1)" onblur="model.butimg(2)" class="fl f16" value="" name="code" data-reg='c' type="tel" reg.m placeholder="请输入短信验证码" oninput="model.isSureLogin()" maxlength="4" />
+                <span class="getCode center fl f16" onclick="model.getCode(this)">获取验证码</span>
+            <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="ph mart15 flex-between" style="display:none;position: relative;padding-top: 4px;" id="pw">
+        		<img src="img/login1/suo.png" style="object-fit: contain;margin-top: 2px;" class="fl" width="22" height="30" />
+            <input type="password" onfocus="model.butimg(1)" onblur="model.butimg(2)" class="fl f16" style="width:85%;height: 32px;" value="" name="password" data-reg='p' maxlength="16" id="password" placeholder="请输入登录密码" oninput="model.isSureLogin()" maxlength="20" />
+            <i style="width:10%;position: absolute;right: 0px;" class="fl" >
+				<img class="imgCon" src="img/login1/bi.png" width="20">
+			</i>
+        </div>
+        <div class="forget" id="forget">
+            <span class="colorrgb f12" id='change' data='1' onclick="model.pwLogin(this);">账号密码登录</span>
+            <span class="colorrgb fr f12" id="cont" onclick='model.findGo()'>收不到验证码？</span>
+        </div>
+        <button type="button" id="login" style="background: #ccc;border-radius:10px !important;height:40px" class="sign-btn f17 lh40" onclick="model.login()">登录/注册</button>
+        <div class="f12 mart10 center">
+            <span class="colorrgb">登录即表示您同意</span>
+            <span class="color038" onclick="Comm.go('Agreement.html')">《果仁服务协议》</span>
+            <span class="colorrgb">和</span>
+            <span class="color038" onclick="Comm.go('helpDetails.html?id=1')">《隐私协议》</span>
+        </div>
+
+
+        <div class="center sign-wx mart5" style="margin-top: 40px;">
+            <div class="linebg">第三方登录</div>
+            <div class="fl" style="width: 25%;height:50px"></div>
+            <div class="fl mart20" style="width: 25%;">
+                <img src="img/login1/qq.png" alt="" onclick="wxSign(2)">
+            </div>
+            <div class="fl mart20" style="width: 25%;">
+                <img src="img/login1/wx.png" alt="" onclick="wxSign(1)">
+            </div>
+            <div class="fl" style="width: 25%;height:50px"></div>
+        </div>
+        <img id="butimg" src="img/login1/tu.png" width="130" height="76" style="position: absolute; right: 15px; bottom: 0;" />
+    		
+    </section>
+
+</body>
+<script type="text/javascript" src="./inc/z.js"></script>
+<script type="text/javascript" src="./inc/g.js"></script>
+<script type="text/javascript" src="./inc/comm.js"></script>
+<script type="text/javascript">
+    
+	
+    function pageload() {
+        model.initAccount();
+
+        Comm.storage("isX", function(d) {
+            if (d) {
+                $(".hasNew").css("padding-top", "10px");
+                Comm.resizeSection();
+            }
+        });
+        //点击眼睛显示或隐藏密码
+    $('.imgCon').on('click', function(e) {
+        if ($('#password').attr('type') == 'password') {
+            $('#password').attr('type', 'text');
+            $('.imgCon').attr('src', 'img/login1/kai.png');
+        } else {
+            $('#password').attr('type', 'password');
+            $('.imgCon').attr('src', 'img/login1/bi.png');
+        };
+    });
+    }
+
+    function jump() {
+        Comm.db('firsr', 1);
+        Comm.gotop('ifrm.html?top=4');
+
+    }
+
+    function ups() {
+        // if (!Comm.ios()) {
+        //     $('section').scrollTop(100);
+        //     Comm.resizeSection();
+        // } else {
+        //     Comm.resizeSection();
+        // }
+    }
+    var model = {
+            _isSureLogin: false, //默认不可以登陆
+            //初始化账号密码    
+            butimg:function(id){
+            	if(id==1){
+			$('#butimg').hide();
+		}else{
+			$('#butimg').show();
+		}
+            },
+            initAccount: function() {
+                var phone = Comm.query('phone');
+                var psw = Comm.query('psw');
+                if (phone != '' && psw != '') {
+                    $('#phone').val(phone);
+                    $('#password').val(psw)
+                }
+            },
+            //登陆
+            login: function() {
+                if (this._isSureLogin) {
+                    var data = {};
+                    data.phone = $('#phone').val();
+                    data.password = $('#password').val();
+                    data.code = $("#code").val();
+                    Comm.loading('加载中...');
+                    var url = '';
+                    if ($('#change').attr('data') == 1) {
+                        url = '/api/customer/codeLogin';
+                    } else {
+                        url = '/api/customer/login';
+                    }
+                    console.log(data)
+                    AJAX.POST(url, data, function(d) {
+                        Comm.loading();
+                        if (d.code === 1) {
+                            if (d.data.isReg == 1) {
+                                Comm.message('注册成功');
+                                AJAX.setTag(d.msg);
+                                Comm.db('firsr', 1)
+                                Comm.db('userinfo', d.data);
+                                if ($('#change').attr('data') == 1) {
+                                    Comm.go('setPw.html');
+                                } else {
+                                    Comm.go('improveInfo.html?_type=0');
+                                }
+                                Comm.registerPush({
+                                    state: 1,
+                                    token: d.msg,
+                                    url: config.root + 'api/customer/deviceToken'
+                                })
+                            } else {
+                                Comm.message('登录成功');
+                                AJAX.setTag(d.msg);
+                                Comm.registerPush({
+                                    state: 1,
+                                    token: d.msg,
+                                    url: config.root + 'api/customer/deviceToken'
+                                })
+                                Comm.db('firsr', 1);
+                                Comm.db('userinfo', d.data);
+                                if ($('#change').attr('data') == 2) {
+                                    if (d.data.isRealInfo == true) {
+                                        Comm.gotop('ifrm.html');
+                                    } else if (d.data.customerName == "") {
+                                        Comm.go('improveInfo.html?_type=0')
+                                    } else {
+                                        Comm.go('setPw.html');
+                                    }
+                                } else {
+                                    if (d.data.havePass == true) {
+                                        Comm.gotop('ifrm.html');
+                                    } else if (d.data.customerName == "") {
+                                        Comm.go('improveInfo.html?_type=0')
+                                    } else {
+                                        Comm.go('setPw.html');
+                                    }
+                                }
+
+
+                            }
+
+                        } else {
+                            Comm.message(d.msg);
+                        }
+                    })
+                } else {
+                    Comm.message('账号或者密码未填写完整');
+                }
+
+            },
+            ////监听账号和密码输入框手机号或密码未输入全时，登录按钮应置灰，不能登陆
+            isSureLogin: function() {
+                var phone = $('#phone').val();
+                var password = $('#password').val();
+                var code = $('#code').val();
+                if (phone.length == 11 && password.length >= 6) {
+                    this._isSureLogin = true;
+                    $('#login').attr('style', 'background:rgba(9, 142, 117, 1);height:40px;border-radius: 10px;').addClass('btnbg1');
+                } else if (phone.length == 11 && code.length == 4) {
+                    this._isSureLogin = true;
+                    $('#login').attr('style', 'height:40px').addClass('btnbg1');
+                } else {
+                    $('#login').attr('style', 'background:#ccc;height:40px;border-radius: 10px;').removeClass('btnbg1');
+                    this._isSureLogin = false;
+                }
+            },
+            getCode: function(t) {
+                var type = 6; //1：注册 2：找回密码  5：手机验证
+                app.timeCountDown(t, $('#phone').val(), type);
+            },
+            pwLogin: function(e) {
+                var that = $(e);
+                if (that.attr('data') == 1) {
+                    $('#yzm').css('display', 'none');
+                    $('#pw').css('display', 'block');
+                    that.attr('data', '2');
+                    $('#code').val('');
+                    that.html('验证码登录');
+                    $('#cont').html('忘记密码？')
+                } else {
+                    $('#yzm').css('display', 'block');
+                    $('#pw').css('display', 'none');
+                    that.attr('data', '1');
+                    $('#password').val('');
+                    that.html('账号密码登录');
+                    $('#cont').html('收不到验证码？');
+                }
+
+            },
+            findGo: function() {
+                if ($('#change').attr('data') == 1) {
+                    Comm.go('updatePhone2.html?type=1');
+                } else {
+                    Comm.go('getPassword.html');
+                }
+            }
+        }
+        //微信登陆
+    function wxSign(type) {
+        console.log('eee')
+        console.info(99)
+        Comm.extLogin({
+            type: type
+        }, function(data) {
+            console.log(data)
+            if (data.code == 1) {
+                Comm.loading("正在登录");
+                Comm.db("wxData", data);
+                AJAX.POST("/api/customer/openLogin", {
+                    openId: data.openid,
+                    uid: data.unionid,
+                    //,type: 1,
+                    devicetype: Comm.ios() ? 1 : 2,
+                    customerName: data.nickname,
+                    headPort: data.face
+                }, function(a) {
+                    Comm.loading(false);
+                    if (a.code == 201) {
+                        Comm.go("bindPhone.html");
+                    } else if (a.code == 1) {
+                        Comm.message('登录成功');
+                        Comm.db("tempToken", a.data.token);
+                        AJAX.setTag(a.data.token);
+                        Comm.registerPush({
+                            state: 1,
+                            token: a.data.token,
+                            url: config.root + 'api/customer/deviceToken'
+                        })
+                        Comm.db('firsr', 1);
+                        Comm.db('userinfo', a.data);
+                        Comm.db("wxData", null)
+                        setTimeout(function() {
+                            if (a.code == 2) {
+                                Comm.gotop("ifrm.html?bindType=1")
+                                return;
+                            }
+                            Comm.gotop("ifrm.html")
+                        }, 300);
+                    } else {
+                        Comm.message(a.msg);
+                    }
+                });
+            }
+        });
+    }
+</script>
+
+</html>

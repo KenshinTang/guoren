@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>请选择</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="./css/g.css" />
+		<link rel="stylesheet" href="./css/comm.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<style>
+.navItemIcon{
+	background: none;
+}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar bottomShadow">
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+				<div class="navItemIcon marl5 marr10" onclick="model.set()">确认</div>
+				<div class="navTitle">请选择</div>
+			</div>
+		</header>
+		<section class="mescroll" id="box">
+			<div class="list paddl20 bg_white" id="list">
+			</div>
+		</section>
+	</body>
+	<script type="text/javascript" src="./inc/z.js"></script>
+	<script type="text/javascript" src="./inc/g.js"></script>
+	<script type="text/javascript" src="./inc/comm.js"></script>
+	<script type="text/javascript" src="./inc/art-template.js"></script>
+	<script type="text/javascript" src="./inc/mescroll/mescroll.min.js"></script>
+	<script type="text/javascript" src="./inc/dict.js"></script>
+	<script>
+		function pageload() {
+			model.init()
+		}
+		
+		function pageresume() {
+
+		}
+
+		var model = {
+			selshop : [],
+			type: Comm.query('type'),
+			init: function() {
+				//获取商家
+				if(!model.mere) {
+					model.mere = new MERefresh('box,list', {
+						pagesize: 20,
+						refreshUrl: '/api/school/groups/dictList',
+						refreshTypeGet: true
+					});
+					model.mere.refreshOption.refreshParm = {
+						getAll: 0
+					};
+					//页面 <刷新> 的回调
+					model.mere.refreshOption.refresh_cb = function(refresh, d) {
+						refresh.successEndRef(d.data.length, d.totalCount);
+						model.shoplist = d.data;
+//						if(Comm.db('selshop')) {
+//							model.selshop = Comm.db('selshop');
+//						}
+//						d.data.selshop = model.selshop;
+//						if(d.data.selshop && d.data.selshop.length > 0) {
+//							for(var i = 0; i < d.data.length; i++) {
+//								for(j = 0; j < d.data.selshop.length; j++) {
+//									if(d.data[i].bussinessId * 1 == d.data.selshop[j].id) {
+//										d.data[i].is = 1;
+//									}
+//								}
+//							}
+//						}
+						refresh.appendHtml(template('shopTpl', d.data));
+					};
+				}
+			},
+			sel: function(id, name, a) {
+				if($(a).find('img').hasClass('hide')) {
+					$(a).find('img').removeClass('hide')
+					
+					model.selshop.push({
+						id: id,
+						name: name
+					});
+
+				} else {
+					$(a).find('img').addClass('hide')
+					for(var i = model.selshop.length - 1; i >= 0; i--) {
+						if(model.selshop[i].id == id) {
+							model.selshop.splice(i, 1);
+						}
+					}
+				}
+				
+			},
+			set:function(){
+				if(model.selshop==''){
+					Comm.message('请选择标签');
+					return false;
+				}else{
+				Comm.db('selshop', model.selshop);
+				Comm.close();	
+				}
+				
+			}
+		}
+	</script>
+	<script id="shopTpl" type="text/html">
+		{{each $data v k}}
+		<div class="lh50 borderb" onclick="model.sel({{v.dictid}},'{{v.dictname}}',this)">
+			{{v.dictname}}
+			<img src="img/my/yese.png" class="fr marr10 mart15 hide" height="15" />
+		</div>
+		{{/each}}
+	</script>
+
+</html>

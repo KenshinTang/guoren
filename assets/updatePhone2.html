@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>找回手机号</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <style>
+        body{
+            background: #f4f4f4;
+        }
+        .masg{
+            padding-top: 25px;
+            padding-bottom: 25px;
+            padding-left: 16px;
+            padding-right: 24px;
+            font-size: 14px;
+            background: #fff;
+        }
+        .masg p{
+            color: #888;
+        }
+        .phone{
+            padding: 17px;
+            background: #fff;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">为什么收不到验证码短信？</div>
+        </div>
+    </header>
+    <section id=''>
+        <div class="masg">
+            
+        </div>
+        <div class="flex-between phone">
+            <p style="font-size: 16px;">联系客服</p>
+            <a style="color:#098E75;" id="tel" href=""></a>
+        </div>
+    </section>
+
+</body>
+
+
+
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script type="text/javascript" src="inc/picker.min.js"></script>
+<script type="text/javascript" src="inc/upimg/upload.js"></script>
+
+<script>
+
+	var type=Comm.query('type');
+	
+    function pageresume() {
+
+    }
+
+    function pageload() {
+		model.init();
+		if(type==1){
+			model.msg();
+		}else{
+			$('.masg').html('<p style="color:#222;font-size: 16px;">原手机不能获取验证怎么办？</p><p style="margin-top: 15px;margin-bottom: 21px;">您好，为了你的账户安全建议尽快到营业厅申请补卡，补卡成功后，再进行验证码登录修改绑定手机号~</p><p>也可以在线联系客服，进行相关信息的核对，进行修改绑定手机号。</p>')
+			
+		}
+    }
+    var model  = {
+        //唤醒电话功能
+        makePhoneCall:function(t){
+            location.href = 'tel:' + t;
+            event.stopPropagation();
+        },
+        init:function(){
+        	AJAX.GET('/api/config/bykeys?keys=serviceNumber',function(a){
+        		if(a&&a.code==1){
+        			$('#tel').attr('href','tel:'+a.data[0].value);
+        			$('#tel').html(a.data[0].value)
+        		}
+        	})
+        },
+        msg:function(){
+        	AJAX.GET('/api/article/info?articleId=6',function(a){
+        		if(a&&a.code==1){
+        			$('.masg').html(a.data.section);
+        		}
+        	})
+        }
+    }
+</script>
+
+</html>

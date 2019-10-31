@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>回复列表</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+
+		<style>
+			.dm {
+				width: 100%;
+				padding: 15px;
+				background-color: #f4f4f4;
+				color: #B9B9B9;
+			}
+			
+			.order-t {
+				
+				text-align: center;
+				font-size: 12px;
+			}
+			
+			.order-t-c {
+				width: 20%;
+				height: 100%;
+				float: left;
+				font-size: 15px;
+				color: #888888;
+				position: relative;
+			}
+			
+			.order-t-c-active {
+				color: #000;
+				/*border-bottom: 2px solid #098E75;*/
+				/*font-weight: bold;*/
+			}
+			
+			.order-t-c-active:after {
+				content: '';
+				position: absolute;
+				left: 20px;
+				bottom: auto;
+				right: auto;
+				height: 2px;
+				width: 30%;
+				background-color: #098E75;
+			}
+			.schoolMsg {
+	border-bottom: 1px solid #f4f4f4;
+}
+			#sinbox1 {
+				position: absolute;
+				bottom: 0;
+				left: 5%;
+				width: 90%;
+			}
+			
+			#sinbox {
+				background-color: #fff;
+				padding: 10px 20px;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+			}
+			
+			.qxgz {
+				background: url(img/index/qxgz.png) no-repeat 0px center;
+				background-size: 16px;
+				text-align: left;
+				padding: 10px 0 10px 50px;
+				color: #444444;
+				border-bottom: 1px solid #f4f4f4;
+			}
+			
+			.bgxq {
+				background: url(img/index/bgxq.png) no-repeat 0px center;
+				background-size: 16px;
+				text-align: left;
+				padding: 10px 0 10px 50px;
+				color: #444444;
+			}
+			
+			.jb {
+				background: url(img/index/jb.png) no-repeat 0px center;
+				background-size: 16px;
+				text-align: left;
+				padding: 10px 0 10px 50px;
+				color: #444444;
+			}
+			
+			#bar {
+				position: fixed;
+				z-index: 999;
+				bottom: 0;
+				width: 100%;
+				height: 60px;
+				background: #fff;
+				padding: 14px 16px 11px 14px;
+				border-top: 1px solid #dedede;
+				display: flex;
+			}
+			
+			#bar .input {
+				width: 150px;
+				height: 36px;
+				border-radius: 18px;
+				border: 1px solid #dbdbdb;
+				color: #999;
+				padding-left: 37px;
+				line-height: 36px;
+				font-size: 14px;
+				background: url('./img/xie.png') no-repeat center;
+				background-position-x: 12px;
+				background-size: 13%;
+				width: 40%;
+				margin-right: 10px;
+			}
+			
+			#bar .imglist {
+				width: 60%;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			
+			.shared {
+				font-size: 14px;
+				background: #fff;
+				position: fixed;
+				width: 100%;
+				bottom: 0;
+			}
+			
+			.shared .top {
+				display: flex;
+				justify-content: space-between;
+				padding: 5px 10px;
+				border: none;
+			}
+			
+			.shared .top p {
+				color: #999999FF;
+			}
+			
+			.shared .top .enlarge {
+				height: 15px;
+				width: 15px;
+				background: url('./img/pinglun/fd.png')no-repeat center;
+				background-size: 100%;
+			}
+			
+			.shared .inputBox {
+				padding: 5px 10px;
+				width: 100%;
+			}
+			
+			.shared .inputBox #huifu {
+				width: 100%;
+				font-size: 14px;
+				border: none;
+				max-height: 90px;
+				height: auto;
+			}
+			
+			.shared .bottom {
+				padding: 5px 10px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			
+			.shared .bottom .l {
+				width: 23px;
+				height: 23px;
+				background: url('./img/pinglun/xl.png')no-repeat center;
+				background-size: 100%;
+			}
+			
+			.shared .bottom .r {
+				color: #098E75;
+			}
+			
+			#textarea {
+				display: block;
+				margin: 0 auto;
+				overflow: hidden;
+				width: 100%;
+				font-size: 14px;
+				height: 23px;
+				line-height: 28px;
+				padding: 2px;
+				max-height: 200px;
+				overflow-y: scroll;
+				-webkit-user-select:text
+			}
+			
+			textarea {
+				outline: 0 none;
+				border: none;
+			}
+			
+			footer {
+				position: relative;
+				z-index: 99999999;
+			}
+			
+			.pl {
+				background: url(img/xzd.png) no-repeat 0px center;
+				background-size: 16px;
+				text-align: left;
+				padding: 10px 0 10px 50px;
+				color: #444444;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar" style="padding: 0;box-shadow: none;">
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+				<div class="nav-title block searchBar marl25" style="width: calc(100% - 50px);height: 44px;">
+					<div class="heads ">
+						<div class="fl">
+							<img class="fl mart10" id="itemFace" width="24" height="24" style="border-radius: 50%;" />
+							<div class="fl marl20">
+								<p class="f14 bold wordW" id="itemName"></p>
+							</div>
+						</div>
+						<div class="fr mart10" id="focus">
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<section style="overflow-y: hidden;">
+			<div class="scrollx mescroll-touch-x">
+				<div id="scrollxContent" class="scrollx-content">
+					<div id="nav" class="order-t ovf bb1" style="border-bottom: 1px solid #f4f4f4;">
+						<div class="order-t-c brp order-t-c-active" i='0'>回复 <span class="c9e f12" id="commentNumber"></span></div>
+						<div class="order-t-c brp" i='1'>赞 <span class="c9e f12" id="praiseNumber"></span></div>
+						<div class="order-t-c brp" i='2'>转发 <span class="c9e f12" id="forwardNumber"></span></div>
+						<div class="order-t-c brp" i='3'>收藏 <span class="c9e f12" id="collectionNumber"></span></div>
+					</div>
+				</div>
+			</div>
+			<!--轮播-->
+			<div id="swiper" class="swiper-container marb30 paddb20">
+				<div id="swiperWrapper" class="swiper-wrapper">
+					<!--回复-->
+					<div id="mescroll0" class="swiper-slide mescroll">
+						<div id="dataList0" class="data-list">
+						</div>
+					</div>
+					<!--赞-->
+					<div id="mescroll1" class="swiper-slide mescroll">
+						<div id="dataList1" class="data-list">
+						</div>
+					</div>
+					<!--转发-->
+					<div id="mescroll2" class="swiper-slide mescroll">
+						<div id="dataList2" class="data-list">
+						</div>
+					</div>
+					<!--收藏-->
+					<div id="mescroll3" class="swiper-slide mescroll">
+						<div id="dataList3" class="data-list">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="bar">
+
+			</div>
+		</section>
+		<footer class="shared  hide">
+			<div class="top">
+				<p>正在回复：xxx</p>
+				<!-- <div class="enlarge" id="enlarge"></div> -->
+			</div>
+			<div class="inputBox">
+				<textarea id="textarea" placeholder="观点的碰撞，思想的火花" onblur="model.loseBlur()" oninput="model.texInput()"></textarea>
+			</div>
+			<div class="bottom">
+				<div class="r" ></div>
+				<div class="r" id="Release" onclick="model.release()">发布</div>
+			</div>
+		</footer>
+	</body>
+	<!-- bar -->
+
+	<script type="text/html" id="footer-bar">
+		<div class="input" onclick="model.showReviews()">写回复...</div>
+		<div class="imglist">
+
+			<img src="img/index/zf.png" alt="" width="28" height="18" onclick="model.zhuanfa()"> {{if($data.isPraise==0)}}
+			<img id="isPraise" src="img/index/zan.png" width="20" height="20" onclick="model.addNewsPraise(this)" /> {{else}}
+			<img id="isPraise" src="img/index/zand.png" width="20" height="20" onclick="model.deleteNewsPraise(this)" /> {{/if}} {{if($data.isCollection==0)}}
+			<img id="isCollection" src="img/index/shou.png" width="20" height="20" onclick="model.addCollection({{$data.itemId}},1,this)" /> {{else}}
+			<img id="isCollection" src="img/index/shoud.png" width="20" height="20" onclick="model.deleteCollection({{$data.itemId}},1,this)" /> {{/if}}
+		</div>
+	</script>
+	<script type="text/html" id="focusdome">
+		{{if($data.focus==1)}}
+		<div style="background-color: #ccc; border-radius: 20px;color: #FFF;line-height: 25px;padding: 1px 10px;" onclick="model.cancelFocus()">已关注</div>
+		{{/if}} {{if($data.focus==0)}}
+		<div style="background-color: #098E75; border-radius: 20px;color: #FFF;line-height: 25px;padding: 1px 10px;" onclick="model.addFocus()">关注</div>
+		{{/if}}
+	</script>
+	<script type="text/html" id="listTpl">
+		<div>
+			{{if($data.dataIndex==0)}} {{each $data.data as v k}}
+			<div class="schoolMsg" onclick="handleGoDetails({{v.commentId}},{{v.userType}});event.stopPropagation()">
+				<div class="heads">
+					<div class="name-left fl" style="width: 100%;">
+						<div  onclick="Comm.go('personal.html?customerId={{v.customerId}}');event.stopPropagation();">
+						<img class="fl" src="{{OSS(v.face)}}" width="40" height="40" style="border-radius:50%;" />
+						<div class="fl marl10 paddb5" style="width: 70%;">
+							<p class="f14 c9e">{{v.customerName}}</p>
+						</div>
+						</div>
+						<div class="name-right fr paddl10 paddr10" onclick="model.More({{v.commentId}},{{v.customerId}});model.qh({{v.commentId}});event.stopPropagation()">
+							<img src="img/index/more.png" width="14" height="3" />
+						</div>
+						<div class="paddl10 paddr10 fl" style="width:80%; ">
+							{{v.content}}
+						</div>
+						<div class="fl marl30 paddl20 mart5 paddb5" style="width: 80%;">
+							<p class="f12 c9e">
+								{{sldate(v.addTime)}} {{if(v.nextList.length>0)}} · {{v.nextList.length}}条回复 {{/if}}
+							</p>
+						</div>
+						{{if v.newsType!=1}}
+						<div class="name-right fr marr10">
+							{{if(v.isPraise==0)}}
+							<img src="img/index/zan.png" width="15" height="17" onclick="model.addCommentPraise({{v.commentId}},this);event.stopPropagation()" /> {{/if}} {{if(v.isPraise==1)}}
+							<img src="img/index/zand.png" width="15" height="17" onclick="model.deleteCommentPraise({{v.commentId}},this);event.stopPropagation()" /> {{/if}}
+						</div>
+						{{/if}}
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			{{/each}} {{/if}} {{if($data.dataIndex==1)}} {{each $data.data as v k}}
+			<div class="schools" onclick="Comm.go('personal.html?customerId={{v.customerId}}')">
+				<div>
+					<div class="paddb10 paddt10 paddr10 paddl30 fl" style="width: 20%;">
+						<img src="{{OSS(v.face)}}" width="36" height="36" style="border-radius:50%;" />
+					</div>
+					<div class="paddb10 paddt20 paddr10 paddl10 fr" style="width: 80%;border-bottom: 1px solid #EEEEEE !important;">
+						<div class="fl">
+							<p class="f14 bold">
+								{{v.customerName}}<span class="f12 c9e paddl10">{{sldate(v.addTime)}}</span>
+							</p>
+
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			{{/each}} {{/if}} {{if($data.dataIndex==2)}} {{each $data.data as v k}}
+			<div class="schools" onclick="Comm.go('personal.html?customerId={{v.customerId}}')">
+				<div>
+					<div class="paddb10 paddt10 paddr10 paddl30 fl" style="width: 20%;">
+						<img src="{{OSS(v.face)}}" width="36" height="36" style="border-radius:50%;" />
+					</div>
+					<div class="paddb10 paddt10 paddr10 paddl10 fr" style="width: 80%;border-bottom: 1px solid #EEEEEE !important;">
+						<div class="fl">
+							<p class="f14 bold">
+								{{v.customerName}}<span class="f12 c9e paddl10"> {{sldate(v.addTime)}}</span>
+							</p>
+							<p class="f14 c60">{{v.content}}</p>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			{{/each}} {{/if}} {{if($data.dataIndex==3)}} {{each $data.data as v k}}
+			<div class="schools" onclick="Comm.go('personal.html?customerId={{v.customerId}}')">
+				<div>
+					<div class="paddb10 paddt10 paddr10 paddl30 fl" style="width: 20%;">
+						<img src="{{OSS(v.face)}}" width="36" height="36" style="border-radius:50%;" />
+					</div>
+					<div class="paddb10 paddt20 paddr10 paddl10 fr" style="width: 80%;border-bottom: 1px solid #EEEEEE !important;">
+						<div class="fl">
+							<p class="f14 bold">
+								{{v.customerName}}<span class="f12 c9e paddl10">{{sldate(v.addTime)}}</span>
+							</p>
+
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			{{/each}} {{/if}}
+		</div>
+	</script>
+	<div id="sinbox1" class="paddb10" wtd="sinboxTemp">
+		<div class="bg_white marb10 f16" style="border-radius: 10px;">
+			<div class="coloreb3 paddb15 paddt15" onclick="model.shanping()">删除</div>
+		</div>
+		<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+	</div>
+	<div id="sinbox1" class="paddb10" wtd="sinboxTemp1">
+		<div class="bg_white marb10 f16" style="border-radius: 10px;">
+			<div class="paddt15 paddb15" onclick="model.Reply()">回复</div>
+			<div class="paddt15 paddb15" style="border-top: 1px solid #EBEBEB;" onclick="model.Report()">举报</div>
+		</div>
+		<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+	</div>
+	<div id="sinbox" wtd="sinboxTemp2">
+		<div class="dflex" style="border-bottom: #f4f4f4 1px solid;">
+			<div class="mart20 marb20" onclick="Comm.go('shareArticle.html')">
+				<img src="img/index/wx.png" width="45" />
+				<p class="c9e mart10">微信好友</p>
+			</div>
+			<div class="mart20 marb20">
+				<img src="img/index/pyq.png" width="45" />
+				<p class="c9e mart10">朋友圈</p>
+			</div>
+			<div class="mart20 marb20">
+				<img src="img/index/qq.png" width="45" />
+				<p class="c9e mart10">QQ</p>
+			</div>
+			<div class="mart20 marb20">
+				<img src="img/index/qqkj.png" width="45" />
+				<p class="c9e mart10">QQ空间</p>
+			</div>
+			<div class="mart20 marb20">
+				<img src="img/index/wb.png" width="45" />
+				<p class="c9e mart10">微博</p>
+			</div>
+		</div>
+		<div class="dflex">
+			<div class="mart20 marb20">
+				<img src="img/index/fjb.png" width="45" />
+				<p class="c9e mart10">举报</p>
+			</div>
+			<div class="mart20 marb20">
+				<img src="img/index/fzlj.png" width="45" />
+				<p class="c9e mart10">复制链接</p>
+			</div>
+			<div class="mart20 marb20">
+				<img src="img/index/gengduo.png" width="45" />
+				<p class="c9e mart10">更多</p>
+			</div>
+			<!--	描述：占位div-->
+			<div>
+			</div>
+			<div>
+			</div>
+			<!--	描述：占位div-->
+		</div>
+		<div class="paddt10 paddb10 color666" style="border-top:#f4f4f4 1px solid;" onclick="Comm.showWindow('')">
+			取消
+		</div>
+	</div>
+	<div id="sinbox" wtd="sinboxTemp2">
+			<div class="dflex" style="border-bottom: #f4f4f4 1px solid;">
+				<div class="mart20 marb20" onclick="model.shear(1)">
+					<img src="img/index/wx.png" width="45" />
+					<p class="c9e mart10">微信好友</p>
+				</div>
+				<div class="mart20 marb20" onclick="model.shear(2)">
+					<img src="img/index/pyq.png" width="45" />
+					<p class="c9e mart10">朋友圈</p>
+				</div>
+				<div class="mart20 marb20" onclick="model.shear(3)">
+					<img src="img/index/qq.png" width="45" />
+					<p class="c9e mart10">QQ</p>
+				</div>
+				<div class="mart20 marb20" onclick="model.shear(4)">
+					<img src="img/index/qqkj.png" width="45" />
+					<p class="c9e mart10">QQ空间</p>
+				</div>
+				<div class="mart20 marb20" onclick="model.shear(5)">
+					<img src="img/index/wb.png" width="45" />
+					<p class="c9e mart10">微博</p>
+				</div>
+			</div>
+			<div class="paddt10 paddb10 color666" style="border-top:#f4f4f4 1px solid;" onclick="Comm.showWindow('')">
+				取消
+			</div>
+		</div>
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="./inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+	<script>
+		var newsId = Comm.query('newsId');
+		var customerId = app.getCid();
+
+		var itemType = "" //文章谁发布的   学校或者专业
+		var h = window.innerHeight - $('header').height() - $('#bar').height() - $('#nav').height()
+		$('#swiperWrapper').height(h)
+		$('.mescroll').height(h)
+
+		function pageload() {
+			//$($('#nav').children()[0]).click();
+			mescrollRefreshFn({
+				menuNumber: 4
+			});
+		}
+function androidback() {
+    if (parseInt(Comm._pageinfo.android_home) === 0) {
+    	if($('.shared').hasClass('hide')){
+    		Comm.close();
+    	}else{
+    		model.loseBlur();
+    		Comm.bg(false);
+				Comm.resizeSection();
+    	}
+        
+    } else {
+        if (parseInt(Comm._pageinfo.android_home) === 1) {
+            Comm._pageinfo.android_home = 2;
+            Comm.confirm("您确定要退出应用？", function(a) {
+                if (a == 1) Comm.close();
+                else Comm._pageinfo.android_home = 1;
+            });
+        }
+    }
+}
+		function pageresume() {
+			var page = {num: 1,size: 5};
+            getListData(page);
+		}
+
+		function handleGoDetails(commentId, type) {
+			Comm.go('./commentDetails.html?newsId=' + newsId + '&commentId=' + commentId)
+		}
+		var mid = "";
+		var customerName = '';
+		var model = {
+			newsData: {}, //新闻信息
+			commenData: {}, //单条回复信息
+			type: 1, //回复类型 1 1针对文章  2.针对回复
+			txt: '', //回复内容
+			qh: function(id) {
+				mid = id;
+				var that = this;
+				for(var i = 0; i < commentList.length; i++) {
+					//在一级回复里直接找到了
+					if(commentList[i].commentId == id) {
+						that.commenData = commentList[i];
+						break;
+					} else if(commentList[i].nextList.length > 0) { //一级回复没找到，找子回复
+						for(var k = 0; k < commentList[i].nextList.length; k++) {
+							if(commentList[i].nextList[k].commentId == id) {
+								that.commenData = commentList[i].nextList[k];
+								break;
+							}
+						}
+					}
+				}
+			},
+			More: function(v, sid) {
+				mid = v;
+				if(sid == customerId) {
+					Comm.showWindow('sinboxTemp', true)
+				} else {
+					Comm.showWindow('sinboxTemp1', true)
+				}
+
+			},
+			shanping: function() {
+				Comm.showWindow('');
+				Comm.confirm('确认删除这条回复？', function(d) {
+					if(d) {
+						AJAX.GET('/admin/comment/noenable?commentId=' + mid, function(a) {
+							if(a && a.code == 1) {
+								Comm.message('删除成功');
+								getListData({
+							num: 1,
+							size: 10
+						});
+							} else {
+								Comm.message(a.msg);
+							}
+						})
+					}
+				})
+			},
+			zhuanfa: function() {
+				Comm.go('zhuanfa.html?newsId=' + newsId);
+			},
+			//获取新闻信息
+			getNewsInfo: function() {
+				var that = this;
+				AJAX.POST('/api/news/info', {
+					newsId: newsId,
+					customerId: customerId
+				}, function(d) {
+					if(d.code == 1) {
+						that.newsData = d.data;
+						$('#itemName').html(d.data.itemName);
+						$('#itemFace').attr('src', Comm.OSS.getImgUrl(d.data.itemFace));
+						$('#focus').html(template('focusdome', d.data));
+						$('#commentNumber').html(d.data.news.commentNumber);
+						$('#praiseNumber').html(d.data.news.praiseNumber);
+						$('#forwardNumber').html(d.data.news.forwardNumber);
+						$('#collectionNumber').html(d.data.news.collectionNumber);
+						$('#bar').html(template('footer-bar', d.data))
+					} else {
+						Comm.message('网络错误')
+					}
+				})
+			},
+			//添加关注
+			addFocus: function() {
+				//学校
+				var that = this;
+				//用户
+				if(this.newsData.itemType == 0) {
+					AJAX.POST('/api/fans/addFans', {
+						customerId: customerId,
+						fid: this.newsData.itemId
+					}, function(d) {
+						if(d && d.code == 1) {
+							that.getNewsInfo();
+							Comm.message('关注成功')
+						} else {
+							Comm.message(d.msg)
+						}
+					})
+				}
+				if(this.newsData.itemType == 1) {
+					AJAX.POST('/api/school/addFocus', {
+						schoolIds: this.newsData.itemId,
+						customerId: customerId
+					}, function(d) {
+						if(d.code == 1) {
+							that.getNewsInfo();
+							Comm.message('关注成功');
+
+						} else {
+							Comm.message('网络错误');
+						}
+					})
+				}
+				//专业
+				if(this.newsData.itemType == 2) {
+					AJAX.POST('/api/school/major/addFocus', {
+						majorId: this.newsData.itemId,
+						customerId: customerId
+					}, function(d) {
+						if(d.code == 1) {
+							that.getNewsInfo();
+							Comm.message('关注成功');
+						} else {
+							Comm.message('网络错误');
+						}
+					})
+				}
+			},
+			//取消关注
+			cancelFocus: function() {
+				var that = this;
+				Comm.confirm('是否确认取消关注？', function(d) {
+					//用户
+					if(this.newsData.itemType == 0) {
+						AJAX.POST('/api/fans/unfollow', {
+							customerId: customerId,
+							fid: this.newsData.itemId
+						}, function(d) {
+							if(d && d.code == 1) {
+								that.getNewsInfo();
+								Comm.message('已取消关注');
+							} else {
+								Comm.message(d.msg)
+							}
+						})
+					}
+					//学校
+					if(this.newsData.itemType == 1) {
+						AJAX.POST('/api/school/cancelFocus', {
+							schoolId: this.newsData.itemId,
+							customerId: customerId
+						}, function(d) {
+							if(d.code == 1) {
+								that.getNewsInfo();
+								Comm.message('已取消关注');
+							} else {
+								Comm.message('网络错误');
+							}
+						})
+					}
+					//专业
+					if(this.newsData.itemType == 2) {
+						AJAX.POST('/api/school/major/cancelFocus', {
+							majorId: this.newsData.itemId,
+							customerId: customerId
+						}, function(d) {
+							if(d.code == 1) {
+								that.getNewsInfo();
+								Comm.message('已取消关注');
+							} else {
+								Comm.message('网络错误');
+							}
+						})
+					}
+				})
+			},
+			//回复点赞
+			addCommentPraise: function(id, e) {
+				AJAX.POST('/api/news/praiseByCommentId', {
+					commentId: id
+				}, function(d) {
+					if(d.code == 1) {
+						$(e).attr('src', 'img/index/zand.png').attr('onclick', 'event.stopPropagation();')
+						setTimeout(function(){
+							$(e).attr('onclick', 'event.stopPropagation();model.deleteCommentPraise(' + id + ',this)')
+						},1000)
+					} else {
+						Comm.message(d.msg || '网络错误')
+					}
+				})
+			},
+			//取消回复点赞
+			deleteCommentPraise: function(id, e) {
+				AJAX.POST('/api/news/cancelPraiseByCommentId', {
+					commentId: id
+				}, function(d) {
+					if(d.code == 1) {
+						$(e).attr('src', 'img/index/zan.png').attr('onclick', 'event.stopPropagation();')
+						setTimeout(function(){
+							$(e).attr('onclick', 'event.stopPropagation();model.addCommentPraise(' + id + ',this)')
+						},1000)
+					} else {
+						Comm.message(d.msg || '网络错误')
+					}
+				})
+			},
+			//添加到收藏
+			addCollection: function(id, type, e) {
+				AJAX.POST('/api/collection/collect', {
+					customerId: customerId,
+					itemId: newsId,
+					itemType: type
+				}, function(d) {
+					if(d && d.code == 1) {
+						$(e).attr('src', 'img/index/shoud.png').attr('onclick', 'event.stopPropagation();')
+						setTimeout(function(){
+							$(e).attr('onclick', 'model.deleteCollection(' + id + ',' + type + ',this)')
+						},1000)
+						return;
+					} else {
+						Comm.message(d.msg || '网络错误');
+					}
+				})
+			},
+			//删除收藏
+			deleteCollection: function(id, type, e) {
+				AJAX.POST('/api/collection/deleteById', {
+					customerId: customerId,
+					itemId: newsId,
+					itemType: type
+				}, function(d) {
+					if(d && d.code == 1) {
+						$(e).attr('src', 'img/index/shou.png').attr('onclick', 'event.stopPropagation();')
+						setTimeout(function(){
+							$(e).attr('onclick', 'model.addCollection(' + id + ',' + type + ',this)')
+						},1000)
+						return;
+					} else {
+						Comm.message(d.msg || '网络错误');
+					}
+				})
+			},
+			//文章点赞
+			addNewsPraise: function(e) {
+				AJAX.POST('/api/news/praiseByNewsId', {
+					newsId: newsId
+				}, function(d) {
+					if(d && d.code == 1) {
+						$(e).attr('src', 'img/index/zand.png').attr('onclick', 'event.stopPropagation();')
+						setTimeout(function(){
+							$(e).attr('onclick', 'model.deleteNewsPraise(this)')
+						},1000)
+					} else {
+						Comm.message(d.msg || '网络错误');
+					}
+				})
+			},
+			//取消文章点赞
+			deleteNewsPraise: function(e) {
+				AJAX.POST('/api/news/cancelPraiseByNewsId', {
+					newsId: newsId
+				}, function(d) {
+					if(d && d.code == 1) {
+						$(e).attr('src', 'img/index/zan.png').attr('onclick', 'event.stopPropagation();')
+						setTimeout(function(){
+							$(e).attr('onclick', 'model.addNewsPraise(this)')
+						},1000)
+					} else {
+						Comm.message(d.msg || '网络错误');
+					}
+				})
+			},
+			//转发
+			zhuanfa: function() {
+				Comm.go('zhuanfa.html?newsId=' + newsId);
+			},
+			//举报
+			Report: function() {
+				Comm.showWindow('')
+				Comm.go('./report.html?itemType=2&itemId=' + mid)
+			},
+			//点击写回复
+			showReviews: function() {
+				Comm.bg(true);
+				Comm.g('MainBg').addEventListener("touchstart", function() {
+                Comm.bg(false);
+                model.loseBlur();
+            		}, false);
+				//隐藏操作栏
+				$('#bar').hide();
+				//显示回复框
+				$('footer').removeClass('hide');
+				//隐藏回复对象
+				$('footer .top').hide();
+				//输入框聚焦
+				$('textarea').focus();
+				//回复类型
+				this.type = 1;
+			},
+			//输入框失去焦点
+			loseBlur: function() {
+				if(this.txt == '') {
+					//显示操作栏
+					$('#bar').show();
+					//显示回复对象
+					$('footer .top').show();
+					//隐藏回复框
+					$('footer').addClass('hide');
+				}
+			},
+			//输入框输入事件
+			texInput: function() {
+				this.txt = $('textarea').val()
+			},
+			//点击二级回复
+			Reply: function() {
+				Comm.showWindow();
+				this.showReviews();
+				this.type = 2; //修改回复规则 针对回复进行回复
+				$('footer .top').show();
+				$('footer .top p').html('正在回复：' + this.commenData.customerName)
+			},
+			//点击发布
+			release: function() {
+				var that = this;
+				var commentId = this.commenData.commentId;
+				if(this.txt == '') {
+					return;
+				}
+				var o = {};
+				if(this.type == 1) {
+					o = {
+						newsId: newsId,
+						sid: '',
+						content: this.txt,
+						commentType: 1
+					}
+				}
+				if(this.type == 2) {
+					o = {
+						newsId: newsId,
+						sid: commentId,
+						content: this.txt,
+						commentType: 1
+					}
+				}
+
+				Comm.loading('发布中...');
+				AJAX.POST('/admin/contentOfNo/saveComment', o, function(d) {
+
+					Comm.loading(false);
+					if(d && d.code == 1) {
+						Comm.message('回复成功');
+						that.txt = '';
+						$('textarea').val('');
+						that.loseBlur()
+						getListData({
+							num: 1,
+							size: 10
+						});
+						
+					} else {
+						Comm.message(d.msg || '网络错误');
+					}
+				})
+			},
+		}
+
+		model.getNewsInfo()
+
+		function setListData(pageData, dataIndex) {
+			var swiper = document.getElementById("swiper");
+			var listDom = document.getElementById("dataList" + dataIndex),
+				nowStr = "",
+				listStr = "",
+				name = "";
+			if(pageData.length > 0) {
+				var d = {};
+				d.data = pageData;
+				d.dataIndex = dataIndex;
+				listStr = template('listTpl', d);
+				listDom.innerHTML += nowStr + name + listStr;
+			}
+		}
+		var htmlData = [];
+		var commentList = []
+
+		function getListDataFromNet(curNavIndex, pageNum, pageSize, successCallback, errorCallback) {
+			if(curNavIndex == 0) {
+				AJAX.GET("/api/news/commentInfoByFid?newsId=" + newsId + '&pagesize=' + pageSize + '&curpage=' + pageNum + '&commentType=1'+'&customerId='+customerId, function(a) {
+					if(a && a.code == 1) {
+						var r = a.data || [];
+						totalSize = a.totalCount;
+						for(var i = 0; i < r.length; i++) {
+							commentList.push(r[i])
+						}
+						successCallback && successCallback(r, totalSize);
+					} else {
+						Comm.message(a.msg);
+						errorCallback && errorCallback();
+					}
+				});
+			}
+			if(curNavIndex == 1) {
+				AJAX.GET("/api/news/praiseListById?newsId=" + newsId + '&pagesize=' + pageSize + '&curpage=' + pageNum+'&customerId='+customerId, function(a) {
+					if(a && a.code == 1) {
+						var r = a.data || [];
+						totalSize = a.totalCount;
+						successCallback && successCallback(r, totalSize);
+					} else {
+						Comm.message(a.msg);
+						errorCallback && errorCallback();
+					}
+				});
+			}
+			if(curNavIndex == 2) {
+				AJAX.GET("/api/forward/listById?itemId=" + newsId + '&itemType=' + 1 + '&pagesize=' + pageSize + '&curpage=' + pageNum+'&customerId='+customerId, function(a) {
+					if(a && a.code == 1) {
+						var r = a.data || [];
+						totalSize = a.totalCount;
+						successCallback && successCallback(r, totalSize);
+					} else {
+						Comm.message(a.msg);
+						errorCallback && errorCallback();
+					}
+				});
+			}
+			if(curNavIndex == 3) {
+				AJAX.GET("/api/collection/listById?itemId=" + newsId + '&itemType=' + 1 + '&pagesize=' + pageSize + '&curpage=' + pageNum+'&customerId='+customerId, function(a) {
+					if(a && a.code == 1) {
+						var r = a.data || [];
+						totalSize = a.totalCount;
+						successCallback && successCallback(r, totalSize);
+					} else {
+						Comm.message(a.msg);
+						errorCallback && errorCallback();
+					}
+				});
+			}
+		}
+		// var render = getListDataFromNet
+	</script>
+	<!-- 回复框处理 -->
+	<script>
+		var autoTextarea = function(elem, extra, maxHeight) {
+			extra = extra || 0;
+			var isFirefox = !!document.getBoxObjectFor || 'mozInnerScreenX' in window,
+				isOpera = !!window.opera && !!window.opera.toString().indexOf('Opera'),
+				addEvent = function(type, callback) {
+					elem.addEventListener ?
+						elem.addEventListener(type, callback, false) :
+						elem.attachEvent('on' + type, callback);
+				},
+				getStyle = elem.currentStyle ? function(name) {
+					var val = elem.currentStyle[name];
+
+					if(name === 'height' && val.search(/px/i) !== 1) {
+						var rect = elem.getBoundingClientRect();
+						return rect.bottom - rect.top -
+							parseFloat(getStyle('paddingTop')) -
+							parseFloat(getStyle('paddingBottom')) + 'px';
+					};
+
+					return val;
+				} : function(name) {
+					return getComputedStyle(elem, null)[name];
+				},
+				minHeight = parseFloat(getStyle('height'));
+
+			elem.style.resize = 'none';
+
+			var change = function() {
+				var scrollTop, height,
+					padding = 0,
+					style = elem.style;
+
+				if(elem._length === elem.value.length) return;
+				elem._length = elem.value.length;
+
+				if(!isFirefox && !isOpera) {
+					padding = parseInt(getStyle('paddingTop')) + parseInt(getStyle('paddingBottom'));
+				};
+				scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+
+				elem.style.height = minHeight + 'px';
+				if(elem.scrollHeight > minHeight) {
+					if(maxHeight && elem.scrollHeight > maxHeight) {
+						height = maxHeight - padding;
+						style.overflowY = 'auto';
+					} else {
+						height = elem.scrollHeight - padding;
+						style.overflowY = 'hidden';
+					};
+					style.height = height + extra + 'px';
+					scrollTop += parseInt(style.height) - elem.currHeight;
+					document.body.scrollTop = scrollTop;
+					document.documentElement.scrollTop = scrollTop;
+					elem.currHeight = parseInt(style.height);
+				};
+			};
+
+			addEvent('propertychange', change);
+			addEvent('input', change);
+			addEvent('focus', change);
+			change();
+		};
+		var text = document.getElementById("huifu");
+		autoTextarea(textarea); // 调用
+	</script>
+
+</html>

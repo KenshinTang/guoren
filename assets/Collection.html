@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的收藏</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+		<link rel="stylesheet" href="css/photo.css" />
+
+		<style>
+			.order-t {
+				text-align: center;
+				font-size: 12px;
+			}
+			
+			.order-t-c {
+				width: 20%;
+				height: 100%;
+				float: left;
+				font-size: 15px;
+				/*font-weight: bold;*/
+				color: #888888;
+			}
+			
+			.order-t-c-active {
+				/*border-bottom: 2px solid #000000;*/
+				position: relative;
+				color: #098E75;
+			}
+			
+			.order-t-c-active:after {
+				content: '';
+				position: absolute;
+				left: 30%;
+				bottom: auto;
+				right: auto;
+				height: 2px;
+				width: 30px;
+				background-color: #098E75;
+			}
+			
+			.mescroll-totop {
+				bottom: 80px;
+				right: 30px;
+				opacity: 1;
+			}
+			
+			.swiper-container2 {
+				height: 170px;
+				width: 300px;
+			}
+			
+			.swiper-container2 .swiper-wrapper {
+				left: 15%;
+			}
+			
+			.div_radio {
+				width: 77px;
+				height: 17px;
+				margin-left: 22px;
+				border-radius: 50%;
+				border: 1px solid #CBCBCB;
+			}
+			
+			.schoolMsg1 {
+				border: none !important;
+			}
+			
+			.schoolMsg {
+				position: relative !important;
+				background: #fff;
+				background-color: #fff;
+			}
+			
+			.schoolMsg img {}
+			
+			.schoolMsg .sel,
+			.demo1 .sel,
+			.demo2 .sel {
+				position: absolute;
+				z-index: 1000;
+				top: 50%;
+				margin-top: -20px;
+				left: -25px;
+				width: 20px;
+			}
+			
+			.delete {
+				position: fixed;
+				z-index: 99999999;
+				bottom: 0px;
+				width: 100%;
+				background: #fff;
+				border-top: 1px solid #dedede;
+			}
+			
+			.deleteBtn {
+				width: 70px;
+				height: 30px;
+				background: #098E75;
+				border-radius: 15px;
+				text-align: center;
+				line-height: 30px;
+				color: #fff;
+			}
+			
+			.demo1 {
+				padding: 15px;
+				border-bottom: 5px solid #f4f4f4;
+				display: flex;
+				position: relative;
+			}
+			
+			.hide {
+				display: none !important;
+			}
+			
+			.data-list {
+				background-color: initial;
+			}
+			
+			.sc-l {
+				width: 74%
+			}
+			
+			.sc-r {
+				width: 25%
+			}
+			
+			.wordW3,
+			.wordW6,
+			.wordW2,
+			.wordWrap2,
+			.wordWrap2 div,
+			.wordWrap2 span,
+			.wordW2 div,
+			.wordW2 span,
+			.wordW3 div,
+			.wordW3 span,
+			.wordW6 div,
+			.wordW6 span {
+				color: #464646;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar bottomShadow">
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+				<div class="navItem f14 marr10" id="edit" onclick="model.edit()">编辑</div>
+				<div class="navTitle">我的收藏</div>
+			</div>
+			<div class="scrollx mescroll-touch-x">
+				<div id="scrollxContent" class="scrollx-content">
+					<div id="nav" class="order-t ovf bb1" style="border-bottom: 1px solid #f4f4f4;">
+						<div class="order-t-c brp order-t-c-active" i='0'>资讯</div>
+						<div class="order-t-c brp" i='1'>帖子</div>
+						<div class="order-t-c brp" i='2'>问问</div>
+						<!--<div class="order-t-c brp" i='3'>视频</div>-->
+						<div class="order-t-c brp" i='3'>日志</div>
+						<div class="order-t-c brp" i='4'>说说</div>
+						<!--<div class="order-t-c brp" i='5'>讨论</div>-->
+					</div>
+				</div>
+			</div>
+		</header>
+		<section>
+			<!--轮播-->
+			<div id="swiper" class="swiper-container">
+				<div id="swiperWrapper" class="swiper-wrapper">
+					<!--全部-->
+					<div id="mescroll0" class="swiper-slide mescroll" style="background: #f4f4f4;">
+						<div id="dataList0" class="data-list">
+						</div>
+
+					</div>
+					<!--旗舰店-->
+					<div id="mescroll1" class="swiper-slide mescroll" style="background: #f4f4f4;">
+						<div id="dataList1" class="data-list">
+						</div>
+
+					</div>
+					<!--优享店-->
+					<div id="mescroll2" class="swiper-slide mescroll" style="background: #f4f4f4;">
+						<div id="dataList2" class="data-list">
+						</div>
+
+					</div>
+					<!--快取店-->
+					<div id="mescroll3" class="swiper-slide mescroll" style="background: #f4f4f4;">
+						<div id="dataList3" class="data-list">
+						</div>
+
+					</div>
+					<div id="mescroll4" class="swiper-slide mescroll" style="background: #f4f4f4;">
+						<div id="dataList4" class="data-list">
+						</div>
+
+					</div>
+					<!--<div id="mescroll5" class="swiper-slide mescroll">
+                    <div id="dataList5" class="data-list">
+                    </div>
+                    
+                </div>-->
+					<!--<div id="mescroll6" class="swiper-slide mescroll">
+                    <div id="dataList6" class="data-list">
+                    </div>
+                    <div class="flex-between delete hide" style="padding:15px;">
+                        <div class="flex-between">
+                            <img src="img/my/no.png" style="width: 20px;height: 20px;margin-right: 20px;" class="selAll"
+                                id="" onclick="model.it(this)" />全选
+                        </div>
+                        <div class="deleteBtn" onclick="model.delete()">删除</div>
+                    </div>
+                </div>-->
+				</div>
+			</div>
+		</section>
+		<footer class="shared hide" style="z-index: 999;background: #fff;">
+			<div class="flex-between" style="padding:15px 15px 15px 5px;">
+				<div class="flex-between">
+					<img src="img/my/no.png" style="width: 20px;height: 20px;margin-right: 20px;" class="selAll" id="" onclick="model.it(this)" />全选
+				</div>
+				<div class="deleteBtn" onclick="model.delete(this)">删除</div>
+			</div>
+		</footer>
+
+	</body>
+
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script type="text/javascript" src="inc/mescroll/mescroll.min.js"></script>
+	<script type="text/javascript" src="inc/mescroll/swiper.min.js"></script>
+	<script type="text/javascript" src="inc/art-template.js"></script>
+	<script type="text/javascript" src="inc/refresh.js" charset="utf-8"></script>
+	<script type="text/javascript" src="inc/tpl.js" charset="utf-8"></script>
+	<script type="text/javascript" src="inc/photo.js"></script>
+	<script type="text/html" id="listTpl">
+
+		{{if($data.dataIndex==0||$data.dataIndex==3||$data.dataIndex==4||$data.dataIndex==5)}} {{each $data v k }}
+		<!--
+        	作者：851902553@qq.com
+        	时间：2019-03-15
+        	描述：学校日志
+        -->
+		{{if v.forwardId==0&&v.resourceId==0&&v.face!=''&&v.videoId==''&&v.face.length==1}}
+		<div class="schoolMsg {{if k+1==$data.length}}schoolMsg1{{/if}}" {{if isbianji==1}} style="margin-left: 30px;" {{/if}} onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}')">
+			<img src="img/my/no.png" style=";" class="sel" id="{{v.collectionId}}" onclick="model.it(this);event.stopPropagation()" />
+			<div class="heads">
+				<div class="name-left fl" onclick="model.geren({{v.uid}},{{v.itemType}})">
+					<img class="fl" style="border-radius: 50%;" src="{{OSS(v.uface)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+					<div class="fl marl10" style="margin-top: 3px;">
+						<p class="f14">{{v.uname}}</p>
+						<p class="f12 c9e">{{sldate(v.collectionTime)}}</p>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="f14 color333 bold wordW mart5">{{v.title}}</div>
+			<div class="mart5 {{if v.newsType!=1&&v.newsType!=8}}wordW3{{/if}} c60 lh20">
+				{{if v.newsType!=2&&v.newsType!=9&&v.newsType!=6}}{{if v.newsType==1||v.newsType==8}}{{repcontent(v.content,v.newsId,'#fff')}}{{else}}{{v.subhead}}{{/if}}{{else}}{{v.subhead}}{{/if}}
+			</div>
+			<div class="mart10">
+				{{imgTpl(v.face[0].split(','),212)}}
+			</div>
+			<div class="clearfix"></div>
+			{{if v.topicId>0}}
+			<div class="scl-dw mart10 wordW" onclick="Comm.go('talkDetail.html?topicId={{v.tId}}');event.stopPropagation()">{{v.tTitle}}</div>
+			{{/if}}
+		</div>
+		{{/if}}
+		<!--
+        	作者：851902553@qq.com
+        	时间：2019-03-15
+        	描述：日志带图片
+        -->
+		{{if v.forwardId==0&&v.resourceId==0&&v.face!=''&&v.face[0]!=''&&v.face.length!=1&&v.videoId==""}}
+		<div class="schoolMsg {{if k+1==$data.length}}schoolMsg1{{/if}}" {{if isbianji==1}} style="margin-left: 30px;" {{/if}} onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}')">
+			<img src="img/my/no.png" style=";" class="sel" id="{{v.collectionId}}" onclick="model.it(this);event.stopPropagation()" />
+			<div class="heads">
+				<div class="name-left fl" onclick="model.geren({{v.uid}},{{v.itemType}})">
+					<img class="fl" style="border-radius: 50%;" src="{{OSS(v.uface)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+					<div class="fl marl10" style="margin-top: 3px;">
+						<p class="f14">{{v.uname}}</p>
+						<p class="f12 c9e">{{sldate(v.collectionTime)}}</p>
+					</div>
+				</div>
+
+				<div class="clearfix"></div>
+			</div>
+			<div class="f14 color333 bold wordW2 mart5">
+				{{v.title}}
+			</div>
+			<div class="f14 {{if v.newsType!=1&&v.newsType!=8}}wordW3{{/if}} mart5 lh20">
+				{{if v.newsType!=2&&v.newsType!=9&&v.newsType!=6}}{{if v.newsType==1||v.newsType==8}}{{repcontent(v.content,v.newsId,'#fff')}}{{else}}{{v.subhead}}{{/if}}{{else}}{{v.subhead}}{{/if}}
+			</div>
+			<div class="mart10">
+				{{if v.newsType!=2&&v.newsType!=9&&v.newsType!=6}} {{imgTpl(v.face,96,90)}} {{else}} {{imgTpl(v.face,76,93)}} {{/if}}
+				<div class="clearfix"></div>
+			</div>
+			{{if v.topicId>0}}
+			<div class="scl-dw mart10 wordW" onclick="Comm.go('talkDetail.html?topicId={{v.tId}}');event.stopPropagation()">{{v.tTitle}}</div>
+			{{/if}}
+
+		</div>
+		{{/if}}
+		<!--
+        	作者：851902553@qq.com
+        	时间：2019-03-15
+        	描述：日志不带图片
+        -->
+		{{if v.face==""&&v.videoId==''&&v.resourceId==0&&v.forwardId==0||v.face[0]==""&&v.videoId==''&&v.resourceId==0&&v.forwardId==0}}
+		<div class="schoolMsg {{if k+1==$data.length}}schoolMsg1{{/if}}" {{if isbianji==1}} style="margin-left: 30px;" {{/if}} onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}')">
+			<img src="img/my/no.png" style=";" class="sel" id="{{v.collectionId}}" onclick="model.it(this);event.stopPropagation()" />
+			<div class="heads">
+				<div class="name-left fl" onclick="model.geren({{v.uid}},{{v.itemType}})">
+					<img class="fl" style="border-radius: 50%;" src="{{OSS(v.uface)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+					<div class="fl marl10" style="margin-top: 3px;">
+						<p class="f14">{{v.uname}}</p>
+						<p class="f12 c9e">{{sldate(v.collectionTime)}}</p>
+					</div>
+				</div>
+
+				<div class="clearfix"></div>
+			</div>
+			<div class="f14 color333 bold wordW2 mart10">
+				{{v.title}}
+			</div>
+			<div class="f14 {{if v.newsType!=1&&v.newsType!=8}}wordW3{{/if}} mart5 lh20">
+				{{if v.newsType!=2&&v.newsType!=9&&v.newsType!=6}}{{if v.newsType==1||v.newsType==8}}{{repcontent(v.content,v.newsId,'#fff')}}{{else}}{{v.subhead}}{{/if}}{{else}}{{v.subhead}}{{/if}}
+			</div>
+			{{if v.topicId>0}}
+			<div class="scl-dw mart10 wordW" onclick="Comm.go('talkDetail.html?topicId={{v.tId}}');event.stopPropagation()">{{v.tTitle}}</div>
+			{{/if}}
+
+		</div>
+		{{/if}} {{if v.forwardId!=0&&resourceId!=0&&v.videoId==''}}
+		<div class="schoolMsg" id="{{v.newsId}}" onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}');">
+			<img src="img/my/no.png" style=";" class="sel" id="{{v.collectionId}}" onclick="model.it(this);event.stopPropagation()" />
+			<div class="heads">
+				<div class="name-left fl" style="width: 60%;">
+					<img onclick="model.geren({{v.uid}},{{v.itemType}})" class="fl" style="border-radius: 50%;" src="{{OSS(v.uface,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+					<div class="fl marl10 lh20" style="width: 68%;">
+						<p class="f14">{{v.uname}}</p>
+						<p class="f12 c9e wordW">{{if v.schoolName}}{{v.schoolName}}{{format(v.enrollmentYear)}}级{{/if}}</p>
+					</div>
+				</div>
+				<div class="name-right fr mart20 center" style="width: 40%;">
+					<div style="padding: 0px 6px 0px 6px;" onclick=" model.qh({{v.newsId}},2,{{v.itemType}},{{v.uid}});event.stopPropagation()" class="fr">
+						<img src="img/index/more.png" width="14" height="3" />
+					</div>
+					<p class="f12 c9e fr marr10">{{sldate(v.collectionTime)}}</p>
+					<div class="clearfix"></div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="f14 mart10">转发{{if v.newsType==2}}：{{v.content}}{{else}}：{{v.content}}{{/if}}</div>
+			{{if(v.ypic)}}
+			<div class="mart15 scl-zf" onclick="{{if !v.yvideoId}}Comm.go('articleDetail.html?newsId={{v.ynewsId}}'){{else}}Comm.go('videoDetails.html?newsId={{v.ynewsId}}'){{/if}};event.stopPropagation()">
+				<div class="wordW f16 marb10"><span class="color038" style="display: inline-block;" onclick="model.geren({{v.yid}},{{v.yitemtype}});event.stopPropagation()">{{v.yname}}</span></span>
+					<span>的{{if v.ynewsType==1}}说说{{/if}}{{if v.ynewsType==2}}日志{{/if}}{{if v.ynewsType==7}}帖子{{/if}}{{if v.ynewsType==8}}讨论{{/if}}</span>
+				</div>
+				<div class="">
+					<div class="wordW6 color31"><span class="marr5">{{v.yTitle}}</span><span>{{v.yContent}}</span></div>
+				</div>
+				{{if v.ypic&&v.ypic!=''}} {{if v.ynewsType!=6&&v.ynewsType!=2}}{{imgTpl(v.ypic,96)}} {{else}}{{imgTpl(v.ypic,76)}}{{/if}} {{/if}}
+				<div class="clearfix"></div>
+			</div>
+			{{else}}
+			<div class="mart15 scl-zf">
+				<div>该动态已删除</div>
+				<div class="clearfix"></div>
+			</div>
+			{{/if}} {{if v.topicId>0}}
+			<div class="scl-dw mart10 wordW" onclick="Comm.go('talkDetail.html?topicId={{v.tId}}');event.stopPropagation()">{{v.tTitle}}</div>
+			{{/if}}
+
+		</div>
+		{{/if}} {{if v.forwardId==0&&v.resourceId>0&&v.videoId==''}}
+		<div class="schoolMsg" id="{{v.newsId}}" onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}');">
+			<img src="img/my/no.png" style=";" class="sel" id="{{v.collectionId}}" onclick="model.it(this);event.stopPropagation()" />
+			<div class="heads">
+				<div class="name-left fl" style="width: 60%;">
+					<img onclick="model.geren({{v.uid}},{{v.itemType}})" class="fl" style="border-radius: 50%;" src="{{OSS(v.uface,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+					<div class="fl marl10 lh20" style="width: 68%;">
+						<p class="f14">{{v.uname}}</p>
+						<p class="f12 c9e wordW">{{if v.schoolName}}{{v.schoolName}}{{format(v.enrollmentYear)}}级{{/if}}</p>
+					</div>
+				</div>
+				<div class="name-right fr mart20 center" style="width: 40%;">
+					<div style="padding: 0px 6px 0px 6px;" onclick=" model.qh({{v.newsId}},2,{{v.itemType}},{{v.uid}});event.stopPropagation()" class="fr">
+						<img src="img/index/more.png" width="14" height="3" />
+					</div>
+					<p class="f12 c9e fr marr10">{{sldate(v.collectionTime)}}</p>
+					<div class="clearfix"></div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="f14 wordW2 mart10">转发{{if v.content}}：{{v.content}}{{/if}}</div>
+			{{if(v.ypic)}}
+			<div class="mart15 scl-zf" onclick="{{if !v.yvideoId}}Comm.go('articleDetail.html?newsId={{v.ynewsId}}'){{else}}Comm.go('videoDetails.html?newsId={{v.ynewsId}}'){{/if}};event.stopPropagation()">
+				<div class="wordW f16 marb10"><span class="color038" style="display: inline-block;" onclick="model.geren({{v.yid}},{{v.yitemtype}});event.stopPropagation()">{{v.yname}}</span></span>
+					<span>的{{if v.ynewsType==1}}说说{{/if}}{{if v.ynewsType==2}}日志{{/if}}{{if v.ynewsType==7}}帖子{{/if}}{{if v.ynewsType==8}}讨论{{/if}}</span>
+				</div>
+				<div class="">
+					<div class="wordW6 color31"><span class="marr5">{{v.yTitle}}</span><span>{{v.yContent}}</span></div>
+				</div>
+				{{if v.ypic&&v.ypic!=''}} {{if v.ynewsType!=6&&v.ynewsType!=2}}{{imgTpl(v.ypic,96)}} {{else}}{{imgTpl(v.ypic,76)}}{{/if}} {{/if}}
+
+				<div class="clearfix"></div>
+			</div>
+			{{else}}
+			<div class="mart15 scl-zf">
+				<div>该动态已删除</div>
+				<div class="clearfix"></div>
+			</div>
+			{{/if}} {{if v.topicId>0}}
+			<div class="scl-dw mart10 wordW" onclick="Comm.go('talkDetail.html?topicId={{v.tId}}');event.stopPropagation()">{{v.tTitle}}</div>
+			{{/if}}
+		</div>
+		{{/if}} {{/each}} {{/if}}
+
+		<!-- -============================================================================================================================================================================ -->
+		{{if($data.dataIndex == 1)}} {{each $data v k}}
+		<div class="schoolMsg {{if k+1==$data.length}}schoolMsg1{{/if}}" {{if isbianji==1}} style="margin-left: 30px;" {{/if}} onclick="Comm.go('articleDetail.html?type=qz&newsId={{v.newsId}}')">
+			<img src="img/my/no.png" style=";" class="sel" id="{{v.collectionId}}" onclick="model.it(this);event.stopPropagation()" />
+			<div style="width:100%;">
+				<div class="fl center" style="width: 7%;">
+					<img src="img/ly.png" width="60%" />
+					<p class="mart5" id="ping{{v.newsId}}">{{v.commentNumber}}</p>
+				</div>
+				<div style="width: 90%;" class="fl marl5">
+					<div class="{{if v.newsImg&&v.newsImg!=''}}sc-l fl{{/if}}">
+						<div class="f14 color333 bold wordW2 ">{{v.title}}</div>
+						<!--<div class="lh25 mart5 wordW2 c60">
+                {{v.subhead}}
+            </div>-->
+						<div class="heads mart10">
+							<div class="name-left fl" onclick="event.stopPropagation();top.Comm.go('postDetails.html?groupId={{v.groupId}}')">
+								<img class="fl" src="{{OSS(v.face,'m')}}" style="border-radius: 5px;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20" />
+								<div class="fl marl10">
+									<p class="f12 c9e wordW lh20" style="width: 100px;">{{v.groupName}}</p>
+								</div>
+								<div class="fl marl20 f12 c9e lh20">{{sldate(v.collectionTime)}}</div>
+							</div>
+							<!--<div class="name-right fr paddl30 paddr10" onclick="Comm.showWindow('{{if v.customerId==v.myId}}sinboxTemp{{else}}sinboxTemp1{{/if}}',true);model.qh({{v.newsId}});event.stopPropagation()">
+                    <img src="img/index/more.png" width="14" height="3" />
+                </div>-->
+							<div class="clearfix"></div>
+						</div>
+					</div>
+					{{if v.newsImg&&v.newsImg!=''}} {{set imgs=v.newsImg.split(',')}}
+					<div class="fr sc-r">
+						{{imgTpl(imgs[0].split(','),56)}}
+					</div>
+					{{/if}}
+					<div class="clearfix"></div>
+
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		{{/each}} {{/if}} {{if($data.dataIndex==2)}} {{each $data v k}}
+		<div class="schoolMsg {{if k+1==$data.length}}schoolMsg1{{/if}}" {{if isbianji==1}} style="margin-left: 30px;" {{/if}} style="padding:0;" onclick="Comm.go('anwser.html?newsId={{v.newsId}}&commentId={{v.itemId}}')">
+			<img src="img/my/no.png" style="" class="sel" id="{{v.collectionId}}" onclick="model.it(this);event.stopPropagation()" />
+			<div style="padding:15px;">
+				<div class="color333 bold" style="font-size:14px;">{{v.title}}</div>
+				{{if v.content}}
+				<div class="wordWrap2" style="color:#606060;font-size:14px;margin:15px 0;height:37px;">{{v.content}}</div>
+				{{/if}}
+				<div style="color:#9E9E9E;font-size:12px;">{{v.praiseNumber}} 人赞同 · {{sldate(v.collectionTime)}}</div>
+			</div>
+		</div>
+		{{/each}} {{/if}}
+		<!--{{if($data.dataIndex==3)}}
+    {{each $data v k}}
+    <div class="schoolMsg" style="padding:0;" onclick="Comm.go('videoDetails.html?newsId={{v.newsId}}')">
+        <img src="img/my/no.png" style=";" class="sel"  id="{{v.collectionId}}" onclick="model.it(this);event.stopPropagation()" />
+        <div class="vido-ss">
+            <div class="vidos-ssl">
+                <img class="vpic" src="{{OSS(v.face)}}" onerror="this.src='img/index/vpic.png';this.onerror=null;" style="width:140px;height:83px;"/>
+                <div class="vtime2">18:11</div>
+            </div>
+            <div class="vidos-ssr">
+                <div class="wordW2 bold mart5">{{v.title}}</div>
+                <div class="wordW c9e mart20 f12">{{v.playNumber}}次播放 · {{v.praiseNumber}}点赞</div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    {{/each}}
+    {{/if}}-->
+	</script>
+	<script>
+		function pageload() {
+			mescrollRefreshFn({
+				menuNumber: 5
+			});
+			// Foot.init(); //底部
+		}
+		var customerId = app.getCid()
+		var chose = [];
+		var model = {
+			dataIndex: 0,
+			//弹出编辑操作
+			edit: function() {
+				this.dataIndex = $('.order-t-c-active').attr('i');
+				//判断当前所在的选项
+				if(this.dataIndex == 0) { //资讯页
+					if($('#dataList' + this.dataIndex + ' .schoolMsg').length < 1) {
+						return Comm.message('当前没有记录不能编辑哦！');
+					}
+					if($('#dataList0 .schoolMsg').css('marginLeft') == '30px') {
+						$('#dataList0 .schoolMsg').css('marginLeft', 0);
+						$('footer').attr('class', ' shared hide');
+						$('#edit').html('编辑');
+						$('.data-list').css('background-color', 'initial');
+					} else {
+						$('#dataList0 .schoolMsg').css('marginLeft', 30);
+						$('footer').attr('class', 'shared');
+						$('#edit').html('取消');
+						$('.data-list').css('background-color', '#fff');
+					}
+				} else if(this.dataIndex == 1) { //帖子页
+					if($('#dataList' + this.dataIndex + ' .schoolMsg').length < 1) {
+						return Comm.message('当前没有记录不能编辑哦！');
+					}
+					if($('#dataList1 .schoolMsg').css('marginLeft') == '30px') {
+						$('#dataList1 .schoolMsg').css('marginLeft', 0);
+						$('footer').attr('class', ' shared hide');
+						$('#edit').html('编辑');
+						$('.data-list').css('background-color', 'initial');
+					} else {
+						$('#dataList1 .schoolMsg').css('marginLeft', 30);
+						$('footer').attr('class', 'shared');
+						$('#edit').html('取消');
+						$('.data-list').css('background-color', '#fff');
+					}
+				} else if(this.dataIndex == 2) { //问问页
+					if($('#dataList' + this.dataIndex + ' .schoolMsg').length < 1) {
+						return Comm.message('当前没有记录不能编辑哦！');
+					}
+					if($('#dataList2 .schoolMsg').css('marginLeft') == '30px') {
+						$('#dataList2 .schoolMsg').css('marginLeft', 0);
+						$('footer').attr('class', ' shared hide');
+						$('#edit').html('编辑');
+						$('.data-list').css('background-color', 'initial');
+					} else {
+						$('#dataList2 .schoolMsg').css('marginLeft', 30);
+						$('footer').attr('class', 'shared');
+						$('#edit').html('取消');
+						$('.data-list').css('background-color', '#fff');
+					}
+				} else if(this.dataIndex == 3) { //视频页
+					if($('#dataList' + this.dataIndex + ' .schoolMsg').length < 1) {
+						return Comm.message('当前没有记录不能编辑哦！');
+					}
+					if($('#dataList3 .schoolMsg').css('marginLeft') == '30px') {
+						$('#dataList3 .schoolMsg').css('marginLeft', 0);
+						$('footer').attr('class', ' shared hide');
+						$('#edit').html('编辑');
+						$('.data-list').css('background-color', 'initial');
+					} else {
+						$('#dataList3 .schoolMsg').css('marginLeft', 30);
+						$('footer').attr('class', 'shared');
+						$('#edit').html('取消');
+						$('.data-list').css('background-color', '#fff');
+					}
+				} else if(this.dataIndex == 4) { //视频页
+					if($('#dataList' + this.dataIndex + ' .schoolMsg').length < 1) {
+						return Comm.message('当前没有记录不能编辑哦！');
+					}
+					if($('#dataList4 .schoolMsg').css('marginLeft') == '30px') {
+						$('#dataList4 .schoolMsg').css('marginLeft', 0);
+						$('footer').attr('class', ' shared hide');
+						$('#edit').html('编辑');
+						$('.data-list').css('background-color', 'initial');
+					} else {
+						$('#dataList4 .schoolMsg').css('marginLeft', 30);
+						$('footer').attr('class', 'shared');
+						$('#edit').html('取消');
+						$('.data-list').css('background-color', '#fff');
+					}
+				}
+				//          else if (this.dataIndex == 5) {//视频页
+				//              if ($('#dataList' + this.dataIndex+' .schoolMsg').length < 1)  {
+				//                  return Comm.message('当前没有记录不能编辑哦！');
+				//              }
+				//              if ($('#dataList5 .schoolMsg').css('marginLeft') == '30px') {
+				//                  $('#dataList5 .schoolMsg').css('marginLeft', 0);
+				//                 $('footer').attr('class', ' shared hide');
+				//                  $('#edit').html('编辑');
+				//              } else {
+				//                  $('#dataList5 .schoolMsg').css('marginLeft', 30);
+				//                  $('footer').attr('class', 'shared');
+				//                  $('#edit').html('取消');
+				//              }
+				//          }
+				//          else if (this.dataIndex == 6) {//视频页
+				//              if ($('#dataList' + this.dataIndex+' .schoolMsg').length ==0)  {
+				//                  return Comm.message('当前没有记录不能编辑哦！');
+				//              }
+				//              if ($('#dataList6 .schoolMsg').css('marginLeft') == '30px') {
+				//                  $('#dataList6 .schoolMsg').css('marginLeft', 0);
+				//                  $('#mescroll6 .delete').attr('class', 'flex-between delete hide');
+				//                  $('#edit').html('编辑');
+				//              } else {
+				//                  $('#dataList6 .schoolMsg').css('marginLeft', 30);
+				//                  $('#mescroll6 .delete').attr('class', 'flex-between delete');
+				//                  $('#edit').html('取消');
+				//              }
+				//          };
+				Comm.resizeSection();
+			},
+			//选择删除项
+			it: function(thih) {
+				event.stopPropagation()
+				var data = $('#dataList' + this.dataIndex + ' .sel');
+				var leng = $('#dataList' + this.dataIndex).children();
+				if($(thih).attr('src') == 'img/my/yese.png') {
+					$(thih).attr('src', 'img/my/no.png');
+					if($(thih).attr('class') == 'selAll') {
+						data.attr('src', 'img/my/no.png');
+						chose = []
+					} else {
+						chose.pop($(thih)[0].id);
+					}
+					if(leng.length == chose.length) {
+						$('.selAll').attr('src', 'img/my/yese.png');
+					} else {
+						$('.selAll').attr('src', 'img/my/no.png');
+					}
+				} else {
+					$(thih).attr('src', 'img/my/yese.png');
+					if($(thih).attr('class') == 'selAll') {
+						data.attr('src', 'img/my/yese.png');
+						for(var i = 0; i < data.length; i++) {
+							chose.push(data[i].id);
+						}
+					} else {
+						chose.push($(thih)[0].id);
+					}
+					if(leng.length == chose.length) {
+						$('.selAll').attr('src', 'img/my/yese.png');
+					}
+
+				}
+			},
+			//删除
+			delete: function() {
+				Comm.confirm('确认删除？', function(d) {
+					if(d) {
+						AJAX.POST('/api/collection/delete', {
+							customerId: customerId,
+							collectionIds: chose.join(',')
+						}, function(res) {
+							if(res && res.code == 1) {
+								Comm.message('删除成功');
+								var page = {
+									num: 1,
+									size: 10
+								};
+								$('#edit').html('编辑');
+								$('.data-list').css('background-color', 'initial');
+								$('#dataList0 .schoolMsg').css('marginLeft', 0);
+								$('footer').attr('class', ' shared hide');
+								$('#dataList1 .schoolMsg').css('marginLeft', 0);
+								$('footer').attr('class', ' shared hide');
+								$('#dataList2 .schoolMsg').css('marginLeft', 0);
+								$('footer').attr('class', ' shared hide');
+								$('#dataList3 .schoolMsg').css('marginLeft', 0);
+								$('footer').attr('class', ' shared hide');
+								$('#dataList4 .schoolMsg').css('marginLeft', 0);
+								$('footer').attr('class', ' shared hide');
+								$('#dataList5 .schoolMsg').css('marginLeft', 0);
+								$('footer').attr('class', ' shared hide');
+								$('#dataList6 .schoolMsg').css('marginLeft', 0);
+								$('footer').attr('class', ' shared hide');
+								getListData(page);
+							}
+						})
+					}
+				})
+				Comm.resizeSection();
+			},
+			changeDeta: function(r) { //处理推荐、关注数据
+				console.log(r)
+				var news = r.newsInfoVOList;
+				var forward = r.forward;
+				var top = r.topic;
+				var user = r.userInfo;
+				var resource = r.resource;
+				for(var i = 0; i < news.length; i++) {
+					//          	news[i].forwardId > 0 && 
+					if(news[i].resourceId > 0) {
+						for(var q = 0; q < resource.length; q++) {
+							if(news[i].resourceId == resource[q].newsId) {
+								news[i].yTitle = resource[q].title;
+								news[i].ynewsId = resource[q].newsId;
+								if(resource[q].subhead != "") {
+									news[i].yContent = resource[q].subhead;
+								} else {
+									news[i].yContent = resource[q].title;
+								}
+								news[i].ynum = resource[q].forwardNumber;
+								news[i].ynewsType = resource[q].newsType;
+								news[i].yaddTime = resource[q].addTime;
+								news[i].ypic = resource[q].face.split(',');
+								for(var s = 0; s < user.length; s++) {
+
+									if(resource[q].customerId == user[s].customerId) {
+
+										news[i].yname = user[s].customerName;
+										if(resource[q].newsType == 7) {
+											news[i].yid = user[s].customerId;
+											news[i].yitemtype = 0;
+										} else {
+											news[i].yid = user[s].userId;
+											news[i].yitemtype = user[s].itemType;
+										}
+									}
+								}
+							}
+						}
+						if(news[i].topicId > 0) {
+							for(var j = 0; j < top.length; j++) {
+								if(news[i].topicId == top[j].topicId) {
+									news[i].tTitle = top[j].title;
+									news[i].tId = top[j].topicId;
+								}
+							}
+						}
+					}
+					if(news[i].topicId > 0) {
+						for(var j = 0; j < top.length; j++) {
+							if(news[i].topicId == top[j].topicId) {
+								news[i].tTitle = top[j].title;
+								news[i].tId = top[j].topicId;
+							}
+						}
+					}
+					if(news[i].itemType == 0) {
+						for(var l = 0; l < user.length; l++) {
+							if(news[i].customerId == user[l].userId && news[i].itemType == user[l].itemType) {
+
+								news[i].uid = user[l].userId;
+								news[i].uname = user[l].customerName;
+								news[i].uface = user[l].customerFace;
+								news[i].schoolName = user[l].schoolName;
+								news[i].enrollmentYear = user[l].enrollmentYear;
+
+							}
+						}
+
+					} else {
+						for(var c = 0; c < user.length; c++) {
+							if(news[i].customerId == 10) {
+								console.log(user[c])
+							}
+							if(news[i].newsId == user[c].newsId && news[i].itemType == user[c].itemType) {
+								news[i].uid = user[c].userId;
+								news[i].uname = user[c].customerName;
+								news[i].uface = user[c].face;
+							}
+						}
+					}
+					if(news[i].face) {
+						news[i].face = news[i].face.split(',');
+					}
+					if(news[i].content) {
+						news[i].content = news[i].content.replace('font-family').replace('font-size')
+					}
+					if(news[i].subhead) {
+						news[i].subhead = news[i].subhead.replace(/<\/?.+?>/g, "").replace(/ /g, "");
+					}
+
+				}
+				console.log(news)
+				return news;
+			},
+			//赞
+			zan: function(id, e) {
+				AJAX.GET('/api/news/praiseByNewsId?newsId=' + id, function(a) {
+					if(a && a.code == 1) {
+						$(e).attr('onclick', 'model.quxiao(' + id + ',this);event.stopPropagation()');
+						$(e).find('img')[0].src = 'img/index/zand.png';
+						$(e).find('span')[0].innerHTML++;
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+			quxiao: function(id, e) {
+				AJAX.GET('/api/news/cancelPraiseByNewsId?newsId=' + id, function(a) {
+					if(a && a.code == 1) {
+						$(e).attr('onclick', 'model.zan(' + id + ',this);event.stopPropagation()');
+						$(e).find('img')[0].src = 'img/index/zan.png';
+						$(e).find('span')[0].innerHTML--;
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+			//转发
+			zhuanfa: function(id) {
+				Comm.go('zhuanfa.html?newsId=' + id);
+			},
+			//删除资讯收藏
+
+		}
+
+		function changeTheme(status) {
+			$(".vidos").removeClass("vido-active");
+			$(event.target).addClass("vido-active");
+		}
+
+		/*设置列表数据
+		 * pageData 当前页的数据
+		 * dataIndex 数据属于哪个nav */
+		function setListData(pageData, dataIndex) {
+
+			var swiper = document.getElementById("swiper");
+			var listDom = document.getElementById("dataList" + dataIndex);
+			model.dataIndex = dataIndex
+			pageData.dataIndex = dataIndex;
+			if(pageData.curPage == 1) {
+				$('#edit').html('编辑');
+				$('.data-list').css('background-color', 'initial');
+				chose = [];
+				for(var c = 0; c < 4; c++) {
+					$('#dataList' + c + ' .schoolMsg').css('marginLeft', 0);
+					$('footer').attr('class', 'shared hide');
+					$('.sel').attr('src', 'img/my/no.png');
+					$('.selAll').attr('src', 'img/my/no.png');
+				}
+				Comm.resizeSection();
+
+			}
+			if($("#edit").html() == '取消') {
+				pageData.isbianji = 1;
+			} else {
+				pageData.isbianji = 0;
+			}
+			listStr = template('listTpl', pageData);
+			listDom.innerHTML += listStr;
+			Comm.scorllDel();
+			$('.wimg').attr('onclick', 'Photo.show(this,true)');
+		}
+
+		/*联网加载列表数据
+		 在您的实际项目中,请参考官方写法: http://www.mescroll.com/api.html#tagUpCallback
+		 请忽略getListDataFromNet的逻辑,这里仅仅是在本地模拟分页数据,本地演示用
+		 实际项目以您服务器接口返回的数据为准,无需本地处理分页.
+		 * */
+		var htmlData = [];
+
+		function getListDataFromNet(curNavIndex, pageNum, pageSize, successCallback, errorCallback) {
+			var type = '';
+			if(curNavIndex == 0) {
+				type = 1;
+			} else if(curNavIndex == 1) {
+				type = 2
+			} else if(curNavIndex == 2) {
+				type = 3
+			} else if(curNavIndex == 3) {
+				type = 5
+			} else if(curNavIndex == 4) {
+				type = 6
+			}
+			//     else if(curNavIndex==5){
+			//     	type = 7
+			//     }
+			AJAX.GET("/api/collection/newsList?curpage=" + pageNum + "&pagesize=" + pageSize + "&itemType=" + type, function(a) {
+				if(a && a.code == 1) {
+					var pageData = a.data || [];
+					pageData.curPage = a.curPage;
+					if(a.curPage > 1) {
+						pageData = pageData;
+					}
+					//处理数据
+					if(curNavIndex == 0 || curNavIndex == 3 || curNavIndex == 4 || curNavIndex == 5) {
+						pageData = model.changeDeta(pageData)
+					}
+					successCallback && successCallback(pageData, a.totalCount);
+				} else {
+					Comm.message(a.msg);
+					errorCallback && errorCallback();
+				}
+			});
+		}
+
+		function changePage(i) {
+			if(curNavIndex != i) {
+				//更改列表条件
+				var curNavDom; //当前菜单项
+				$("#nav div").each(function(n, dom) {
+					if(dom.getAttribute("i") == i) {
+						dom.classList.add("order-t-c-active");
+						curNavDom = dom;
+						//_type_ = dom.getAttribute("data-type");
+					} else {
+						dom.classList.remove("order-t-c-active");
+					}
+				});
+				//菜单项居中动画
+				var scrollxContent = document.getElementById("scrollxContent");
+				var star = scrollxContent.scrollLeft; //当前位置
+				var end = curNavDom.offsetLeft + curNavDom.clientWidth / 2 - document.body.clientWidth / 2; //居中
+				mescrollArr[curNavIndex].getStep(star, end, function(step, timer) {
+					scrollxContent.scrollLeft = step; //从当前位置逐渐移动到中间位置,默认时长300ms
+				});
+				//隐藏当前回到顶部按钮
+				mescrollArr[curNavIndex].hideTopBtn();
+				//取出菜单所对应的mescroll对象,如果未初始化则初始化
+				if(mescrollArr[i] == null) {
+					mescrollArr[i] = initMescroll(i, s);
+				} else {
+
+					var curMescroll = mescrollArr[i];
+					var curScrollTop = curMescroll.getScrollTop();
+					if(curScrollTop >= curMescroll.optUp.toTop.offset) {
+						curMescroll.showTopBtn();
+					} else {
+						curMescroll.hideTopBtn();
+					}
+				}
+				//更新标记
+				curNavIndex = i;
+			}
+			//处理删除
+			$('#edit').html('编辑');
+			$('.data-list').css('background-color', 'initial');
+			chose = [];
+			for(var c = 0; c < 4; c++) {
+				$('#dataList' + c + ' .schoolMsg').css('marginLeft', 0);
+				$('footer').attr('class', 'shared hide');
+				$('.sel').attr('src', 'img/my/no.png');
+				$('.selAll').attr('src', 'img/my/no.png');
+			}
+			Comm.resizeSection();
+		}
+	</script>
+
+</html>

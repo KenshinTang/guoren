@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>回复详情列表</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+    <style>
+        header {
+            border-bottom: 1px solid #f4f4f4;
+        }
+        
+        /*span {
+            vertical-align: text-bottom;
+        }*/
+        
+        section {
+            position: fixed;
+            background: #f4f4f4;
+        }
+        
+        .father {}
+        
+        .item {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            background: #fff;
+        }
+        
+        .item>.l {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .item>.l .imgs {
+            width: 36px;
+            height: 36px;
+            border: 1px solid #f4f4f4;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+        
+        .item>.r {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .main {
+            margin-top: 10px;
+        }
+        
+        .footer1 {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background: #fff;
+            text-align: center;
+            align-items: center;
+        }
+        
+        .txt-div {
+            width: 100%;
+            height: 36px;
+            border: 1px solid #dbdbdb;
+            border-radius: 18px;
+            line-height: 36px;
+            color: #999999;
+            text-align: left;
+            background: url('./img/xie.png')no-repeat center;
+            background-position-x: 10px;
+            background-size: 6%;
+            padding-left: 40px;
+        }
+        
+        #textarea {
+            display: block;
+            margin: 0 auto;
+            overflow: hidden;
+            width: 100%;
+            font-size: 14px;
+            height: auto;
+           /* line-height: 28px;*/
+            padding: 2px;
+            max-height: 200px;
+            overflow-y: scroll;
+            outline: 0 none;
+            border: none;
+            -webkit-user-select: text
+        }
+        #textarea:empty:before{
+            content: attr(placeholder);
+            color:#999;
+        		}
+        .footer2 {
+            padding: 5px 15px;
+            background: #fff;
+        }
+        
+        .footer2 .bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+            margin-top: 5px;
+        }
+        
+        .footer2 .bottom .l {
+            width: 23px;
+            height: 23px;
+            background: url('./img/pinglun/xl.png')no-repeat center;
+            background-size: 100%;
+        }
+        
+        .footer2 .bottom .r,
+        .footer2 .bottom .ll {
+            color: #fff;
+            background: #098E75;
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
+        
+        .bgxq {
+            background: url(img/index/bgxq.png) no-repeat 0px center;
+            background-size: 16px;
+            text-align: left;
+            padding: 10px 0 10px 50px;
+            color: #444444;
+            /* border-bottom: 1px solid #f4f4f4; */
+        }
+        
+        .jb {
+            background: url(img/index/jb.png) no-repeat 0px center;
+            background-size: 16px;
+            text-align: left;
+            padding: 10px 0 10px 50px;
+            color: #444444;
+        }
+        
+        #sinbox1 {
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+            width: 90%;
+        }
+        
+        #bar {
+            width: 100%;
+            z-index: 999;
+        }
+        
+        .pl {
+            background: url(img/xzd.png) no-repeat 0px center;
+            background-size: 16px;
+            text-align: left;
+            padding: 10px 0 10px 50px;
+            color: #444444;
+        }
+        
+        .cunbtn {
+            font-size: 12px;
+            color: #098E75;
+            /*border: 1px solid #098E75;*/
+            padding: 0px 3px;
+            border-radius: 3px;
+            margin-left: 60px;
+            font-weight: 200;
+            width: 60px;
+            background-color: #fff;
+        }
+        
+        #top {
+            padding-bottom: 10px;
+            background: #fff;
+        }
+        
+        #pp {
+            position: fixed;
+            bottom: -100px;
+            left: 10px;
+            height: 1px;
+            width: 1px;
+        }
+        .bold{
+        user-select: none; -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar" style="padding: 0;box-shadow: none;">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">回复详情</div>
+        </div>
+    </header>
+    <section class="mescroll" id="box">
+        <input id="pp" type="text" />
+        <div id="top">
+
+        </div>
+        <div class="main">
+            <p style="padding:10px;padding-left: 14px;background: #fff;font-size: 14px;border-bottom: 1px solid #f4f4f4;" id="commentNumber"></p>
+            <div id="list">
+
+            </div>
+        </div>
+        
+    </section>
+    <footer>
+    	<div id="bar" class="footer1">
+            <input class="txt-div wordWrap" onfocus="model.showReviews()"readonly="readonly" id="txt-div" placeholder="添加你的回复" />
+            <!--<span style="color:#098E75">发布</span>-->
+        </div>
+    	<div class="footer2 hide" style="z-index: 9999;">
+    	<p style="color:#ccc;" id="customerName">正在回复Enzo</p>
+        <div contenteditable="plaintext-only"onpaste="model.copy()" oninput="editOninput(this)"onkeydown="zhuanfa.keydown(this)" id="textarea" placeholder="观点的碰撞，思想的火花"></div>
+        <div class="bottom">
+            <div></div>
+            <div class="r jjs" id="Release" onclick="model.release()">发布</div>
+        </div>	
+    	</div>
+        
+    </footer>
+</body>
+<script type="text/html" id="demo">
+    {{each $data.nextList as item index}}
+    <div class="item">
+        <div class="l" style="width: 100%;">
+            <img class="imgs" width="36" height="36" src="{{OSS(item.face)}}" onclick="{{if item.userType==1}}Comm.go('personal.html?customerId={{item.customerId}}'){{else if item.userType==2}}Comm.go('University.html?schoolId={{item.customerId}}' ){{else if item.userType==3}}Comm.go('major.html?majorId={{item.customerId}}'){{/if}}"
+            />
+            <div class="data" style="width: calc(100% - 40px);">
+                <p class="bold">{{item.customerName}}</p>
+                <div class="mart10 marb10 colors" style="color:#444444;" onclick="model.setu({{item.commentId}},'{{item.customerName}}',{{item.customerId}})">
+
+                    {{if(item.customerName2 && item.parentContent)}}
+                    <span>回复</span>
+                    <span class="color038" onclick="Comm.go('personal.html?customerId={{item.customerId2}}');event.stopPropagation()">@{{item.customerName2}}:</span>
+                    <span>{{item.content}} </span> {{else}}
+                    <span>{{item.content}}</span> {{/if}}
+                </div>
+                <p style="color:#8D8D8D;" style="-webkit-user-select:none;">{{sldate(item.addTime)}}</p>
+          
+          <div class="r" style="-webkit-user-select:none;margin-top: -20px;">
+            <p></p>
+            <p></p>
+            {{if(item.isPraise==1)}}
+            <div class="tright">
+                <div class="fr" style="width:30px" onclick="model.More({{item.commentId}},'{{item.customerName}}',{{item.customerId}},{{publishCustomerId}});event.stopPropagation()">
+                    <img src="img/index/more.png" width="14" height="3" />
+                </div>
+                {{if newsType!=1&&newsType!=8&&newsType!=0}}
+                <img src="img/index/zand.png" style="object-fit: contain;" width="19" height="17" data-isPraise="1" onclick="model.praiseByCommentId(this,{{item.commentId}});event.stopPropagation()" />
+                <span class="c9e" id="zan{{item.commentId}}">{{item.praiseNumber}}</span> {{/if}}
+            </div>
+            {{/if}}{{if(item.isPraise==0)}}
+            <div class="tright">
+                <div class="fr" style="width:30px" onclick="model.More({{item.commentId}},'{{item.customerName}}',{{item.customerId}},{{publishCustomerId}});event.stopPropagation()">
+                    <img src="img/index/more.png" width="14" height="3" />
+                </div>
+                {{if newsType!=1&&newsType!=8&&newsType!=0}}
+                <img src="img/index/zan.png" style="object-fit: contain;" width="19" height="17" data-isPraise="0" onclick="model.praiseByCommentId(this,{{item.commentId}});event.stopPropagation()" />
+                <span class="c9e" id="zan{{item.commentId}}">{{item.praiseNumber}}</span> {{/if}}
+            </div>
+            {{/if}}
+        </div>
+            </div>
+        </div>
+        <!--onclick="model.setu({{item.commentId}},'{{item.customerName}}',{{item.customerId}})"-->
+        
+    </div>
+    {{/each}}
+</script>
+
+<script type="text/html" id="demo1">
+    <div class="item">
+        <div class="l" style="width: 100%;">
+            <img class="imgs" width="36" height="36" src="{{OSS($data.face)}}" onclick="Comm.go('personal.html?customerId={{$data.customerId}}')" />
+            <div class="data" style="width:  calc(100% - 40px);">
+                <p class="bold">{{$data.customerName}}</p>
+                <div class="mart10 marb10 colors" style="color:#444444;">{{$data.content}} </div>
+                <p style="color:#8D8D8D;-webkit-user-select:none;">{{sldate($data.addTime)}}</p>
+           
+           <div class="r" style="-webkit-user-select:none;margin-top: -20px;">
+            <p></p>
+            <p></p>
+            {{if newsType!=1&&newsType!=8&&newsType!=0}} {{if($data.isPraise==1)}}
+            <div class="fr">
+                <div class="fr paddl10" style="width:30px" onclick="model.More({{$data.commentId}},'{{$data.customerName}}',{{$data.customerId}},{{publishCustomerId}})">
+                    <img src="img/index/more.png" width="14" height="3" />
+                </div>
+                <img src="img/index/zand.png" style="object-fit: contain;" width="19" height="17" data-isPraise="1" onclick="model.praiseByCommentId(this,{{$data.commentId}})" />
+                <span class="c9e" id="zan{{$data.commentId}}">{{$data.praiseNumber}}</span>
+            </div>
+            {{/if}} {{if($data.isPraise==0)}}
+            <div class="fr">
+                <div class="fr paddl10" style="width:30px" onclick="model.More({{$data.commentId}},'{{$data.customerName}}',{{$data.customerId}},{{publishCustomerId}})">
+                    <img src="img/index/more.png" width="14" height="3" />
+                </div>
+                <img src="img/index/zan.png" style="object-fit: contain;" width="19" height="17" data-isPraise="0" onclick="model.praiseByCommentId(this,{{$data.commentId}})" />
+                <span class="c9e" id="zan{{$data.commentId}}">{{$data.praiseNumber}}</span>
+            </div>
+            {{/if}} {{/if}}
+        </div>
+            </div>
+			
+        </div>
+        
+
+    </div>
+    <div class="cunbtn" style="-webkit-user-select:none;" onclick="Comm.go('articleDetail.html?newsId={{newsId}}');">查看原文</div>
+</script>
+
+<div id="sinbox1" class="paddb10" wtd="sinboxTemp">
+    <div class="bg_white marb10 f16" style="border-radius: 10px;">
+        <div class="coloreb3 paddb15 paddt15" onclick="Comm.showWindow('');model.shanping()">删除</div>
+    </div>
+    <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+</div>
+<div id="sinbox1" class="paddb10" wtd="sinboxTemp1">
+    <div class="bg_white marb10 f16" style="border-radius: 10px;">
+        <div class="paddt15 paddb15" onclick="model.Reply()">回复</div>
+        <div class="paddt15 paddb15" style="border-top: 1px solid #EBEBEB;" onclick="model.Report()">举报</div>
+    </div>
+    <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+</div>
+
+<div id="sinbox1" class="paddb10" wtd="sinboxTemp3">
+    <div class="bg_white marb10 f16" style="border-radius: 10px;">
+        <div class="paddt15 paddb15" onclick="model.Reply()">回复</div>
+        <div class="paddt15 paddb15 coloreb3" style="border-top: 1px solid #EBEBEB;" onclick="Comm.showWindow('');model.shanping()">删除</div>
+    </div>
+    <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow()">取消</div>
+</div>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="./inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+<script type="text/javascript" src="inc/tpl.js"></script>
+<script type="text/javascript" src="inc/dict.js" ></script>
+<script>
+    var customerId = app.getCid();
+    var commentId = Comm.query('commentId'); //主回复id
+    var newsId = Comm.query('newsId');
+    var merefresh = null;
+    var data = [];
+    var type = Comm.query('type');
+
+    function pageload() {
+        myrefresh();
+        zhuanfa.suiji('textarea','plksj');
+    }
+
+    function editOninput(a) {
+        //输入控制
+        zhuanfa.oninput(a);
+        Comm.db('zhuanfa', '1');
+        //数字回写，没有数字限制不需要
+        //$('#num').html(zhuanfa.getlen(a));
+    }
+
+    function pageresume() {
+        if (Comm.db('zhuanfa') == 1) {
+            zhuanfa.pageresume(Comm.g('textarea'), 1000);
+            Comm.db('zhuanfa', '')
+        }
+    }
+    function Focus(id) {
+        // 始终聚焦在文本末尾
+        el = document.getElementById(id);
+        //el=el[0];  //jquery 对象转dom对象
+        el.focus();
+        if ($.support.msie) {
+            var range = document.selection.createRange();
+            this.last = range;
+            range.moveToElementText(el);
+            range.select();
+            document.selection.empty(); //取消选中
+        } else {
+            var range = document.createRange();
+            range.selectNodeContents(el);
+            range.collapse(false);
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
+    }
+    //			$("#textarea").on("paste", function(e) {
+    //			textInit(e)
+    //		});
+    //
+    //		function textInit(e) {
+    //			e.preventDefault();
+    //			var text;
+    //			var clp = (e.originalEvent || e).clipboardData;
+    //			if(clp === undefined || clp === null) {
+    //				text = window.clipboardData.getData("text") || "";
+    //				if(text !== "") {
+    //					if(window.getSelection) {
+    //						var newNode = document.createElement("span");
+    //						newNode.innerHTML = text;
+    //						window.getSelection().getRangeAt(0).insertNode(newNode);
+    //					} else {
+    //						document.selection.createRange().pasteHTML(text);
+    //					}
+    //				}
+    //			} else {
+    //				text = clp.getData('text/plain') || "";
+    //				if(text !== "") {
+    //					document.execCommand('insertText', false, text);
+    //				}
+    //			}
+    //		}
+    function androidback() {
+        if (parseInt(Comm._pageinfo.android_home) === 0) {
+            if ($('.footer2').hasClass('hide')) {
+                Comm.close();
+            } else {
+                model.loseBlur();
+                Comm.bg(false);
+                Comm.resizeSection();
+            }
+
+        } else {
+            if (parseInt(Comm._pageinfo.android_home) === 1) {
+                Comm._pageinfo.android_home = 2;
+                Comm.confirm("您确定要退出应用？", function(a) {
+                    if (a == 1) Comm.close();
+                    else Comm._pageinfo.android_home = 1;
+                });
+            }
+        }
+    }
+
+    function myrefresh() {
+        if (merefresh == null) {
+            merefresh = new MERefresh('box,list', {
+                refreshUrl: '/api/news/commentInfoByCommentId',
+                refreshTypeGet: true
+            });
+            //网络请求参数
+            merefresh.refreshOption.refreshParm = {
+                customerId: customerId,
+                commentId: commentId,
+                commentType: 1
+            };
+            //页面 <刷新> 的回调
+            merefresh.refreshOption.refresh_cb = function(refresh, d) {
+                if (d.data && !d.data.nextList) {
+                    Comm.alert('该回复已删除', function() {
+                        Comm.close();
+                    })
+                } else {
+                    refresh.successEndRef(d.data && d.data.nextList ? d.data.nextList.length : 0, d.totalCount);
+                    //渲染主回复
+                    $('#top').html(template('demo1', d.data));
+                    $('#commentNumber').html(d.data.commentNumber + '条回复')
+                        //渲染副回复
+                    refresh.appendHtml(template('demo', d.data));
+                    data = d.data
+                    if (type == 1) {
+                        $('.mescroll').scrollTop($('#list').height())
+                    }
+                    $('section').children().addClass('havemenu');
+                }
+
+            };
+        }
+    }
+    var mid = ''; //回复id
+    var customerName = ''; //主回复名字
+    var customerName2 = ''
+    var model = {
+        txt: '', //回复的内容
+        type: 1,
+        //点击回复的更多选项
+        More: function(v, name, sid, pid) {
+            mid = v;
+            customerName2 = name;
+            if (pid == customerId) {
+                Comm.showWindow('sinboxTemp3', true);
+            } else {
+                if (sid == customerId) {
+                    Comm.showWindow('sinboxTemp', true)
+                } else {
+                    Comm.showWindow('sinboxTemp1', true)
+                }
+            }
+
+        },
+        shanping: function() {
+            Comm.showWindow('');
+            Comm.confirm('确认删除这条回复？', function(d) {
+                if (d) {
+                    AJAX.GET('/admin/comment/noenable?commentId=' + mid, function(a) {
+                        if (a && a.code == 1) {
+                            Comm.message('删除成功');
+                            merefresh.refreshFunction()
+                        } else {
+                            Comm.message(a.msg);
+                        }
+                    })
+                }
+            })
+        },
+        //给回复点赞
+        praiseByCommentId: function(e, commentId) {
+            var isPraise = $(e).attr('data-isPraise'); //是否点赞了
+            //没点赞
+            if (isPraise == 0) {
+                AJAX.POST('/api/news/praiseByCommentId', {
+                    commentId: commentId
+                }, function(d) {
+                    if (d.code == 1) {
+                        var num = $('#zan' + commentId).html();
+                        num++;
+                        $('#zan' + commentId).html(num);
+                        $(e).attr('src', 'img/index/zand.png').attr('data-isPraise', '3');
+                        $(e).addClass('donghua')
+                        setTimeout(function() {
+                            $(e).attr('data-isPraise', '1')
+                        }, 200)
+
+                    }
+                })
+                return;
+            }
+            //点赞了
+            if (isPraise == 1) {
+                AJAX.POST('/api/news/cancelPraiseByCommentId', {
+                    commentId: commentId,
+                    commentId: commentId
+                }, function(d) {
+                    if (d.code == 1) {
+                        var num = $('#zan' + commentId).html();
+                        num--;
+                        $('#zan' + commentId).html(num);
+                        $(e).attr('src', 'img/index/zan.png').attr('data-isPraise', '3')
+                        setTimeout(function() {
+                            $(e).attr('data-isPraise', '0')
+                        }, 200)
+                        $(e).removeClass('donghua')
+                    }
+                })
+            }
+
+        },
+
+        //举报
+        Report: function() {
+            if (app.isLogin() == false) {
+                Comm.showWindow('')
+                top.Comm.confirm('您还未登录,请先登录', function(a) {
+                    if (a == 1) {
+                        Comm.go('newLogin.html')
+                    }
+                });
+                return false;
+            }
+            Comm.showWindow('')
+            Comm.go('./report.html?itemType=2&itemId=' + mid)
+        },
+        //点击添加回复
+        showReviews: function() {
+            if (app.isLogin() == false) {
+            	document.activeElement.blur();
+                top.Comm.confirm('您还未登录,请先登录', function(a) {
+                    if (a == 1) {
+                        Comm.go('newLogin.html')
+                    }
+                });
+                return false;
+            }
+            if(Comm.db('userinfo').shutup==1){
+					Comm.alert('您暂无权限~',function(){
+							
+						})
+					return false;
+					}
+            $('#textarea').html('');
+            $('footer').css('z-index','9999')
+            if (Comm.ios()) {
+                $('#pp').focus();
+               // setTimeout(function() {
+                    Comm.bg(true);
+                    Comm.g('MainBg').addEventListener("touchstart", function() {
+                        Comm.bg(false);
+                        model.loseBlur();
+                        Comm.resizeSection();
+                    }, false);
+//                  $('#textarea').html('');
+                    //隐藏bar
+                    $('#bar').hide();
+                    //显示输入框
+                    $('.footer2').removeClass('hide');
+                    //输入框聚焦
+                  //  setTimeout(function() {
+                        $('#textarea').focus();
+                        Focus('textarea');
+                  //  }, 150)
+                    $('.footer2>p').html('正在回复：' + data.customerName);
+                    this.type = 1;
+                //}, 100)
+            } else {
+                Comm.bg(true);
+                Comm.g('MainBg').addEventListener("touchstart", function() {
+                    Comm.bg(false);
+                    model.loseBlur();
+                    Comm.resizeSection();
+                }, false);
+                //隐藏bar
+                $('#bar').hide();
+                //显示输入框
+                $('.footer2').removeClass('hide');
+                //输入框聚焦
+                $('#textarea').focus();
+                Focus('textarea');
+                $('.footer2>p').html('正在回复：' + data.customerName);
+                this.type = 1;
+            }
+            setInterval(function() {
+            if($("#textarea").html().replace(/\s+/g, "").replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/[ ]|&nbsp;/g, '').length > 0) {
+						$('.jjs').css('background', '#098E75');
+						$('.jjs').attr('onclick', 'model.release()');
+					} else {
+						$('.jjs').css('background', '#f4f4f4');
+						$('.jjs').attr('onclick', '');
+					}
+				}, 1)
+            
+//$("#textarea").on("paste", function(e) {
+//				e.preventDefault();
+//				zhuanfa.copy = true;
+//			var text;
+//			var clp = (e.originalEvent || e).clipboardData;
+//			if(clp === undefined || clp === null) {
+//				text = window.clipboardData.getData("text") || "";
+//				if(text !== "") {
+//					if(window.getSelection) {
+//						var newNode = document.createElement("span");
+//						newNode.innerHTML = text;
+//						window.getSelection().getRangeAt(0).insertNode(newNode);
+//					} else {
+//						document.selection.createRange().pasteHTML(text);
+//					}
+//				}
+//			} else {
+//				text = clp.getData('text/plain') || "";
+//				if(text !== "") {
+//					text = text.replace(/<\/?.+?\/?>/g, "").replace(/<\/?.+?>/g,"").replace(/[\r\n]/g, "");
+//					var div = document.createElement('div');
+//						div.innerHTML=text;
+//						document.execCommand('insertText', false, div.innerText);
+//						zhuanfa.copy = false;
+//				}
+//			}
+//			});
+
+
+        },
+        copy:function(){
+        	var e =event;
+        	 e.preventDefault();
+                zhuanfa.copy = true;
+                var text;
+                var clp = (e.originalEvent || e).clipboardData;
+                if (clp === undefined || clp === null) {
+                    text = window.clipboardData.getData("text") || "";
+                    if (text !== "") {
+                        if (window.getSelection) {
+                            var newNode = document.createElement("span");
+                            newNode.innerHTML = text;
+                            window.getSelection().getRangeAt(0).insertNode(newNode);
+                        } else {
+                            document.selection.createRange().pasteHTML(text);
+                        }
+                    }
+                } else {
+                    text = clp.getData('text/plain') || "";
+                    if (text !== "") {
+                        text = text.replace(/<\/?.+?\/?>/g, "").replace(/<[^>]*>|<\/[^>]*>/gm, "");
+                        var div = document.createElement('div');
+                        div.innerHTML = text;
+                        document.execCommand('insertText', false, div.innerText);
+                        
+                    }
+                }
+                zhuanfa.copy = false;
+        },
+        //输入框失去焦点
+        loseBlur: function() {
+            if (this.txt == '') {
+                //显示操作栏
+                $('#bar').show();
+                //隐藏回复框
+                $('.footer2').addClass('hide');
+            }
+            $('footer').css('z-index','999')
+            $("#textarea").blur();
+            Comm.resizeSection();
+        },
+        //输入框输入事件
+        texInput: function() {
+            this.txt = $('#textarea').html()
+        },
+        //点击发布
+        release: function() {
+            var that = this;
+            if ($('#textarea').html().replace(/\s+/g, "").replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/[ ]|&nbsp;/g, '') == '') {
+                Comm.message('请输入回复内容')
+                return;
+            }
+            if($("#textarea").html().replace(/\s+/g, "").replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/[ ]|&nbsp;/g, '').length>500){
+            	Comm.message('回复内容最多输入500字，请重新编辑')
+                return;
+            }
+            var o = {};
+            if (this.type == 1) {
+                o = {
+                    newsId: newsId,
+                    sid: commentId,
+                    content: '<span style="color:#464646;vertical-align: bottom;">' + $('#textarea').html().replace(/(\r\n|\n|\r)/gm, "<br/>") + '</span>',
+                    commentType: 1,
+                    ids: zhuanfa.ids.join(',')
+                }
+            }
+            if (this.type == 2) {
+                o = {
+                    newsId: newsId,
+                    sid: mid,
+                    content: '<span style="color:#464646;vertical-align: bottom;">' + $('#textarea').html().replace(/(\r\n|\n|\r)/gm, "<br/>")+ '</span>',
+                    commentType: 1,
+                    ids: zhuanfa.ids.join(',')
+                }
+            }
+            Comm.loading('发布中...');
+            AJAX.POST('/admin/contentOfNo/saveComment', o, function(d) {
+
+                Comm.loading(false);
+                Comm.bg(false)
+                if (d && d.code == 1) {
+                    Comm.message('回复成功');
+                    Comm.bg(false);
+                    that.txt = '';
+                    $('#textarea').html('');
+                    
+                    that.loseBlur();
+                    merefresh.refreshFunction();
+                    if(Comm.ios()){
+						 resizeDom();
+					}else{
+						 Comm.resizeSection();
+					}
+                } else {
+                    Comm.message(d.msg || '网络错误');
+                }
+            })
+        },
+        geren: function(id, type) {
+            event.stopPropagation();
+            if (type == 0) {
+                Comm.go('personal.html?customerId=' + id);
+            } else if (type == 1) {
+                Comm.go('University.html?schoolId=' + id);
+            } else if (type == 2) {
+                Comm.go('major.html?majorId=' + id);
+            } else if (type == 4) {
+                Comm.go('postDetails.html?groupId=' + id);
+            }
+        },
+        setu: function(v, name, sid) {
+            mid = v;
+            customerName2 = name;
+            data.customerName = name;
+            console.log(data)
+            model.Reply();
+
+        },
+        //点击二级回复
+        Reply: function() {
+            Comm.showWindow();
+            this.showReviews();
+            this.type = 2; //修改回复规则 针对回复进行回复
+            $('.footer2 .top').show();
+            $('.footer2>p').html('正在回复：' + customerName2);
+        },
+    }
+</script>
+<!-- 回复框处理 -->
+<script>
+    var autoTextarea = function(elem, extra, maxHeight) {
+        extra = extra || 0;
+        var isFirefox = !!document.getBoxObjectFor || 'mozInnerScreenX' in window,
+            isOpera = !!window.opera && !!window.opera.toString().indexOf('Opera'),
+            addEvent = function(type, callback) {
+                elem.addEventListener ?
+                    elem.addEventListener(type, callback, false) :
+                    elem.attachEvent('on' + type, callback);
+            },
+            getStyle = elem.currentStyle ? function(name) {
+                var val = elem.currentStyle[name];
+
+                if (name === 'height' && val.search(/px/i) !== 1) {
+                    var rect = elem.getBoundingClientRect();
+                    return rect.bottom - rect.top -
+                        parseFloat(getStyle('paddingTop')) -
+                        parseFloat(getStyle('paddingBottom')) + 'px';
+                };
+
+                return val;
+            } : function(name) {
+                return getComputedStyle(elem, null)[name];
+            },
+            minHeight = parseFloat(getStyle('height'));
+
+        elem.style.resize = 'none';
+
+        var change = function() {
+            var scrollTop, height,
+                padding = 0,
+                style = elem.style;
+
+            if (elem._length === elem.value.length) return;
+            elem._length = elem.value.length;
+
+            if (!isFirefox && !isOpera) {
+                padding = parseInt(getStyle('paddingTop')) + parseInt(getStyle('paddingBottom'));
+            };
+            scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+
+            elem.style.height = minHeight + 'px';
+            if (elem.scrollHeight > minHeight) {
+                if (maxHeight && elem.scrollHeight > maxHeight) {
+                    height = maxHeight - padding;
+                    style.overflowY = 'auto';
+                } else {
+                    height = elem.scrollHeight - padding;
+                    style.overflowY = 'hidden';
+                };
+                style.height = height + extra + 'px';
+                scrollTop += parseInt(style.height) - elem.currHeight;
+                document.body.scrollTop = scrollTop;
+                document.documentElement.scrollTop = scrollTop;
+                elem.currHeight = parseInt(style.height);
+            };
+        };
+
+        addEvent('propertychange', change);
+        addEvent('input', change);
+        addEvent('focus', change);
+        change();
+    };
+    var text = document.getElementById("huifu");
+    //autoTextarea(textarea); // 调用
+</script>
+
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>推荐学校</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="./css/g.css" />
+    <link rel="stylesheet" href="./css/comm.css" />
+    <style>
+        body {
+            /*background: url(img/login1/bg.png) no-repeat;
+            background-size: 100% 100%;*/
+        }
+        
+        section {
+            overflow-y: hidden !important;
+        }
+        
+        .navBackIcon {
+            /*background-image: url(img/a/ljiantou.png);*/
+        }
+        
+        .navItemIcon {
+            background: inherit;
+            font-size: 17px;
+            color: #333;
+            width: 50px;
+        }
+        
+        .main {
+            height: 485px;
+            /*background-color: rgba(249, 202, 99, 0.4);*/
+            margin: 10px 15px 0px;
+        }
+        
+        .addBtn {
+            background-color: rgba(9, 142, 117, 1);
+            width: 70%;
+            height: 40px;
+            line-height: 40px;
+            margin: 20px auto;
+            border-radius: 10px;
+        }
+        
+        .fansItem {
+            background: inherit;
+            border: none;
+            padding: 0;
+        }
+        
+        .userImg {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+        }
+        .colorrgb{
+        	color: rgba(153,153,153);
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="paddt10">
+        <div class="">
+            <div class="navBar bottomShadow mart20" style="border:none;">
+                <div class="navBackIcon" onclick="Comm.close()"></div>
+                <div class="navItemIcon marl5 marr10" style="height: 44px;" onclick="Comm.gotop('ifrm.html')">跳过</div>
+                <div class="navTitle"></div>
+            </div>
+        </div>
+        <div class="main paddb15">
+            <div>
+                <p class="color333 f24">为您推荐</p>
+                <p class="colorrgb f12 mart10">根据您的身份，推荐关注一下内容</p>
+            </div>
+            <div id="main" style="height:440px;overflow-y:auto;"></div>
+        </div>
+        <div class="addBtn center" onclick="model.allFollow()">
+            <span class="colorfff">一键关注</span>
+        </div>
+    </section>
+
+
+</body>
+<script type="text/html" id="fenshiTpl">
+    {{each $data as v k}}
+    <div class="fansItem mart10" id="{{v.itemId}}" onclick="Comm.go('./personal.html?customerId={{v.itemId}}')">
+        <div class="flex_wrap" style="align-items: center;width: 100%;">
+            <div class="userImg" style="margin-right: 15px;">
+                <img src="{{OSS(v.face,'s')}}" alt="" onerror="this.src='img/my/mti.png';this.onerror=null;" width="60" height="60" style="border-radius:50%">
+            </div>
+            <div style="width: calc(100% - 125px);">
+                <p class="wordW color333" style="font-size:14px;font-weight: 700; ">{{v.itemName}}</p>
+                <p class="wordW colorrgb paddr10" style="font-size:12px;margin-top: 5px; ">{{v.autograph||'这是一句生来就注定要被消灭的签名'}}</p>
+                <p class="f12 c9e colorrgb"><span class="colorrgb" style="display: inline-block;">关注{{conunm(v.followNumber)}}</span> · <span class="colorrgb" style="display: inline-block;">粉丝{{conunm(v.customerNum)}}</span> · <span class="colorrgb" style="display: inline-block;">获赞{{conunm(v.praiseNumber)}}</span>  </p>
+            </div>
+
+            <div class="pad15" onclick="event.stopPropagation();model.addpeo({{v.itemId}},this)">
+                <i class="icon_guanzu"></i>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</script>
+<script type="text/javascript" src="./inc/z.js"></script>
+<script type="text/javascript" src="./inc/g.js"></script>
+<script type="text/javascript" src="./inc/comm.js"></script>
+<script type="text/javascript" src="./inc/picker.min.js"></script>
+<script type="text/javascript" src="./inc/area.js"></script>
+<script src="./inc/art-template.js"></script>
+
+
+
+<script type="text/javascript">
+    function pageload() {
+        model.getSchoolList();
+        Comm.storage("isX", function(d) {
+            if (d) {
+                $("section").css("padding-top", "40px");
+            }
+        });
+    }
+    var model = {
+        allList: [], //学校列表
+        followList: [], //关注的学校 默认全部
+        //获取推荐学校列表
+        getSchoolList: function() {
+            var that = this
+            AJAX.POST('/api/customer/recommendList', {
+                curpage: 1,
+                pagesize: 30
+            }, function(d) {
+                if (d.code === 1 && d.data) {
+                    for (var i = 0; i < d.data.length; i++) {
+                        var item = d.data[i];
+                        model.allList.push({
+                            itemId: item.itemId,
+                            itemType: item.itemType,
+                            follow: true
+                        });
+                    }
+                    $('#main').html(template('fenshiTpl', d.data))
+                }
+            })
+        },
+        addpeo: function(fid, e) {
+            AJAX.GET('/api/fans/addFans?fid=' + fid + '&customerId=' + app.getCid(), function(a) {
+                if (a && a.code == 1) {
+                    Comm.message('关注成功');
+                    $("#" + fid).remove();
+                }
+            })
+        },
+        //一键关注
+        allFollow: function() {
+            jsonData = JSON.stringify(model.allList)
+            AJAX.POST('/api/customer/batchOfFocus', {
+                jsonData: jsonData,
+                customerId: app.getCid()
+            }, function(d) {
+                if (d.code === 1) {
+                    Comm.message('已为您关注成功');
+                    Comm.gotop('ifrm.html')
+                }
+            })
+        }
+    }
+</script>
+
+</html>

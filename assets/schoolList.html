@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>大学列表</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+
+		<style>
+			.searchBar {
+				margin: 0 auto;
+			}
+			
+			.searchBar input {
+				width: 95%;
+				padding-left: 30px;
+				line-height: 30px;
+				height: 30px;
+				font-size: 14px;
+				color: #8891A7;
+				background-color: #F2F6F7;
+				border-radius: 18px;
+				background-image: url('img/search.png');
+				background-repeat: no-repeat;
+				background-size: 14px;
+				background-position: 10px center;
+				margin: 0 auto;
+				margin-left: 2.5%;
+			}
+			
+			.order-t {
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				font-size: 12px;
+			}
+			
+			.order-t-c {
+				width: 20%;
+				height: 100%;
+				float: left;
+				font-size: 15px;
+				/*font-weight: bold;*/
+				color: #888888;
+			}
+			
+			.order-t-c-active {
+				color: #000;
+				border-bottom: 2px solid #000000;
+				color: #000;
+			}
+			
+			.hasNew {
+				background: url('./img/search.png')no-repeat center;
+				background-size: 65%;
+			}
+			
+			.schoolMsg {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			
+			.schoolMsg .left {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			
+			.lagList>span {
+				display: inline-block;
+				height: 16px;
+				font-size: 10px;
+				color: #888888;
+				background: #EEEEEE;
+				text-align: center;
+				line-height: 16px;
+				padding: 0 5px;
+			}
+			
+			.schoolMsg .cancel {
+				width: 62px;
+				height: 26px;
+				text-align: center;
+				line-height: 26px;
+				font-size: 12px;
+				color: #888888;
+				border: 1px solid #CBCBCB;
+				border-radius: 3px;
+			}
+			
+			.navTop {
+				height: 40px;
+				background: #fff;
+				display: flex;
+				justify-content: space-between;
+				padding: 12px 30px;
+			}
+			
+			.navTop span {
+				color: #888;
+				font-size: 14px
+			}
+			
+			.borb {
+				height: 10px;
+				background: #f4f4f4;
+			}
+			
+			.icon_bottom {
+				display: inline-block;
+				width: 7px;
+				height: 4px;
+				background: url('./img/my/bottom.png') no-repeat center;
+				background-size: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar borderb" style="height: 100%;">
+				<!-- <div class="navItemIcon marr15 hasNew"></div> -->
+				<div class="navBackIcon " style="height: 44px;" onclick="Comm.close()"></div>
+				<div class="navTitle" style="height: 44px;">大学</div>
+			</div>
+		</header>
+		<section>
+
+			<!--轮播-->
+			<div class="navTop">
+				<div onclick="model._data.levelPicker.show()">
+					<span id="lvName">级别</span>
+					<i class="icon_bottom"></i>
+				</div>
+				<div onclick="model._data.CityPicker.show()">
+					<span id="arName">地区</span>
+					<i class="icon_bottom"></i>
+				</div>
+				<div onclick="model._data.typePicker.show()">
+					<span id="typeName">类别</span>
+					<i class="icon_bottom"></i>
+				</div>
+			</div>
+			<div class="borb"></div>
+			<div id="swiper" class="swiper-container">
+				<div id="swiperWrapper" class="swiper-wrapper">
+					<!--全部-->
+					<div id="mescroll0" class="swiper-slide mescroll">
+						<div id="dataList0" class="data-list">
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="mescroll-totop" onclick="Comm.showWindow('sinboxTemp2',true);">
+			<img src="img/index/bj.png" width="45" />
+		</div>
+		<footer class="shared">
+
+		</footer>
+	</body>
+	<script type="text/html" id="listTpl">
+		{{each $data item index}}
+		<div class="schoolMsg" onclick="event.stopPropagation();Comm.go('./University.html?schoolId={{item.schoolId}}')">
+			<div class="left">
+				<div class="schoolImg">
+					<img src="{{OSS(item.schoolLogo)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="50" height="50" style="border-radius:50%;" alt="">
+				</div>
+				<div class="marl20">
+					<p class="bold f14">{{item.schoolName}}</p>
+					<p class="f12" style="color:#888888;margin:5px 0;">{{item.cityName}} · 关注{{item.customerNum}}</p>
+					<div class="lagList">
+						{{each item.tagNames v k}}
+						<span>{{v}}</span> {{/each}}
+					</div>
+				</div>
+			</div>
+			{{if(item.focus==0)}}
+			<div class="cancel" style="color:#098E75;border:1px solid #098E75;" onclick="event.stopPropagation(); model.addFocus({{item.schoolId}},this)">关注</div>
+			{{else}}
+			<div class="cancel" onclick="event.stopPropagation();model.cancelFocus({{item.schoolId}},this)">取消关注</div>
+			{{/if}}
+		</div>
+		{{/each}}
+	</script>
+
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="./inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+	<script type="text/javascript" src="./inc/picker.min.js"></script>
+
+	<script>
+		function pageload() {
+			model.init()
+			mescrollRefreshFn({
+				menuNumber: 1
+			});
+		}
+
+		function pageresume() {
+
+		}
+		var model = {
+			data: {
+				tagIds: Comm.query('tagId') || '', //标签id
+				cityId: Comm.query('cityId') || '', //城市id
+				customerId: app.getCid(), //用户id
+			},
+			_data: {
+				LagList: {}, //筛选条件
+				levelPicker: null, //级别pick
+				CityPicker: null, //城市pick
+				typePicker: null, //类型pick
+				jb: '', //级别
+				lb: '', //类别
+			},
+			init: function() {
+				var name = Comm.query('name');
+				var type = Comm.query('type');
+				if(type == 1) {
+					$('#lvName').html(name);
+				}
+				if(type == 3) {
+					$('#arName').html(name);
+				}
+				if(type == 4) {
+					$('#typeName').html(name);
+				}
+				this.getLagList();
+			},
+			//获取筛选条件
+			getLagList: function() {
+				var that = this;
+				AJAX.GET('/api/school/tagList', function(d) {
+					if(d.code === 1 && d.data) {
+						d.data.level.map((item, index) => {
+							item.text = item.tagName
+						})
+						d.data.city.map((item, index) => {
+							item.text = item.cityName
+						})
+						d.data.category.map((item, index) => {
+							item.text = item.tagName
+						})
+						that._data.LagList = d.data
+						//初始化级别pickerv
+						that._data.levelPicker = new Commpicker("选择级别", [d.data.level], function(obj, name, sid) {
+							obj = obj[0]
+							that._data.jb = obj.tagId;
+							$('#lvName').html(name);
+							that.data.tagIds = that._data.jb + ',' + that._data.lb;
+							getListData({
+								num: 1,
+								size: 10
+							});
+						});
+						//初始化地区picker
+						that._data.CityPicker = new Commpicker("选择地区", [d.data.city], function(obj, name, sid) {
+							that.data.cityId = obj[0].cityId;
+							$('#arName').html(name);
+							getListData({
+								num: 1,
+								size: 10
+							});
+						});
+						//初始化类别picker
+						that._data.typePicker = new Commpicker("选择类别", [d.data.category], function(obj, name, sid) {
+							obj = obj[0]
+							that._data.lb = obj.tagId;
+							$('#typeName').html(name);
+							that.data.tagIds = that._data.jb + ',' + that._data.lb;
+							getListData({
+								num: 1,
+								size: 10
+							});
+						});
+					}
+				})
+			},
+
+			//关注学校
+			addFocus: function(id, e) {
+				var that = this
+				AJAX.POST('/api/school/addFocus', {
+					schoolIds: id,
+					customerId: that.data.customerId
+				}, function(d) {
+					if(d.code == 1) {
+						$(e).attr('style', '').attr('onclick', 'event.stopPropagation();model.cancelFocus(' + id + ',this)').html('取消关注')
+						Comm.message('添加关注成功');
+					} else {
+						Comm.message('添加关注失败')
+					}
+				})
+			},
+			//取消关注
+			cancelFocus: function(id, e) {
+				var that = this
+				Comm.confirm('是否确认取消关注？', function(d) {
+					if(d) {
+						AJAX.POST('/api/school/cancelFocus', {
+							schoolId: id,
+							customerId: that.data.customerId
+						}, function(d) {
+							if(d.code == 1) {
+								$(e).attr('style', 'color:#098E75;border:1px solid #098E75;').attr('onclick', 'event.stopPropagation();model.addFocus(' + id + ',this)').html('关注')
+								Comm.message('已取消关注')
+							} else {
+								Comm.message('取消关注失败')
+							}
+						})
+					}
+				})
+
+			}
+		}
+
+		function setListData(pageData, dataIndex) {
+			var swiper = document.getElementById("swiper");
+			var listDom = document.getElementById("dataList" + dataIndex),
+				nowStr = "",
+				listStr = "",
+				name = "";
+			if(pageData.length > 0) {
+				pageData.dataIndex = dataIndex;
+				pageData.map(function(item, index) {
+					item.tagNames = item.tagNames.split(',')
+				})
+				listStr = template('listTpl', pageData);
+				listDom.innerHTML = nowStr + name + listStr;
+			}
+		}
+		var htmlData = [];
+
+		function getListDataFromNet(curNavIndex, pageNum, pageSize, successCallback, errorCallback) {
+			AJAX.POST('/api/school/list', {
+					curpage: pageNum,
+					pagesize: pageSize,
+					customerId: model.data.customerId,
+					tagIds: model.data.tagIds,
+					cityId: model.data.cityId
+				},
+				function(a) {
+					if(a && a.code == 1) {
+						var r = a.data || [];
+						if(a.curPage == 1) {
+							htmlData = r;
+							totalSize = a.totalCount;
+						} else {
+							htmlData = htmlData.concat(r);
+							totalSize = totalSize;
+						}
+						htmlData = Comm.jsonSort(htmlData, "distance", true);
+						successCallback && successCallback(htmlData, totalSize);
+					} else {
+						Comm.message(a.msg);
+						errorCallback && errorCallback();
+					}
+				});
+		}
+	</script>
+
+</html>

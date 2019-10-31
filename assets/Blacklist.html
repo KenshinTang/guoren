@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>黑名单</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+
+    <style>
+        .imgBox {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .item {
+            padding: 15px;
+            border-bottom: 1px solid #dedede;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">黑名单</div>
+        </div>
+    </header>
+    <section>
+
+    </section>
+</body>
+<script type="text/html" id="listTpl">
+    {{each $data v k}}
+    <div class="item flex-between" onclick="Comm.go('personal.html?customerId={{v.customerId}}')">
+       <div class="flex-between">
+            <div class="imgBox marr15"><img src="{{OSS(v.face)}}" style="width:50px;height:50px;border-radius:50%;" alt=""></div>
+            <div class="">
+                <p class="marb10 bold">{{v.customerName}}</p>
+                <p class="wordWrap" style="color:#999; width: 150px;">{{v.autograph||'这个人很懒,什么都没留下emmm'}}</p>
+            </div>
+       </div>
+        <div class="isJiaru" onclick="model.relieve({{v.customerId}});event.stopPropagation()">
+            解除拉黑
+        </div>
+    </div>
+    {{/each}}
+</script>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+
+<script>
+    var customerId = app.getCid();
+    function pageload(){
+    	 model.init();
+    	Comm.db('ssddda','ffddf');
+    }
+	
+    var model = {
+        //对象数据
+        data: {
+            dataList: [],//数据
+        },
+        //初始化函数
+        init: function () {
+            this.getList()
+        },
+        //获取数量
+        getList: function () {
+            var that = this;
+            AJAX.POST('/api/blacklist/reachellist', { customerId: customerId }, function (d) {
+                if (d && d.code == 1) {
+                	if(d.data){
+                		that.data.dataList = d.data;
+                    $('section').html(template('listTpl', d.data))
+                	}else{
+                		$('section').html('<div class="mescroll-empty"><p class="empty-tip">没有更多数据啦~</p></div>')
+                	}
+                    
+                    
+                } else {
+                    Comm.message(d.msg || '网络错误')
+                }
+            })
+        },
+        relieve:function(id){
+            var that = this;
+            Comm.confirm('是否确认解除拉黑？',function(a){
+            	if(a){
+            		AJAX.POST('/api/blacklist/relieveBlacklist',{blackId:id},function(d){
+                if(d&&d.code==1){
+                    that.getList();
+                    Comm.message('操作成功')
+                }else{
+                    Comm.message(d.msg||'网络错误')
+                }
+            })
+            	}
+            })
+        }
+    }
+
+   
+
+
+
+</script>
+
+</html>

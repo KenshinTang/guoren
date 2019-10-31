@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>话题详情</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="css/tpl.css" />
+		<link rel="stylesheet" href="css/photo.css" />
+		<style>
+			.dm {
+				width: 100%;
+				padding: 15px;
+				background-color: #F7F7F7;
+				color: #B9B9B9;
+			}
+			
+			.order-t {
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				font-size: 12px;
+			}
+			
+			.order-t-c {
+				width: 20%;
+				height: 100%;
+				float: left;
+				font-size: 15px;
+				font-weight: bold;
+				color: #888888;
+			}
+			
+			.order-t-c-active {
+				/*border-bottom: 2px solid #000000;*/
+				position: relative;
+				font-weight: bold;
+				color: #098E75;
+			}
+			
+			.order-t-c-active:after {
+				content: '';
+				position: absolute;
+				left: 25%;
+				bottom: auto;
+				right: auto;
+				top: 47px;
+				height: 2px;
+				width: 50%;
+				background-color: #098E75;
+			}
+			
+			.btn {
+				width: 60px;
+				background-color: #098E75;
+				line-height: 26px;
+				text-align: center;
+			}
+			
+			.btn2 {
+				background-color: #EEEEEE;
+				line-height: 20px;
+				text-align: center;
+				border: none;
+				color: #222222;
+				border-radius: 8px;
+				margin: 5px 10px;
+				width: fit-content;
+			}
+			
+			.btn2-active {
+				background-color: #098E75;
+				color: #fff;
+			}
+			
+			.sx {
+				background: url(img/index/htsx.png) no-repeat left center;
+				width: 50px;
+				background-size: 12px;
+				padding-left: 5px;
+				color: #737171;
+			}
+			
+			.add-guan {
+				border-radius: 20px;
+				background-color: #F7F7F7;
+				border: none;
+				color: #098E75;
+			}
+			
+			#WTDBOXTD {
+				width: 80%;
+				height: 100%;
+				margin-left: 26%
+			}
+			
+			#sinbox {
+				width: 93%;
+				height: 100%;
+				padding: 0;
+			}
+			
+			.qrbtn {
+				width: 100%;
+				position: absolute;
+				bottom: 0;
+			}
+			
+			.no {
+				padding: 15px;
+				background-color: #EEEEEE;
+				color: #898989;
+			}
+			
+			.yes {
+				padding: 15px;
+				background-color: #098E75;
+				color: #FFFFFF;
+			}
+			.mescroll-totop{
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header></header>
+		<section style="background-color: #F0F0F0;" class="paddb10 mescroll" id="mescroll">
+
+			<div id="topHead">
+
+			</div>
+
+			<div class="mart10 bg_white">
+				<div id="nav" class="order-t ovf bb1" style="border-bottom: 1px solid #F0F0F0;">
+					<div class="order-t-c brp order-t-c-active" i='0' onclick="model.changeTheme(1,this)">最热</div>
+					<div class="order-t-c brp" i='1' onclick="model.changeTheme(2,this)">最新</div>
+					<!--<div class="fr sx" onclick="Comm.showWindow('sinboxTemp',true)">筛选</div>-->
+				</div>
+				<div id="dataList" style="min-height: 400px;"></div>
+
+			</div>
+		</section>
+		<footer class="shared paddl10 paddr10">
+
+		</footer>
+		<div id="sinbox" wtd="sinboxTemp">
+			<div class="tleft c9e paddt20 paddl20">热门词</div>
+			<div id="navw" class="pad20">
+
+			</div>
+			<div class="dflex qrbtn">
+				<div class="no" onclick="model.no()">取消</div>
+				<div class="yes" onclick="model.yes()">确认</div>
+			</div>
+		</div>
+	</body>
+	
+	<script type="text/html" id="listTpl">
+		{{each $data v k}}
+		<div class="schoolMsg">
+			<div class="heads">
+				<div class="name-left fl">
+					<img class="fl" style="border-radius: 50%;" src="{{OSS(v.uface)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+					<div class="fl marl10">
+						<p class="f14">{{v.customerName}}</p>
+						<p class="f12 c9e">{{sldate(v.addTime)}}</p>
+					</div>
+				</div>
+				<!-- <div class="name-right fr">
+					{{if(v.focus!=0)}}
+					<div class="f14 isJiaru" onclick="model.remove({{v.customerId}},this);">已关注</div>
+					{{/if}} {{if(v.focus==0)}}
+					<div class="f14 add-guan" onclick="model.addl({{v.customerId}},this);">+ 关注</div>
+					{{/if}}
+				</div> -->
+				
+				<div class="clearfix"></div>
+			</div>
+			<div class="f14 wordW2 mart10">
+					<span class=" scl-dw" style="margin: 0;margin-right: 10px;">{{v.topicName}}</span>
+					<div class="mart10">{{v.content}}</div>
+				</div>
+			<div class="mart15">
+				 <div>
+                    {{if v.face!=''}} {{imgTpl(v.face,96)}}{{/if}}
+                </div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		{{/each}}
+	</script>
+	<script id="listTpl1" type="text/html">
+		<div class="paddt15 paddl15 paddr15">
+			<div class=" scl-dw fl" style="margin: 2px 0;line-height: 18px;">{{topic.title}}</div>
+			
+			<div class="clearfix"></div>
+		</div>
+		<p class="paddl15 paddr15 mart10 marb10 color666">{{conunm(topic.newsNumber)}}篇内容 · {{conunm(topic.customerNumber)}}人关注 </p>
+		<p class="paddl15 paddr15 mart10 marb10 color666">
+			{{topic.introduction}}
+		</p>
+	</script>
+	<script id="listTpl2" type="text/html">
+		{{each $data v k}}
+		<div class="btn2 {{if k==0}}btn2-active{{/if}} f14 paddt5 paddb5 paddl15 paddr15 fl" onclick="model.change('{{v.dictname}}',this)">{{v.dictname}}</div>
+
+		{{/each}}
+		<div class="clearfix"></div>
+	</script>
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script type="text/javascript" src="inc/dict.js"></script>
+	<script src="inc/down-refresh.js" charset="utf-8"></script>
+	<script type="text/javascript" src="inc/share.js" ></script>
+	<script type="text/javascript" src="inc/photo.js" ></script>
+	<script type="text/javascript" src="inc/tpl.js" ></script>
+	<script>
+		var topicId = Comm.query('topicId');
+		
+		var sortType = 1;
+		var keyword = "";
+		var shearId = '';
+		var shearTitle = '';
+		var shearContent = '';
+		function pageload() {
+			model.init();
+			mesrcollFn();
+		var header = tpl.gethead();
+		$('header').html(header);
+		var footer = tpl.foorers();
+		$('footer').html(footer);
+		Comm.resizeSection()
+		}
+
+		function pageresume() {
+
+		}
+		var keywords = ""
+		var model = {
+			changeTheme: function(id, a) {
+				$(".brp").removeClass("order-t-c-active");
+				$(a).addClass("order-t-c-active");
+				sortType = id;
+				var page = {num:1, size:10};
+				getListData(page);
+			},
+			change: function(id, a) {
+				$(".btn2").removeClass("btn2-active");
+				$(a).addClass("btn2-active");
+				keywords = id;
+				console.log(keywords)
+			},
+			no: function() {
+				Comm.showWindow('');
+			},
+			yes: function() {
+				keyword = keywords;
+				Comm.showWindow('');
+				var page = {num:1, size:10};
+				getListData(page);
+			},
+			init: function() {
+				GDict.init(function() {
+					var data = GDict.getItem('26');
+					keywords = data.cs[0].dictname;
+					console.log(keyword)
+					$('#navw').html(template('listTpl2', data.cs));
+				})
+			},
+			zan: function(id, e) {
+				AJAX.GET('/api/news/praiseByNewsId?newsId=' + id, function(a) {
+					if(a && a.code == 1) {
+						Comm.message('操作成功');
+						$(e).attr('onclick', 'model.quxiao(' + id + ',this);event.stopPropagation()');
+						$(e).find('img')[0].src = 'img/index/zand.png';
+						$(e).find('span')[0].innerHTML++;
+					} else {
+						Comm.message(a.msg);
+					}
+				});
+				event.stopPropagation();
+			},
+			quxiao: function(id, e) {
+				AJAX.GET('/api/news/cancelPraiseByNewsId?newsId=' + id, function(a) {
+					if(a && a.code == 1) {
+						Comm.message('操作成功');
+						$(e).attr('onclick', 'model.zan(' + id + ',this);event.stopPropagation()');
+						$(e).find('img')[0].src = 'img/index/zan.png';
+						$(e).find('span')[0].innerHTML--;
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+				event.stopPropagation()
+			}
+		}
+
+		/*设置列表数据
+		 * pageData 当前页的数据
+		 * dataIndex 数据属于哪个nav */
+		function setListData(pageData, dataIndex) {
+			var listStr = "";
+			AJAX.GET('/api/topic/info?topicId=' + topicId, function(a) {
+				if(a && a.code == 1) {
+					$('#topHead').html(template('listTpl1', a.data));
+					$('.nav-title').html(a.data.topic.title);
+					shearId = topicId;
+				shearTitle = a.data.topic.title;
+				shearContent = a.data.topic.introduction;
+				}
+			})
+			
+			if(pageData.length > 0) {
+				pageData.dataIndex = dataIndex;
+				for(var i = 0; i < pageData.length; i++) {
+					pageData[i].face = pageData[i].face.split(',');
+				}
+				
+				listStr += template('listTpl', pageData);
+				
+				if(pageData.curPage > 1) {
+					document.getElementById('dataList').innerHTML+=listStr;
+				} else {
+					$('#dataList').html(listStr);
+				}
+
+			}
+
+		}
+
+		/*联网加载列表数据
+		 在您的实际项目中,请参考官方写法: http://www.mescroll.com/api.html#tagUpCallback
+		 请忽略getListDataFromNet的逻辑,这里仅仅是在本地模拟分页数据,本地演示用
+		 实际项目以您服务器接口返回的数据为准,无需本地处理分页.
+		 * */
+		var htmlData = [];
+
+		function getListDataFromNet(curNavIndex, pageNum, pageSize, successCallback, errorCallback) {
+			var o = {};
+			o.curpage = pageNum;
+			o.pagesize = pageSize;
+			o.topicId = topicId;
+			o.sortType = sortType;
+			o.keyword = keyword;
+			AJAX.POST("/api/topic/newsListById", o, function(a) {
+				if(a && a.code == 1) {
+					var r = a.data || [];
+					htmlData = r;
+					totalSize = a.totalCount;
+					htmlData.curPage = a.curPage;
+					console.log(htmlData);
+					successCallback && successCallback(htmlData, totalSize);
+				} else {
+					Comm.message(a.msg);
+					errorCallback && errorCallback();
+				}
+			});
+		}
+	</script>
+
+</html>

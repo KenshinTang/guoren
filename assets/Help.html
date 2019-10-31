@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>帮助说明</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+
+		<style>
+			body {
+				background: #f4f4f4;
+			}
+			
+			section>div {
+				background: #fff;
+			}
+			
+			.borb {
+				border-bottom: 1px solid #dedede;
+			}
+			
+			.icon_left {
+				display: inline-block;
+				width: 6px;
+				height: 11px;
+				background: url('img/a/left.png')no-repeat center;
+				background-size: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar bottomShadow">
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+				<div class="navTitle">帮助说明</div>
+			</div>
+		</header>
+		<section>
+			<p class="f12 pad10" style="color:#9E9E9E;">常见问题</p>
+			<div id="list">
+
+			</div>
+
+		</section>
+	</body>
+	<script type="text/html" id="listTpl">
+		{{each $data v k}}
+		<div class="flex-between pad15 borb indicator" onclick="Comm.go('./helpDetails.html?id={{v.ArticleID}}')">
+			<p class="f14" style="color:#222222;">{{v.ArticleName}}</p>
+			<i class="icon_left"></i>
+		</div>
+		{{/each}}
+	</script>
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+
+	<script>
+		function pageload() {
+		model.init();
+		}
+		var model = {
+			init: function() {
+				AJAX.GET('/api/article/articlelist?articleType=3&pageno=1&pagesize=20', function(a) {
+					if(a && a.code == 1) {
+						$('#list').html(template('listTpl', a.data));
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			}
+		}
+	</script>
+
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>消息列表</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+
+		<style>
+			.vidos {
+				width: 40px;
+				height: 100%;
+				float: left;
+				font-size: 15px;
+				font-weight: bold;
+				color: #888888;
+				margin-left: 10px;
+				padding: 5px 0;
+				text-align: center;
+			}
+			
+			.vido-active {
+				border-bottom: 2px solid #098E75;
+				color: #000;
+			}
+			
+			.order-t {
+				
+				text-align: center;
+				font-size: 12px;
+			}
+			
+			.order-t-c {
+				width: 25%;
+				height: 100%;
+				float: left;
+				font-size: 15px;
+				/*font-weight: bold;*/
+				color: #888888;
+			}
+			
+			.order-t-c-active {
+				color: #000;
+				border-bottom: 2px solid #098E75;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar bottomShadow">
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+				<div class="navTitle">我的问题</div>
+			</div>
+		</header>
+		<section>
+			<div class="scrollx mescroll-touch-x">
+				<div id="scrollxContent" class="scrollx-content">
+					<div id="nav" class="order-t ovf bb1" style="border-bottom: 1px solid #f4f4f4;">
+						<div class="order-t-c brp order-t-c-active" i='0'>全部</div>
+						<div class="order-t-c brp" i='1'>待回答</div>
+						<div class="order-t-c brp" i='2'>已回答</div>
+						<div class="order-t-c brp" i='3'>已退款</div>
+					</div>
+				</div>
+			</div>
+			<!--轮播-->
+			<div id="swiper" class="swiper-container">
+				<div id="swiperWrapper" class="swiper-wrapper">
+					<!--全部-->
+					<div id="mescroll0" class="swiper-slide mescroll">
+						<div id="dataList0" class="data-list">
+						</div>
+					</div>
+					<!--旗舰店-->
+					<div id="mescroll1" class="swiper-slide mescroll">
+						<div id="dataList1" class="data-list">
+						</div>
+					</div>
+					<!--优享店-->
+					<div id="mescroll2" class="swiper-slide mescroll">
+						<div id="dataList2" class="data-list">
+						</div>
+					</div>
+					<!--快取店-->
+					<div id="mescroll3" class="swiper-slide mescroll">
+						<div id="dataList3" class="data-list">
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</body>
+	<script type="text/html" id="listTpl">
+		{{each $data v k}}
+		<div class="schoolMsg">
+			<div class="flex-between marb10">
+				<p class="f12" style="color:#A5A5A5;">订单号：{{v.orderSn}}</p>
+				<p class="f12" style="color:#098E75;">
+					{{if v.isReply==0&&v.isrefound==1}} 待回答 {{else if v.isReply==1&&v.isrefound==1}} 已回答 {{else if v.isReply==0&&v.isrefound==0}} 已退款 {{/if}}
+				</p>
+			</div>
+			<div class="wordW2 bold">
+				{{v.content}}
+			</div>
+			<div class="paddt10 paddb10">
+				<div class="lh25">
+					<img src="{{OSS(v.face)}}" onerror="this.src='img/index/biao.png';this.onerror=null;" class="fl" style="border-radius: 50%;" width="40" height="40" /> {{if v.isReply==1&&v.isrefound==1}}
+					<div class="yipin fl mart5 marl10" id="{{v.forumId}}">
+						<img src="img/index/bf1.png" width="24" class="fl" style="margin: 2px 0 0 2px;" />
+						<!--<img class="fl marl10" src="img/index/dong.gif" width="30" />-->
+						<p class="colorfff fr f12" style="margin: 2px 10px 0 0;">{{v.auditPrice}}积分旁听</p>
+					</div>
+					<div class="c9e f12 fl mart5 marl10">
+						{{miaochange(v.timeLength)}}
+					</div>
+					{{/if}} {{if v.isReply==0&&v.isrefound==1}}
+					<div  ontouchstart="gtouchstart({{v.forumId}})" ontouchmove="gtouchmove()" ontouchend="gtouchend()" class="f14 fr mart5 marl20 center lh30" style="color:#fff;width: 80px; background-color: #098E75; border-radius: 20px;">
+						回答
+					</div>
+					{{/if}}
+					<div class="f14 fr mart5" style="color: #FE8B3E;">
+						{{v.price}}积分
+					</div>
+
+					<div class="clearfix"></div>
+				</div>
+				<div class="mart10">
+					<p class="fl"><span>{{v.customerName}}</span> <span class="c9e">| {{v.title}}</span></p>
+					<p class="fr c9e f12">{{sldate(v.addTime)}}</p>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		{{/each}}
+	</script>
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+
+	<script>
+		function pageload() {
+			mescrollRefreshFn({
+				menuNumber: 6
+			});
+
+		}
+
+		/*设置列表数据
+		 * pageData 当前页的数据
+		 * dataIndex 数据属于哪个nav */
+		function setListData(pageData, dataIndex) {
+			var swiper = document.getElementById("swiper");
+			var listDom = document.getElementById("dataList" + dataIndex),
+				nowStr = "",
+				listStr = "",
+				name = "";
+			if(pageData.length > 0) {
+				pageData.dataIndex = dataIndex;
+				listStr = template('listTpl', pageData);
+				listDom.innerHTML = nowStr + name + listStr;
+
+			}
+
+		}
+
+		/*联网加载列表数据
+		 在您的实际项目中,请参考官方写法: http://www.mescroll.com/api.html#tagUpCallback
+		 请忽略getListDataFromNet的逻辑,这里仅仅是在本地模拟分页数据,本地演示用
+		 实际项目以您服务器接口返回的数据为准,无需本地处理分页.
+		 * */
+		var htmlData = [];
+
+		function getListDataFromNet(curNavIndex, pageNum, pageSize, successCallback, errorCallback) {
+			var o = {};
+			o.pageno = pageNum;
+			o.pagesize = pageSize;
+			if(curNavIndex == 1) {
+				o.replystate = 0;
+			} else if(curNavIndex == 2) {
+				o.replystate = 1;
+			} else if(curNavIndex == 3) {
+				o.isrefound = 0;
+			}
+			AJAX.POST('/api/order/quizlist', o, function(a) {
+				if(a && a.code == 1) {
+					var r = a.data || [];
+					htmlData = r;
+					totalSize = a.totalCount;
+					htmlData.curpage = a.curPage
+					successCallback && successCallback(htmlData, totalSize);
+				} else {
+					Comm.message(a.msg);
+					errorCallback && errorCallback();
+				}
+			});
+		}
+		var timeOutEvent = 0; //定时器   
+		//开始按   
+		function gtouchstart(id) {
+			timeOutEvent = setTimeout("longPress("+id+")", 500); //这里设置定时器，定义长按500毫秒触发长按事件，时间可以自己改，个人感觉500毫秒非常合适   
+			return false;
+		};
+		//手释放，如果在500毫秒内就释放，则取消长按事件，此时可以执行onclick应该执行的事件   
+		function gtouchend() {
+			Comm.message('ssss');
+			clearTimeout(timeOutEvent); //清除定时器   
+			if(timeOutEvent != 0) {
+				//这里写要执行的内容（尤如onclick事件）   
+				Comm.message('请长按回答按钮')
+			}
+			return false;
+		};
+		//如果手指有移动，则取消所有事件，此时说明用户只是要移动而不是长按   
+		function gtouchmove() {
+			clearTimeout(timeOutEvent); //清除定时器   
+			timeOutEvent = 0;
+
+		};
+
+		//真正长按后应该执行的内容   
+		function longPress(id) {
+			timeOutEvent = 0;
+			//执行长按要执行的内容，如弹出菜单   
+			//alert(id);
+		}
+	</script>
+
+</html>

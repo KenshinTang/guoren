@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>邀请观看</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="./css/g.css" />
+		<link rel="stylesheet" href="./css/comm.css" />
+		<style>
+			section {
+				width: 100%;
+				height: 100%;
+				background: rgba(244, 244, 244, 1);
+			}
+			
+			section>form {
+				padding: 0 15px;
+				background: #fff;
+			}
+			
+			section form div {
+				padding: 10px 0;
+			}
+			
+			section form label {
+				display: inline-block;
+				font-size: 16px;
+				color: #444;
+				width: 48px;
+			}
+			
+			section form input {
+				margin-left: 31px;
+				font-size: 16px;
+				color: #444444;
+			}
+			
+			.pw i {
+				position: absolute;
+				padding: 0 5px;
+				width: 30px;
+				right: 10px;
+				top: 0;
+				bottom: 0;
+			}
+			
+			.pw i>img {
+				vertical-align: middle;
+			}
+			
+			#phone {
+				border: 1px solid #EEEEEE;
+				border-radius: 20px;
+				width: 80%;
+				height: 40px;
+				text-align: center;
+			}
+			
+			#code {
+				border: 1px solid #EEEEEE;
+				border-radius: 20px;
+				width: 50%;
+				height: 40px;
+				text-align: center;
+			}
+			
+			.yzm {
+				border: 1px solid #EEEEEE;
+				border-radius: 20px;
+				width: 30%;
+				height: 40px;
+				line-height: 40px;
+				display: inline-block;
+				text-align: center;
+			}
+			
+			.downApp {
+				border-radius: 20px;
+				background-color: #098E75;
+				border: none;
+				color: #FFF;
+				padding: 5px 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<section>
+			<div class="bg_white pad20">
+				<div id="type" class="center pad15"></div>
+				<form>
+					<div class="ph">
+						<input number id="phone" value="" name="phone" data-reg='m' type="tel" placeholder="请输入11位手机号码" maxlength="11">
+					</div>
+					<div class="cd">
+						<input number id="code" value="" name="code" data-reg='m' type="tel" placeholder="请输入短信验证码" maxlength="6">
+						<span class="yzm" style="color:#098E75;" class="fr" onclick="model.getCode(this)">获取验证码</span>
+					</div>
+				</form>
+
+				<div class="flex-justify-center">
+					<button id="redBtn" style="background:#098E75;border:none;" onclick="model.reg()">确认加入</button>
+				</div>
+			</div>
+			<div class="mart10" style="background-color: #fff;">
+				<div class="center f12 paddb10 paddt10 f16">已参与用户</div>
+				<div class="center color999 marb10" id="nums"></div>
+				<div id="list">
+
+				</div>
+			</div>
+		</section>
+		<footer class="shared paddl15 paddr15">
+			<div class="heads mart10 marb10">
+				<div class="name-left fl">
+					<img class="fl" src="img/fgr.png" width="40" height="40">
+					<div class="fl marl10 mart5">
+						<p class="f20 cgreen bold">果仁</p>
+						<p class="f12 c9e">这里是APP aglon</p>
+					</div>
+				</div>
+				<div class="name-right fr">
+					<div class="downApp fr mart5">
+						下载APP
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</footer>
+	</body>
+	<script id="listTpl" type="text/html">
+		{{each $data v k}}
+		<div class="dflex paddb5 paddl10 paddr10 borderb">
+			<div style="flex-grow: 1;"><img src="{{OSS(v.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="50" height="50" /></div>
+			<div style="flex-grow: 3; text-align: left; padding-left: 10px;">
+				<div class="lh25">{{v.customerName}}</div>
+				<div class="lh25">{{v.addTime}}</div>
+			</div>
+			<div class="lh50" style="flex-grow: 3;">{{phones(v.phone)}}</div>
+		</div>
+		{{/each}}
+	</script>
+	<script type="text/javascript" src="./inc/z.js"></script>
+	<script type="text/javascript" src="./inc/g.js"></script>
+	<script type="text/javascript" src="./inc/comm.js"></script>
+	<script type="text/javascript" src="inc/art-template.js"></script>
+	<script type="text/javascript">
+		var type = Comm.query('type');
+		var groupId = Comm.query('groupId');
+		var price = '';
+
+		var model = {
+			countdown: 60,
+			code: '', //获取的验证码
+			//发送验证码倒计时
+			settime: function(el) {
+				var thih = this
+				var i = setInterval(function() {
+					el.html(thih.countdown + '秒');
+					if(thih.countdown > 0) {
+						thih.countdown -= 1;
+					} else {
+						el.html('重新获取');
+						thih.countdown = 60
+						clearInterval(i)
+					}
+				}, 1000)
+			},
+			//获取验证码
+			getCode: function(el) {
+				var that = this;
+				var phone = $('#phone').val();
+				//未填写手机号
+				if(phone == '') {
+					Comm.message('请填写手机号');
+					return;
+				};
+				AJAX.POST('/api/customer/sendMsg', {
+					phone: phone,
+					bo: 3
+				}, function(d) {
+					if(d && d.code == 1) {
+						that.code = d.data;
+						that.settime($(el))
+					} else {
+						Comm.message(d.msg || '网络错误');
+					}
+				})
+			},
+			//注册
+			reg: function() {
+				var url = '';
+				if(type != 'null') {
+					url = '/api/order/groupbuyjoin'
+				} else {
+					url = '/api/order/viewjoin';
+				}
+				var phone = $('#phone').val();
+				var code = $('#code').val();
+				if(phone == '') {
+					Comm.message('请填写手机号');
+					return;
+				};
+				if(phone.length != 11) {
+					Comm.message('请填写正确手机号');
+					return;
+				};
+				if(code == '') {
+					Comm.message('请填写验证码');
+					return;
+				};
+				var o = {};
+				o.point = price;
+				o.phone = phone;
+				o.code = code;
+				o.groupBuyId = groupId;
+				if(type != 'null') {
+					Comm.confirm('加入后将会扣除您的积分，是否确认加入？', function(d) {
+						if(d) {
+							AJAX.POST(url, o, function(a) {
+								if(a && a.code == 1) {
+									Comm.message('加入成功');
+									model.init();
+									$('#phone').val('');
+									$('#code').val('');
+								} else {
+									Comm.message(a.msg);
+								}
+							})
+						}
+					})
+				} else {
+					AJAX.POST(url, o, function(a) {
+						if(a && a.code == 1) {
+							Comm.message('加入成功');
+							model.init();
+							$('#phone').val('');
+							$('#code').val('');
+						} else {
+							Comm.message(a.msg);
+							$('#phone').val('');
+							$('#code').val('');
+						}
+					})
+				}
+
+			},
+			init: function() {
+				AJAX.GET('/api/order/grouplist?groupBuyId=' + groupId, function(a) {
+					if(a && a.code == 1) {
+						$('#list').html(template('listTpl', a.data.list));
+						if(type != 'null') {
+							$('#type').html('本次累计邀请' + a.data.groupbuy.joinPeople + '人，即可成团');
+						} else {
+							$('#type').html('本次累计邀请' + a.data.groupbuy.joinPeople + '人，可免费观看24小时');
+						}
+						price = a.data.groupbuy.price;
+						var anum = a.data.groupbuy.joinPeople - a.data.groupbuy.pnum;
+						$('#nums').html('当前已有' + a.data.groupbuy.pnum + '人参与');
+					}
+				});
+			}
+		}
+		model.init();
+	</script>
+
+</html>

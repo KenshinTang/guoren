@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+    <link rel="stylesheet" href="css/photo.css" />
+    <style>
+        body {
+            width: 1px;
+            min-width: 100%;
+        }
+        
+        .navItemIcon {
+            background-image: url('img/msg.png');
+            background-position: center right;
+            background-repeat: no-repeat;
+            background-size: auto 25px;
+        }
+        
+        .searchBar {
+            margin: 0 auto;
+        }
+        
+        .searchBar div {
+            width: 95%;
+            padding-left: 30px;
+            line-height: 30px;
+            height: 30px;
+            font-size: 14px;
+            background-color: #F2F6F7;
+            border-radius: 18px;
+            background-image: url('img/search.png');
+            background-repeat: no-repeat;
+            background-size: 14px;
+            background-position: 10px center;
+            margin: 0 auto;
+            margin-left: 15px;
+        }
+        
+        .dian {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #CF2D28;
+            position: absolute;
+            right: 11px;
+            line-height: 20px;
+            top: 32px;
+            font-size: 12px;
+            color: #fff;
+            text-align: center;
+        }
+        
+        #sinbox {
+            width: 300px;
+            padding: 0;
+            border-radius: 10px;
+        }
+        
+        #sinbox1 {
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+            width: 90%;
+        }
+        
+        .qxgz {
+            background: url(img/index/qxgz.png) no-repeat 0px center;
+            background-size: 16px;
+            text-align: left;
+            padding: 10px 0 10px 50px;
+            color: #444444;
+        }
+        
+        .bgxq {
+            background: url(img/index/bgxq.png) no-repeat 0px center;
+            background-size: 16px;
+            text-align: left;
+            padding: 10px 0 10px 50px;
+            color: #444444;
+            border-bottom: 1px solid #f4f4f4;
+        }
+        
+        .jb {
+            background: url(img/index/jb.png) no-repeat 0px center;
+            background-size: 16px;
+            text-align: left;
+            padding: 10px 0 10px 50px;
+            color: #444444;
+        }
+        
+        #sinbox2 {
+            width: 100%;
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            padding: 20px;
+            background-color: #fff;
+        }
+        
+        .fb {
+            width: 33%;
+            padding: 10px;
+        }
+        
+        .fb img {
+            width: 40px;
+        }
+        
+        .getmor {
+            background: url(img/my/left.png) no-repeat 97% center;
+            background-size: 8px 14px;
+            border-bottom: 1px solid #f4f4f4;
+        }
+        
+        .god {
+            width: 18%;
+            display: inline-block;
+            white-space: initial;
+            vertical-align: top;
+            padding-top: 10px;
+        }
+        
+        .mescroll-totop {
+            bottom: 60px;
+            right: 30px;
+            opacity: 1;
+            z-index: 99;
+        }
+        
+        .hot {
+            width: 100%;
+            /*	height:278px;*/
+            /*background:url(img/index/hot.png) no-repeat bottom right 10px;
+        	background-size:26px 26px;*/
+        }
+        
+        .icon_left {
+            background: url('./img/my/left.png') no-repeat center right;
+            background-size: 6px 11px;
+        }
+        
+        .news {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar" style="padding: 0;box-shadow: none;">
+            <div class="navItemIcon marr20 hasNew" style="height: 44px;" onclick="app.goMsg();">
+                <div class="dian hide">
+
+                </div>
+            </div>
+            <div class="nav-title block searchBar" onclick="Page.send('go','search.html?type=5&focus=1');" style="padding-top: 8px;width: calc(100% - 50px);height: 44px; margin: 0;">
+                <div id="id_searchInput" class="color999 tleft">请输入您搜索的问题</div>
+               
+            </div>
+        </div>
+    </header>
+    <section style="background-color:#F0F0F0;height: 400px;" id="section" class="mescroll">
+        <div class="hot paddl15 paddr15">
+            <div class="paddt10 ">
+                <div class="color333 f16 bold fl">热门问题</div>
+                <div class="icon_left fr paddr10 f12 color333" onclick="Page.send('go','hotList.html');">查看更多</div>
+                <div class="clearfix"></div>
+            </div>
+            <div id="hot" class="mart10">
+
+            </div>
+            <!--<img src="img/index/hot.png" width="26" height="26" class="fr" style="margin-top:-15px" />
+			<div class="clearfix"></div>-->
+        </div>
+        <div class="news bg_white paddl15 paddr10">
+            <img src="img/index/new.png" width="44" height="20" style="margin-left:45%;object-fit: contain;margin-top: -2px;" />
+
+            <div class="color333 f16 bold">最新问题</div>
+            <div id="news" class="bg_white">
+
+            </div>
+        </div>
+    </section>
+    
+    <!--<footer class="shared">
+
+    </footer>-->
+</body>
+
+<div id="sinbox1" class="paddb10" wtd="sinboxTemp">
+    <div class="bg_white marb10 f16" style="border-radius: 10px;">
+        <div class="coloreb3 paddb15 paddt15" onclick="model.shanchu(1)">删除</div>
+    </div>
+    <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+</div>
+<div id="sinbox1" class="paddb10" wtd="sinboxTemp1">
+    <div class="bg_white marb10 f16" style="border-radius: 10px;">
+        <!--<div class="paddt15 paddb15" onclick="model.bgxq(3)">不感兴趣</div>-->
+        <div class="paddt15 paddb15" onclick="model.jb(5)">举报</div>
+    </div>
+    <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+</div>
+<div id="sinbox" class="" wtd="sinboxTempxz">
+    <div class="bg_white f16" style="border-radius: 10px; padding: 30px 10px;">
+        您还未完善信息，请先完善信息
+    </div>
+    <div class="bg_white paddt15 paddb15 f16 colorfff" style="background-color: #098E75;" onclick="Page.send('go','improveInfo.html?_type=0');">确定</div>
+</div>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script type="text/javascript" src="inc/mescroll/mescroll.min.js"></script>
+<script type="text/javascript" src="inc/mescroll/swiper.min.js"></script>
+<script type="text/javascript" src="inc/art-template.js"></script>
+<script type="text/javascript" src="inc/refresh.js" charset="utf-8"></script>
+<script type="text/javascript" src="inc/tpl.js"></script>
+<script type="text/javascript" src="inc/photo.js"></script>
+<script type="text/javascript" src="inc/pages.js"></script>
+<script>
+    var customerId = "";
+    var _token = '';
+    var _user = "";
+    var dbnewsId = "";
+    var shanchu = "";
+    var firsr = "";
+
+    function getModel(m) {
+    		if(m=='refresh'){
+        	$('section').scrollTop(0);
+        }
+       model[m]&&model[m]();
+    }
+
+    function pageload() {
+    		if(Comm.ios()){
+    		$('section').css('padding-bottom','60px');
+    	}
+        //document.body.style.width = document.documentElement.offsetWidth + 'px';
+        Page.send('dbs', '_token', function(a) {
+            _token = a._token;
+            _user = a.user;
+            if(_user){
+            	customerId = _user.customerId;
+            }
+            
+            dbnewsId = a.dbnewsId;
+            shanchu = a.shanchu;
+            firsr = a.firsr;
+            model.getHot();
+            model.init();
+            showmsg();
+            $("#id_searchInput").on('keypress', function(e) {
+                var keycode = e.keyCode;
+                //获取搜索框的值
+                var searchContent = $(this).val();
+                if (keycode == '13') {
+                    e.preventDefault();
+                    //请求搜索接口
+                    if (searchContent == '') {
+                        Comm.message('请输入搜索内容')
+                    } else {
+                        Page.send('go', 'searchQz.html?keyWord=' + searchContent);
+                    }
+                }
+            });
+            if (Comm.ios()) {
+                Comm.resizeSection();
+                //$(".mescroll-totop").css('bottom','130px');
+            }
+        })
+
+    }
+
+    function showmsg() {
+        //判断消息个数
+        AJAX.GET('/api/mess/count?userType=1&type=1', function(a) {
+            if (a && a.code == 1) {
+                if (a.data > 0) {
+                    $('.dian').html(a.data)
+                    $('.dian').removeClass('hide');
+                } else {
+                    $('.dian').addClass('hide');
+                }
+            }
+        })
+    }
+
+    function pageresume() {
+        showmsg();
+		model.getHot();
+        //model.refresh();
+    }
+    if (Comm.ios()) {
+        Comm.resizeSection();
+        //$('section').css('padding-bottom','60px');
+    }
+
+
+    function showWindow1(name) {
+    	AJAX.GET('/api/customer/detail', function(d) {
+            if (d && d.code === 1) {
+            	
+                if (name == 1) {
+            Page.send('showWindow', {
+                model: 'question',
+                sinboxTemp4: 'sinboxTemp3'
+            });
+            //top.showWindow(this.model, 'sinboxTemp3');
+        } else if (name == 2) {
+            Page.send('showWindow', {
+                model: 'question',
+                sinboxTemp4: 'sinboxTemp1'
+            });
+            //top.showWindow(this.model, 'sinboxTemp1');
+        }
+            }
+        });
+    }
+    var mid = "";
+    var merefresh = null;
+    var model = {
+        init: function() {
+            if (merefresh == null) {
+                merefresh = new MERefresh('section,news', {
+                    pagesize: 10,
+                    refreshUrl: '/api/news/questionList',
+                    refreshTypeGet: true
+                });
+                //网络请求参数
+                merefresh.refreshOption.refreshParm = {};
+                //页面 <刷新> 的回调
+                merefresh.refreshOption.refresh_cb = function(refresh, d) {
+                    // console.info(d)
+                    model.getHot();
+                    refresh.successEndRef(d.data.length, d.totalCount);
+                    d.data.curPage = d.curPage;
+                    d.data.customerId = customerId;
+                    for(var i=0;i<d.data.length;i++){
+                    	d.data[i].content=d.data[i].content.replace(/<\/?.+?>/g, "").replace(/ /g, "")
+                    }
+                    if(Comm.ios()){
+                    	resizeDom();
+                    }
+                    refresh.appendHtml(template('newsTpl', d.data));
+                    if(d.curPage==1){
+                    	if(Comm.ios()){
+                    	resizeDom();
+                    }
+                      $('section').scrollTop(0);
+                      if(Comm.ios()){
+                    	resizeDom();
+                    }
+                    }
+                   Comm.scorllDel();
+                   Comm.resizeSection();
+                   if(Comm.ios()){
+                    	resizeDom();
+                    }
+                };
+            }
+        },
+        qh: function(id) {
+            mid = id;
+            event.stopPropagation();
+        },
+        getHot: function() {
+            var o = {};
+            o.curpage = 1;
+            o.pagesize = 3
+            AJAX.POST('/api/news/questionHotList', o, function(a) {
+                if (a && a.code == 1) {
+                    a.data.curPage = a.curPage;
+                    a.data.customerId = customerId;
+                    for(var i=0;i<a.data.length;i++){
+                    	a.data[i].content=a.data[i].content.replace(/<\/?.+?>/g, "").replace(/ /g, "")
+                    }
+                    $('#hot').html(template('hotTpl', a.data));
+                    $('.news').css('min-height', ($('section').height() - $('.hot').height()) + 'px');
+                    
+                }
+            })
+        },
+        go: function(cnum, cid, nid) {
+            if (cnum != 0) {
+                Page.send('go', "anwser.html?newsId=" + nid + "&commentId=" + cid);
+            } else {
+                Page.send('go', "qzAskDetail.html?newsId=" + nid);
+            }
+        },
+        
+        shanchu: function(type) {
+            AJAX.GET('/api/news/del?newsId=' + mid, function(a) {
+                if (a && a.code == 1) {
+                    Comm.message('删除成功');
+                    $('#' + mid).remove();
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+        },
+        bgxq: function(type) {
+            console.log('dd')
+            AJAX.GET('/api/keyword/notLike?newsId=' + mid, function(a) {
+                if (a && a.code == 1) {
+                    $('#' + mid).remove();
+                    Comm.showWindow('');
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+            console.log(type, mid);
+        },
+        jb: function(type) {
+             AJAX.GET('/api/customer/detail', function(d) {
+            if (d && d.code === 1) {
+            	Comm.showWindow('');
+            Page.send('go', 'report.html?itemId=' + mid);
+            
+            }
+        });
+        },
+        refresh: function() {
+            if (merefresh != null) {
+                merefresh.refreshOption.refreshParm = {
+
+                };
+                //重置列表数据
+                merefresh.MeRefScroll.resetUpScroll();
+                //merefresh.MeRefScroll.triggerDownScroll();
+                //隐藏回到顶部按钮
+                merefresh.MeRefScroll.hideTopBtn();
+            }
+            
+        }
+    }
+</script>
+<script type="text/html" id="hotTpl">
+    {{each $data v k}} {{hotQues(v,curPage,k,customerId)}} {{/each}}
+</script>
+<script type="text/html" id="newsTpl">
+
+    {{each $data v k}}
+    <div class="mart10 borderb paddb10" id="{{v.newsId}}" onclick='{{if v.commentNumber!=0}}Page.send("go","anwser.html?newsId={{v.newsId}}&commentId={{v.commentId}}");{{else}}Page.send("go","qzAskDetail.html?newsId={{v.newsId}}");{{/if}}'>
+        <div class="color333 f14 wordW fl" style="width:86%;font-family: Arial;">{{v.title}}</div>
+        <div style="width:12%" class="fl tright" onclick="showWindow1('{{if v.publishCustomerId==customerId}}1{{else}}2{{/if}}');model.qh({{v.newsId}});event.stopPropagation()"><img src="img/index/more.png" width="18" /></div>
+        <div class="clearfix"></div>
+        <div>
+            <div class="mart5 marb5">
+                <div class="fl f12 color999" style="width:85%">回答 {{conunm(v.commentNumber)}}</div>
+                <div class="fr f12 center" style="width:15%">
+                    <img src="img/index/{{if v.isPraise==1}}dzan{{else}}zan{{/if}}.png" width="14" height="11" class="" style="margin:-2px 0 0 0;object-fit: contain;" />
+                    <span class="f12 color999">{{conunm(v.praiseNumber)}}</span>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div>
+                <div style="width:85%" class="fl">
+                    <div class="color038 wordW f12 marb5" style="">
+                        <img src="{{OSS(v.face,'s')}}" onerror="app.herrorimg(this)" style="border-radius:50%" width="15" height="15" />
+                        <span class="color038 f12 wordW" style="display:inline-block;max-width:20%;font-family: Arial;margin-top: 2px;">{{v.customerName}}：</span>
+                        <span class="color999 wordW f12" style="display:inline-block;width:65%;font-family: Arial;margin-top: 2px;">{{v.content}}</span>
+                    </div>
+                </div>
+                <div style="width:15%" class="fr f12 color999">{{sldate(v.addTime)}}</div>
+            </div>
+            <div class="clearfix"></div>
+            {{imgTpl(v.newsImg.split(','),1024)}}
+        </div>
+    </div>
+    {{/each}}
+</script>
+
+</html>

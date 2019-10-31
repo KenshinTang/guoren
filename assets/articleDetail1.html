@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>资讯详情</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+</head>
+<style>
+    .order-t {
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        font-size: 12px;
+    }
+    
+    .order-t-c {
+        width: 20%;
+        height: 100%;
+        float: left;
+        font-size: 15px;
+        color: #888888;
+        position: relative;
+    }
+    
+    .order-t-c-active {
+        color: #000;
+        border-bottom: 2px solid #56ccda;
+        font-weight: bold;
+    }
+    /* header */
+    
+    .nav-title {
+        float: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: calc(100% - 108px);
+        font-size: 12px;
+        margin: 0 10px;
+        height: 44px;
+    }
+    
+    .nav-title img {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    
+    .follow {
+        font-size: 10px;
+        color: #56ccda;
+        border: 1px solid #56ccda;
+        padding: 2px 6px;
+        border-radius: 5px;
+    }
+    /* page */
+    
+    .page {
+        /* padding: 10px; */
+    }
+    
+    .news-title {
+        line-height: 25px;
+    }
+    
+    .page {
+        /* margin-bottom: 70px; */
+    }
+    
+    .page>.top {
+        padding: 10px;
+    }
+    
+    .page>.top .issuer {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .issuer img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 15px;
+    }
+    
+    .issuer>div:nth-child(1) {
+        display: flex;
+    }
+    
+    .page .content {
+        text-indent: 28px;
+        line-height: 140%;
+        letter-spacing: 1px;
+    }
+    
+    .page .content img {
+        margin: 15px 0;
+        width: 100%;
+        height: auto;
+    }
+    
+    .flex-direction {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .text111 {
+        height: auto;
+        width: 100%;
+        border: none;
+    }
+    /* center */
+    
+    .nav-tabs {
+        width: 100%;
+    }
+    
+    .swiper-container {
+        /* height: auto; */
+    }
+    
+    .commentList .item {
+        padding: 12px;
+        padding-right: 0;
+        border-bottom: 1px solid #F0F0F0;
+    }
+    
+    .commentList .item .r {
+        width: calc(100% - 50px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        margin-left: 13px;
+    }
+    
+    .commentList .children {
+        margin-top: 10px;
+        border-top: 1px solid #F0F0F0;
+        padding: 10px;
+        padding-left: 0;
+    }
+    
+    .commentList .children .r {
+        width: calc(100% - 30px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        margin-left: 10px;
+    }
+    
+    .bar {
+        border-bottom: 1px solid #DBDBDB;
+        padding: 10px;
+        /* position: fixed; */
+        /* bottom: 0; */
+        margin-top: 15px;
+        width: 100%;
+        height: 60px;
+        z-index: 100;
+        background: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .bar .btn {
+        width: 140px;
+        height: 36px;
+        border: 1px solid #DBDBDB;
+        border-radius: 18px;
+        color: #999;
+        background: #fff;
+        font-size: 14px;
+        text-align: center;
+        line-height: 36px;
+        margin-right: 25px;
+    }
+    
+    .bar>div:nth-child(2) {
+        width: calc(100% - 165px);
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+    }
+    
+    .forwardList,
+    .collectionList,
+    .praiseList {
+        padding-left: 15px;
+    }
+    /* 赞 */
+    
+    .praiseList .item,
+    .forwardList .item,
+    .collectionList .item {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #F0F0F0;
+        padding: 15px;
+        padding-left: 0;
+    }
+    
+    .mescroll {
+        position: fixed;
+        top: 44px;
+        bottom: 0;
+        height: auto;
+        overflow-x: hidden;
+    }
+    
+    .mescroll-totop {
+        display: none;
+    }
+    
+    #sinbox1 {
+        background-color: #fff;
+        padding: 10px 20px;
+        position: relative;
+        width: 300px;
+        border-radius: 10px;
+    }
+    
+    .shared .bottom {
+        padding: 5px 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .shared .bottom .l {
+        width: 23px;
+        height: 23px;
+        /*background: url('./img/pinglun/xl.png')no-repeat center;*/
+        background-size: 100%;
+    }
+    
+    .shared .bottom .r {
+        color: #56ccda;
+    }
+    
+    .shared {
+        font-size: 14px;
+        background: #fff;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+    }
+    
+    .shared .inputBox {
+        padding: 5px 10px;
+        width: 100%;
+    }
+    
+    .shared .inputBox #huifu {
+        width: 100%;
+        font-size: 14px;
+        border: none;
+        max-height: 90px;
+        height: auto;
+    }
+    
+    .shared .top {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 10px;
+        border: none;
+    }
+    
+    .shared .top p {
+        color: #999999FF;
+    }
+    
+    .shared .top .enlarge {
+        height: 15px;
+        width: 15px;
+        background: url('./img/pinglun/fd.png')no-repeat center;
+        background-size: 100%;
+    }
+    
+    .pl {
+        background: url(img/xzd.png) no-repeat 0px center;
+        background-size: 16px;
+        text-align: left;
+        padding: 10px 0 10px 50px;
+        color: #444444;
+    }
+    
+    .jb {
+        background: url(img/index/jb.png) no-repeat 0px center;
+        background-size: 16px;
+        text-align: left;
+        padding: 10px 0 10px 50px;
+        color: #444444;
+    }
+    
+    #textarea {
+        display: block;
+        margin: 0 auto;
+        overflow: hidden;
+        width: 100%;
+        font-size: 14px;
+        height: 18px;
+        line-height: 28px;
+        padding: 2px;
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+    
+    textarea {
+        outline: 0 none;
+        border: none;
+        /* box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6); */
+    }
+    
+    #sinbox {
+        background-color: #fff;
+        padding: 10px 20px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+    
+    .content img {
+        max-width: 100% !important;
+    }
+    
+    .bar img {
+        object-fit: contain;
+    }
+</style>
+
+<body>
+    <header>
+        <div class="navBar bottomShadow" style="padding: 0;">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navItemIcon marl5 marr10" onclick="Comm.showWindow('sinboxTemp2',true);"></div>
+            <div class="nav-title block searchBar" id="nav-title" style="display: none;">
+
+            </div>
+        </div>
+    </header>
+    <section>
+        <div id="mescroll" class="mescroll">
+            <div id="dataList">
+            </div>
+        </div>
+        <!-- <div id="page1" class="page">
+
+        </div>
+        <div id="page2" class="page">
+
+        </div>
+        <div id="page3" class="page">
+
+        </div> -->
+
+    </section>
+    <footer class="shared hide" id="shared" style="">
+        <div class="top">
+            <p>正在回复Enzo</p>
+            <!-- <div class="enlarge" id="enlarge"></div> -->
+        </div>
+        <div class="inputBox">
+            <textarea id="textarea" placeholder="观点的碰撞，思想的火花"></textarea>
+        </div>
+        <div class="bottom">
+            <!--<div class="l"></div>-->
+            <div class="r" onclick="model.clas()">取消</div>
+            <div class="r" onclick="model.release()">发布</div>
+        </div>
+    </footer>
+    <div id="sinbox1" wtd="sinboxTemp1">
+        <!--<div class="pl" onclick="model.Reply()">回复</div>-->
+        <div class="jb" onclick="model.Report()">举报</div>
+    </div>
+    <div id="sinbox" wtd="sinboxTemp2">
+        <div class="dflex" style="border-bottom: #f4f4f4 1px solid;">
+            <div class="mart20 marb20" onclick="model.shear(1)">
+                <img src="img/index/wx.png" width="45" />
+                <p class="c9e mart10">微信好友</p>
+            </div>
+            <div class="mart20 marb20" onclick="model.shear(2)">
+                <img src="img/index/pyq.png" width="45" />
+                <p class="c9e mart10">朋友圈</p>
+            </div>
+            <div class="mart20 marb20" onclick="model.shear(3)">
+                <img src="img/index/qq.png" width="45" />
+                <p class="c9e mart10">QQ</p>
+            </div>
+            <div class="mart20 marb20" onclick="model.shear(4)">
+                <img src="img/index/qqkj.png" width="45" />
+                <p class="c9e mart10">QQ空间</p>
+            </div>
+            <div class="mart20 marb20" onclick="model.shear(5)">
+                <img src="img/index/wb.png" width="45" />
+                <p class="c9e mart10">微博</p>
+            </div>
+        </div>
+        <div class="dflex">
+            <div class="mart20 marb20" onclick="model.Reports()">
+                <img src="img/index/fjb.png" width="45" />
+                <p class="c9e mart10">举报</p>
+            </div>
+            <div class="mart20 marb20">
+                <img src="img/index/fzlj.png" width="45" />
+                <p class="c9e mart10">复制链接</p>
+            </div>
+            <div class="mart20 marb20">
+                <img src="img/index/gengduo.png" width="45" />
+                <p class="c9e mart10">更多</p>
+            </div>
+            <!--	描述：占位div-->
+            <div>
+            </div>
+            <div>
+            </div>
+            <!--	描述：占位div-->
+        </div>
+        <div class="paddt10 paddb10 color666" style="border-top:#f4f4f4 1px solid;" onclick="Comm.showWindow('')">
+            取消
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="./inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+<script src="inc/jquery.min.js"></script>
+<!-- nav-title -->
+<script type="text/html" id="header-dome">
+    <div>
+        <img src="{{OSS($data.itemFace)}}" onerror="this.src='img/logo.png';this.onerror=null;">
+        <span style="color:#999;" id="name">{{$data.itemName}}</span>
+    </div>
+</script>
+<script type="text/html" id="page-dome">
+    <div class="item page">
+        <div class="top">
+            <h1 class="news-title">{{$data.newsInfo.news.title}}</h1>
+            <div class="issuer" onclick="model.geren({{$data.newsInfo.itemId}},{{$data.newsInfo.itemType}})">
+                <div>
+                    <img src="{{OSS($data.newsInfo.itemFace)}}" onerror="this.src='img/logo.png';this.onerror=null;">
+                    <div class="flex-direction">
+                        <span class="f16">{{$data.newsInfo.itemName}}</span>
+                        <span class="f12" style="color:#999;">{{sldate($data.newsInfo.news.addTime)}}</span>
+                    </div>
+                </div>
+                <!-- <span class="follow">+关注</span> -->
+            </div>
+            <div class="content mart10 f16">
+                {{$data.newsInfo.news.content}}
+            </div>
+            {{if $data.newsInfo.news.newsType==1&&$data.newsInfo.news.face!=''||$data.newsInfo.news.newsType==8&&$data.newsInfo.news.face!=''}} {{each $data.newsInfo.news.face v k}}
+            <img onclick="showImgView(this)" src="{{OSS(v)}}" width="30%" height="106" style="border-radius: 5px;" class="fl marl10 mart10" /> {{/each}}
+            <div class="clearfix"></div>
+            {{/if}}
+        </div>
+    </div>
+
+</script>
+<script>
+</script>
+<script>
+    var newsId = Comm.query('newsId'); //新闻id
+    // var newsId = 71;
+    var customerId = app.getCid();
+
+    var mySwiper = [];
+    var swiperStr = [];
+    var mid = '';
+    var shearId = '';
+    var shearTitle = '';
+    var shearContent = '';
+    var showimgs = null;
+
+    function pageload() {
+        // model.init({ page: $('#page1') });
+    }
+
+    function pageresume() {
+
+    }
+    //全屏图片
+    var showImgView = function showImgView(that) {
+        var oImgs = $(that);
+        var imgArr = new Array();
+        $.each(oImgs, function(i, e) {
+            imgArr.push(e.src);
+        });
+        Comm.db('imgView', showimgs);
+        Comm.go('imgView.html');
+    };
+    var model = {
+        data: {
+            newsInfo: null, //新闻详情
+            commentList: null, //评论列表
+            praiseList: null, //点赞列表
+            forwardList: null, //收藏列表
+            CollectionList: null, //转发
+        },
+        _data: {
+            refresh: true, //是否刷新
+            renderCb: null, //渲染完成回调
+        },
+        pageData: [], //页面全部数据
+        init: function({
+            refresh
+        }, cb) {
+            this._data.renderCb = cb
+            this._data.refresh = refresh;
+            this.getNewsInfo();
+        },
+        //获取资讯详情
+        getNewsInfo: function() {
+            var that = this;
+            AJAX.POST('/api/news/info', {
+                newsId: newsId,
+                customerId: customerId
+            }, function(d) {
+                if (d && d.code) {
+                    that.data.newsInfo = d.data;
+                    shearId = d.data.news.newsId;
+                    shearTitle = d.data.itemName;
+                    shearContent = d.data.news.title;
+                    that.renderPage()
+                } else {
+                    Comm.message(d.msg || '网络错误');
+                }
+            })
+        },
+
+        //渲染页面方法
+        renderPage: function() {
+            var that = this;
+            if (that.data.newsInfo) {
+                var news = that.data.newsInfo.news;
+                that.data.newsInfo.news.content = this.handleNewsContent(news.content, news.face, news.subhead);
+                // console.log(that.data.newsInfo.news.content)
+                if (this._data.refresh) {
+                    //newsId = that.data.newsInfo.nextNewsId;
+                    this.pageData = [that.data];
+                    this.data.index = 0;
+                    that.data.newsInfo.news.face = that.data.newsInfo.news.face.split(',');
+                    showimgs = that.data.newsInfo.news.face;
+                    $('#dataList').html(template('page-dome', that.data));
+                    that.initSwiper(0);
+                    this.emptyData()
+                } else {
+                    newsId = that.data.newsInfo.nextNewsId;
+                    this.pageData.push(that.data);
+                    that.data.index = this.pageData.length - 1;
+
+                    var html = $('#dataList').html();
+                    html += template('page-dome', that.data);
+                    $('#dataList').html(html);
+                    that.initSwiper(this.pageData.length - 1);
+                    this.emptyData()
+                }
+                this._data.renderCb()
+            }
+            $('#dataList').find('mark').remove();
+        },
+        //初始化Swiper
+        initSwiper: function(i) {
+            var that = this;
+            if (i == 0) {
+                swiperStr = ['.swiper-container' + i]
+            } else {
+                swiperStr.push('.swiper-container' + i)
+            }
+            for (var k = 0; k < swiperStr.length; k++) {
+                var sw = new Swiper(swiperStr[k], {
+                    onSlideChangeEnd: function(swiper) {
+                        var index = swiper.container.attr('data-index');
+                        that.navActive(swiper.activeIndex, index)
+                    }
+                });
+                mySwiper.push(sw)
+            }
+
+        },
+        //更新title方法
+        updateTitle: function(data, isShow) {
+            if (isShow) {
+                $('#nav-title').html(template('header-dome', data)).fadeIn();
+            } else {
+                $('#nav-title').html(template('header-dome', data)).fadeOut();
+            }
+        },
+        //处理新闻Content数据
+        handleNewsContent: function(content, face, subhead) {
+            if (content != '') {
+                if (content.indexOf('br') > -1 && content.indexOf('textarea') == -1) {
+                    var html = $('<div></div>')
+                    html.append($(('<p>' + content) + '</p>'))
+                } else {
+
+                    var contentHtml = $(content);
+                    var html = $('<div></div>')
+
+                    if (contentHtml.length > 0) {
+                        for (var k = 0; k < contentHtml.length; k++) {
+                            var dom = contentHtml.get(k);
+                            var domName = dom.tagName;
+
+                            if (domName == 'TEXTAREA') {
+
+                                html.append($(('<p>' + ($(dom).attr('attr') || '') + '</p>')))
+                            } else if (domName == 'DIV') {
+                                html.append(dom)
+                            } else {
+                                html.append(dom)
+                            }
+                        }
+                    } else {
+                        html.append($('<p>' + (content || '') + '</p>'))
+                        var imgs = face.split(',')
+                        if (imgs[0] != '') {
+                            for (var k = 0; k < imgs.length; k++) {
+                                // html.append($('<img src=' + Comm.OSS.getImgUrl(imgs[k]) + '>'))
+                            }
+                        }
+                    }
+                }
+
+
+                return html.html()
+            } else {
+                html.append($('<p>' + (subhead || '') + '</p>'))
+                var imgs = face.split(',')
+                for (var k = 0; k < imgs.length; k++) {
+                    // html.append($('<img src=' + Comm.OSS.getImgUrl(imgs[k]) + '>'))
+                }
+                return html.html()
+            }
+        },
+        /*菜单点击事件*/
+        navChang: function(e, index) {
+            var i = Number($(e).attr("i"));
+            mySwiper[index].slideTo(i); //以轮播的方式切换列表
+            this.navActive(i, index)
+        },
+        //nav菜单选中效果
+        navActive: function(i, index) {
+            console.log('nav===' + index, 'item====' + i)
+            var curNavDom; //当前菜单项
+            $("#nav" + index + " div").each(function(n, dom) {
+                if (dom.getAttribute("i") == i) {
+                    dom.classList.add("order-t-c-active");
+                    curNavDom = dom;
+                    //_type_ = dom.getAttribute("data-type");
+                } else {
+                    dom.classList.remove("order-t-c-active");
+                }
+            });
+            var scrollxContent = document.getElementById("scrollxContent" + index);
+            var star = scrollxContent.scrollLeft; //当前位置
+            var end = curNavDom.offsetLeft + curNavDom.clientWidth / 2 - document.body.clientWidth / 2; //居中
+        },
+        emptyData: function() {
+            this.data = {
+                newsInfo: null, //新闻详情
+                commentList: null, //评论列表
+                praiseList: null, //点赞列表
+                forwardList: null, //收藏列表
+                CollectionList: null, //转发
+            }
+        },
+        geren: function(id, type) {
+            if (type == 0) {
+                Comm.go('personal.html?customerId=' + id);
+            } else if (type == 1) {
+                Comm.go('University.html?schoolId=' + id);
+            } else if (type == 2) {
+                Comm.go('major.html?majorId=' + id);
+            }
+
+            event.stopPropagation();
+        },
+        content: function(id) {
+            Comm.go('./conDetail.html?newsId=' + id);
+        },
+        zhuanfa: function(id) {
+            Comm.go('zhuanfa.html?newsId=' + id);
+        },
+        More: function(v) {
+            mid = v;
+            Comm.showWindow('sinboxTemp1', true)
+        },
+        Report: function() {
+            Comm.go('./report.html?itemType=2&itemId=' + mid)
+        },
+        release: function() {
+            if ($("#textarea").val() == '') {
+                Comm.message('请输入回复内容')
+                return;
+            }
+            var o = {};
+            o = {
+                newsId: mid,
+                sid: '',
+                content: $("#textarea").val(),
+                commentType: 1
+            }
+            Comm.loading('发布中...');
+            AJAX.POST('/admin/contentOfNo/saveComment', o, function(d) {
+                Comm.loading(false);
+                if (d && d.code == 1) {
+                    Comm.message('回复成功');
+                    $('footer').attr('class', 'hide');
+                    model.getcommentList(mid);
+                    model.getPraiseList();
+                    model.getForwardList();
+                    model.getCollectionList();
+                    model.getNewsInfo();
+                    model._data.refresh = true;
+                } else {
+                    Comm.message(d.msg || '网络错误');
+                }
+            })
+        },
+        shear: function(platform) {
+            //分享资讯 -- 通用
+            event.stopPropagation();
+            var url = config.webroot+'/app/app/shareArticle.html?id=' + shearId;
+            Comm.shareUrl({
+                platform: platform,
+                pic: config.webroot+"/app/app/img/logo.png",
+                title: shearTitle,
+                desc: shearContent,
+                url: url
+            }, function(d) {
+                if (d.code) {
+                    Comm.message('分享成功！')
+                }
+            });
+            //Comm.go('shareArticle.html')
+        },
+        Reports: function() {
+            Comm.go('./report.html?itemType=1&itemId=' + shearId);
+        },
+    }
+</script>
+<script>
+    var mescroll = new MeScroll("mescroll", { //第一个参数"mescroll"对应上面布局结构div的id (1.3.5版本支持传入dom对象)
+        //如果您的下拉刷新是重置列表数据,那么down完全可以不用配置,具体用法参考第一个基础案例
+        //解析: down.callback默认调用mescroll.resetUpScroll(),而resetUpScroll会将page.num=1,再触发up.callback
+        down: {
+            isLock: true,
+            callback: downCallback, //下拉刷新的回调,别写成downCallback(),多了括号就自动执行方法了
+
+        },
+        up: {
+            callback: upCallback, //上拉加载的回调
+            //onScroll: onScroll,
+            use: false,
+            //以下是一些常用的配置,当然不写也可以的.
+            page: {
+                num: 0, //当前页 默认0,回调之前会加1; 即callback(page)会从1开始
+                size: 10 //每页数据条数,默认10
+            },
+            htmlNodata: '<p class="upwarp-nodata">-- END --</p>',
+            noMoreSize: 5, //如果列表已无数据,可设置列表的总数量要大于5才显示无更多数据;避免列表数据过少(比如只有一条数据), 显示无更多数据会不好看这就是为什么无更多数据有时候不显示的原因.
+            toTop: {
+                //回到顶部按钮
+                src: "/img/goTop.png", //图片路径,默认null,支持网络图
+                offset: 1000 //列表滚动1000px才显示回到顶部按钮	
+            },
+            empty: {
+                //列表第一页无任何数据时,显示的空提示布局; 需配置warpId才显示
+                warpId: "xxid", //父布局的id (1.3.5版本支持传入dom元素)
+                icon: null, //图标,默认null,支持网络图
+                tip: "没有更多数据啦~" //提示
+            },
+            lazyLoad: {
+                use: true, // 是否开启懒加载,默认false
+                attr: 'imgurl' // 标签中网络图的属性名 : <img imgurl='网络图  src='占位图''/>
+            }
+        }
+    });
+
+    function downCallback() {
+        model.init({
+                refresh: true
+            }, function() {
+                mescroll.endSuccess();
+            })
+            // model.init({ refresh: true }, function () {
+            // 	mescroll.endSuccess();
+            // })
+    }
+
+    function upCallback(page) {
+        if (page.num > 1) {
+            // console.log(page.num)
+            model.init({
+                refresh: false
+            }, function() {
+                mescroll.endSuccess();
+            })
+        }
+
+    }
+    var topArr = []
+
+    function onScroll(mescroll, y, isUp) {
+        for (var k = 0; k < $('#dataList .issuer').length; k++) {
+            var top = $('#dataList .issuer').eq(k).offset().top
+            topArr[k] = top
+            var i = calculation();
+            shearId = model.pageData[i].newsInfo.news.newsId;
+            shearTitle = model.pageData[i].newsInfo.itemName;
+            shearContent = model.pageData[i].newsInfo.news.title;
+            $('#nav-title').html(template('header-dome', model.pageData[i].newsInfo)).fadeIn(300);
+        }
+    }
+
+    function calculation() {
+        var arr = topArr.map(function(item, index) {
+            return item < 0 ? item = -item : item = item
+        })
+        var min = Math.min.apply(null, arr);
+        return arr.indexOf(min)
+    }
+</script>
+
+</html>

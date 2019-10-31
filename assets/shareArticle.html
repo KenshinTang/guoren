@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>果仁</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/tpl.css" />
+	<link rel="stylesheet" href="css/photo.css" />
+    <style>
+        .add-guan {
+            border-radius: 20px;
+            background-color: #f4f4f4;
+            border: none;
+            color: #098E75;
+        }
+        
+        .content img {
+            margin: 10px 0;
+            width: 100%;
+            height: auto;
+        }
+        
+        .order-t {
+            height: 50px;
+            line-height: 50px;
+            font-size: 12px;
+            border-bottom: 1px solid #333333;
+            padding: 0px 20px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        #sinbox1 {
+            background-color: #fff;
+            padding: 10px 20px;
+            position: relative;
+            width: 300px;
+            border-radius: 10px;
+        }
+        
+        #sinbox {
+            background-color: #fff;
+            padding: 10px 20px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+        
+        .qxgz {
+            background: url(img/index/qxgz.png) no-repeat 0px center;
+            background-size: 16px;
+            text-align: left;
+            padding: 10px 0 10px 50px;
+            color: #444444;
+            border-bottom: 1px solid #f4f4f4;
+        }
+        
+        .bgxq {
+            background: url(img/index/bgxq.png) no-repeat 0px center;
+            background-size: 16px;
+            text-align: left;
+            padding: 10px 0 10px 50px;
+            color: #444444;
+            border-bottom: 1px solid #f4f4f4;
+        }
+        
+        .jb {
+            background: url(img/index/jb.png) no-repeat 0px center;
+            background-size: 16px;
+            text-align: left;
+            padding: 10px 0 10px 50px;
+            color: #444444;
+        }
+        
+        .downApp {
+            border-radius: 20px;
+            background-color: #098E75;
+            border: none;
+            color: #FFF;
+            padding: 5px 10px;
+        }
+        
+        #list {
+            overflow: hidden;
+        }
+        
+        .btn {
+            margin: 10px auto;
+            display: inline-block;
+        }
+        
+        #zz {
+            position: relative;
+            left: 0;
+            right: 0;
+            top: -75px;
+            height: 78px;
+            display: none;
+            background-image: linear-gradient(-180deg, rgba(255, 255, 255, 0) 0, #FFFFFF 100%);
+        }
+        
+        #read {
+            position: relative;
+            top: -80px;
+            display: none;
+        }
+        
+        .imgBox {
+            text-indent: 0px;
+        }
+        
+        .issuer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .issuer img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        
+        .issuer>div:nth-child(1) {
+            display: flex;
+        }
+        
+        .page .content {
+            line-height: 140%;
+            letter-spacing: 1px;
+        }
+        
+        .page .content img {
+            margin: 10px 0;
+            width: 100%;
+            height: auto;
+        }
+        
+        .flex-direction {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .content span {
+        vertical-align: baseline;
+    }
+    .addHave,.addHave span,.addHave div{
+    	color: #464646;
+    	font-size: 16px;
+    }
+    .spanxx span,.spanxx div{
+    	color: #464646;
+    	font-size: 14px;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header style="padding: 0;">
+    </header>
+    <section>
+        <div class="paddl15 paddr15 paddb20">
+            <div id="list" class="f18 lh25 color333 wimgbox">
+
+            </div>
+            <div id="zz" onclick="model.read()"></div>
+            <div class="center" id="read">
+                <img src="img/dmore.png" onclick="model.read()" width="12" style="position: relative;top: -45px;left: 47%;" />
+                <a  onclick="tpl.openclient();" class="center btn label" >打开app查看更多</a>
+                <!--<input id="J-download-app" type="hidden" name="storeurl" value="http://m.chanyouji.cn/apk/chanyouji-2.2.0.apk">-->
+            </div>
+        </div>
+
+    </section>
+    <footer class="shared paddl10 paddr10">
+        
+    </footer>
+</body>
+<script type="text/html" id="demo1">
+    <div class="paddt10 paddb20">
+        <div class="content mart10 f16">
+            {{if $data.news.newsType!=0}}
+            <div class="bold">{{$data.news.title}}</div>
+            {{/if}}
+            <div class="issuer">
+                <div>
+                    <img src="{{OSS($data.itemFace)}}" onerror="this.src='img/my/mti.png';this.onerror=null;">
+                    <div class="flex-direction">
+                        <span class="f16 mart10">{{$data.itemName}}</span>
+                        <span class="f12" style="color:#999;">{{sldate($data.news.addTime)}}</span>
+                    </div>
+                </div>
+                <!-- <span class="follow">+关注</span> -->
+            </div>
+            {{if news.newsType==8}}
+            <div class="f14 scl-dw">
+                {{topicInfo.title}}
+            </div>
+            {{/if}}
+            <div class="addHave" {{if $data.news.newsType==2}}class="mart10 marb10" {{/if}}>{{$data.news.content}}</div>
+
+        </div>
+        {{if $data.news.newsType==1&&$data.news.face!=''||$data.news.newsType==8&&$data.news.face!=''}}
+        {{imgTpl(news.face,96)}}
+        <div class="clearfix"></div>
+        {{/if}} 
+        {{if ($data.resourceInfo)}}
+            <div class="pad5 bg_hui mart10" >
+                <div class="wordW f16 marb10"><span class="color038">{{resourceUserInfo.customerName}}</span><span>的{{if resourceInfo.newsType==1}}说说{{/if}}{{if resourceInfo.newsType==2}}日志{{/if}}{{if resourceInfo.newsType==7}}帖子{{/if}}{{if resourceInfo.newsType==8}}讨论{{/if}}</span>
+                </div>
+                <div class="">
+                    <div class="wordW6 color31 spanxx"><span class="bold">{{resourceInfo.title}}</span><span>{{resourceInfo.subhead}}</span></div>
+                </div>
+                {{if resourceInfo.face&&resourceInfo.face!=""}} {{each resourceInfo.face v k}}
+                <div class="scm-l fl marr5 mart5" style="width: 30%;">
+                    <img src="{{OSS(v)}}" style="object-fit: cover;" width="100%" height="76" style="border-radius: 10px;">
+                </div>
+                {{/each}} {{/if}}
+                <div class="clearfix"></div>
+            </div>
+            {{/if}}
+		{{if news.newsType==11}}
+            <div class="f14 mart10 scl-dw" >
+                {{topicInfo.title}}
+            </div>
+            {{/if}}
+    </div>
+</script>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/art-template.js"></script>
+<script type="text/javascript" src="inc/share.js" ></script>
+<script type="text/javascript" src="inc/tpl.js" ></script>
+<script type="text/javascript" src="inc/photo.js" ></script>
+<script>
+    var id = Comm.query('id');
+
+    function pageload() {
+        model.init();
+        var header = tpl.gethead();
+		$('header').html(header);
+		var footer = tpl.foorers();
+		$('footer').html(footer);
+		Comm.resizeSection()
+    }
+
+    function pageresume() {
+
+    }
+    var mid = "";
+    var model = {
+        qh: function(id) {
+            mid = id
+        },
+        content: function() {
+            Comm.go('conDetail.html');
+        },
+        read: function() {
+            $("#list").css('overflow', 'auto');
+            $("#list").css('height', 'auto');
+            $('#zz').css('display', 'none');
+            $('#read').css('display', 'none');
+            $('section').css('overflow-y:auto;')
+        },
+        init: function() {
+            AJAX.POST('/api/news/info', {
+                newsId: id
+            }, function(d) {
+                if (d && d.code == 1) {
+                    d.data.news.face = d.data.news.face.split(',')
+                    if(d.data.resourceInfo.face){
+                    	d.data.resourceInfo.face=d.data.resourceInfo.face.split(',');
+                    }
+                    if(d.data.news.content){
+                    	d.data.news.content=d.data.news.content.replace(/<div>|<\/div>/gi, "").replace(/<script/g, '').replace(/(\r\n|\n|\r)/gm, "<br/>").replace(/(?!img>)\s/g, "&nbsp;").replace(/&nbsp;src/g, " src").replace(/&nbsp;len/g, " len").replace(/&nbsp;old/g, " old").replace(/&nbsp;class/g, " class").replace(/&nbsp;onclick/g, " onclick");
+                    }
+                    var h = $('section').height() - 60;
+                    $('#list').html(template('demo1', d.data));
+                    if ($("#list").height() > h) {
+                        $('#list').css('height', h + 'px');
+                        $('#read').css('display', 'block');
+                        $('#zz').css('display', 'block');
+                    }
+                    if (d.data.news.newsType == 1) {
+                        var imgStr = ''
+                        d.data.news.face.map(function(item, index) {
+                            if (item != '') {
+                                $('.imgs').append($('<img  src=' + (Comm.OSS.getImgUrl(item)) + ' class="mart10">'))
+                            }
+                        })
+                    }
+                     $('#list .content img').each(function(i, e) {
+                $(e).addClass('wimg')
+                e.onclick = function() {
+                    Photo.show();
+                }
+                e.setAttribute('rsrc', e.src);
+            })
+                    $('#list .imgs img').wrap('<div class="wimg"></div>');
+                    var zz = document.getElementsByClassName('text111');
+                    for (var i = 0; i < zz.length; i++) {
+                        zz[i].innerHTML = zz[i].attributes.attr.value;
+                    }
+
+                }else{
+                	Comm.message(d.msg);
+                }
+            })
+
+        }
+    }
+
+    
+</script>
+
+</html>

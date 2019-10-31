@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加关注</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+
+		<style>
+			.navItemIcon {
+				background: url('./img/tianjia.png')no-repeat center;
+				background-size: 70%;
+			}
+			
+			.search {
+				width: 100%;
+				padding: 10px 15px;
+				display: flex;
+				justify-content: center;
+			}
+			
+			.search>div {
+				width: 100%;
+				position: relative;
+			}
+			
+			.search input {
+            height: 35px;
+            width: 85%;
+            padding-left: 37px;
+            background: #F4F4F4;
+            border-radius: 20px;
+        }
+			
+			.icon_search {
+				display: inline-block;
+				width: 28px;
+				height: 25px;
+				background: url('./img/search.png')no-repeat center;
+				background-size: 65%;
+				position: absolute;
+				top: 50%;
+				margin-top: -13px;
+				left: 5px;
+			}
+			
+			.title {
+				padding: 10px 16px;
+				background: #F4F4F4;
+				font-size: 12px;
+				color: #888888;
+			}
+			
+			.memberList,
+			.adminList {
+				padding-left: 15px;
+			}
+			
+			.memberList li,
+			.adminList li {
+				display: inline-flex;
+				align-items: center;
+				height: 45px;
+				margin: 10px 0;
+			}
+			
+			.userImg {
+				width: 45px;
+				height: 45px;
+				border-radius: 50%;
+				margin-right: 20px;
+			}
+			
+			.userName {
+				font-size: 14px;
+				font-weight: 700;
+				margin-right: 10px;
+			}
+			
+			.identity {
+				display: inline-block;
+				color: #fff;
+				background: #098E75;
+				font-size: 10px;
+				line-height: 25px;
+				height: 25px;
+				padding: 1px 3px;
+				width: 45px;
+    text-align: center;
+				border-radius: 3px;
+			}
+			
+			.userData {
+				height: 100%;
+				width: calc(100% - 65px);
+				/*display: flex;*/
+				line-height: 45px;
+				align-items: center;
+				border-bottom: 1px solid #dedede;
+			}
+			
+			.userImg img {
+				width: 45px;
+				height: 45px;
+			}
+			
+			#sinbox1,
+			#sinbox2 {
+				position: absolute;
+				bottom: 0;
+				left: 5%;
+				width: 90%;
+			}
+			
+			.ybox {
+				width: 100px;
+				height: 100px;
+				background: url(img/ybox.png) no-repeat;
+				background-size: 100%;
+				position: absolute;
+				top: 45px;
+				right: 15px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar" style="padding: 0;">
+				<div class="navBackIcon " onclick="Comm.close()"></div>
+				<div class="nav-title block searchBar f16" style="width: calc(100% - 40px);height: 44px;font-weight: 700;">成员管理</div>
+			</div>
+		</header>
+		<section style="border-top: 1px solid #f4f4f4;">
+			<div class="search">
+            <form action="javascript:return true;" onsubmit="model.search()" style="position: relative;width:100%">
+                <div>
+                    <i class="icon_search fl"></i>
+                    <input type="search" id="search" class="paddr15 fl" autocomplete="off" placeholder="搜索" oninput="model.search()">
+                    <div class="lh30 marl5 marr10 fr" onclick="model.search()">搜索</div>
+                    <div class="clearfix"></div>
+                </div>
+            </form>
+        </div>
+			<div class="ybox hide">
+				<div class="flex paddl15 paddt15" onclick="Comm.go('friend.html?groupId='+groupId)">
+					<img src="img/yqtb.png" width="16" height="16" style="object-fit: contain;" />
+					<div class="colorfff paddl10 paddb10" style="border-bottom: #7C7C7C 1px solid;width: 100%;">邀请</div>
+				</div>
+				<div class="flex paddl15 paddt15" onclick="model.out()">
+					<img src="img/exit.png" width="16" height="16" style="object-fit: contain;" />
+					<div class="colorfff paddl10 paddb10" style="width: 100%;">退出</div>
+				</div>
+			</div>
+			<div id="list">
+
+			</div>
+		</section>
+		<div id="sinbox1" class="paddb10" wtd="sinboxTemp1">
+			<div class="bg_white marb10 f16" style="border-radius: 10px;">
+				<div class="bg_white marb10 f16" style="border-radius: 10px;">
+					<div class="color038 paddb15 paddt15" onclick="model.setGroup()">设为圈主</div>
+					<div class="color038 paddb15 paddt15" onclick="model.setMeb()" style="border-bottom: 1px solid #EBEBEB;border-top: 1px solid #EBEBEB;">设为普通成员</div>
+					<div class="coloreb3 paddb15 paddt15" onclick="model.remove()">删除</div>
+				</div>
+			</div>
+			<div class="bg_white paddt15 paddb15 f16 color038" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+		</div>
+		<div id="sinbox2" class="paddb10" wtd="sinboxTemp">
+			<div class="bg_white marb10 f16" style="border-radius: 10px;">
+				<div class="color038 paddb15 paddt15" onclick="model.setAdmin()" style="border-bottom: 1px solid #EBEBEB;">设为管理员</div>
+				<div class="coloreb3 paddb15 paddt15" onclick="model.remove()">删除</div>
+			</div>
+			<div class="bg_white paddt15 paddb15 f16 color038" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+		</div>
+		
+	</body>
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="./inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+	<script id="listTpl" type="text/html">
+
+		<!-- 管理员或者圈主 -->
+		<div class="admin">
+			<p class="title">圈主/管理员({{admin}}人)</p>
+			<ul class="adminList">
+				{{each $data v k}} {{if v.customerRole==1}}
+				<li>
+					<div class="userImg" onclick="Comm.go('personal.html?customerId={{v.customerId}}');"><img style="border-radius: 50%;" src="{{OSS(v.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20"></div>
+					<div class="userData">
+						<span class="userName wordW" onclick="Comm.go('personal.html?customerId={{v.customerId}}');">{{v.customerName}}</span>
+						<span class="identity">圈主</span>
+					</div>
+				</li>
+				{{/if}} {{if v.customerRole==2}}
+				<li>
+					<div class="userImg" onclick="Comm.go('personal.html?customerId={{v.customerId}}');"><img style="border-radius: 50%;" src="{{OSS(v.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20"></div>
+					<div class="userData paddr15">
+						<span class="userName wordW" style="max-width: 35%;display: inline-block;" onclick="Comm.go('personal.html?customerId={{v.customerId}}');">{{v.customerName}}</span>
+						<span class="identity marr10" style="background: #EFB950;">管理员</span>
+						{{if  userType==1}}
+						{{if(v.customerStatus==1)}}
+							<span class="identity fr mart10 marr10" style="background: #b04343;"onclick="model.jinyan({{v.customerId}},this)">禁言</span>
+						{{else}}
+							<span class="identity fr mart10 marr10" style="background: #098E75;"onclick="model.jiejin({{v.customerId}},this)">解禁</span>
+						{{/if}}
+						<span class="identity marr10 mart10 fr " style="background: #b9b9b9;" onclick="model.yichu({{v.customerId}})">移除</span>
+						{{/if}}
+					</div>
+				</li>
+				{{/if}} {{/each}}
+			</ul>
+		</div>
+		<!-- 群员 -->
+		<div class="member">
+			<p class="title">成员({{member}}人)</p>
+			<ul class="memberList">
+				{{each $data v k}} {{if v.customerRole==3}}
+				<li>
+					<div class="userImg" onclick="Comm.go('personal.html?customerId={{v.customerId}}');"><img style="border-radius: 50%;" src="{{OSS(v.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20"></div>
+					<div class="userName flex paddr15 paddt10 paddb10" style="justify-content:space-between;width: 100%;border-bottom: 1px solid #dedede;">
+						<span class="userName wordW" style="flex-basis: 60%;" onclick="Comm.go('personal.html?customerId={{v.customerId}}');">{{v.customerName}}</span>
+						{{if userType==1||userType==2}}
+						<span class="identity marr10" style="background: #b9b9b9;" onclick="model.yichu({{v.customerId}})">移除</span>
+						{{if(v.customerStatus==1)}}
+							<span class="identity" style="background: #b04343;"onclick="model.jinyan({{v.customerId}},this)">禁言</span>
+						{{else}}
+							<span class="identity" style="background: #098E75;"onclick="model.jiejin({{v.customerId}},this)">解禁</span>
+						{{/if}}
+						{{/if}}
+					</div>
+				</li>
+				{{/if}} {{/each}}
+			</ul>
+		</div>
+
+	</script>
+	<script id="listTpl1" type="text/html">
+		<div class="member">
+			<ul class="memberList">
+				{{each $data v k}} {{if v.customerRole==1}}
+				<li>
+					<div class="userImg" onclick="Comm.go('personal.html?customerId={{v.customerId}}');"><img style="border-radius: 50%;" src="{{OSS(v.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20"></div>
+					<div class="userData">
+						<span class="userName wordW" onclick="Comm.go('personal.html?customerId={{v.customerId}}');">{{v.customerName}}</span>
+						<span class="identity">圈主</span>
+					</div>
+				</li>
+				{{/if}} {{if v.customerRole==2}}
+				<li>
+					<div class="userImg" onclick="Comm.go('personal.html?customerId={{v.customerId}}');"><img style="border-radius: 50%;" src="{{OSS(v.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20"></div>
+					<div class="userData paddr15">
+						<span class="userName wordW" style="max-width: 35%;display: inline-block;" onclick="Comm.go('personal.html?customerId={{v.customerId}}');">{{v.customerName}}</span>
+						<span class="identity marr10" style="background: #EFB950;">管理员</span>
+						{{if userType==1}}	
+						{{if(v.customerStatus==1)}}
+							<span class="identity fr mart10  marr10" style="background: #b04343;"onclick="model.jinyan({{v.customerId}},this)">禁言</span>
+						{{else}}
+							<span class="identity fr mart10 marr10" style="background: #098E75;"onclick="model.jiejin({{v.customerId}},this)">解禁</span>
+						{{/if}}
+						<span class="identity marr10 mart10 fr " style="background: #b9b9b9;" onclick="model.yichu({{v.customerId}})">移除</span>
+						{{/if}}
+					</div>
+				</li>
+				{{/if}} {{if v.customerRole==3}}
+				<li>
+					<div class="userImg" onclick="Comm.go('personal.html?customerId={{v.customerId}}');"><img style="border-radius: 50%;" src="{{OSS(v.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20"></div>
+					<div class="userName flex paddr15 paddt10 paddb10" style="justify-content:space-between;width: 100%;border-bottom: 1px solid #dedede;">
+						<span class="userName" style="flex-basis: 60%;" onclick="Comm.go('personal.html?customerId={{v.customerId}}');">{{v.customerName}}</span>
+						{{if userType==1||userType==2}}
+						<span class="identity marr10" style="background: #b9b9b9;" onclick="model.yichu({{v.customerId}})">移除</span>
+						{{if(v.customerStatus==1)}}
+							<span class="identity" style="background: #b04343;"onclick="model.jinyan({{v.customerId}},this)">禁言</span>
+						{{else}}
+							<span class="identity" style="background: #098E75;"onclick="model.jiejin({{v.customerId}},this)">解禁</span>
+						{{/if}}
+						{{/if}}
+					</div>
+				</li>
+				{{/if}} {{/each}}
+			</ul>
+		</div>
+	</script>
+	<script>
+		var groupId = Comm.query('groupId');
+		var qx = false;
+		function pageload() {
+			model.init();
+		}
+
+		function pageresume() {
+
+		}
+		var mid = '';
+		var model = {
+			init: function() {
+				AJAX.GET('/api/school/groups/userList?groupId=' + groupId, function(a) {
+					if(a && a.code == 1) {
+						var data = a.data;
+						data.member = 0;
+						data.admin = 0;
+						//获取当前用户的管理权限
+						for(var j=0;j<data.length;j++){
+							if(data[j].customerId==Comm.db('userinfo').customerId){
+								data.userType =data[j].customerRole;
+							}
+						}
+						
+						var isMember = false;//是否属于圈子成员 默认false
+						for(var i = 0; i < data.length; i++) {
+							if(data[i].customerRole == 3) {
+								data.member++;
+							} else {
+								data.admin++;
+							}
+						}
+						
+						$("#list").html(template('listTpl', data));
+						Comm.db('userdata', data);
+					}
+				})
+			},
+			id: function(id) {
+				mid = id;
+			},
+			yichu: function(id) {
+				Comm.confirm('确认移除该成员？',function(d){
+					if(d){
+						AJAX.GET('/api/school/groups/delGroupMember?delCustomerId=' + id + '&groupId=' + groupId, function(a) {
+					if(a && a.code == 1) {
+						model.init();
+						Comm.showWindow();
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+					}
+				})
+				
+				
+			},
+			jinyan:function(id,e){
+				Comm.confirm('确认禁言该成员？',function(d){
+					if(d){
+						AJAX.GET('/api/school/groups/updateCustomerPublishStatus?groupId='+groupId+'&customerId='+id+'&publishStatus=0',function(a){
+							if(a&&a.code==1){
+								$(e).html('解禁');
+								$(e).attr('onclick','model.jiejin('+id+',this)');
+								$(e).css('background','#098E75');
+							}else{
+								Comm.message(a.msg);
+							}
+						})
+					}
+				})
+			},
+			jiejin:function(id,e){
+				Comm.confirm('确认解禁该成员？',function(d){
+					if(d){
+						AJAX.GET('/api/school/groups/updateCustomerPublishStatus?groupId='+groupId+'&customerId='+id+'&publishStatus=1',function(a){
+							if(a&&a.code==1){
+								$(e).html('禁言');
+								$(e).css('background','#b04343');
+								$(e).attr('onclick','model.jinyan('+id+',this)');
+							}else{
+								Comm.message(a.msg);
+							}
+						})
+					}
+				})
+			},
+			search: function() {
+				var list = [];
+				var data = Comm.db('userdata');
+				var sear = $("#search").val();
+				if(sear == "") {
+					data.member = 0;
+					data.admin = 0;
+					//获取当前用户的管理权限
+						for(var j=0;j<data.length;j++){
+							if(data[j].customerId==Comm.db('userinfo').customerId){
+								data.userType =data[j].customerRole;
+							}
+						}
+					for(var i = 0; i < data.length; i++) {
+						if(data[i].customerRole == 3) {
+							data.member++;
+						} else {
+							data.admin++;
+						}
+					}
+					console.log(data)
+					$("#list").html(template('listTpl', data));
+				} else {
+					//获取当前用户的管理权限
+						for(var j=0;j<data.length;j++){
+							if(data[j].customerId==Comm.db('userinfo').customerId){
+								list.userType =data[j].customerRole;
+							}
+						}
+					for(var i = 0; i < data.length; i++) {
+						if(data[i].customerName.indexOf(sear) > -1) {
+							list.push(data[i]);
+						}
+					}
+					console.log(list)
+					$("#list").html(template('listTpl1', list));
+				}
+
+			}
+		}
+	</script>
+
+</html>

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加关注</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+		<style>
+			.jjs {
+				background-color: #098E75;
+				border-radius: 5px;
+				color: #FFF;
+				line-height: 22px;
+				padding: 1px 10px;
+			}
+			
+			.search {
+				padding: 10px 25px;
+				background-color: #F3F3F3;
+				background-image: url(img/index/down.png);
+				background-repeat: no-repeat;
+				background-size: 6px 3px;
+				background-position: 98% center;
+			}
+			
+			.inp {
+				width: 100%;
+				background-color: #F3F3F3;
+			}
+			
+			.mrpx {
+				color: #9B9B9B;
+				padding-right: 15px;
+				width: 75px;
+				background: url(img/index/down.png) no-repeat right center;
+				background-size: 8px;
+			}
+			
+			#sinbox1 {
+				position: absolute;
+				bottom: 0;
+				left: 5%;
+				width: 90%;
+			}
+			
+			.jb {
+				background: url(img/index/jb.png) no-repeat 0px center;
+				background-size: 16px;
+				text-align: left;
+				padding: 10px 0 10px 50px;
+				color: #444444;
+			}
+			
+			.pl {
+				background: url(img/xzd.png) no-repeat 0px center;
+				background-size: 16px;
+				text-align: left;
+				padding: 10px 0 10px 50px;
+				color: #444444;
+			}
+			
+			.ybox {
+				width: 100px;
+				height: 125px;
+				background: url(img/ybox.png) no-repeat;
+				background-size: 100% 100%;
+				position: absolute;
+				top: 45px;
+				right: 15px;
+				z-index: 2;
+			}
+			
+			#sinbox {
+				background-color: #fff;
+				padding: 10px 20px;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+			}
+			
+			#newsContent {
+				line-height: 25px;
+			}
+			
+			#newsContent img {
+				margin-top: 10px;
+				margin-bottom: 10px;
+			}
+			
+			.cunbtn {
+				font-size: 12px;
+				color: #098E75;
+				border: 1px solid #098E75;
+				padding: 1px 3px;
+				border-radius: 3px;
+				margin-left: 5px;
+				font-weight: 200;
+			}
+			
+			.schoolMsg {
+				padding-right: 10px;
+			}
+			div {
+				word-break : normal;
+			}
+		</style>
+	</head>
+
+	<body style="background: #f4f4f4;">
+		<!-- 头部 -->
+		<header>
+			<div class="navBar bottomBorder" style="padding: 0;box-shadow: none;">
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+				<div class="navItemIcon marl5 marr10" onclick="Comm.showWindow('sinboxTemp2',true);"></div>
+				<div class="navTitle">问答详情</div>
+			</div>
+		</header>
+		<section class="mescroll" id="box">
+			<div class="schoolMsg" style="border:none">
+				<div class="color333 bold f24 lh30" style="font-family: Arial;" id="newsTitle"></div>
+				<div class="flex paddt10 mart5">
+					<div><img id="uFace" height="40" width="40"  onerror="this.src='img/my/mti.png';this.onerror=null;" style="border-radius: 40px;display: none;" /></div>
+					<div id="uName" class="lh20 marl15 wordW"></div>
+				</div>
+				<div class="color505 mart15 marb10" style="font-family: Arial;" id="newsContent"></div>
+			</div>
+			<div class="paddb10 paddt10 paddl10 paddr10" style="background-color: #F4F4F4;position: relative;z-index:1;">
+				<div class="fl" style="color: #9B9B9B;margin-left: 5px;" id="commentNumber">
+
+				</div>
+				<div class="mrpx fr changes" onclick="show()">
+					默认排序
+				</div>
+				<div class="ybox hide">
+					<div class="flex  center paddt15" onclick="model.changes(1,'默认排序')">
+						<div class="colorfff  paddb10" style="border-bottom: #7C7C7C 1px solid;width: 100%;">默认排序</div>
+					</div>
+					<div class="flex  paddt10" onclick="model.changes(2,'时间倒序')">
+						<div class="colorfff  center paddb10" style="border-bottom: #7C7C7C 1px solid;width: 100%;">时间倒序</div>
+					</div>
+					<div class="flex paddt10" onclick="model.changes(3,'按点赞数')">
+						<div class="colorfff  paddb10 center" style="width: 100%;">按点赞数</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div id="list">
+
+			</div>
+		</section>
+		<footer class="shared" style="background: #F4F4F4;">
+			<div class="pad15" id="anster" onclick="model.goQz()">
+				<div style=" color: #9B9B9B;line-height: 16px;" class="center">
+
+					<div class="cgreen"><img src="img/index/xie.png" width="14" height="14" class="marr10" />我要回答</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</footer>
+		<div id="sinbox1" class="paddb10" wtd="sinboxTemp">
+			<div class="bg_white marb10 f16" style="border-radius: 10px;">
+				<div class="paddb15 paddt15" style="border-bottom: 1px solid #f2f3f4;" onclick="model.bianji()">编辑</div>
+				<div class="coloreb3 paddb15 paddt15" onclick="model.shanping()">删除</div>
+			</div>
+			<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+		</div>
+		<div id="sinbox1" class="paddb10" wtd="sinboxTemp1">
+			<div class="bg_white marb10 f16" style="border-radius: 10px;">
+				<div class="paddt15 paddb15" onclick="model.jb()">举报</div>
+			</div>
+			<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+		</div>
+		<div id="sinbox" wtd="sinboxTemp2">
+			<div class="dflex" style="border-bottom: #f4f4f4 1px solid;">
+				<div class="mart20 marb20" onclick="model.shear(1)">
+					<img src="img/index/wx.png" width="45" />
+					<p class="c9e mart10">微信好友</p>
+				</div>
+				<div class="mart20 marb20" onclick="model.shear(2)">
+					<img src="img/index/pyq.png" width="45" />
+					<p class="c9e mart10">朋友圈</p>
+				</div>
+				<div class="mart20 marb20" onclick="model.shear(3)">
+					<img src="img/index/qq.png" width="45" />
+					<p class="c9e mart10">QQ</p>
+				</div>
+				<div class="mart20 marb20" onclick="model.shear(4)">
+					<img src="img/index/qqkj.png" width="45" />
+					<p class="c9e mart10">QQ空间</p>
+				</div>
+				<div class="mart20 marb20" onclick="model.shear(5)">
+					<img src="img/index/wb.png" width="45" />
+					<p class="c9e mart10">微博</p>
+				</div>
+			</div>
+			<div class="paddt10 paddb10 color666" style="border-top:#f4f4f4 1px solid;" onclick="Comm.showWindow('')">
+				取消
+			</div>
+		</div>
+	</body>
+	<script type="text/html" id="listTpl">
+		{{each $data v k}}
+		<div class="schoolMsg bg_white">
+			<div class="heads">
+				<div class="name-left fl" style="width: 100%;">
+					<img class="fl" style="border-radius: 50%;" onclick="Comm.go('personal.html?customerId={{v.customerId}}')" src="{{OSS(v.face)}}" onerror="this.src='img/index/scr.png';this.onerror=null;" width="40" height="40" />
+					<div class="fl marl10" style="width: 60%; height: 40px;" onclick="Comm.go('personal.html?customerId={{v.customerId}}')">
+						<p class="f14 color333" style="height: 25px;">
+							<span>{{v.customerName}}</span> {{if v.isBestComment==1}}<span><img src="img/index/zuiyouhuida.png" width="55" style="margin-left: 5px;margin-top: -2px;" /></span>{{/if}}
+						</p>
+						<p class="f12 c9e" style="height: 16px;">{{sldate(v.addTime)}}</p>
+
+					</div>
+					<div class="name-right fr paddl15 paddb15" onclick="model.More({{v.commentId}},{{v.customerId}});model.qh({{v.commentId}})">
+						<img src="img/index/more.png" width="14" height="3" />
+					</div>
+					<div class="fl" onclick="Comm.go('anwser.html?newsId=' + {{v.newsId}} + '&commentId=' + {{v.commentId}});" style="width: 100%;">
+						<!--{{if v.face[0]==''}}
+                    {{v.content}}
+                    {{/if}}-->
+						<div class="{{if v.url&&v.url[0]!=''}}sc-l{{/if}} cont fl lh21_5 mart5 wordW3 color505" style="font-family: Arial;">
+							{{v.content}}
+						</div>
+						{{if v.url&&v.url[0]!=''}}
+						<div class="fr sc-r mart10">
+							<img src="{{OSS(v.url[0],9)}}" onerror="this.src='img/index/scr.png';this.onerror=null;" class="fr" width="100%" height="76" style="border-radius: 5px;" />
+						</div>
+						{{/if}}
+						<!--{{if v.url&&v.url.length>1}}
+				<div class="clearfix"></div>
+				{{each v.url i l }}
+				<div class="fl marl5" style="width: 30%;">
+					<img src="{{OSS(i,9)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" style="object-fit: cover;border-radius: 5px;" width="100%" height="68">
+				</div>
+				{{/each}} {{/if}}-->
+						<div class="clearfix"></div>
+					</div>
+					<div class="clearfix"></div>
+
+					<div class="name-right fr" style="width: 50%;">
+						<div class="scl-but mart10 center">
+							{{if(v.isPraise==1)}}
+							<div onclick="model.romevePraise({{v.commentId}},this);" style="width:60px;"> <img class="zpic{{v.commentId}}" src="img/index/zand.png" width="19" height="17" /><span style="margin-left: 5px;" class="zan{{v.commentId}} c9e f12">{{conunm(v.praiseNumber)}}</span></div>
+							{{else}}
+							<div onclick="model.addPraise({{v.commentId}},this);" style="width:60px;"> <img class="zpic{{v.commentId}}" src="img/index/zan.png" width="19" height="17" /><span style="margin-left: 5px;" class="zan{{v.commentId}} c9e f12">{{conunm(v.praiseNumber)}}</span></div>
+							{{/if}}
+							<div onclick="Comm.go('anwser.html?newsId=' + {{v.newsId}} + '&commentId=' + {{v.commentId}}+'&cont=1');" style="width:60px;"><img src="img/index/pl.png" width="19" height="17" /><span style="margin-left: 5px;" class="pl{{v.commentId}} c9e f12">{{if v.commentNumber}}{{conunm(v.commentNumber)}}{{else}}0{{/if}}</span> </div>
+							<!--{{if v.isLike == 1}}
+                       
+                        {{else}}
+                        <div onclick="model.addLike({{v.commentId}},this);"><span style="margin-left: 5px;" class="like{{v.commentId}}" class="c9e f12">{{v.likeNumber}}</span> <img src="img/index/xin.png" width="15" /></div>
+                        {{/if}}-->
+							{{if v.isCollection ==1}}
+							<div onclick="model.removeCollection({{v.commentId}},this);" style="width:60px;"> <img class="spic{{v.commentId}}" src="img/index/shoud.png"  width="19" height="17"/><span style="margin-left: 5px;" class="shou{{v.commentId}} c9e f12">{{conunm(v.collectionNumber)}}</span></div>
+							{{else}}
+							<div onclick="model.addCollection({{v.commentId}},this);" style="width:60px;"> <img class="spic{{v.commentId}}" src="img/index/shou.png" width="19" height="17"/><span style="margin-left: 5px;" class="shou{{v.commentId}} c9e f12">{{conunm(v.collectionNumber)}}</span></div>
+							{{/if}}
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		{{/each}}
+	</script>
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="./inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script type="text/javascript" src="./inc/upimg/upload.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+	<script type="text/javascript" src="./inc/picker.min.js"></script>
+	<script>
+		var newsId = Comm.query('newsId'); //id
+		var shearId = newsId;
+		var shearTitle = '发现一个问题哟~';
+		var shearContent = '快来帮我还回答吧~';
+		var sort = 1;
+		var customerId = app.getCid();
+
+		function pageload() {
+			model.gteNweInfo();
+			model.init();
+			 Comm.storage("isX", function(d) {
+            if (d) {
+                $(".shared").css("bottom", "10px");
+                Comm.resizeSection();
+            }
+        });
+		}
+
+		function pageresume() {
+			//model.init();
+			if(Comm.db('anwserId')&&Comm.db('userinfo')) {
+				getNum()
+			}
+		}
+
+		function show() {
+			if($('.ybox').hasClass('hide')) {
+				$('.ybox').removeClass('hide')
+			} else {
+				$('.ybox').addClass('hide')
+			}
+		}
+
+		function getNum() {
+			AJAX.GET('/api/comment/commentFieldInfo?commentId=' + Comm.db('anwserId'), function(d) {
+				if(d && d.code == 1) {
+					var id = Comm.db('anwserId');
+					console.log(d.data);
+					$('.zan' + id).html(d.data.praiseNumber);
+					$('.pl' + id).html(d.data.commentNumber);
+					$('.shou' + id).html(d.data.collectionNumber);
+					if(d.data.isPraise == 1) {
+						$('.zpic' + id).attr('src', 'img/index/zand.png');
+					} else {
+						$('.zpic' + id).attr('src', 'img/index/zan.png');
+					}
+					if(d.data.isCollection == 1) {
+						$('.spic' + id).attr('src', 'img/index/shoud.png');
+					} else {
+						$('.spic' + id).attr('src', 'img/index/shou.png');
+					}
+				}
+			})
+		}
+		var mid = "";
+		var qzTitle = '';
+		var model = {
+			changes: function(sid, name) {
+				sort = sid;
+				var page = {
+					num: 1,
+					size: 10
+				};
+				model.init();
+				$('.changes').html(name);
+				$('.ybox').addClass('hide')
+			},
+			qh: function(id) {
+				mid = id
+			},
+			jb: function() {
+				if(app.isLogin()==false){
+					Comm.showWindow('')
+					top.Comm.confirm('您还未登录,请先登录', function(a) {
+                    if (a == 1) {
+                        Comm.go('newLogin.html')
+                    }
+                });
+                return false;
+				}
+				Comm.showWindow('');
+				Comm.go('report.html?itemId=' + mid + '&itemType=2');
+			},
+			rp: function() {
+				Comm.showWindow('');
+				Comm.go('anwser.html?newsId=' + newsId + '&commentId=' + mid);
+			},
+			More: function(v, sid) {
+				mid = v;
+				if(sid == customerId) {
+					Comm.showWindow('sinboxTemp', true)
+				} else {
+					Comm.showWindow('sinboxTemp1', true)
+				}
+
+			},
+			shanping: function() {
+				Comm.showWindow('');
+				Comm.confirm('确认删除这条回复？', function(d) {
+					if(d) {
+						AJAX.GET('/admin/comment/noenable?commentId=' + mid, function(a) {
+							if(a && a.code == 1) {
+								Comm.message('删除成功');
+								model.init();
+							} else {
+								Comm.message(a.msg);
+							}
+						})
+					}
+				})
+			},
+			bianji: function() {
+				Comm.showWindow('');
+				Comm.db('qzTitle',$('#newsTitle').html());
+				Comm.go('anwserqz.html?newsId=' + newsId + '&title=' + $('#newsTitle').html() + '&plId=' + mid+'&disable=1');
+			},
+			shear: function(platform) {
+				//分享资讯 -- 通用
+				event.stopPropagation();
+				var url = config.webroot + 'shareAsk.html?newsId=' + shearId;
+				Comm.shareUrl({
+					platform: platform,
+					pic: config.webroot + "img/logo.png",
+					title: shearTitle,
+					desc: shearContent,
+					url: url
+				}, function(d) {
+					if(d.code) {
+						//Comm.message('分享成功！')
+					}
+				});
+				Comm.showWindow('');
+				//Comm.go('shareArticle.html')
+			},
+			//获取详情
+			gteNweInfo: function() {
+				AJAX.GET("/api/news/info?newsId=" + newsId, function(d) {
+					if(d && d.code == 1) {
+						console.log(d.data.itemName)
+						if(d.data.itemName == undefined) {
+							Comm.alert('该问问已删除', function() {
+								Comm.close();
+							})
+						}
+						$("#commentNumber").html(d.data.news.commentNumber + '个回答');
+						$('#newsTitle').html(d.data.news.title.replace(/<div>|<\/div>/gi, "").replace(/(\r\n|\n|\r)/gm, "<br/>").replace(/[ ]/g, "&nbsp;").replace(/&nbsp;src/g, " src"))
+						$('#newsContent').html(d.data.news.content.replace(/<div>|<\/div>/gi, "").replace(/<script/g, '').replace(/(\r\n|\n|\r)/gm, "<br/>").replace(/[ ]/g, "&nbsp;").replace(/&nbsp;src/g, " src"));
+						$('#uFace').attr('src', Comm.OSS.getImgUrl(d.data.itemFace));
+						$('#uFace').attr('onclick', "Comm.go('personal.html?customerId="+d.data.itemId+"')");
+						$('#uFace').show();
+						$('#uName').html('<span>' + d.data.itemName + '</span>'+'<br><span class="color999 f12">' + sldate(d.data.news.addTime)  + '</span>')
+						if(d.data.news.title) {
+							shearTitle = d.data.news.title;
+						}
+						if(d.data.news.subhead) {
+							shearContent = d.data.news.subhead.replace(/<\/?[^>]*>/gim,"");
+						}
+						var historys = {};
+						if(d.data.news.subhead == "") {
+							historys.content = d.data.news.content;
+						} else {
+							historys.content = d.data.news.subhead;
+						}
+						historys.commentNumber = d.data.news.commentNumber;
+						historys.id = d.data.news.newsId;
+						historys.type = 3;
+						historys.title = d.data.news.title;
+						var his = [];
+						if(Comm.db('seeHistory')) {
+							his = Comm.db('seeHistory');
+						}
+						if(his && his.length > 29) {
+							his.pop();
+						}
+						var no = ""
+						for(var i = 0; i < his.length; i++) {
+							if(his[i].id == historys.id) {
+								console.log(historys.id)
+								no = 1;
+							}
+						}
+						if(no == '') {
+							his.unshift(historys);
+						}
+						Comm.db('seeHistory', his);
+						qzTitle = d.data.news.title;
+				if(!app.isLogin()){
+					
+					$("#anster").attr('onclick', 'model.noLogin()');
+				}
+					}
+				})
+			},
+			goQz:function(){
+				if(Comm.db('userinfo').shutup==1){
+					Comm.alert('您暂无权限~',function(){
+							
+						})
+					return false;
+					}
+				Comm.db('qzTitle',qzTitle);
+				Comm.go("anwserqz.html?newsId=" + newsId + "&disable=1")
+			},
+			noLogin:function(){
+			top.Comm.confirm('您还未登录,请先登录', function(a) {
+                    if (a == 1) {
+                        Comm.go('newLogin.html')
+                    }
+                });	
+			},
+			init: function() {
+				if(!model.mere) {
+					model.mere = new MERefresh('box,list', {
+						pagesize: 10,
+						refreshUrl: '/api/news/commentInfoByFid',
+						refreshTypeGet: true
+					});
+
+					model.mere.refreshOption.refreshParm = {
+						newsId: newsId,
+						commentType: 1,
+						sort: sort,
+						customerId: customerId
+					};
+
+					//页面 <刷新> 的回调
+					model.mere.refreshOption.refresh_cb = function(refresh, d) {
+						refresh.successEndRef(d.data.length, d.totalCount);
+						for(var i = 0; i < d.data.length; i++) {
+							if(d.data[i].url) {
+								d.data[i].url = d.data[i].url.split(',');
+							}
+						}
+						$('.schoolMsg').addClass('bg_white');
+//						for(var i=0;i<d.data.length;i++){
+//							d.data[i].content=d.data[i].content.replace(/<div>|<\/div>/gi, "").replace(/<script/g, '').replace(/(\r\n|\n|\r)/gm, "<br/>").replace(/[ ]/g, "&nbsp;").replace(/&nbsp;src/g, " src")
+//						}
+						refresh.appendHtml(template('listTpl', d.data));
+						$('.cont div').addClass('color505')
+						$('section').children().addClass('havemenu');
+					};
+				} else {
+					model.mere.refreshOption.refreshParm = {
+						newsId: newsId,
+						commentType: 1,
+						sort: sort,
+						customerId: customerId
+					};
+					//重置列表数据
+					model.mere.MeRefScroll.resetUpScroll();
+					//model.mere.MeRefScroll.triggerDownScroll();
+					//隐藏回到顶部按钮
+					model.mere.MeRefScroll.hideTopBtn();
+
+				}
+			},
+			addPraise: function(id, e) { //点赞
+				AJAX.GET('/api/news/praiseByCommentId?commentId=' + id, function(a) {
+					if(a && a.code == 1) {
+						$(e).attr('onclick', '');
+						setTimeout(function() {
+							$(e).attr('onclick', 'model.romevePraise(' + id + ',this)');
+						}, 200)
+
+						var num = $('.zan' + id).html();
+						$('.zan' + id).html(Number(num) + 1);
+						var aa = $(e).children();
+						$(aa[0]).attr('src', 'img/index/zand.png');
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+			addLike: function(id, e) { //喜欢
+				AJAX.GET('/api/comment/addLike?commentId=' + id, function(a) {
+					if(a && a.code == 1) {
+						$(e).attr('onclick', '');
+						setTimeout(function() {
+							$(e).attr('onclick', 'model.romeveLike(' + id + ',this)');
+						}, 200)
+
+						var num = $('.like' + id).html();
+						$('.like' + id).html(Number(num) + 1);
+						var aa = $(e).children();
+						$(aa[0]).attr('src', 'img/index/xind.png');
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+			addCollection: function(id, e) { //收藏
+
+				AJAX.GET('/api/collection/collect?itemId=' + id + '&customerId=' + customerId + '&itemType=2', function(a) {
+					if(a && a.code == 1) {
+						$(e).attr('onclick', '');
+						setTimeout(function() {
+							$(e).attr('onclick', 'model.removeCollection(' + id + ',this)');
+						}, 200)
+
+						var num = $('.shou' + id).html();
+						$('.shou' + id).html(Number(num) + 1);
+						var aa = $(e).children();
+						$(aa[0]).attr('src', 'img/index/shoud.png');
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+			romevePraise: function(id, e) { //取消点赞
+
+				AJAX.GET('/api/news/cancelPraiseByCommentId?commentId=' + id, function(a) {
+					if(a && a.code == 1) {
+						$(e).attr('onclick', '');
+						setTimeout(function() {
+							$(e).attr('onclick', 'model.addPraise(' + id + ',this)');
+						}, 200)
+						var aa = $(e).children();
+						var num = $('.zan' + id).html();
+						console.log(num)
+						$('.zan' + id).html(Number(num) - 1);
+						$(aa[0]).attr('src', 'img/index/zan.png');
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+			//      romeveLike: function(id, e) { //取消喜欢
+			//      	Comm.loading('加载中...')
+			//          AJAX.GET('/api/comment/cancelLike?commentId=' + id, function(a) {
+			//          	Comm.loading(false)
+			//              if (a && a.code == 1) {
+			//                  Comm.message('操作成功');
+			//                  $(e).attr('onclick', 'model.addLike(' + id + ',this)');
+			//                  var aa = $(e).children();
+			//                  var num = $('.like'+id).html();
+			//                  $('.like'+id).html(Number(num) - 1);
+			//                  $(aa[1]).attr('src', 'img/index/xin.png');
+			//              } else {
+			//                  Comm.message(a.msg);
+			//              }
+			//          })
+			//      },
+			removeCollection: function(id, e) { //取消收藏
+				AJAX.GET('/api/collection/deleteById?itemId=' + id + '&customerId=' + customerId + '&itemType=2', function(a) {
+
+					if(a && a.code == 1) {
+						$(e).attr('onclick', '');
+						setTimeout(function() {
+							$(e).attr('onclick', 'model.addCollection(' + id + ',this)');
+						}, 200)
+
+						var aa = $(e).children();
+						var num = $('.shou' + id).html();
+						$('.shou' + id).html(Number(num) - 1);
+						$(aa[0]).attr('src', 'img/index/shou.png');
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+
+		}
+	</script>
+
+</html>

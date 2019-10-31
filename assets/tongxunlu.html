@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>我的粉丝</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+
+    <style>
+        .navItemIcon {
+            background-image: url('img/msg.png');
+            background-position: center right;
+            background-repeat: no-repeat;
+            background-size: auto 20px;
+        }
+
+        .searchBar {
+            margin: 0 auto;
+        }
+
+        .searchBar input {
+            width: 95%;
+            padding-left: 30px;
+            line-height: 30px;
+            height: 30px;
+            font-size: 14px;
+            color: #8891A7;
+            background-color: #F2F6F7;
+            border-radius: 18px;
+            background-image: url('img/search.png');
+            background-repeat: no-repeat;
+            background-size: 14px;
+            background-position: 10px center;
+            margin: 0 auto;
+            margin-left: 2.5%;
+        }
+
+        .fansItem {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 13px 13px 13px 3px;
+            margin: 0 10px;
+            border-bottom: 1px solid #f4f4f4;
+        }
+
+        .userImg {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid #dedede;
+
+        }
+
+        .icon_jia {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: url('img/fans/guanzu.png')no-repeat center;
+            background-size: 100%;
+        }
+
+        .icon_quxiao {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: url('img/fans/quxiao.png')no-repeat center;
+            background-size: 100%;
+        }
+
+        .icon_guanzu {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: url('img/fans/guanzu.png')no-repeat center;
+            background-size: 100%;
+        }
+        .isJiaru{
+        	background: inherit;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">通讯录</div>
+        </div>
+    </header>
+    <section id="box">
+        <div class="main">
+            <div class="fansList" id="fansList">
+            </div>
+        </div>
+
+    </section>
+</body>
+<!--  -->
+<script type="text/html" id="dome1">
+    {{each $data as v k}}
+    <div class="fansItem">
+        <div style="display: flex;align-items: center;" onclick="Comm.go('./personal.html?customerId={{v.customerId}}')">
+            <div class="userImg" style="margin-right: 15px;">
+                <img src="{{OSS(v.face)}}" alt="" width="50" height="50" style="border-radius:50%">
+            </div>
+            <div>
+                <p class="wordW" style="color:#222222;font-size:14px;font-weight: 700; width: 180px;">{{v.concatName}}</p>
+                <p class="wordW" style="color:#888888;font-size:12px;margin-top: 5px; width: 180px;">{{v.phone}}</p>
+            </div>
+        </div>
+        <div>
+            {{if(v.isFocus == 1)}}
+            <div class="f14 isJiaru" style="width: 65px;padding: 0;border: none;" onclick="unfollow(this,{{v.customerId}});event.stopPropagation()"><img src="img/isAdd.png" width="100%"/></div>
+            
+            {{/if}}
+            {{if(v.isFocus == 0)}}
+            <div class="f14 add-guan center" style="width: 65px;padding: 0;border: none;" onclick="addFans(this,{{v.customerId}}); event.stopPropagation()"><img src="img/add.png" width="100%"/></div>
+            {{/if}}
+        </div>
+    </div>
+    {{/each}}
+</script>
+
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+
+<script>
+    var customerId = app.getCid();
+    var merefresh = null;
+   	var tel=null;
+   	var allTel=null;
+	Comm.loading('查询中...')
+    function pageload() {
+    	Comm.getAddressBook(function (data) {
+            if (data.code == 1) {
+            	tel = data.list;
+            	Comm.db('allTel',data.list);
+            	myrefresh();
+            }else{
+            		Comm.close();
+            }
+       });
+    }
+    function pageresume() {
+    			$('#fansList').html('');
+    			tel = Comm.db('allTel');
+			myrefresh();
+		}
+	
+	
+
+    function myrefresh() {
+    	if(tel.length>20){
+    		var jsonData = tel.slice(0,20);
+    	}else{
+    		var jsonData = tel;
+    	}
+    	
+       AJAX.POST('/api/customer/checkContactList',{jsonData:JSON.stringify(jsonData)},function(a){
+       	if(a&&a.code==1){
+       		if(a.data&&a.data!=''){
+       		Comm.loading(false)
+       		$('#fansList').append(template('dome1',a.data));	
+       		}
+       		if(tel.length>20){
+       			tel.splice(0,20);
+       		}else{
+       			tel.splice(0,tel.length);
+       		}
+       		if(tel.length>0){
+       			myrefresh();
+       		}else{
+       			Comm.loading(false);
+       			$('#fansList').append('<div class="mescroll-empty"><p class="empty-tip" style="display: block;">没有更多数据啦~~</p></div>');
+       		}     		
+       	}else{
+       		Comm.message(a.msg);
+       	}
+       })
+    }
+
+    //成为他的粉丝
+    function addFans(e, fid) {
+        AJAX.POST('/api/fans/addFans', { customerId: customerId, fid: fid }, function (d) {
+            if (d.code == 1) {
+                 $(e).parent().html('<div class="f14 isJiaru" style="width: 65px;padding: 0;border: none;" onclick="unfollow(this,'+fid+');event.stopPropagation()"><img src="img/isAdd.png" width="100%"/></div>')
+            }else{
+                Comm.message(d.msg);
+            }
+        })
+    }
+    //取消关注
+    function unfollow(e, fid) {
+    	Comm.confirm('是否确认取消关注？',function(a){
+    		if(a){
+    			AJAX.POST('/api/fans/unfollow', { customerId: customerId, fid: fid }, function (d) {
+            if (d.code == 1) {
+                $(e).parent().html('<div class="f14 add-guan" style="width: 65px;padding: 0;border: none;" onclick="addFans(this,'+fid+'); event.stopPropagation()"><img src="img/add.png" width="100%"/></div>')
+            }else{
+                Comm.message(d.msg); 
+            }
+        })
+    		}
+    	})
+    }
+
+    // var model = {
+    //     // getFansList() {
+    //     //     AJAX.POST('/api/fans/fansList', { customerId: customerId, curPage: 1, pageSize: 10 }, function (d) {
+    //     //         if (d.code == 1) {
+    //     //             $('#fansList').html(template('dome1', d.data))
+    //     //         }
+    //     //     })
+    //     }
+    // }
+
+
+</script>
+
+</html>

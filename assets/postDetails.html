@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>圈子详情</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="./css/g.css" />
+    <link rel="stylesheet" href="./css/comm.css" />
+    <link rel="stylesheet" href="./css/side.css" />
+    <link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="./css/tpl.css" />
+    <link rel="stylesheet" href="css/photo.css" />
+    <style>
+        body {
+            background: #fff;
+        }
+        
+        header {
+            height: 200px;
+            width: 100%;
+            /*background: url('./img/a/banner.png')no-repeat center;*/
+            background-size: cover;
+            position: relative;
+        }
+        
+        #edit {
+            background: url('img/chengyuan.png')no-repeat center;
+            background-size: 60%;
+            width: 40px;
+        }
+        
+        .logo {
+            width: 55px;
+            height: 55px;
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+        }
+        
+        .logo img {
+            width: 55px;
+            height: 55px;
+            border: 1px solid #fff;
+            border-radius: 5px;
+        }
+        
+        .top {
+            padding: 15px 15px 0px 15px;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .top .isJiaru {
+            color: #fff;
+            width: 65px;
+            /*height: 30px;*/
+            text-align: center;
+            /*line-height: 30px;*/
+            background: #D3D3D3;
+            border-radius: 15px;
+            padding: 0px;
+        }
+        .top .add-guan {
+            color: #098E75;
+            width: 65px;
+            /*height: 30px;*/
+            text-align: center;
+            /*line-height: 30px;*/
+            background: #fff;
+            border: 1px solid #098E75;
+            border-radius: 15px;
+            padding: 0px;
+        }
+        .masg {
+            color: #999999;
+            padding: 5px 5px 5px 15px;
+            background: #F4F4F4;
+            display: none;
+        }
+        
+        .name-left {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .schoolMsg {
+            background: #fff;
+            padding-bottom: 10px;
+        }
+        
+        .xiewenzhan {
+            position: fixed;
+            bottom: 100px;
+            right: 25px;
+            z-index: 99;
+        }
+        
+        .tabs {
+            background: #fff;
+            border-top: 1px solid #ededed;
+            padding: 8px 15px;
+            /*padding-bottom: 0px;*/
+        }
+        
+        .tabs input[type="text"] {
+            width: 66px;
+            height: 26px;
+            border-radius: 13px;
+            border: 1px solid #D2D2D2;
+            padding-left: 30px;
+            margin-top: -10px;
+        }
+        
+        .active {
+            border-bottom: 2px solid #098E75 !important;
+            padding-bottom: 5px;
+            font-weight: bold;
+            color: #098E75;
+        }
+        
+        .v_list>div {
+            border-bottom: 2px solid transparent;
+            /*padding-bottom: 10px;*/
+        }
+        
+        .icon_search {
+            display: inline-block;
+            width: 13px;
+            height: 15px;
+            background: url('./img/a/search.png')no-repeat center;
+            background-size: 100%;
+            position: absolute;
+            left: 10px;
+            top: 2px;
+        }
+        
+        .searchBar {
+            margin: 0 auto;
+        }
+        
+        .searchBar div {
+            width: 80%;
+            padding-left: 30px;
+            line-height: 30px;
+            height: 30px;
+            font-size: 14px;
+            background-color: #F2F6F7;
+            border-radius: 18px;
+            background-image: url('img/search.png');
+            background-repeat: no-repeat;
+            background-size: 14px;
+            background-position: 10px center;
+            margin-left: 15%;
+            opacity: 0.8;
+        }
+        
+        .navBackIcon {
+            background-image: url(img/fh.png);
+            background-size: auto 25px;
+        }
+        
+        .cunbtn {
+            font-size: 12px;
+            color: #098E75;
+            border: 1px solid #098E75;
+            padding: 0px 3px;
+            border-radius: 3px;
+            margin-right: 5px;
+            font-weight: 200;
+        }
+        
+        .sc-l {
+            width: 73%;
+        }
+        
+        .sc-r {
+            width: 25%;
+        }
+        
+        .visibility {
+            visibility: hidden !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navBar navt bg_white paddt30" style="display:none;">
+        <div class="navBackIcon" onclick="Comm.close()"></div>
+        <div class="nav-title block searchBar" onclick="model.searchBox()" style="padding-top: 8px;width: calc(100% - 50px);height: 44px;margin: 0;">
+                    <div id="id_searchInput" class="color999 tleft">请输入您搜索的帖子</div>
+                </div>
+    </div>
+    <section id="mescroll" class="mescroll" style="padding-bottom:60px;">
+        <header>
+            <div class="navBar ">
+                <div class="navBackIcon" onclick="Comm.close()"></div>
+                <div class="navItem f16 marr10" id="edit" style="color: #098E75" onclick="model.edit()"></div>
+                <div class="nav-title block searchBar" onclick="model.searchBox()" style="padding-top: 6px;width: calc(100% - 50px);height: 44px;margin: 0;">
+                    <div id="id_searchInput" class="color999 tleft">请输入您搜索的帖子</div>
+                </div>
+            </div>
+            <div class="logo wimgbox">
+                <img src="" class="wimg"onclick="Photo.show(this,true)" alt="">
+            </div>
+        </header>
+        <div class="top">
+
+        </div>
+        <!--<div class="tabs flex-between" id="tabs">
+            <div class="flex-between v_list">
+                <div id="jje" class='jje' style="margin-right: 30px;" onclick="model.swTabs(this,1)">简介</div>
+                <div id="tzz" class="tzz active" onclick="model.swTabs(this,2)">帖子</div>
+            </div>
+            <div class="searchBox" onclick="model.searchBox()">
+                <i class="icon_search"></i>
+                <input readonly="readonly" type="text" placeholder="搜索">
+            </div>
+
+        </div>-->
+        <div class="masg f12 paddl10">542个讨论</div>
+        <div class="main" id="main">
+            <div class="hide" id="intro"></div>
+            <div class="hide" id="list"></div>
+        </div>
+        <div class="xiewenzhan" onclick="Comm.go('send2.html')">
+            <img src="img/index/bj.png" width="45">
+        </div>
+    </section>
+
+</body>
+<script type="text/html" id="listTpl3">
+    <div style="width: 100%;" class="borderb paddb10">
+        <div class="f18 lh30 marb10" style="color:#444; width:100%">
+            <div style="width: 84%;" class="fl">{{groupName}}</div>
+            <div id="isAdd" class="fl" style="margin-top: -1px;">
+                {{if(focus!=0&&customerId!=adminUserId)}}
+                <img src="img/yijia.png" style="object-fit: contain;" onclick="model.remove({{groupId}})" width="52" height="30" />
+                <!--<div class="f14 isJiaru" onclick="model.remove({{groupId}})">退出</div>-->
+                {{/if}} {{if(focus==0&&customerId!=adminUserId)}}
+                <img src="img/jiaru.png" style="object-fit: contain;" onclick="model.add({{groupId}})" width="52" height="30" />
+                <!--<div class="f14 add-guan" onclick="model.add({{groupId}})">加入</div>-->
+                {{/if}}
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <p class="f12" style="color:#999;"><span style="color:#999;">帖子{{newsNum}}</span> · <span style="color:#999;">成员{{customerNum}}</span> </p>
+        <p class="f12 mart5" style="color:#999;">{{introduction}}</p>
+    </div>
+
+</script>
+<script type="text/html" id="listTpl2">
+    {{each $data v k}}
+    <div class="schoolMsg" id="{{v.newsId}}" onclick="event.stopPropagation();Comm.go('articleDetail.html?type=qz&newsId='+{{v.newsId}})">
+        <div class="fl center" style="width: 7%;">
+            <img src="img/ly.png" width="18" />
+            <p class="mart5" id="ping{{v.newsId}}">{{v.commentNumber}}</p>
+        </div>
+        <div style="width: 90%;" class="fl marl5">
+            <div class="{{if v.face&&v.face[0]!=''}}sc-l fl{{/if}}">
+                <div class="f14 wordW2 color333">
+                <span class="cunbtn {{v.newsId}} {{if v.recommend==0}}hide{{/if}}">置顶</span><span style='font-family: Arial;'>{{v.title}}</span>
+                	
+                	
+                </div>
+
+                <!--<div class="lh25 mart5 wordW2 c60">
+                {{v.subhead}}
+            </div>-->
+                <div class="heads mart10">
+                    <div class="name-left fl">
+                        <img class="fl" onclick="Comm.go('personal.html?customerId='+{{v.customerId}});event.stopPropagation();" src="{{OSS(v.userFace)}}" style="border-radius: 10px;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20" />
+                        <div class="fl marl10">
+                            <p class="f12 c9e wordW" style="width: 120px;">{{v.userName}}</p>
+                        </div>
+                        <div class="fl marl20 f12 c9e">{{sldate(v.lastCommentTime)}}</div>
+                    </div>
+                    <!--<div class="name-right fr paddl30 paddr10" onclick="Comm.showWindow('{{if v.customerId==v.myId}}sinboxTemp{{else}}sinboxTemp1{{/if}}',true);model.qh({{v.newsId}});event.stopPropagation()">
+                    <img src="img/index/more.png" width="14" height="3" />
+                </div>-->
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            {{if v.face&&v.face[0]!=''}}
+            <div class="fr sc-r">
+                {{imgTpl(v.face[0].split(','),56)}}
+            </div>
+            {{/if}}
+            <div class="clearfix"></div>
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    {{/each}}
+</script>
+<script type="text/html" id="listTpl1">
+    <div style="background: #fff;" class="pad15">
+        <div class="flex ">
+            <p class="f14 bold " style="width:60px;">圈主</p>
+            <p style="color:#737171;">{{adminUserName}}</p>
+        </div>
+        <div class="flex mart10">
+            <p class="f14 bold " style="width:60px;">创建于 </p>
+            <p style="color:#737171;">{{addTime}}</p>
+        </div>
+        <div class="mart10">
+            <p class="f14 bold " style="width:60px;"> 简介 </p>
+            <p class="mart10" style="color:#737171;">
+                {{introduction}}
+            </p>
+        </div>
+    </div>
+</script>
+<script type="text/javascript" src="./inc/z.js"></script>
+<script type="text/javascript" src="./inc/g.js"></script>
+<script type="text/javascript" src="./inc/comm.js"></script>
+<script type="text/javascript" src="./inc/side.js"></script>
+<script src="./inc/mescroll/mescroll.min.js"></script>
+<script src="./inc/mescroll/swiper.min.js"></script>
+<script type="text/javascript" src="inc/tpl.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+<script type="text/javascript" src="inc/photo.js"></script>
+<script>
+    var customerId = app.getCid();
+    var merefresh = null;
+    var groupId = Comm.query('groupId');
+
+    function pageload() {
+        //Comm.loading('加载中...')
+        //初始化tabs页
+        model.swTabs($('#tzz')[0], 2);
+        model.intTabS();
+        $("section").scroll(function() {
+            event.stopPropagation();
+            model.scroll(this);
+        });
+    }
+
+    function pageresume() {
+        if (Comm.db('tzcb') == 1) {
+            refresh();
+            Comm.db('tzcb', '');
+        }
+        if(Comm.db('tcxz') == 1){
+        		$("#isAdd").html('<div class="f14 add-guan" onclick="model.add(' + groupId + ')">加入</div>');
+            $('.xiewenzhan').hide();
+        		Comm.db('tcxz','');
+        }
+       // refresh();
+        if (Comm.db('newsID')) {
+            AJAX.GET('/api/news/fieldInfo?newsId=' + Comm.db('newsID') + '&customerId=' + customerId, function(d) {
+                if (d && d.code == 1) {
+                    $('#ping' + Comm.db('newsID')).html(d.data.commentNumber);
+                }
+            })
+        }
+        model.intTabS();
+    }
+    var model = {
+        pageIndex: 2, //默认简介页
+        //切换tabs事件
+        swTabs: function(el, index) {
+            model.pageIndex = index;
+            if (index == 1 && !$(el).hasClass('active')) {
+                $('.v_list div.active').removeClass('active');
+                $('.jje').addClass('active');
+
+                $('#main #intro').removeClass('hide');
+                $('#main #list').addClass('hide');
+                $('.mescroll-upwarp').addClass('visibility');
+
+                //开启上拉刷新和下拉加载
+                merefresh.MeRefScroll.options.up.use = false;
+                merefresh.MeRefScroll.options.down.use = false;
+            } else if (index == 2) {
+                $('.v_list div.active').removeClass('active');
+                $('.tzz').addClass('active');
+
+                $('#main #intro').addClass('hide');
+                $('#main #list').removeClass('hide');
+                $('.mescroll-upwarp').removeClass('visibility');
+
+                if (merefresh) {
+                    //开启上拉刷新和下拉加载
+                    merefresh.MeRefScroll.options.up.use = true;
+                    merefresh.MeRefScroll.options.down.use = true;
+                } else {
+                    refresh();
+                }
+            }
+        },
+        //初始化tabs页
+        intTabS: function() {
+            AJAX.GET('/api/school/groups/info?groupId=' + groupId + '&customerId=' + customerId, function(a) {
+                if (a && a.code == 1) {
+                    //Comm.loading(false)
+                    a.data.customerId = app.getCid();
+                    model.jianjie = a.data;
+                    $(".masg").html(a.data.newsNum + '个帖子');
+                    $(".top").html(template('listTpl3', a.data));
+                    $('#main #intro').html(template('listTpl1', model.jianjie));
+
+                    $(".logo img").attr('src', Comm.OSS.getImgUrl(a.data.face, 'm'));
+                    $(".logo img").attr('onerror', "this.src='img/my/mti.png';this.onerror=null;");
+                    $("header").css('background', 'url(' + Comm.OSS.getImgUrl(a.data.headImg, 'l') + ')no-repeat center;');
+                    $("header").css('background-size', 'cover');
+                    if (a.data.focus == 0||Comm.db('userinfo').shutup==1) {
+                        $('.xiewenzhan').hide();
+                    } else {
+                        $('.xiewenzhan').attr('onclick', 'Comm.go("send2.html?groupId=' + a.data.groupId + '&disable=1")')
+                    }
+
+                }else{
+                	Comm.alert(a.msg,function(){
+                			Comm.close();
+                		})
+                }
+            })
+        },
+        add: function(groupsId) {
+            AJAX.GET('/api/school/groups/addFocus?groupsId=' + groupsId + '&customerIds=' + customerId, function(a) {
+                if (a && a.code == 1) {
+                    model.intTabS();
+                    $("#isAdd").html('<div class="f14 isJiaru"onclick="model.remove(' + groupsId + ')">退出</div>');
+                    $('.xiewenzhan').attr('onclick', 'Comm.go("send2.html?groupId=' + groupId + '&disable=1")');
+                    $('.xiewenzhan').show();
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+        },
+        remove: function(groupsId) {
+            Comm.confirm('是否确认退出？', function(d) {
+                if (d) {
+                    AJAX.GET('/api/school/groups/cancelFocus?groupsId=' + groupsId + '&customerIds=' + customerId, function(a) {
+                        if (a && a.code == 1) {
+                            model.intTabS();
+                            $("#isAdd").html('<div class="f14 add-guan" onclick="model.add(' + groupsId + ')">加入</div>');
+                            $('.xiewenzhan').hide();
+                        } else {
+                            Comm.message(a.msg);
+                        }
+                    })
+                }
+            })
+        },
+        edit: function() {
+            Comm.go('groupMembers.html?groupId=' + groupId);
+        },
+        zan: function(id, e) {
+            AJAX.GET('/api/news/praiseByNewsId?newsId=' + id, function(a) {
+                if (a && a.code == 1) {
+                    $(e).attr('onclick', 'model.quxiao(' + id + ',this);event.stopPropagation()');
+                    $(e).find('img')[0].src = 'img/index/zand.png';
+                    $(e).find('span')[0].innerHTML++;
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+        },
+        quxiao: function(id, e) {
+            AJAX.GET('/api/news/cancelPraiseByNewsId?newsId=' + id, function(a) {
+                if (a && a.code == 1) {
+                    $(e).attr('onclick', 'model.zan(' + id + ',this);event.stopPropagation()');
+                    $(e).find('img')[0].src = 'img/index/zan.png';
+                    $(e).find('span')[0].innerHTML--;
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+        },
+        scroll: function(a) { //滚动处理
+            var top = $(a).scrollTop();
+            var t1 =top;
+            if (top > 70) {
+                $('.navt').show();
+                Comm.resizeSection();
+            } else if (top < 70) {
+                $('.navt').hide();
+                Comm.resizeSection();
+            }
+            setTimeout(function(){
+            	var t2 = $(a).scrollTop();
+            	if(t1==t2){
+            		Comm.upSlide(2);
+            	}
+            },500);
+           
+        },
+        searchBox: function() {
+            Comm.go("search2.html?groupId=" + model.jianjie.groupId + "&type=4&focus=1")
+        }
+    }
+
+    function refresh(url, demoId, renderEl) {
+        if (model.pageIndex == 2) {
+            if (merefresh == null) {
+                merefresh = new MERefresh("mescroll,list", {
+                    refreshUrl: '/api/school/groups/newsList',
+                    refreshTypeGet: true,
+                    needHeadRefresh: true,
+                    refresh_cb: true,
+                    pagesize: 10,
+                });
+                //网络请求参数
+                merefresh.refreshOption.refreshParm = {
+                    groupId: groupId,
+                    customerId: customerId
+                };
+                //页面 <刷新> 的回调
+                merefresh.refreshOption.refresh_cb = function(refresh, d) {
+                    refresh.successEndRef(d.data.length, d.totalCount);
+                    for (var i = 0; i < d.data.length; i++) {
+                        d.data[i].face = d.data[i].face.split(',')
+                    }
+                    refresh.appendHtml(template('listTpl2', d.data));
+                    $('.schoolMsg .wimg').attr('onclick','');
+                    Comm.resizeSection();
+                };
+            } else {
+                merefresh.MeRefScroll.resetUpScroll();
+                merefresh.MeRefScroll.hideTopBtn();
+            }
+        }
+    }
+</script>
+
+</html>

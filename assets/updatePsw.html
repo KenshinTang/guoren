@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码验证码</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <style>
+        .main {}
+
+        .title {
+            margin-top: 10px;
+            color: #404040;
+            font-size: 22px;
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .masg {
+            text-align: center;
+            color: #999999;
+            font-size: 14px;
+        }
+
+        .phone {
+            font-size: 14px;
+            text-align: center;
+            margin-top: 8px;
+        }
+
+
+
+        .checkedCode {
+
+            overflow: hidden;
+            margin-top: 50px;
+        }
+
+        .getCodeMsg {
+            display: flex;
+            justify-content: center;
+        }
+
+        .checkedCode input {
+            padding: 0;
+            margin: 10px 0;
+            width: 12%;
+            margin-right: 5.6%;
+            text-align: center;
+            display: block;
+            float: left;
+            height: 35px;
+            color: #098E75;
+            border-bottom: solid 1px #DFDFDF;
+            border-radius: 0;
+        }
+
+        .checkedCode input:last-child {
+            margin-right: 0
+        }
+
+        .getCode {
+            color: #44A1FF;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navBar ">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+        </div>
+    </header>
+    <section id=''>
+        <div class="main">
+            <h3 class="title">输入验证码</h3>
+            <p class="masg" onclick="model.getCode(this)">获取验证码</p>
+            <p class="phone" id="phone"></p>
+            <div class="checkedCode">
+                <div class="getCodeMsg">
+                    <input type="tel" id="code1" maxlength="1" name="code" pattern="[0-9]*" />
+                    <input type="tel" id="code2" onclick="checkFirst(this)" maxlength="1" name="code" pattern="[0-9]*" />
+                    <input type="tel" id="code3" onclick="checkFirst(this)" maxlength="1" name="code" pattern="[0-9]*" />
+                    <input type="tel" id="code4" onclick="checkFirst(this)" maxlength="1" name="code" pattern="[0-9]*" />
+                </div>
+            </div>
+            <div class="flex-justify-center" style="margin-top:50px;">
+                <button id="Determine" style="background:#D9D9D9;" onclick="model.determine()">确定</button>
+            </div>
+            <p class="getCode" onclick="model.getCode(this)">重新发送</p>
+        </div>
+
+    </section>
+
+</body>
+
+
+
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script type="text/javascript" src="inc/picker.min.js"></script>
+<script type="text/javascript" src="inc/upimg/upload.js"></script>
+<script>
+    var phone = Comm.query('phone');
+    $('#phone').html('+86 ' + phones(phone))
+    function phones(f) {
+            var tel = f;
+            tel = "" + tel;
+            var reg = /(\d{3})\d{4}(\d{4})/;
+            var tel1 = tel.replace(reg, "$1****$2")
+            return tel1;
+        }
+    $('.getCodeMsg input').keyup(function (event) {
+        // 删除往前 添加往后
+        if ($(this).index() < 4) {
+            if (event.keyCode == 46 || event.keyCode == 8) {
+                $(this).prev('input').focus();
+            } else {
+                $(this).next('input').focus();
+            }
+        }
+        if ($('#code1').val() != '' && $('#code2').val() && $('#code3').val() && $('#code4').val()) {
+            $('#Determine').attr('style', 'background:#098E75;')
+        } else {
+            $('#Determine').attr('style', 'background:#D9D9D9;')
+        }
+    })
+	function checkFirst(a){
+		if($(a).val()==""){
+			$('#code1').focus();
+		}
+		
+	}
+    function pageresume() {
+		
+    }
+
+    function pageload() {
+		$('.masg').click()
+    }
+    var model = {
+        countdown: 60,//倒计时时间上限
+        code: '0000',//获取到的验证码
+        //获取验证码
+        getCode: function (el) {
+            var that = this;
+            if (this.countdown == 60) {
+                AJAX.POST('/api/customer/sendMsg', { phone: phone, bo: 3 }, function (d) {
+                    if (d && d.code == 1) {
+                        that.settime(el)
+                    } else {
+                        Comm.message(d.msg || '网络错误')
+                    }
+                })
+            }
+
+        },
+        //发送验证码倒计时
+        settime: function (el) {
+            var thih = this
+            var i = setInterval(function () {
+                $(el).html(thih.countdown + '秒');
+                if (thih.countdown > 0) {
+                    thih.countdown -= 1;
+                } else {
+                    $(el).html('重新获取');
+                    thih.countdown = 60
+                    clearInterval(i)
+                }
+            }, 1000)
+        },
+        //确定验证手机号
+        determine: function () {
+            if ($('#code1').val() != '' && $('#code1').val() && $('#code2').val() && $('#code3').val() && $('#code4').val()) {
+                var codeVal = $('#code1').val() + $('#code2').val() + $('#code3').val() + $('#code4').val()
+                AJAX.GET('/api/customer/checkPhoneBySelf?phone='+phone+'&code='+codeVal,function(a){
+                	if (a&&a.code==1) {
+                    Comm.go('updatePsw2.html')
+                } else {
+                    Comm.message('验证码错误');
+                }
+                })
+                
+                
+                
+                // Comm.go('./updatePsw2.html')
+            }
+        }
+    }
+</script>
+
+</html>

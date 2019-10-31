@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>首页</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+		<link rel="stylesheet" href="css/photo.css" />
+		<style>
+			.searchBar {
+				margin: 0 auto;
+			}
+			
+			.searchBar input {
+				width: 95%;
+				padding-left: 30px;
+				line-height: 30px;
+				height: 30px;
+				font-size: 14px;
+				color: #8891A7;
+				background-color: #F2F6F7;
+				border-radius: 18px;
+				background-image: url('img/search.png');
+				background-repeat: no-repeat;
+				background-size: 14px;
+				background-position: 10px center;
+				margin: 0 auto;
+				margin-left: 2.5%;
+			}
+			
+			.order-t {
+				text-align: center;
+				font-size: 12px;
+			}
+			
+			.scrollx {
+				height: 40px;
+				overflow: hidden;
+			}
+			
+			.scrollx-content {
+				width: 100%;
+				overflow-x: auto;
+				white-space: nowrap;
+			}
+			
+			.navBar {
+				height: 40px;
+				line-height: 40px;
+			}
+			
+			.order-t-c {
+				width: 32%;
+				height: 100%;
+				font-size: 15px;
+				/*font-weight: bold;*/
+				color: #888888;
+				display: inline-block;
+				/*把水平滚动条撑到外面,达到隐藏的目的*/
+				vertical-align: middle;
+			}
+			
+			.order-t-c-active {
+				/*border-bottom: 2px solid #000000;*/
+				position: relative;
+				font-weight: bold;
+				color: #098E75;
+			}
+			
+			.order-t-c-active:after {
+				content: '';
+				position: absolute;
+				left: 38%;
+				bottom: auto;
+				right: auto;
+				height: 2px;
+				width: 30px;
+				top: 35px;
+				background-color: #098E75;
+			}
+			
+			.mescroll-totop {
+				bottom: 80px;
+				right: 30px;
+				opacity: 1;
+				z-index: 99;
+			}
+			
+			.swiper-container2 {
+				height: 170px;
+				width: 80%;
+			}
+			
+			.navItemIcon {
+				background: inherit;
+			}
+			
+			.swiper-container2 .swiper-wrapper {
+				left: 15%;
+			}
+			
+			.isselatesku-item {
+				position: relative;
+			}
+			
+			.getmor {
+				border-bottom: 1px solid #f4f4f4;
+			}
+			
+			.isJiaru {
+				/*border: 1px solid #D3D3D3;*/
+				color: #999;
+				border-radius: 4px;
+			}
+			
+			.schoolMsg {
+				border-bottom: 2px solid #f4f4f4;
+				background-color: #fff;
+			}
+			
+			
+			.data-list {
+				background-color: #f4f4f4;
+			}
+			
+			.sc-l {
+				width: 74%
+			}
+			
+			.sc-r {
+				width: 25%
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar" style="padding: 0;box-shadow: none;">
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+				<div class="navItemIcon marl5 marr10" onclick="getListData({num:1, size:10})">搜索</div>
+				<div class="nav-title block searchBar" style="width: calc(100% - 100px);height: 44px;">
+					<form action="javascript:return true;" onsubmit="model.search();return false;" style="position: relative;">
+						<input id="id_searchInput" oninput="leng()" autocomplete="off" type="search" class="paddr15" placeholder="输入关键字">
+						<!--<img src="img/index/qxgz.png" onclick="model.clear()" width="15" style="position: absolute;right: 15px;top: 15px;"> /-->
+					</form>
+				</div>
+			</div>
+			<div class="scrollx mescroll-touch-x">
+				<div id="scrollxContent" class="scrollx-content">
+					<div id="nav" class="order-t ovf bb1" style="border-bottom: 1px solid #f4f4f4;">
+						<div class=" order-t-c order-t-c-active brp" i='0'>综合</div>
+						<div class=" order-t-c brp" i='1'>帖子</div>
+						<div class=" order-t-c brp" i='2'>圈子</div>
+						<!--<div class=" order-t-c brp" i='3'>问问</div>-->
+					</div>
+				</div>
+			</div>
+		</header>
+		<section>
+
+			<!--轮播-->
+			<div id="swiper" class="swiper-container">
+				<div id="swiperWrapper" class="swiper-wrapper">
+					<!--全部-->
+					<div id="mescroll0" class="swiper-slide mescroll">
+						<div id="dataList0" class="data-list" style="border-top: 10px solid #F4F4F4;">
+						</div>
+					</div>
+					<!--旗舰店-->
+					<div id="mescroll1" class="swiper-slide mescroll">
+						<div id="dataList1" class="data-list" style="border-top: 10px solid #F4F4F4;">
+						</div>
+					</div>
+					<!--优享店-->
+					<div id="mescroll2" class="swiper-slide mescroll">
+						<div id="dataList2" class="data-list" style="border-top: 10px solid #F4F4F4;">
+						</div>
+					</div>
+					<!--优享店-->
+					<!--<div id="mescroll3" class="swiper-slide mescroll">
+						<div id="dataList3" class="data-list" style="border-top: 5px solid #F4F4F4;">
+						</div>
+					</div>-->
+				</div>
+			</div>
+		</section>
+		<footer class="shared">
+
+		</footer>
+	</body>
+
+	<!--问问-->
+	<script id="questionTpl" type="text/html">
+		{{each $data v k}}
+		<div style="border-bottom: 1px solid #f4f4f4 ;" class="paddb10" onclick="Comm.go('qzAskDetail.html?newsId={{v.newsId}}')">
+			<div class="f16 wordW2 mart15">{{v.title}}</div>
+			<div class="mart10">
+				<img src="{{OSS(v.customerFace)}}" height="20" width="20" style="border-radius:20px;" onerror="app.herrorimg(this)" />
+				<span class="color666">{{v.customerName}}</span>
+			</div>
+			<div class="fl mart10 wordW3 c60">
+				{{v.content}}
+			</div>
+			<div class="clearfix"></div>
+			<div class="f12 mart10 color999">{{v.commentNumber}}个回答 · {{sldate(v.addTime)}}</div>
+		</div>
+		{{/each}}
+	</script>
+
+	<!--圈子-->
+	<script id="groupsTpl" type="text/html">
+		{{each $data v k}}
+		<div class="schoolMsg">
+			<div class="heads">
+				<div class="name-left fl" style="width: 75%; position: relative;" onclick="Comm.go('postDetails.html?groupId={{v.groupId}}')">
+					<img class="fl" src="{{OSS(v.face)}}" style="border-radius: 50%;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+					<div class="fl marl10" style="width: 60%;">
+						<p class="f14 wordW">{{v.groupName}}</p>
+						<p class="f12 c9e">帖子{{conunm(v.newsNum)}} · 成员 {{conunm(v.customerNum)}}</p>
+					</div>
+				</div>
+				<div id="isAdd">
+					{{if v.focus==0}}
+					<div class=" add-guan fr mart10" style="margin-top: 7px;" onclick="model.add({{v.groupId}},this)">加入</div>
+					{{else}}
+					<div class="f14 fr isJiaru" style="margin-top: 7px;" onclick="model.remove({{v.groupId}},this)">退出</div>
+					{{/if}}
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		{{/each}}
+	</script>
+
+	<!--帖子-->
+	<script id="invitationTpl" type="text/html">
+		{{each $data v k}}
+		<div class="schoolMsg" id="{{v.newsId}}" onclick="event.stopPropagation();Comm.go('articleDetail.html?type=qz&newsId='+{{v.newsId}})">
+			<div class="fl center" style="width: 7%;">
+				<img src="img/ly.png" width="60%" />
+				<p class="mart5" id="ping{{v.newsId}}">{{v.commentNumber}}</p>
+			</div>
+			<div style="width: 90%;" class="fl marl5">
+				<div class="{{if v.face&&v.face.split(',')!=''}}sc-l fl{{/if}}">
+					<div class="f14 wordW2 ">{{v.title}}</div>
+					<div class="heads mart10">
+						<div class="name-left fl">
+							<img class="fl" onclick="event.stopPropagation();top.Comm.go('postDetails.html?groupId={{v.groupId}}')" src="{{OSS(v.groupFace,'s')}}" style="border-radius: 5px;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20" />
+							<div class="fl marl10">
+								<p class="f12 c9e wordW" style="width: 120px;">{{v.groupName}}</p>
+							</div>
+							<div class="fl marl20 f12 c9e">{{sldate(v.addTime)}}</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				{{if v.face&&v.face.split(',')!=''}}
+				<div class="fr sc-r">
+					{{imgTpl(v.face.split(',')[0].split(','),56)}}
+				</div>
+				{{/if}}
+				<div class="clearfix"></div>
+
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		{{/each}}
+	</script>
+	<script type="text/html" id="listTpl">
+		<div class="bg_white">
+			{{if $data.dataIndex==0}}
+			<div>
+
+				{{if $data.invitationResult!=''}}
+				<div class="getmor paddb20 paddt20 paddl20 paddr20" onclick="model.qh(1)">
+					<div class="fl color666" style="font-size: 15px;line-height: 24px;">帖子</div>
+					<div class="fr color666" style="font-size: 15px;"><img src="img/more.png" width="60" height="24" /></div>
+					<div class="clearfix"></div>
+				</div>
+				{{/if}} {{ include 'invitationTpl' $data.invitationResult }} {{if $data.groupsResult!=''}}
+				<div class="getmor paddb20 paddt20 paddl20 paddr15" style="border-top: 10px solid #F4F4F4;" onclick="model.qh(2)">
+					<div class="fl color666" style="font-size: 15px;line-height: 24px;">圈子</div>
+					<div class="fr color666" style="font-size: 15px;"><img src="img/more.png" width="60" height="24" /></div>
+					<div class="clearfix"></div>
+				</div>
+				{{/if}} {{ include 'groupsTpl' $data.groupsResult }}
+				<!--{{if $data.questionResult!=''}}
+				<div class="getmor paddb20 paddt20 paddl20 paddr30" onclick="model.qh(3)">
+					<div class="fl color666">问问</div>
+					<div class="fr color666">更多</div>
+					<div class="clearfix"></div>
+				</div>
+				{{/if}}
+				{{ include 'questionTpl' $data.questionResult }}-->
+			</div>
+			{{/if}} {{if $data.dataIndex==1}}
+			<div>{{ include 'invitationTpl' $data }}</div>
+			{{/if}} {{if $data.dataIndex==2}}
+			<div>{{ include 'groupsTpl' $data }}</div>
+			{{/if}} {{if $data.dataIndex==3 }}
+			<div>{{ include 'questionTpl' $data }}</div>
+			{{/if}}
+		</div>
+	</script>
+
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="./inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script type="text/javascript" src="inc/tpl.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+	<script type="text/javascript" src="inc/photo.js"></script>
+	<script>
+		if(Comm.db('userinfo')) {
+			var customerId = app.getCid();
+		} else {
+			var customerId = "";
+		}
+		if (Comm.db('historySearch')) {
+        var historySearch = Comm.db('historySearch');
+    } else {
+        var historySearch = [];
+    }
+		$("#id_searchInput").val(Comm.query('keyWord'));
+
+		function pageload() {
+			mescrollRefreshFn({
+				menuNumber: 3
+			});
+
+		}
+
+		function leng() {
+			if($("#id_searchInput").val() == '') {
+				//				model.search();
+				Comm.goself('search2.html?type=2&focus=1')
+			}
+			//			else{
+			//				model.search();
+			//			}
+		}
+
+		function pageresume() {
+
+		}
+
+		function mescrollRefreshFn(option) {
+			n = option && option.menuNumber ? option.menuNumber : 1;
+			s = option && option.pagesize ? option.pagesize : 10;
+			mescrollArr = new Array(n);
+			//初始化首页
+			mescrollArr[curNavIndex] = initMescroll(curNavIndex, s);
+			if(mescrollArr.length > 1) {
+				/*初始化轮播*/
+				swiper = new Swiper('#swiper', {
+					observer: true,
+					onTransitionEnd: function(swiper) {
+						var i = swiper.activeIndex; //轮播切换完毕的事件
+						changePage(i);
+						getListData({
+							num: 1,
+							size: 10
+						});
+						Comm.scorllDel();
+					},
+					onTouchStart: function(swiper, even) {
+                if ((swiper.activeIndex == 0 || swiper.activeIndex == $('#swiperWrapper>.swiper-slide').length - 1) && even) {
+                    if (even.changedTouches && even.changedTouches.length > 0) {
+                        _pageX = even.changedTouches[0].pageX;
+                        if (swiper.activeIndex == $('#swiperWrapper>.swiper-slide').length - 1) {
+                            _lasttransform = Comm.g('swiperWrapper').style.transform;
+                        }
+                    }
+                }
+            },
+            onTouchMove: function(swiper, even) {
+                if (swiper.activeIndex == 0 && even) { //第一个
+                    //console.log(_pageX < even.changedTouches[0].pageX);
+                    if (even.changedTouches && even.changedTouches.length > 0) {
+                        if (_pageX < even.changedTouches[0].pageX) {
+                            $('#swiperWrapper').addClass('notransform');
+                        } else {
+                            $('#swiperWrapper').removeClass('notransform');
+                        }
+                    }
+                }
+
+                if (swiper.activeIndex == $('#swiperWrapper>.swiper-slide').length - 1 && even) { //最后一个
+                    if (even.changedTouches && even.changedTouches.length > 0) {
+                        //console.log(_pageX);
+                        //console.log(even.changedTouches[0].pageX);
+                        if (_pageX > even.changedTouches[0].pageX) {
+                            Comm.g('swiperWrapper').style.transform = _lasttransform;
+                        } else {}
+                    }
+                }
+            },
+            onTouchEnd: function(swiper, even) {
+                _lasttransform = "";
+                _pageX = 0;
+                $('#swiperWrapper').removeClass('notransform');
+            }
+				});
+				/*菜单点击事件*/
+				$("#nav div").click(function() {
+					var i = Number($(this).attr("i"));
+					//_type_ = Number($(this).attr("data-type"));
+					$('#dataList' + i).html('');
+					swiper.slideTo(i); //以轮播的方式切换列表
+					getListData({
+						num: 1,
+						size: 10
+					});
+					Comm.scorllDel();
+				});
+			}
+		}
+		var mid = "";
+		var model = {
+			qh: function(id) {
+				swiper.slideTo(id);
+			},
+			search: function() {
+				getListData({
+					num: 1,
+					size: 10
+				});
+				document.activeElement.blur();
+			},
+			clear: function() {
+				$("#id_searchInput").val('');
+			},
+			add: function(groupsId, e) {
+				AJAX.GET('/api/school/groups/addFocus?groupsId=' + groupsId + '&customerIds=' + customerId, function(a) {
+					if(a && a.code == 1) {
+						$(e).removeClass('add-guan').addClass('isJiaru').attr('onclick', 'event.stopPropagation();model.remove(' + groupsId + ',this)').html('退出')
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+			remove: function(groupsId, e) {
+				Comm.confirm('是否确认退出？', function(d) {
+					if(d) {
+						AJAX.GET('/api/school/groups/cancelFocus?groupsId=' + groupsId + '&customerIds=' + customerId, function(a) {
+							if(a && a.code == 1) {
+								$(e).removeClass('isJiaru').addClass('add-guan').attr('onclick', 'event.stopPropagation();model.add(' + groupsId + ',this)').html('加入')
+
+							} else {
+								Comm.message(a.msg);
+							}
+						})
+					}
+				})
+
+			},
+		}
+
+		/*设置列表数据
+		 * pageData 当前页的数据
+		 * dataIndex 数据属于哪个nav */
+		function setListData(pageData, dataIndex) {
+
+			var listDom = document.getElementById("dataList" + dataIndex),
+				listStr = "";
+			if(pageData.length > 0) {
+				if(dataIndex == 0) {
+					pageData = pageData[0];
+				}
+				pageData.dataIndex = dataIndex;
+				listStr = template('listTpl', pageData);
+				if(pageData.curPage > 1) {
+					listDom.innerHTML += listStr;
+				} else {
+					listDom.innerHTML = listStr
+				};
+			}
+			Comm.scorllDel();
+			Comm.resizeSection();
+		}
+
+		/*联网加载列表数据
+		 在您的实际项目中,请参考官方写法: http://www.mescroll.com/api.html#tagUpCallback
+		 请忽略getListDataFromNet的逻辑,这里仅仅是在本地模拟分页数据,本地演示用
+		 实际项目以您服务器接口返回的数据为准,无需本地处理分页.
+		 * */
+		var htmlData = [];
+
+		function getListDataFromNet(curNavIndex, pageNum, pageSize, successCallback, errorCallback) {
+			var type = '';
+			if(curNavIndex == 1) {
+				type = 7;
+			} else if(curNavIndex == 2) {
+				type = 2
+			}
+			//			else if(curNavIndex == 3) {
+			//				type = 5
+			//			}
+			var title = $("#id_searchInput").val();
+			 historySearch = historySearch && historySearch.length > 0 ? historySearch : [];
+                var keyWord = $("#id_searchInput").val()
+                if (keyWord != '') {
+                    var index = historySearch.indexOf(keyWord)
+                    if (index == -1) {
+                        historySearch.unshift(keyWord);
+                    } else {
+                        historySearch.splice(index, 1);
+                        historySearch.unshift(keyWord);
+                    }
+                    Comm.db('historySearch', historySearch);
+                }
+			var o = {};
+			o.title = title;
+			o.curpage = pageNum;
+			o.pagesize = pageSize;
+			o.type = type;
+			o.customerId = customerId;
+			AJAX.POST("/api/news/getVagueList", o, function(a) {
+				if(a && a.code == 1) {
+					var r = a.data || [];
+					htmlData = r;
+					totalSize = a.totalCount;
+					htmlData.curPage = a.curPage;
+					if(curNavIndex == 0) {
+						if(htmlData.groupsResult == "" && htmlData.invitationResult == "") {
+							htmlData = [];
+						} else {
+							var value = $("#id_searchInput").val();
+							if(htmlData.groupsResult != "") {
+								for(var i = 0; i < htmlData.groupsResult.length; i++) {
+
+									var values = htmlData.groupsResult[i].groupName.replace(/<\/?[^>]*>/gim, "").split(value);
+									htmlData.groupsResult[i].groupName = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+								}
+							}
+							if(htmlData.invitationResult != "") {
+								for(var i = 0; i < htmlData.invitationResult.length; i++) {
+
+									var values = htmlData.invitationResult[i].groupName.replace(/<\/?[^>]*>/gim, "").split(value);
+									htmlData.invitationResult[i].groupName = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+									var values2 = htmlData.invitationResult[i].title.replace(/<\/?[^>]*>/gim, "").split(value);
+									htmlData.invitationResult[i].title = values2.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+
+								}
+							}
+							
+							htmlData = [htmlData];
+						}
+
+					}
+					if(curNavIndex==1){
+						var value = $("#id_searchInput").val();
+								for(var i = 0; i < htmlData.length; i++) {
+									var values = htmlData[i].title.replace(/<\/?[^>]*>/gim, "").split(value);
+									htmlData[i].title = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+									
+								}
+								
+					}
+					if(curNavIndex==2){
+						var value = $("#id_searchInput").val();
+						for(var i = 0; i < htmlData.length; i++) {
+									var values = htmlData[i].groupName.replace(/<\/?[^>]*>/gim, "").split(value);
+									htmlData[i].groupName = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+									
+								}
+					}
+					successCallback && successCallback(htmlData, totalSize);
+				} else {
+					Comm.message(a.msg);
+					errorCallback && errorCallback();
+				}
+			});
+		}
+	</script>
+
+</html>

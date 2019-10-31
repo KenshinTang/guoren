@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加关注</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+		<style>
+			div {
+				-webkit-user-select: text;
+			}
+			
+			div * {
+				-webkit-user-select: text
+			}
+			
+			.navItemIcon {
+				width: 50px;
+				background: none;
+			}
+			
+			.jjs {
+				background-color: #f4f4f4;
+				border-radius: 5px;
+				color: #FFF;
+				line-height: 22px;
+				padding: 1px 10px;
+			}
+			
+			.search {
+				padding: 10px 25px;
+				background-color: #F3F3F3;
+				background-image: url(img/index/down.png);
+				background-repeat: no-repeat;
+				background-size: 6px 3px;
+				background-position: 98% center;
+			}
+			
+			.inp {
+				width: 100%;
+				background-color: #F3F3F3;
+			}
+			
+			.in-title {
+				width: 100%;
+			}
+			
+			textarea {
+				width: 100%;
+				height: 300px;
+				border: none;
+			}
+			
+			.whosee {
+				border-bottom: 1px solid #BFBFBF;
+				border-top: 1px solid #BFBFBF;
+				padding: 25px 20px;
+			}
+			
+			.who {
+				background: url(img/index/per.png) no-repeat left center;
+				background-size: 19px;
+				color: #222222;
+			}
+			
+			.see {
+				background: url(img/index/bac-r.png) no-repeat right center;
+				background-size: 6px 11px;
+				color: #888888;
+			}
+			
+			.add-pic {
+				background-color: #F4F4F4;
+				padding: 10px 25px;
+			}
+			
+			#title {
+				color: #101010;
+				font-size: 15px;
+				font-weight: bold;
+			}
+			
+			#content {
+				color: #464646;
+				/*font-size: 15px;*/
+				line-height: 20px;
+				
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar" style="padding: 0;box-shadow: none;">
+
+				<div class="navBackIcon" onclick="model.close()"></div>
+
+				<div class="navItemIcon marl5 marr10">
+					<div class="jjs mart10">发起</div>
+				</div>
+				<div class="f16 nav-title block searchBar marl25" style="width: calc(100% - 85px);height: 44px;">
+					发起话题
+				</div>
+			</div>
+		</header>
+		<section>
+			<div class="paddl15 paddr10">
+				<div class="" style="border-bottom:  1px solid #f4f4f4;">
+					<input id="title" style="height: 25px;width: 100%;" class="f18 lh25" oninput="inputLen()" onkeyup="inputLen()" placeholder="输入标题" />
+					<!--<input id="title" oninput="inputLen()" placeholder="输入标题" type="text" class="in-title f18 lh25" />-->
+				</div>
+				<div class="dd" style="padding-top: 3px;">
+					<textarea id="content" class="f14" oninput="inputLen()" onkeyup="inputLen()" placeholder="话题简介~最多200字"></textarea>
+				</div>
+			</div>
+
+		</section>
+		<footer class="shared">
+		</footer>
+	</body>
+
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="./inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+	<script>
+		var isfirst = 1;
+		var first = 1;
+
+		function pageload() {
+			if(Comm.ios()) {
+				setTimeout(function() {
+					var elem = document.getElementById('title');
+					elem.focus();
+					Comm.PopUpKeyboard({
+						code: 1
+					});
+				}, 500);
+				document.body.addEventListener('touchmove', function(e) {
+					if(document.activeElement)
+						document.activeElement.blur();
+				}, {
+					passive: false
+				});
+				$('#content').css('margin-left','-2px');
+			} else {
+				setTimeout(function() {
+					var elem = document.getElementById('title');
+					elem.focus();
+					Comm.PopUpKeyboard({
+						code: 1
+					});
+				}, 500)
+				$('.dd').css('padding-top','4px');
+				//$('#content').css('margin-left','-1px');
+			}
+			$("#title").bind("keydown", function(e) {
+				// 兼容FF和IE和Opera    
+				var theEvent = e || window.event;
+				var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+				if(code == 13) {
+					//回车执行查询
+					$("#content").focus();
+					return false;
+				}
+			});
+		}
+
+		function pageresume() {
+
+		}
+
+		function inputLen() {
+			if($('#title').val().length >= 20 && isfirst == 1) {
+				Comm.message('话题名称最多20字');
+				isfirst = 2;
+				//$('#title').val($('#title').val().slice(0, 15));
+			}
+			if($('#title').val().length != '' && $('#content').val().length != '') {
+				$('.jjs').css('background', '#098E75');
+				$('.jjs').parent().attr('onclick', 'model.add()');
+			} else {
+				$('.jjs').css('background', '#f4f4f4');
+				$('.jjs').parent().attr('onclick', '');
+			}
+			if($('#content').val().length >= 200 && first == 1) {
+				Comm.message('话题描述最多200字');
+				first = 2;
+			}
+		}
+		var model = {
+			close: function() {
+				if($('#title').val().replace(/\s+/g, "") != '' || $("#content").val().replace(/\s+/g, "") != '') {
+					Comm.confirm('确认退出？', function(d) {
+						if(d) {
+							Comm.close();
+						}
+					})
+				} else {
+					Comm.close();
+				}
+			},
+			add: function(id) {
+				var title = $('#title').val();
+				var content = $("#content").val();
+				if(title.replace(/\s+/g, "") == '') {
+					Comm.message('请输入话题标题');
+					return false;
+				}
+				if(title.length > 20) {
+					Comm.message('话题标题限制20字，请简略输入');
+					return false;
+				}
+				if(content.replace(/\s+/g, "") == '') {
+					Comm.message('请输入话题简介');
+					return false;
+				}
+				if(content.length > 200) {
+					Comm.message('话题简介最多200字，请重新编辑');
+					return false;
+				}
+				var o = {};
+				o.topicName = title.replace(/\s+/g, "").replace(/<\/?.+?>/g, "").replace(/<img\b[^>]*>/g, "").replace(/<br>/g, '').replace(/(\r\n|\n|\r)/gm, "");
+				o.introduction = content.replace(/\n/g, "<br/>");
+				Comm.loading('发布中...');
+				AJAX.POST('/api/topic/add', o, function(a) {
+					Comm.loading(false);
+					if(a && a.code == 1) {
+						if(a.msg == '操作成功，已存在') {
+							Comm.confirm('已存在相同的话题，重新编辑？', function(d) {
+								if(d) {
+									Comm.showWindow('');
+								} else {
+									Comm.close();
+								}
+							})
+						} else {
+							Comm.message('发布成功');
+							Comm.goself('talkDetail.html?topicId=' + a.data.topicId)
+						}
+
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+		}
+	</script>
+
+</html>

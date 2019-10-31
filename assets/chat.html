@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>私信</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="./css/g.css" />
+		<link rel="stylesheet" href="./css/comm.css" />
+		<link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="css/side.css" />
+	</head>
+	<style>
+		body,
+		html {
+			height: 100%;
+			width: 100%;
+		}
+		
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		
+		footer {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+		}
+		
+		footer>div {
+			width: 100%;
+			background: #fff;
+		}
+		
+		section {
+			background: #F4F4F4;
+			width: 100%;
+		}
+		
+		#dataList {}
+		/* .mescroll {
+		flex: 1;
+	
+	
+	} */
+		/* =============== */
+		
+		#bar {
+			display: flex;
+			width: 100%;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0px 5px;
+		}
+		
+		.textarea {
+			flex: auto;
+			width: calc(100% - 27px - 46px);
+			padding: 0 20px;
+			outline: 0;
+			max-height: 100px;
+			font-size: 12px;
+			overflow-x: hidden;
+			overflow-y: auto;
+			border-radius: 3px;
+			-webkit-user-select: text;
+			text-align: left;
+		}
+		/* 表情 */
+		
+		.emotion {
+			background: #F9F4F8;
+		}
+		
+		.emotion .w50 {
+			width: 50px;
+		}
+		
+		.emotion .cur {
+			background: #F9F4F8;
+		}
+		
+		#banner {
+			position: relative;
+			padding-bottom: 10px;
+			height: 90px;
+		}
+		
+		#banner .side_nbox {
+			left: 50%;
+			bottom: 5px;
+			margin-left: -20px;
+			right: initial;
+		}
+		
+		#banner .side_nbox i {
+			background-color: #ccc;
+		}
+		
+		#banner .side_nbox .cur {
+			background-color: #222;
+		}
+		
+		#banner ul li div {
+			text-align: center;
+		}
+		
+		#banner ul li div span {
+			display: block;
+			float: left;
+			width: 20%;
+		}
+		
+		#banner ul li div img {
+			margin: 10px 0px;
+		}
+		
+		.time {
+			text-align: center;
+			font-size: 10px;
+			color: #C4C4C4;
+			margin: 10px 0;
+		}
+		/* 微信气泡 */
+		
+		div.speech {
+			float: left;
+			padding: 8px;
+			table-layout: fixed;
+			word-break: break-all;
+			position: relative;
+			background: -webkit-gradient(linear, 50% 0%, 50% 100%, from(#ffffff), color-stop(0.1, #ececec), color-stop(0.5, #dbdbdb), color-stop(0.9, #dcdcdc), to(#8c8c8c));
+			border: 1px solid #DEDEDE;
+			border-radius: 8px;
+			background: #fff;
+		}
+		
+		div.speech:before {
+			content: '';
+			position: absolute;
+			width: 0;
+			height: 0;
+			left: 15px;
+			top: -20px;
+			border: 10px solid;
+			border-color: transparent transparent #989898 transparent;
+		}
+		
+		div.speech:after {
+			content: '';
+			position: absolute;
+			width: 0;
+			height: 0;
+			left: 17px;
+			top: -16px;
+			border: 8px solid;
+			border-color: transparent transparent #ffffff transparent;
+		}
+		
+		div.speech.right {
+			display: inline-block;
+			box-shadow: -2px 2px 5px #CCC;
+			margin-right: 10px;
+			max-width: 75%;
+			float: right;
+			background: #f4f4f4;
+			border: 1px solid #e8e8e8;
+			color: #000;
+			/* background: -webkit-gradient(linear, 50% 0%, 50% 100%, from(#e4ffa7), color-stop(0.1, #bced50), color-stop(0.4, #aed943), color-stop(0.8, #a7d143), to(#99BF40)); */
+		}
+		
+		div.speech.right:before {
+			content: '';
+			position: absolute;
+			width: 0;
+			height: 0;
+			top: 9px;
+			bottom: auto;
+			left: auto;
+			right: -10px;
+			border-width: 9px 0 9px 10px;
+			border-color: transparent #e6e3e3;
+		}
+		
+		div.speech.right:after {
+			content: '';
+			position: absolute;
+			width: 0;
+			height: 0;
+			top: 10px;
+			bottom: auto;
+			left: auto;
+			right: -8px;
+			border-width: 8px 0 8px 9px;
+			border-color: transparent #f4f4f4;
+		}
+		
+		div .left {
+			display: inline-block;
+			box-shadow: 2px 2px 2px #fff;
+			margin-left: 10px;
+			max-width: 75%;
+			position: relative;
+		}
+		
+		div .left:before {
+			content: '';
+			position: absolute;
+			width: 0;
+			height: 0;
+			top: 9px;
+			bottom: auto;
+			left: -10px;
+			border-width: 9px 10px 9px 0;
+			border-color: transparent #dedede;
+		}
+		
+		div .left:after {
+			content: '';
+			position: absolute;
+			width: 0;
+			height: 0;
+			top: 10px;
+			bottom: auto;
+			left: -8px;
+			border-width: 8px 9px 8px 0;
+			border-color: transparent #fff;
+		}
+		
+		.leftimg {
+			float: left;
+			margin-top: 10px;
+		}
+		
+		.rightimg {
+			float: right;
+			margin-top: 10px;
+		}
+		
+		.leftd {
+			clear: both;
+			float: left;
+			margin-left: 10px;
+		}
+		
+		.rightd {
+			clear: both;
+			float: right;
+			margin-right: 10px;
+		}
+		
+		.leftd_h {
+			width: 39px;
+			height: 39px;
+			border-radius: 100%;
+			display: block;
+			float: left;
+			overflow: hidden;
+		}
+		
+		.leftd_h img {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+		
+		.rightd_h {
+			width: 39px;
+			height: 39px;
+			border-radius: 100%;
+			display: block;
+			float: right;
+			overflow: hidden;
+		}
+		
+		.rightd_h img {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+		
+		.rightd,
+		.leftd {
+			width: 100%;
+			margin: 0;
+		}
+		
+		.leftd-div {
+			display: flex;
+			margin-left: 5px;
+		}
+		
+		.rightd-div {
+			margin-right: 5px;
+		}
+		
+		.leftd-div .speech img,
+		.rightd-div .speech img {
+			max-width: 35px;
+		}
+		
+		b,
+		b div {
+			color: #464646;
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 21px;
+		}
+	</style>
+
+	<body>
+		<header>
+			<div class="navBar bottomShadow">
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+				<div class="navTitle"></div>
+			</div>
+		</header>
+		<section id="mescroll" class="mescroll" onclick="$('content').blur()">
+			<div id="dataList">
+			</div>
+		</section>
+		<footer>
+			<div>
+				<div id="bar">
+					<img src="img/xiaolian.png" alt="" onclick="model.showEmotion()" width="27px" height="27px" style="align-self:flex-end;    margin: auto;" />
+					<div class="textarea" id="content" onpaste="model.copy()" oninput="editOninput(this)" contenteditable="true" onclick="model.TextareaClick(this)" onblur="model.TextareaBlur(this)">
+						<a style="color:#999;">请输入内容~</a>
+					</div>
+					<p style="color:#098E75;padding: 10px 5px;height: 40px;" class="paddr10" onclick="model.sends()">发送</p>
+				</div>
+				<div class="emotion hide" id="emotion">
+					<div class="banner" id="banner">
+						<ul class="side_ul" id="side">
+							123
+						</ul>
+					</div>
+					<!-- <div class="bg_white lh50 clearfix">
+					<div class="left w50 center hide">
+						<img src="img/chatroom/upimg.png" id="imgupimg" />
+					</div>
+				</div> -->
+				</div>
+			</div>
+		</footer>
+	</body>
+	<script type="text/html" id="listTpl">
+		{{each $data v k}} {{if(v.customerId == $data.customerId)}}
+		<div class="leftd" id="{{v.messId}}">
+			<p class="time  mart5 ">{{v.addTime}}</p>
+			<div class="leftd-div">
+				<img class="marr15" style="border-radius: 50%;" src="{{OSS(v.face)}}" alt="" width="42" height="42" style="min-width:40px;" onclick="Comm.go('personal.html?customerId={{v.itemId}}')">
+				<div style="width: 100%;">
+					<!-- <p class="f12" style="color:#999;">{{v.}}</p> -->
+					<div class="speech left">
+						{{v.content}}
+					</div>
+				</div>
+			</div>
+		</div>
+		{{else}}
+		<div class="rightd" id="{{v.messId}}">
+			<p class="time  mart5 ">{{v.addTime}}</p>
+			<div class="rightd-div">
+				<img class="marl15 right" style="border-radius: 50%;" src="{{OSS($data.face)}}" alt="" width="42" height="42" style="min-width:40px;" onclick="Comm.go('personal.html?customerId={{v.itemId}}')">
+				<div>
+					<div class="speech right" ontouchstart="model.start({{v.messId}})" ontouchmove="model.move()">
+						{{v.content}}
+					</div>
+				</div>
+			</div>
+		</div>
+		{{/if}} {{/each}}
+	</script>
+	<script type="text/javascript" src="./inc/z.js"></script>
+	<script type="text/javascript" src="./inc/g.js"></script>
+	<script type="text/javascript" src="./inc/comm.js"></script>
+	<script src="./inc/jquery.min.js"></script>
+	<script src="inc/side.js"></script>
+	<script type="text/javascript" src="inc/upimg/upload.js"></script>
+	<script type="text/javascript" src="inc/art-template.js"></script>
+	<!-- <script type="text/javascript" src="inc/refresh.js"></script> -->
+	<script type="text/javascript" src="inc/mescroll/mescroll.min.js"></script>
+	<script>
+		var mescroll = null;
+
+		function editOninput(a) {
+			Comm.resizeSection()
+		}
+
+		function pageload() {
+			$('.navTitle').html(Comm.db('setName'));
+			mescroll = new MeScroll("mescroll", {
+				//上拉加载的配置项
+				down: {
+					offset: 60,
+					auto: true,
+					callback: downCallback, //上拉回调,此处可简写; 相当于 callback: function (page) { getListData(page); }
+					isBounce: false, //此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
+
+					page: {
+						size: 5
+					},
+					clearEmptyId: "dataList",
+					lazyLoad: {
+						use: true // 是否开启懒加载,默认false
+					}
+				},
+				up: {
+					use: false
+				}
+			});
+			Comm.storage("isX", function(d) {
+				if(d) {
+					$("footer").css("padding-bottom", "10px");
+
+				}
+			});
+			$("#content").on("paste", function(e) {
+				textInit(e)
+			});
+			
+		};
+function textInit(e) {
+			e.preventDefault();
+			var text;
+			var clp = (e.originalEvent || e).clipboardData;
+			if(clp === undefined || clp === null) {
+				text = window.clipboardData.getData("text") || "";
+				if(text !== "") {
+					if(window.getSelection) {
+						var newNode = document.createElement("span");
+						newNode.innerHTML = text;
+						window.getSelection().getRangeAt(0).insertNode(newNode);
+					} else {
+						document.selection.createRange().pasteHTML(text);
+					}
+				}
+			} else {
+				text = clp.getData('text/plain') || "";
+				if(text !== "") {
+						document.execCommand('insertText', false, text);
+				}
+			}
+		}
+		var model = {
+			data: {
+				isshow: false, //是否显示表情
+			},
+			copy:function(){
+        	var e =event;
+        	 e.preventDefault();
+                zhuanfa.copy = true;
+                var text;
+                var clp = (e.originalEvent || e).clipboardData;
+                if (clp === undefined || clp === null) {
+                    text = window.clipboardData.getData("text") || "";
+                    if (text !== "") {
+                        if (window.getSelection) {
+                            var newNode = document.createElement("span");
+                            newNode.innerHTML = text;
+                            window.getSelection().getRangeAt(0).insertNode(newNode);
+                        } else {
+                            document.selection.createRange().pasteHTML(text);
+                        }
+                    }
+                } else {
+                    text = clp.getData('text/plain') || "";
+                    if (text !== "") {
+                        text = text.replace(/<\/?.+?\/?>/g, "").replace(/<[^>]*>|<\/[^>]*>/gm, "");
+                        var div = document.createElement('div');
+                        div.innerHTML = text;
+                        document.execCommand('insertText', false, div.innerText);
+                        zhuanfa.copy = false;
+                    }
+                }
+        },
+			//初始化表情
+			initemotion: function() {
+				var emotionhtml = [];
+				emotionhtml.push("<li class='clearfix'><div>");
+				for(var i = 1; i <= 20; i++) {
+					emotionhtml.push("<span onclick='model.clickemotion(this)'><img width='70%' src='inc/chart/arclist/" + i + ".gif'/></span>")
+					if(i % 5 == 0 && i != 20) {
+						emotionhtml.push("</div></li><li class='clearfix'><div>")
+					}
+				}
+				emotionhtml.push("</div></li>")
+				$("#side").html(emotionhtml.join(""));
+				new Side("banner", 3, false);
+			},
+			//控制表情显示或隐藏
+			showEmotion: function() {
+				console.log(this.data.isshow)
+				//处于隐藏状态
+				if(!this.data.isshow) {
+					$('#emotion').removeClass('hide');
+					this.initemotion();
+					mescroll.scrollTo(999999);
+					this.data.isshow = true;
+					$('section').attr('onclick', 'model.showEmotion()')
+				} else if(this.data.isshow) { //处于显示状态
+					$('#emotion').addClass('hide');
+					this.data.isshow = false;
+					// this.upimg()
+					mescroll.scrollTo(999999);
+					$('section').attr('onclick', '')
+				}
+
+				Comm.resizeSection();
+			},
+			upimg: function() {
+				var uploader = new imgUploader("imgupimg");
+				uploader.success = function() {
+					var cimgUrl = this.imgList.length > 0 ? this.imgList[0] : 'img/error.png';
+					var data = {
+						thisid: u.id,
+						toid: toid,
+						msg: "<img width='100%' width='40' height='40' src='" + Comm.OSS.getImgUrl(cimgUrl, 's') + "'/>",
+						type: 2
+					}
+					sendajax(data)
+				}
+			},
+			clickemotion: function(a) {
+				var src = $(a).find("img").attr("src")
+				$('#content a').remove();
+				$("#content").append("<img width='35' src='" + src + "'/>");
+			},
+			//点击输入框
+			TextareaClick: function(e) {
+				setTimeout(function() {
+					Comm.resizeSection();
+					mescroll.scrollTo(999999);
+				}, 350)
+				$(e).children('a').remove();
+			},
+			//输入框失去焦点
+			TextareaBlur: function(e) {
+				if($(e).html() == '') {
+					$(e).html('<a style="color:#999;">请输入内容~</a>')
+				}
+				if(Comm.ios()){
+					resizeDom();
+				}
+			},
+			//发送数据
+			sends: function() {
+				var content = $('#content').html();
+				console.log(content.replace(/\s+/g, "").replace(/<(?!img).*?>/g, ""))
+				
+				if(content.replace(/\s+/g, "").replace(/<(?!img).*?>/g, "") == '请输入内容~' || content.replace(/\s+/g, "").replace(/<(?!img).*?>/g, "").replace(/ /g, "").replace(/[ ]|&nbsp;/g, '') == "") {
+					Comm.message('请输入聊天内容');
+					return;
+				}
+				var that = this;
+				if(content.length > 0) {
+					var o = {};
+					o.messType = 2;
+					o.customerId = Comm.query('id');
+					o.userType = Comm.query('type');
+					o.messTitle = '';
+					o.content = "<b>" + content + '</b>' //.replace(/<(?!img).*?>/g, "").replace(/(\r\n|\n|\r)/gm, "<br/>").replace(/(?!.*>)\s/g, "&nbsp;");
+					o.itemType = 3;
+					o.itemId = app.getCid();
+					AJAX.POST('/api/mess/send', o, function(a) {
+						if(a && a.code == 1) {
+							$('#content').html('');
+							setTimeout(function() {
+//								console.log(o)
+//								that.pushMsg(o);
+							
+								pageno=1;
+								$('#dataList').html('')
+								downCallback()
+							}, 300);
+							Comm.resizeSection();
+						} else {
+							Comm.message(a.msg);
+						}
+					})
+
+				}
+			},
+			pushMsg: function(o) {
+				o.content = o.content.replace(/(%26)/g, '&');
+				var html = '';
+				html += '	<div class="rightd"><p class="time  mart5 ">' + app.formatDate(new Date(), 'Y-m-d H:i') + '</p>';
+				html += '<div class="rightd-div"><img class="marl15 right" style="border-radius: 50%;" src="' + Comm.OSS.getImgUrl(Comm.db('userinfo').face, 's') + '" alt="" width="40" height="40" style="min-width:40px;">';
+				html += '<div style="width: 100%;"><div class="speech havemenu right">' + o.content + '</div></div></div></div>';
+				$('#dataList').append(html);
+				mescroll.scrollTo(999999);
+			},
+			longClick: 0,
+			timeOutEvent: 0,
+			start: function(id) {
+				var that = this;
+				that.longClick = 0;
+				that.timeOutEvent = setTimeout(function() {
+					that.longClick = 1;
+					Comm.confirm('确认撤回？',function(d){
+						if(d){
+						AJAX.GET('api/mess/delMySend?messId='+id,function(a){
+							if(a&&a.code==1){
+								Comm.message('撤回成功');
+								$('#'+id).remove();
+							}else{
+								Comm.message(a.msg);
+							}
+						})
+						}
+					})
+				}, 1000)
+			},
+			move: function(e) {
+				var that = this;
+				clearTimeout(that.timeOutEvent);
+				that.timeOutEvent = 0;
+				e.preventDefault();
+			},
+		}
+
+		$(window).resize(function() {
+			//mescroll.scrollTo(999999);
+		});
+
+		var pageno = 1;
+
+		function downCallback() {
+			if(pageno) {
+				var o = {};
+				o.itemType = Comm.query('type');
+				o.itemId = Comm.query('id');
+				o.pagesize = 5;
+				o.pageno = pageno
+				AJAX.POST('/api/mess/getPrivateMessList', o, function(a) {
+					if(a && a.code == 1) {
+						mescroll.endSuccess()
+						a.data = a.data.reverse()
+						a.data.map(function(item, index) {
+							item.addTime = app.formatDate(item.addTime, 'Y-m-d H:i')
+						})
+						setListData(a.data);
+
+						a.totalCount ? pageno += 1 : pageno = false;
+					} else {
+						Comm.message(a.msg);
+						errorCallback && errorCallback();
+					}
+				});
+			} else {
+				mescroll.endSuccess();
+				mescroll.lockDownScroll(true);
+			}
+		};
+
+		/*设置列表数据
+		 * pageData 当前页的数据
+		 * dataIndex 数据属于哪个nav */
+		function setListData(pageData, dataIndex) {
+			var listDom = document.getElementById("dataList");
+			if(pageData.length > 0) {
+				pageData.customerId = app.getCid();
+				pageData.face = Comm.db('userinfo').face;
+				var listStr = listDom.innerHTML;
+				listStr = template('listTpl', pageData) + listStr
+				console.log(pageData)
+				listDom.innerHTML = listStr;
+				if(pageno > 1) {
+					listDom.innerHTML = listStr
+				} else {
+					listDom.innerHTML = listStr;
+					setTimeout(function() {
+						mescroll.scrollTo(999999);
+					}, 200);
+				}
+				$('.speech').addClass('havemenu');
+				$('.speech').children().addClass('havemenu');
+			}
+		}
+	</script>
+
+</html>

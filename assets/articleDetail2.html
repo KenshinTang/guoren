@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>资讯详情</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+</head>
+<style>
+   input{
+   	margin: 50px;
+   	width: 90%;
+   	height: 50px;
+   	font-size: 30px;
+   }
+</style>
+
+<body>
+    <header>
+        <div class="navBar bottomShadow" style="padding: 0;">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            
+        </div>
+    </header>
+    <section>
+       <input class="paddr15" maxlength="20" id="id_searchInput1" autocomplete="off" type="search" placeholder="输入关键字">
+
+    </section>
+    
+</body>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script>
+	window.onresize=Comm.resizeSection;
+	
+	
+	
+	function show () {
+		if(time<=0){
+				var elem = document.getElementById('id_searchInput1');
+         	elem.focus();
+		}
+		else{
+			time--;
+			document.getElementById('id_searchInput1').value=time;
+			setTimeout(show,sp);
+		}
+			
+	}
+	
+	
+	
+	
+	function pageload() {
+		
+        setTimeout(function(){
+        	var elem = document.getElementById('id_searchInput1');
+         	elem.focus();
+        },500);
+          
+
+    }
+</script>
+</html>

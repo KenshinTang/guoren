@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>我的粉丝</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+
+    <style>
+        .navItemIcon {
+            background-image: url('img/msg.png');
+            background-position: center right;
+            background-repeat: no-repeat;
+            background-size: auto 20px;
+        }
+        
+        .searchBar {
+            margin: 0 auto;
+        }
+        
+        .searchBar input {
+            width: 95%;
+            padding-left: 30px;
+            line-height: 30px;
+            height: 30px;
+            font-size: 14px;
+            color: #8891A7;
+            background-color: #F2F6F7;
+            border-radius: 18px;
+            background-image: url('img/search.png');
+            background-repeat: no-repeat;
+            background-size: 14px;
+            background-position: 10px center;
+            margin: 0 auto;
+            margin-left: 2.5%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">访问记录</div>
+        </div>
+    </header>
+    <section id="box" style="background-color: #f4f4f4;">
+        <div class="main">
+            <div class="fansList mescroll" id="fansList" style="background-color: #f4f4f4;">
+            </div>
+        </div>
+
+    </section>
+</body>
+<!--  -->
+<script type="text/html" id="dome1">
+    {{each $data as v k}}
+    <div class="fansItem"  style="background-color: #fff;" onclick="Comm.go('./personal.html?customerId={{v.customerId}}')">
+        <div class="flex_wrap" style="align-items: center;width: 100%;">
+            <div class="userImg" style="margin-right: 15px;">
+                <img src="{{OSS(v.face,'s')}}"onerror="this.src='img/my/mti.png';this.onerror=null;" alt="" width="50" height="50" style="border-radius:50%">
+            </div>
+            <div style="width: calc(100% - 125px);">
+                <p class="wordW" style="color:#222222;font-size:14px;font-weight: 700; ">{{v.customerName}}</p>
+                <p class="wordW paddr15" style="color:#888888;font-size:12px;">{{v.autograph||'这是一句生来就注定要被消灭的签名'}}</p>
+              	<p class="f12 c9e">关注{{conunm(v.followNumber)}} · 粉丝{{conunm(v.fansNumber)}} · 获赞{{conunm(v.praiseNumber)}} </p>
+            </div>
+            <div class="color999 f12">
+            	{{sldate(v.visitTime)}}
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</script>
+
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+
+<script>
+    var customerId = app.getCid();
+    var merefresh = null;
+    var _customerId = Comm.query('customerId');
+   
+    function pageload() {
+        myrefresh()
+    }
+
+
+
+    function myrefresh() {
+        if (merefresh == null) {
+            merefresh = new MERefresh('box,fansList', {
+                refreshUrl: '/api/customer/visitRecordList',
+                refreshTypeGet: true
+            });
+            //网络请求参数
+            merefresh.refreshOption.refreshParm = {
+                curPage: 1,
+                pageSize: 10,
+                customerId: _customerId
+            };
+            //页面 <刷新> 的回调
+            merefresh.refreshOption.refresh_cb = function(refresh, d) {
+                refresh.successEndRef(d.data.length, d.totalCount);
+                d.data.myId = app.getCid();
+                d.data.hisId = Comm.query('customerId') ? Comm.query('customerId') : app.getCid();
+                refresh.appendHtml(template('dome1', d.data));
+
+            };
+        } else {
+            console.log(merefresh)
+        }
+    }
+
+</script>
+
+</html>

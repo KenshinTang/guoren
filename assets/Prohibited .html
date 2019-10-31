@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+
+		<style>
+			.navItemIcon {
+				background-image: url('img/msg.png');
+				background-position: center right;
+				background-repeat: no-repeat;
+				background-size: auto 20px;
+			}
+			
+			.searchBar {
+				margin: 0 auto;
+			}
+			
+			.search {
+				width: 100%;
+				padding: 10px 15px;
+				display: flex;
+				justify-content: center;
+			}
+			
+			.search>div {
+				width: 100%;
+				position: relative;
+			}
+			
+			.search input {
+				height: 35px;
+				width: 100%;
+				padding-left: 37px;
+				background: #F4F4F4;
+				border-radius: 5px;
+			}
+			
+			.icon_search {
+				display: inline-block;
+				width: 28px;
+				height: 25px;
+				background: url('./img/search.png')no-repeat center;
+				background-size: 65%;
+				position: absolute;
+				top: 50%;
+				margin-top: -13px;
+				left: 5px;
+			}
+			
+			.establish {
+				width: 134px;
+				height: 45px;
+				background: #098E75;
+				border-radius: 23px;
+				color: #fff;
+				text-align: center;
+				line-height: 45px;
+				margin: 10px auto;
+			}
+			
+			.icon_xie {
+				display: inline-block;
+				width: 14px;
+				height: 14px;
+				background: url('./img/a/bi.png')no-repeat center;
+				background-size: 100%;
+				margin-right: 5px;
+			}
+			
+			.identity {
+				display: inline-block;
+				color: #fff;
+				background: #b04343;
+				font-size: 10px;
+				line-height: 20px;
+				padding: 1px 3px;
+				border-radius: 3px;
+			}
+			
+			#sinbox1 {
+				width: 300px;
+				border-radius: 10px;
+				padding: 0;
+				background-color: #fff;
+			}
+			
+			.qxgz {
+				background-size: 16px;
+				text-align: center;
+				padding: 20px;
+				color: #444444;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar" style="padding: 0;">
+				<div class="navBackIcon " onclick="Comm.close()"></div>
+				<div class="nav-title block searchBar f16" style="width: calc(100% - 40px);height: 44px;font-weight: 700;">违禁词管理</div>
+			</div>
+		</header>
+		<section id="box">
+			<div class="search">
+				<form action="javascript:return true;" onsubmit="myrefresh()" style="position: relative;width:100%">
+					<div>
+						<i class="icon_search"></i>
+						<input type="search" id="search" placeholder="搜索" onblur="myrefresh()">
+					</div>
+				</form>
+			</div>
+			<div id="list"></div>
+			
+		</section>
+		<footer class="shared">
+			<div class="establish" onclick="Comm.showWindow('sinboxTemp1',true)"><i class="icon_xie"></i> 添加违禁词</div>
+		</footer>
+	</body>
+	<div id="sinbox1" wtd="sinboxTemp1">
+		<div class="qxgz" style="border-bottom: 1px solid #F4F4F4;">请输入违禁词</div>
+		<div class="qxgz" style="border-bottom: 1px solid #F4F4F4;"><input id="kewyWord" style="width: 100%;" placeholder="请输入违禁词" /></div>
+		<div class="flex">
+			<div class="qxgz" style="width: 50%;background: #F9F9F9;border-bottom-left-radius: 5px;" onclick="Comm.showWindow('')">取消</div>
+			<div class="qxgz" style="width: 50%;background:#098E75 ;color: #fff;border-bottom-right-radius: 5px;" onclick="setKey()">确认</div>
+		</div>
+	</div>
+	<script id="listTpl2" type="text/html">
+{{each $data v k}}
+		<div class="flex lh20" id="{{v.groupSwordId}}" style="padding: 5px 5px;margin: 5px 15px;background-color: #F2F2F2;">
+			<div style="flex-basis: 90%;">{{v.groupSword}}</div>
+			<div class="identity" onclick="shanchu({{v.groupSwordId}})">删除</div>
+		</div>
+{{/each}}
+	</script>
+
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script type="text/javascript" src="inc/mescroll/mescroll.min.js"></script>
+	<script type="text/javascript" src="inc/mescroll/swiper.min.js"></script>
+	<script type="text/javascript" src="inc/art-template.js"></script>
+	<script type="text/javascript" src="inc/down-refresh.js" charset="utf-8"></script>
+	<script type="text/javascript" src="inc/tpl.js"></script>
+
+	<script>
+		var customerId = app.getCid();
+		var groupId = Comm.query('groupId');
+		var merefresh = null;
+		function pageload() {
+			myrefresh()
+		}
+
+		function pageresume() {
+
+		}
+
+		function setKey() {
+			if($('#WTDBOXTD #kewyWord').val() && $('#WTDBOXTD #kewyWord').val() != '') {
+				AJAX.GET('/api/sword/addByGroup?groupId=' + groupId + '&keyword=' + $('#WTDBOXTD #kewyWord').val(), function(a) {
+					if(a && a.code == 1) {
+						Comm.message('添加成功');
+						myrefresh()
+						Comm.showWindow('');
+					} else {
+						Comm.message(a.msg);
+						Comm.showWindow('');
+					}
+				})
+			} else {
+				Comm.message('违禁词不能为空');
+			}
+		}
+		var mid = "";
+		var model = {
+			shanchu: function(id) {
+				Comm.confirm('确认删除？', function(d) {
+					if(d) {
+						AJAX.GET('/api/sword/batchDelByGroup?swordIds=' + id, function(a) {
+							if(a && a.code == 1) {
+								Comm.message('删除成功');
+								$('#' + id).remove();
+							} else {
+								Comm.message(a.msg);
+							}
+						})
+					}
+				})
+			},
+			
+		}
+	function myrefresh() {
+			if(merefresh == null) {
+				merefresh = new MERefresh('box,list', {
+					refreshUrl: '/api/sword/listByGroup',
+					refreshTypeGet: true
+				});
+				 //网络请求参数
+            merefresh.refreshOption.refreshParm = {
+                pageno: 1,
+                pageSize: 10,
+                groupId: groupId,
+                keyword:$("#search").val()
+            };
+            //页面 <刷新> 的回调
+            merefresh.refreshOption.refresh_cb = function (refresh, d) {
+                refresh.successEndRef(d.data.length, d.totalCount);
+                refresh.appendHtml(template('listTpl2', d.data));
+            };
+			} else {
+
+				merefresh.refreshOption.refreshParm = {
+					groupId: groupId,
+                keyword:$("#search").val()
+				};
+				//重置列表数据
+				merefresh.MeRefScroll.resetUpScroll();
+				//model.mere.MeRefScroll.triggerDownScroll();
+				//隐藏回到顶部按钮
+				merefresh.MeRefScroll.hideTopBtn();
+			}
+
+		}
+	</script>
+
+</html>

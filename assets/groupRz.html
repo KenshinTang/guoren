@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加关注</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+
+		<style>
+			.searchBar {
+				margin: 0 auto;
+			}
+			.schoolMsg{
+				border-bottom: 2px solid #f4f4f4;
+			}
+			.searchBar input {
+				width: 95%;
+				padding-left: 30px;
+				line-height: 30px;
+				height: 30px;
+				font-size: 14px;
+				color: #8891A7;
+				background-color: #F2F6F7;
+				border-radius: 18px;
+				background-image: url('img/search.png');
+				background-repeat: no-repeat;
+				background-size: 14px;
+				background-position: 10px center;
+				margin: 0 auto;
+				margin-left: 2.5%;
+			}
+			
+			.order-t {
+				
+				text-align: center;
+				font-size: 12px;
+			}
+			
+			.order-t-c {
+				width: 25%;
+				height: 100%;
+				float: left;
+				font-size: 15px;
+				/*font-weight: bold;*/
+				color: #888888;
+			}
+			
+			.order-t-c-active {
+            /*border-bottom: 2px solid #000000;*/
+            position: relative;
+            color: #098E75;
+        }
+        
+        .order-t-c-active:after {
+            content: '';
+            position: absolute;
+            left: 18%;
+            bottom: auto;
+            right: auto;
+            height: 2px;
+            width: 64%;
+            background-color: #098E75;
+        }
+        .mescroll-empty{
+        	background-color: #f4f4f4;
+        }
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar" style="padding: 0;box-shadow: none;">
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+				<div class="nav-title block searchBar f16" style="width: calc(100% - 40px);height: 44px;font-weight: 700;">管理日志</div>
+			</div>
+			<div class="scrollx mescroll-touch-x">
+				<div id="scrollxContent" class="scrollx-content">
+					<div id="nav" class="order-t ovf bb1" style="border-bottom: 1px solid #f4f4f4;">
+						<div class="order-t-c brp order-t-c-active" i='0'>全部日志</div>
+						<div class="order-t-c brp" i='1'>帖子管理</div>
+						<div class="order-t-c brp" i='2'>成员管理</div>
+						<div class="order-t-c brp" i='3'>圈子设置</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<section>
+
+			<!--轮播-->
+			<div id="swiper" class="swiper-container">
+				<div id="swiperWrapper" class="swiper-wrapper">
+					<!--全部-->
+					<div id="mescroll0" class="swiper-slide mescroll">
+						<div id="dataList0" class="data-list">
+						</div>
+					</div>
+					<!--旗舰店-->
+					<div id="mescroll1" class="swiper-slide mescroll">
+						<div id="dataList1" class="data-list">
+						</div>
+					</div>
+					<!--优享店-->
+					<div id="mescroll2" class="swiper-slide mescroll">
+						<div id="dataList2" class="data-list">
+						</div>
+					</div>
+					<!--快取店-->
+					<div id="mescroll3" class="swiper-slide mescroll">
+						<div id="dataList3" class="data-list">
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="mescroll-totop" onclick="Comm.showWindow('sinboxTemp2',true);">
+			<img src="img/index/bj.png" width="45" />
+		</div>
+		<footer class="shared">
+
+		</footer>
+	</body>
+	<script type="text/html" id="listTpl">
+		{{each $data v k}}
+		<div class="pad10" style="margin:10px;background: #f4f4f4;">
+		<div class="flex"><div style="flex-basis: 50%;">{{v.logTitle}}</div><div>{{v.addTime}}</div></div>
+		<div class="mart5">{{v.logContent}}</div>
+		</div>
+		{{/each}}
+	</script>
+
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="./inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+
+	<script>
+		var customerId = app.getCid();
+		var groupId = Comm.query('groupId');
+		function pageload() {
+			mescrollRefreshFn({
+				menuNumber: 4
+			});
+			var type = Comm.query('type');
+			if(type) {
+				swiper.slideTo(type);
+			}
+		}
+
+		function pageresume() {
+
+		}
+		var model = {
+			//关注圈子
+			add: function(groupsId, e) {
+				AJAX.GET('/api/school/groups/addFocus?groupsId=' + groupsId + '&customerIds=' + customerId, function(a) {
+					if(a && a.code == 1) {
+						$(e).parent().html('<div class="f14 fr isJiaru"onclick="model.remove(' + groupsId + ',this)">已加入</div>');
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+			remove: function(groupsId, e) {
+				Comm.confirm('是否确认退出？', function(d) {
+					if(d) {
+						AJAX.GET('/api/school/groups/cancelFocus?groupsId=' + groupsId + '&customerIds=' + customerId, function(a) {
+							if(a && a.code == 1) {
+								$(e).parent().html('<div class="f14 fr add-guan" onclick="model.add(' + groupsId + ',this)">加入</div>');
+							} else {
+								Comm.message(a.msg);
+							}
+						})
+					}
+				})
+
+			},
+			//关注学校
+			addSchool: function(id, e) {
+				AJAX.GET('/api/school/addFocus?schoolIds=' + id + '&customerId=' + customerId, function(a) {
+					if(a && a.code == 1) {
+						$(e).parent().html('<div class="f14 fr isJiaru"onclick="model.removeSchool(' + id + ',this)">已关注</div>')
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+			removeSchool: function(id, e) {
+				Comm.confirm('是否确认取消关注？', function(d) {
+					if(d) {
+						AJAX.GET('/api/school/cancelFocus?schoolId=' + id + '&customerId=' + customerId, function(a) {
+							if(a && a.code == 1) {
+								$(e).parent().html('<div class="f14 fr add-guan" onclick="model.addSchool(' + id + ',this)">关注</div>');
+							} else {
+								Comm.message(a.msg);
+							}
+						})
+					}
+				})
+
+			},
+			//关注专业
+			addMajor: function(id, e) {
+				AJAX.GET('/api/school/major/addFocus?majorId=' + id + '&customerId=' + customerId, function(a) {
+					if(a && a.code == 1) {
+						$(e).parent().html('<div class="f14 fr isJiaru"onclick="model.removeMajor(' + id + ',this)">已关注</div>');
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+			removeMajor: function(id, e) {
+				Comm.confirm('是否确认取消关注？', function(d) {
+					if(d) {
+						AJAX.GET('/api/school/major/cancelFocus?majorId=' + id + '&customerId=' + customerId, function(a) {
+							if(a && a.code == 1) {
+								$(e).parent().html('<div class="f14 fr add-guan" onclick="model.addMajor(' + id + ',this)">关注</div>');
+							} else {
+								Comm.message(a.msg);
+							}
+						})
+					}
+				})
+
+			},
+			//关注用户
+			addCos: function(id, e) {
+				AJAX.GET('/api/fans/addFans?fid=' + id + '&customerId=' + customerId, function(a) {
+					if(a && a.code == 1) {
+						$(e).parent().html('<div class="f14 fr isJiaru"onclick="model.removeCos(' + id + ',this)">已关注</div>');
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+			removeCos: function(id, e) {
+				Comm.confirm('是否确认取消关注？', function(d) {
+					if(d) {
+						AJAX.GET('/api/fans/unfollow?fid=' + id + '&customerId=' + customerId, function(a) {
+							if(a && a.code == 1) {
+								$(e).parent().html('<div class="f14 fr add-guan" onclick="model.addCos(' + id + ',this)">关注</div>');
+							} else {
+								Comm.message(a.msg);
+							}
+						})
+					}
+				})
+
+			},
+			//关注话题
+			addTop: function(id, e) {
+				AJAX.GET('/api/topic/addFocus?topicId=' + id + '&customerId=' + customerId, function(a) {
+					if(a && a.code == 1) {
+						$(e).parent().html('<div class="f14 fr isJiaru"onclick="model.removeTop(' + id + ',this)">已关注</div>');
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+			removeTop: function(id, e) {
+				Comm.confirm('是否确认取消关注？', function(d) {
+					if(d) {
+						AJAX.GET('/api/topic/cancelFocus?topicId=' + id + '&customerId=' + customerId, function(a) {
+							if(a && a.code == 1) {
+								$(e).parent().html('<div class="f14 fr add-guan" onclick="model.addTop(' + id + ',this)">关注</div>');
+							} else {
+								Comm.message(a.msg);
+							}
+						})
+					}
+				})
+
+			}
+
+		}
+		/*设置列表数据
+		 * pageData 当前页的数据
+		 * dataIndex 数据属于哪个nav */
+		function setListData(pageData, dataIndex) {
+			var swiper = document.getElementById("swiper");
+			var listDom = document.getElementById("dataList" + dataIndex),
+				nowStr = "",
+				listStr = "",
+				name = "";
+			if(pageData.length > 0) {
+				pageData.dataIndex = dataIndex;
+				listStr = template('listTpl', pageData);
+				if(pageData.curPage > 1) {
+					listDom.innerHTML += listStr;
+				} else {
+					listDom.innerHTML = listStr;
+				}
+			}
+			Comm.scorllDel();
+		}
+
+		/*联网加载列表数据
+		 在您的实际项目中,请参考官方写法: http://www.mescroll.com/api.html#tagUpCallback
+		 请忽略getListDataFromNet的逻辑,这里仅仅是在本地模拟分页数据,本地演示用
+		 实际项目以您服务器接口返回的数据为准,无需本地处理分页.
+		 * */
+		var htmlData = [];
+
+		function getListDataFromNet(curNavIndex, pageNum, pageSize, successCallback, errorCallback) {
+			var o = {};
+			
+			o.curpage = pageNum;
+			o.pagesize = pageSize;
+			o.groupId = groupId;
+			o.groupLogType = curNavIndex;
+			AJAX.POST('/api/school/groups/logList', o, function(a) {
+				if(a && a.code == 1) {
+					var r = a.data || [];
+					htmlData = r;
+					totalSize = a.totalCount;
+					htmlData.curPage = a.curPage;
+					successCallback && successCallback(htmlData, totalSize);
+				} else {
+					Comm.message(a.msg);
+					errorCallback && errorCallback();
+				}
+			});
+		}
+	</script>
+
+</html>

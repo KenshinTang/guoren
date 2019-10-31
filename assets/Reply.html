@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>回复</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+    <style>
+.shared {
+			font-size: 14px;
+			background: #fff;
+			position: fixed;
+			width: 100%;
+			bottom: 0;
+		}
+
+		.shared .top {
+			display: flex;
+			justify-content: space-between;
+			padding: 5px 10px;
+			border: none;
+		}
+
+		.shared .top p {
+			color: #999999FF;
+		}
+
+		.shared .top .enlarge {
+			height: 15px;
+			width: 15px;
+			background: url('./img/pinglun/fd.png')no-repeat center;
+			background-size: 100%;
+		}
+
+		.shared .inputBox {
+			padding: 5px 10px;
+			width: 100%;
+		}
+
+		.shared .inputBox #huifu {
+			width: 100%;
+			font-size: 14px;
+			border: none;
+			height: 100px;
+		}
+
+		.shared .bottom {
+			padding: 5px 10px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.shared .bottom .l {
+			width: 23px;
+			height: 23px;
+			background: url('./img/pinglun/xl.png')no-repeat center;
+			background-size: 100%;
+		}
+
+		.shared .bottom .r {
+			color: #098E75;
+		}
+        .bottom{
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+
+    </header>
+    <section class=" paddt10 shared">
+        <div class="top">
+            <p>正在回复Enzo</p>
+            <div class="enlarge" id="enlarge"></div>
+        </div>
+        <div class="inputBox">
+            <textarea id="huifu" placeholder="观点的碰撞，思想的火花"></textarea>
+        </div>
+        <div class="bottom">
+            <div class="l"></div>
+            <div class="r">发布</div>
+        </div>
+    </section>
+    <footer class="shared hide" style="">
+
+    </footer>
+</body>
+
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="./inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+<script>
+    function pageload() {
+        $($('#nav').children()[0]).click();
+
+    }
+
+    function pageresume() {
+
+    }
+    var mid = "";
+    var model = {
+        qh: function (id) {
+            mid = id
+        },
+        content: function () {
+            Comm.go('')
+        }
+    }
+</script>
+
+</html>

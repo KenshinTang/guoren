@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加关注</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+		<link rel="stylesheet" href="css/photo.css" />
+		<style>
+			div {
+				-webkit-user-select: text;
+			}
+			
+			div * {
+				-webkit-user-select: text
+			}
+			
+			.navItemIcon {
+				width: 50px;
+				background: none;
+			}
+			
+			.jjs {
+				background-color: #098E75;
+				border-radius: 5px;
+				color: #FFF;
+				line-height: 22px;
+				padding: 1px 10px;
+			}
+			
+			.search {
+				padding: 10px 25px;
+				background-color: #F3F3F3;
+				background-image: url(img/index/down.png);
+				background-repeat: no-repeat;
+				background-size: 6px 3px;
+				background-position: 98% center;
+			}
+			
+			.inp {
+				width: 100%;
+				background-color: #F3F3F3;
+			}
+			
+			#inner {
+				width: 100%;
+				height: 180px;
+				border: none;
+				overflow-x: hidden;
+				overflow-y: auto;
+				font-size: 14px !important;
+				-webkit-user-select: text
+			}
+			
+			.whosee {
+				border-bottom: 1px solid #BFBFBF;
+				border-top: 1px solid #BFBFBF;
+				padding: 25px 20px;
+			}
+			
+			.who {
+				background: url(img/index/per.png) no-repeat left center;
+				background-size: 19px;
+				color: #222222;
+			}
+			
+			.see {
+				background: url(img/index/bac-r.png) no-repeat right center;
+				background-size: 6px 11px;
+				color: #888888;
+			}
+			
+			.imgbox img {
+				width: 100%;
+			}
+			
+			span {
+				vertical-align: bottom;
+			}
+			
+			#zf {
+				transform: translate3d(0, 0, 0);
+			}
+			
+			.color505 div {
+				color: #464646;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar" style="padding: 0;box-shadow: none;">
+				<div class="navBackIcon" onclick="model.close()"></div>
+				<div class="navItemIcon marl5 marr10">
+					<div class="jjs mart10" onclick="model.add()">发布</div>
+				</div>
+				<div class="nav-title block searchBar marl25" style="width: calc(100% - 85px);height: 44px;">
+					转发
+				</div>
+			</div>
+		</header>
+		<section class="paddl15 paddr15">
+			<div class="">
+				<div class="paddl10 paddt10" contenteditable="true" oninput="editOninput(this)" onkeydown="zhuanfa.keydown(this)" id="inner" placeholder="说说您的看法...~"></div>
+			</div>
+			<div class="pad10" id="fcontent"></div>
+			<div class="tright"><span id="num" class="color038"></span><span>/140</span></div>
+			<div class="mart15 scl-zf" id="zf">
+
+			</div>
+		</section>
+
+	</body>
+	<script id="zfTpl" type="text/html">
+		{{if news.resourceId>0 }} {{if resourceInfo&&resourceInfo!=''}}
+		<div class="wordW f16 marb10 color505">{{resourceUserInfo.customerName}}的{{if resourceInfo.newsType==1}}说说{{/if}}{{if resourceInfo.newsType==2}}日志{{/if}}{{if resourceInfo.newsType==7}}帖子{{/if}}{{if resourceInfo.newsType==8}}讨论{{/if}}{{if resourceInfo.newsType==11}}动态{{/if}}
+		</div>
+		<div class="">
+			<div class="color505 {{if resourceInfo.newsType==2||resourceInfo.newsType==7}}wordW3{{/if}}">{{if resourceInfo.title}}<span class="marr5 color505">{{resourceInfo.title}} </span> {{/if}}<span class="color505"> {{if resourceInfo.newsType==2||resourceInfo.newsType==7}}{{resourceInfo.content}}{{else}}{{repcontent(resourceInfo.content,resourceInfo.newsId, '#fff')}}{{/if}}</span></div>
+		</div>
+		{{if resourceInfo.face&&resourceInfo.face!=''}}{{if resourceInfo.newsType==1||resourceInfo.newsType==8}} {{imgTpl(resourceInfo.face,96)}}{{else}}{{imgTpl(resourceInfo.face,76)}}{{/if}}{{/if}}
+		<div class="clearfix"></div>
+		{{else}}
+		<div class="wordW f14">该动态已删除</div>
+		<div class="clearfix"></div>
+		{{/if}} {{else}}
+		<div class="wordW f16 marb10 color505">{{itemName}}的{{if news.newsType==1}}说说{{/if}}{{if news.newsType==2}}日志{{/if}}{{if news.newsType==7}}帖子{{/if}}{{if news.newsType==8}}讨论{{/if}}{{if news.newsType==11}}动态{{/if}}
+		</div>
+		<div class="">
+			<div class="color505 {{if news.newsType==2||news.newsType==7}}wordW3{{/if}}">{{if news.title}}<span class="marr20 color505 bold">{{news.title}} </span>{{/if}} <span class="color505">{{if news.newsType==2||news.newsType==7}}{{news.content}}{{else}}{{repcontent(news.content,news.newsId, '#fff')}}{{/if}}</span></div>
+		</div>
+		{{if news.face&&news.face!=''}}{{if news.newsType==1||news.newsType==8}} {{imgTpl(news.face,96)}}{{else}}{{imgTpl(news.face,76)}}{{/if}} {{/if}}
+		<div class="clearfix"></div>
+
+		{{/if}}
+	</script>
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script type="text/javascript" src="inc/mescroll/mescroll.min.js"></script>
+	<script type="text/javascript" src="./inc/mescroll/swiper.min.js"></script>
+	<script type="text/javascript" src="inc/art-template.js"></script>
+	<script type="text/javascript" src="./inc/upimg/upload.js"></script>
+	<script type="text/javascript" src="inc/refresh.js" charset="utf-8"></script>
+	<script type="text/javascript" src="inc/tpl.js" charset="utf-8"></script>
+	<script>
+		var id = Comm.query('newsId');
+		var customerId = Comm.db('userinfo').customerId;
+		var ntype = '';
+
+		function pageload() {
+			model.init();
+			$("#inner").on("paste", function(e) {
+				textInit(e)
+			});
+		}
+
+		function androidback() {
+			if(parseInt(Comm._pageinfo.android_home) === 0) {
+				model.close();
+
+			} else {
+				if(parseInt(Comm._pageinfo.android_home) === 1) {
+					Comm._pageinfo.android_home = 2;
+					Comm.confirm("您确定要退出应用？", function(a) {
+						if(a == 1) Comm.close();
+						else Comm._pageinfo.android_home = 1;
+					});
+				}
+			}
+		}
+
+		function editOninput(a) {
+			//输入控制
+			zhuanfa.oninput(a);
+			//数字回写，没有数字限制不需要
+			$('#num').html(zhuanfa.getlen(a));
+		}
+
+		function pageresume() {
+			//回调页面刷新
+			//Comm.message(JSON.stringify(Comm.db('atfriend')))
+			zhuanfa.pageresume(Comm.g('inner'));
+			//数字回写，没有数字限制不需要
+			$('#num').html(zhuanfa.getlen(Comm.g('inner')));
+			Comm.db('zhuanfa', '');
+		}
+
+		function textInit(e) {
+			e.preventDefault();
+			zhuanfa.copy = true;
+			var text;
+			var clp = (e.originalEvent || e).clipboardData;
+			if(clp === undefined || clp === null) {
+				text = window.clipboardData.getData("text") || "";
+				if(text !== "") {
+					if(window.getSelection) {
+						var newNode = document.createElement("span");
+						newNode.innerHTML = text;
+						window.getSelection().getRangeAt(0).insertNode(newNode);
+					} else {
+						document.selection.createRange().pasteHTML(text);
+					}
+				}
+			} else {
+				text = clp.getData('text/plain') || "";
+				if(text !== "") {
+					//text = text.replace(/@/g, "<font>@</font>");
+					document.execCommand('insertText', false, text);
+					$('#nums').html(zhuanfa.getlen(Comm.g('content')));
+				}
+			}
+			zhuanfa.copy = false;
+		}
+
+		function Focus() {
+			// 始终聚焦在文本末尾
+			el = document.getElementById('inner');
+			//el=el[0];  //jquery 对象转dom对象
+			el.focus();
+			if($.support.msie) {
+				var range = document.selection.createRange();
+				this.last = range;
+				range.moveToElementText(el);
+				range.select();
+				document.selection.empty(); //取消选中
+			} else {
+				var range = document.createRange();
+				range.selectNodeContents(el);
+				range.collapse(false);
+				var sel = window.getSelection();
+				sel.removeAllRanges();
+				sel.addRange(range);
+			}
+		}
+		if(Comm.ios()) {
+			$("section").scroll(function() {
+				document.activeElement.blur();
+				event.stopPropagation();
+			});
+		}
+		var mid = "";
+		var model = {
+			close: function() {
+				document.activeElement.blur();
+				Comm.resizeSection();
+
+				setTimeout(function() {
+					Comm.confirm('是否确认退出？', function(d) {
+						if(d) {
+							Comm.close();
+						}
+					})
+					Comm.resizeSection();
+				}, 200)
+
+			},
+			init: function() {
+				AJAX.GET('/api/news/info?newsId=' + id + '&customerId=' + customerId, function(a) {
+					if(a && a.code == 1) {
+						if(!a.data) {
+							Comm.alert('该内容已删除', function() {
+								Comm.close();
+							})
+						}
+						var data = a.data;
+						data.news.face = data.news.face.split(',');
+						if(data.resourceInfo) {
+							data.resourceInfo.face = data.resourceInfo.face.split(',');
+							data.resourceInfo.content = data.resourceInfo.content.replace(/<(img).*?>/g, "").replace(/&nbsp;/g, "").replace(/<br>/gi, "")
+							if(data.resourceInfo.newsType == 2 || data.resourceInfo.newsType == 7) {
+								data.resourceInfo.content = data.resourceInfo.content.replace(/<div class="f14">/gi, "").replace(/<div class='f14'>/gi, "").replace(/<div>|<\/div>/gi, "").replace(/(\r\n|\n|\r)/gm, "<br/>")
+							}
+						} else {
+							data.news.content = data.news.content.replace(/<(img).*?>/g, "").replace(/&nbsp;/g, "").replace(/<br>/gi, "")	
+							if(data.news.newsType == 2 || data.news.newsType == 7) {
+								data.news.content = data.news.content.replace(/<div class="f14">/gi, "").replace(/<div class='f14'>/gi, "").replace(/<div>|<\/div>/gi, "").replace(/(\r\n|\n|\r)/gm, "<br/>")
+							} else {
+								data.news.content = data.news.content.replace(/<img\b[^>]*>/g, "").replace(/&nbsp;/g, "").replace(/<br>/gi, "")
+							}
+						}
+						console.log(data)
+						$("#zf").html(template('zfTpl', data));
+						var zz = document.getElementsByClassName('text111');
+						for(var i = 0; i < zz.length; i++) {
+							zz[i].innerHTML = zz[i].attributes.attr.value;
+						}
+						ntype = data.news.newsType;
+
+						if(data.news.resourceId) {
+							if(data.news.content && data.news.content != '') {
+								$("#inner").html('//<span class="blue" len=' + (data.itemName.length + 1) + ' old="' + data.itemName + '" idd="' + data.itemId + '"  onclick="model.geren(' + data.itemId + ',' + data.itemType + ')">@' + data.itemName + '</span>&nbsp;' + data.news.content.replace(/<div>|<\/div>/gi, ""));
+							} else {
+								$("#inner").html('');
+							}
+							$('#num').html($("#inner").text().length);
+						} else {
+							$('#num').html(0);
+						}
+						if(Comm.ios()) {
+							setTimeout(function() {
+								$('#inner').focus();
+								Comm.PopUpKeyboard({
+									code: 1
+								});
+							}, 500);
+
+						} else {
+							$('#inner').focus();
+							Comm.PopUpKeyboard({
+								code: 1
+							});
+						}
+
+					}
+					if(!Comm.w9()) {
+						//Comm.db('inner_', '');
+						//pageresume()
+					}
+				})
+			},
+			add: function() {
+				document.activeElement.blur();
+				zhuanfa.removefont(Comm.g('inner'));
+				var inner = $("#inner").html() + $('#fcontent').html();
+				var innerLen = $("#inner").text() + $('#fcontent').text();
+				if(innerLen.length > 140) {
+					Comm.message('转发内容最多限制140字,请减少转发字数');
+					return false;
+				}
+				if(inner.replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/[ ]|[&nbsp;]/g, '').replace(/(\r\n|\n|\r)/gm, "").replace("<br>", "") == '') {
+					inner = "";
+				}
+				var o = {};
+				o.content = '<span>' + inner.replace(/<font class="removefont">&nbsp;/g, '<font class="removefont">') + '</span>';
+				o.itemId = id;
+				o.ids = zhuanfa.ids.join(',');
+				console.log(o)
+				Comm.loading('发布中...');
+				AJAX.POST('/api/forward/add', o, function(a) {
+					Comm.loading(false);
+					if(a && a.code == 1) {
+						document.activeElement.blur();
+						Comm.message('转发成功');
+						Comm.gotop('ifrm.html');
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+			},
+
+		}
+	</script>
+
+</html>

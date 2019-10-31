@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>添加关注</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+    <style>
+        .navItemIcon {
+            width: 50px;
+            background: none;
+        }
+        
+        .jjs {
+            background-color: #f4f4f4;
+            border-radius: 5px;
+            color: #FFF;
+            line-height: 22px;
+            padding: 1px 10px;
+        }
+        
+        .search {
+            padding: 10px 25px;
+            background-color: #F3F3F3;
+            background-image: url(img/index/down.png);
+            background-repeat: no-repeat;
+            background-size: 6px 3px;
+            background-position: 98% center;
+        }
+        
+        .inp {
+            width: 100%;
+            background-color: #F3F3F3;
+        }
+        
+        #content {
+            width: 100%;
+            height: 180px;
+            border: none;
+            overflow-x: hidden;
+            overflow-y: auto;
+            max-height: 150px;
+            color: #464646;
+            font-size: 16px;
+            -webkit-user-select: text;
+        }
+        
+        #content div {
+            color: #464646;
+        }
+        
+        #content:empty:before {
+            content: attr(placeholder);
+            color: #999;
+        }
+        
+        .whosee {
+            border-bottom: 1px solid #BFBFBF;
+            border-top: 1px solid #BFBFBF;
+            padding: 25px 20px;
+        }
+        
+        .who {
+            background: url(img/index/per.png) no-repeat left center;
+            background-size: 19px;
+            color: #222222;
+        }
+        
+        .see {
+            background: url(img/index/bac-r.png) no-repeat right center;
+            background-size: 6px 11px;
+            color: #888888;
+        }
+        
+        #sinbox {
+            width: 300px;
+            border-radius: 10px;
+        }
+        
+        .qxgz {
+            background-size: 16px;
+            text-align: center;
+            padding: 20px;
+            color: #444444;
+        }
+        
+        .closeimg {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+        }
+        
+        div#conimg .left img.closeimg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        div {
+            -webkit-user-select: text;
+        }
+        
+        div * {
+            -webkit-user-select: text
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar" style="padding: 0;box-shadow: none;">
+
+            <div class="navBackIcon" onclick="model.close()"></div>
+
+            <div class="navItemIcon marl5 marr10">
+                <div class="jjs mart10">发布</div>
+            </div>
+            <div class="nav-title block searchBar marl25 f16" style="width: calc(100% - 85px);height: 44px;">
+                发布说说
+            </div>
+        </div>
+    </header>
+    <section>
+        <div class="paddt5 paddl15 paddr25">
+            <!--onfocus="changh(1)" onblur="changh(2)"-->
+            <div contenteditable="plaintext-only" onkeydown="zhuanfa.keydown(this)" oninput="length(this)" id="content" placeholder="" maxlength="3000"></div>
+            <p class="tright"><span id="nums" class="color038">0</span><span class="color666">/3000</span></p>
+            <div class="paddt5 bg_white refund-price">
+                <div class="bg_white  paddr10">
+                    <div class="fl flex_wrap" id="conimg">
+                        <div class="fl" id="conimg">
+                            <div class="left" id="upm">
+                                <img src="./img/my/xztp.png" width="80" height="80" id="imgupimg" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+
+            </div>
+            <!--<div class="paddt20 mart20 marb20 paddb20 paddl10" style="border-bottom:  1px solid #f4f4f4;border-top:  1px solid #f4f4f4;">
+				<input id="" placeholder="输入关键字" type="text" class="in-title f14" />
+			</div>-->
+        </div>
+
+        <!--<div class="whosee" onclick="Comm.showWindow('sinboxTemp',true)">
+				<div class="who fl paddl25">谁可以看</div>
+				<div class="see fr paddr10" id="3">所有人</div>
+				<div class="clearfix"></div>
+			</div>-->
+
+    </section>
+    <footer class="shared">
+
+    </footer>
+    <div id="sinbox" wtd="sinboxTemp">
+        <div class="qxgz" style="border-bottom: 1px solid #F4F4F4;" onclick="model.see(3)">所有人</div>
+        <div class="qxgz" style="border-bottom: 1px solid #F4F4F4;" onclick="model.see(1)">仅我可见</div>
+        <div class="qxgz" onclick="model.see(2)">仅好友可见</div>
+    </div>
+</body>
+<script id="imgTpl" type="text/html">
+    {{each $data v k}}
+    <div class="left marr10 marb10" style="position:relative;">
+        <img src="./img/close.png" width="20" data='{{v.img}}' class="closeimg" onclick="removeimg(this)" />
+        <img class="upimg1" src="{{OSS(v.img)}}" width="80" height="80" data="{{v.img}}" />
+    </div>
+    {{/each}}
+</script>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="./inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script type="text/javascript" src="inc/dict.js"></script>
+<script type="text/javascript" src="./inc/upimg/upload.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+<script type="text/javascript" src="inc/tpl.js"></script>
+<script>
+    var whyPicker;
+    var upHeader = null;
+    var cimgUrl = [];
+    var cimgUrl1 = [];
+    var picNum = 0; //图片数量
+    var isfirst = 1;
+    var tui =1;
+    if (Comm.ios()) {
+        $("section").scroll(function() {
+            document.activeElement.blur();
+            event.stopPropagation();
+        });
+    }
+
+    function androidback() {
+        if (parseInt(Comm._pageinfo.android_home) === 0) {
+            model.close();
+
+        } else {
+            if (parseInt(Comm._pageinfo.android_home) === 1) {
+                Comm._pageinfo.android_home = 2;
+                Comm.confirm("您确定要退出应用？", function(a) {
+                    if (a == 1) Comm.close();
+                    else Comm._pageinfo.android_home = 1;
+                });
+            }
+        }
+    }
+    //移除凭证
+    function removeimg(a) {
+        //      Comm.confirm('是否删除该图片', function(d) {
+        //          if (d) {
+        $(a).parent().remove();
+        var imgData = $(a).attr('data');
+        for (var i = 0; i < cimgUrl1.length; i++) {
+            if (cimgUrl1[i].img == imgData) {
+                cimgUrl1.splice(i, 1)
+                imgUploader.prototype.del(i);
+                picNum--;
+            }
+        }
+        $("#upm").show().find('.moxie-shim').width(80).height(80);
+        var ss = $('#content').html().replace(/\s+/g, "").replace(/<\/?.+?>/g, "").replace(/ /g, "").length;
+        if (picNum == 0 && ss == 0) {
+            $('.jjs').css('background', '#f4f4f4');
+            $('.jjs').parent().attr('onclick', '');
+        }
+        //          }
+        //      })
+    }
+
+    function length(a) {
+        var ss = $('#content').html().replace(/\s+/g, "").replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/[ ]|&nbsp;/g, '').length;
+        if (ss > 0 || $('#conimg .upimg1').length > 0) {
+            $('.jjs').css('background', '#098E75');
+            $('.jjs').parent().attr('onclick', 'model.sub()');
+        } else {
+            $('.jjs').css('background', '#f4f4f4');
+            $('.jjs').parent().attr('onclick', '');
+        }
+        zhuanfa.oninput(a, 3000);
+        //数字回写，没有数字限制不需要
+        $('#nums').html(zhuanfa.getlen(a));
+    }
+    //		function changh(e){
+    //			if(e==1){
+    //				$('#content').css('height','200px');
+    //			}else{
+    //				if(!Comm.ios()){
+    //					Comm.resizeSection();
+    //				}
+    //				setTimeout(function(){
+    //				$('#content').css('max-height','200px');
+    //				$('#content').css('height','200px');
+    //				},200)
+    //				
+    //			}
+    //		}
+    function pageload() {
+        zhuanfa.suiji('content', 'sssj');
+        upHeader = new imgUploader('conimg', 9, "imgupimg");
+        upHeader.success = function(arr) {
+            if (arr.length > 0) {
+                cimgUrl = [];
+                for (var k = 0; k < arr.length; k++) {
+                    cimgUrl1.push({
+                        img: arr[k]
+                    })
+                    cimgUrl.push({
+                        img: arr[k]
+                    })
+
+                }
+            }
+            $("#upm").before(template('imgTpl', cimgUrl))
+            $('.jjs').css('background', '#098E75');
+            $('.jjs').parent().attr('onclick', 'model.sub()');
+            picNum += cimgUrl.length;
+            if (picNum == 9) {
+                $("#upm").hide();
+            } else {
+                $("#upm").show().find('.moxie-shim').width(80).height(80);
+            }
+        }
+        if (Comm.ios()) {
+            setTimeout(function() {
+                var elem = document.getElementById('content');
+                elem.focus();
+                Comm.PopUpKeyboard({
+                    code: 1
+                });
+            }, 500)
+		    document.body.addEventListener('touchmove', function (e) {
+		        if(document.activeElement)
+		            document.activeElement.blur();
+		    }, {passive: false});
+        } else {
+            setTimeout(function() {
+                var elem = document.getElementById('content');
+                elem.focus();
+                Comm.PopUpKeyboard({
+                    code: 1
+                });
+            }, 500)
+
+        }
+        $("#content").on("paste", function(e) {
+            textInit(e)
+        });
+    }
+
+    function textInit(e) {
+        e.preventDefault();
+         zhuanfa.copy = true;
+        var text;
+        var clp = (e.originalEvent || e).clipboardData;
+        if (clp === undefined || clp === null) {
+            text = window.clipboardData.getData("text") || "";
+            if (text !== "") {
+                if (window.getSelection) {
+                    var newNode = document.createElement("span");
+                    newNode.innerHTML = text;
+                    window.getSelection().getRangeAt(0).insertNode(newNode);
+                } else {
+                    document.selection.createRange().pasteHTML(text);
+                }
+            }
+        } else {
+            text = clp.getData('text/plain') || "";
+            if (text !== "") {
+                document.execCommand('insertText', false, text);
+                //$("#content").html($("#content").html().replace(/(?!img>)\s/g, "&nbsp;"));
+                $('#nums').html(zhuanfa.getlen(Comm.g('content')));
+                length($("#content"));
+                 
+            }
+        }
+        zhuanfa.copy = false;
+    }
+
+    function Focus() {
+        // 始终聚焦在文本末尾
+        el = document.getElementById('content');
+        //el=el[0];  //jquery 对象转dom对象
+        el.focus();
+        if ($.support.msie) {
+            var range = document.selection.createRange();
+            this.last = range;
+            range.moveToElementText(el);
+            range.select();
+            document.selection.empty(); //取消选中
+        } else {
+            var range = document.createRange();
+            range.selectNodeContents(el);
+            range.collapse(false);
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
+    }
+
+    function pageresume() {
+        if (Comm.db('zhuanfa') == 1) {
+            //回调页面刷新
+            zhuanfa.pageresume(Comm.g('content'), 3000);
+            //数字回写，没有数字限制不需要
+            $('#nums').html(zhuanfa.getlen(Comm.g('content')));
+            Comm.db('zhuanfa', '')
+        } else {
+            $('#content').html($('#content').html())
+        }
+    }
+    var mid = "";
+    var model = {
+        close: function() {
+            document.activeElement.blur();
+            Comm.resizeSection();
+            setTimeout(function() {
+                if ($('#content').html() != '' || $('#conimg').find('img').length > 1) {
+                    Comm.confirm('是否确认退出？', function(d) {
+                        if (d) {
+                            Comm.close();
+                        }
+                    })
+                } else {
+                    document.activeElement.blur();
+                    if(tui==1){
+                    	tui=2;
+                    	Comm.close();
+                    }
+                }
+            }, 200)
+
+
+        },
+        see: function(type) {
+            if (type == 3) {
+                $('.see').html('所有人');
+                $('.see').attr('id', '3');
+                Comm.showWindow('');
+            } else if (type == 1) {
+                $('.see').html('仅自己可见');
+                $('.see').attr('id', '1');
+                Comm.showWindow('');
+            } else {
+                $('.see').html('仅好友可见');
+                $('.see').attr('id', '3');
+                Comm.showWindow('');
+            }
+        },
+        sub: function() {
+            var o = {};
+            var imgArr1 = $('#conimg .upimg1');
+            o.content = "<div>" + $("#content").html().replace(/<div>/gi, "<div class='f14'>").replace(/(\r\n|\n|\r)/gm, "<br/>").replace(/<font class="removefont">&nbsp;/g, '<font class="removefont">') + "</div>";
+            if ($("#nums").html() > 3000) {
+                Comm.message('说说最多只能输入3000字哦');
+                return false;
+            }
+
+            o.urls = '';
+            o.newsType = 1;
+            o.title = '';
+            o.videoId = "";
+            o.isdraft = 0;
+            o.itemType = 0;
+            o.itemId = 0;
+            o.subhead = $("#content").text().substring(0, 200);
+            o.newsRange = 3;
+            o.ids = zhuanfa.ids.join(',');
+            if (imgArr1.length == 1) {
+                $.each(imgArr1, function() {
+                    o.urls += $(this).attr('data');
+                })
+            }
+            if (imgArr1.length > 1) {
+                $.each(imgArr1, function() {
+                    o.urls += $(this).attr('data') + ',';
+                })
+            }
+            if ($("#content").html().replace(/\s+/g, "").replace(/[ ]|&nbsp;/g, '').replace(/<\/?.+?>/g, "").replace(/ /g, "") == '' && o.urls == "") {
+                Comm.message('请输入说说内容');
+                return false;
+            }
+            console.log(o);
+            Comm.loading('发布中...');
+            debugger
+            AJAX.POST('/api/news/sub', o, function(a) {
+                Comm.loading(false)
+                if (a && a.code == 1) {
+                    document.activeElement.blur();
+                    Comm.message('发布成功');
+                    Comm.gotop('ifrm.html?top=0');
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+
+        }
+    }
+</script>
+
+</html>

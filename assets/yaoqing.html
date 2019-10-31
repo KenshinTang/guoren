@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>分类</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/tpl.css" />
+    <style>
+        .navItemIcon {
+            background: inherit;
+        }
+        
+        .searchBar {
+            margin: 0 auto;
+        }
+        
+        .btn {
+            width: 50%;
+            margin: 30px auto;
+        }
+        
+        .cont {
+            border-radius: 20px;
+            background: url(img/index/yqbj.png) no-repeat #FFF;
+            background-size: 100%;
+            padding-top: 130px;
+            padding-bottom: 20px;
+        }
+        
+        #sinbox {
+            background-color: #fff;
+            padding: 10px 20px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar bottomShadow" style="padding: 0;">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="nav-title block bold searchBar" style="width: calc(100% - 100px);height: 44px;">
+                邀请好友
+            </div>
+        </div>
+    </header>
+    <section class="pad20" style="background-color: #F4F4F4;">
+        <div class="center bg_white cont">
+            <div class="mart30 marb30">
+                <div id="qrcode" style="width: 200px;margin-top: 40px; padding: 0 20%;">
+
+                </div>
+            </div>
+            <p class="f16 lh25" style="width: 90%;margin: 0 auto;color: #333333;">您正在查看【<span id="name"></span>】的课程【<span id="kc"></span>】</p>
+            <p class="lh20 paddt10" style="width: 80%;margin: 0 auto;color: #BBBBBB;"><span>本次邀请好友 </span><span id="num"></span><span>人，即可开团成功</span></p>
+
+            <div class="btn" onclick="Comm.showWindow('sinboxTemp2',true);">邀请好友一起读</div>
+        </div>
+    </section>
+    <footer class="shared">
+    </footer>
+    <div id="sinbox" wtd="sinboxTemp2">
+        <div class="dflex" style="border-bottom: #f4f4f4 1px solid;">
+            <div class="mart20 marb20" onclick="model.shear(1)">
+                <img src="img/index/wx.png" width="45" />
+                <p class="c9e mart10">微信好友</p>
+            </div>
+            <div class="mart20 marb20" onclick="model.shear(2)">
+                <img src="img/index/pyq.png" width="45" />
+                <p class="c9e mart10">朋友圈</p>
+            </div>
+            <div class="mart20 marb20" onclick="model.shear(3)">
+                <img src="img/index/qq.png" width="45" />
+                <p class="c9e mart10">QQ</p>
+            </div>
+            <div class="mart20 marb20" onclick="model.shear(4)">
+                <img src="img/index/qqkj.png" width="45" />
+                <p class="c9e mart10">QQ空间</p>
+            </div>
+            <div class="mart20 marb20" onclick="model.shear(5)">
+                <img src="img/index/wb.png" width="45" />
+                <p class="c9e mart10">微博</p>
+            </div>
+        </div>
+        <div class="paddt10 paddb10 color666" style="border-top:#f4f4f4 1px solid;" onclick="Comm.showWindow('')">
+            取消
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script src="inc/art-template.js"></script>
+<script type="text/javascript" src="inc/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="inc/jquery.qrcode.js"></script>
+<script type="text/javascript" src="inc/qrcode.js"></script>
+<script type="text/javascript" src="inc/utf.js"></script>
+<script>
+    var id = Comm.query('forumId');
+    var shearId = id;
+    var groupId = '';
+
+    function pageload() {
+        model.init();
+        model.init1();
+    }
+
+    function pageresume() {
+
+    }
+    var model = {
+        init: function() {
+            AJAX.GET('/api/forum/detail?forumId=' + id, function(a) {
+                if (a && a.code == 1) {
+                    AJAX.GET('/api/order/view?forumId=' + id + '&invitationCode=1', function(d) {
+                        if (d && d.code == 1) {
+                            groupId = d.data;
+                            $('#name').html(a.data.expertinfo.customerName);
+                            $('#kc').html(a.data.forum.forumName);
+                            $('#num').html(a.data.forum.groupBuyNum);
+                        }
+                    })
+
+                }
+            })
+        },
+        init1: function() {
+            $('#qrcode').html('');
+            $("#qrcode").qrcode({
+                render: "canvas",
+                width: 200, //宽度
+                height: 200, //高度
+                text: config.webroot + '/app/app/shareClass1.html?id=' + id + '&type=2', //任意内容
+                background: "#ffffff", //二维码的后景色  
+                foreground: "#000000", //二维码的前景色  
+            });
+        },
+        shear: function(platform) {
+            //分享资讯 -- 通用
+            event.stopPropagation();
+            var url = config.webroot + '/app/app/shareClass1.html?id=' + shearId + '&groupId=' + groupId;
+            Comm.shareUrl({
+                platform: platform,
+                pic: config.webroot+"/app/app/img/logo.png",
+                title: '果仁',
+                desc: '快来和我一起读吧~',
+                url: url
+            }, function(d) {
+                if (d.code) {
+                	//Comm.showWindow('')
+                    //Comm.message('分享成功！')
+                }
+            });
+            	Comm.showWindow('')
+            //Comm.go('shareArticle.html')
+        }
+    }
+</script>
+
+</html>

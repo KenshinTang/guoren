@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>登录</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="./css/g.css" />
+		<link rel="stylesheet" href="./css/comm.css" />
+		<link rel="stylesheet" href="css/tpl.css" />
+		<style>
+			body {
+				/*background: url(img/login1/bg.png) no-repeat;
+				background-size: 100% 100%;*/
+			}
+			body>header{
+				background-color:inherit;
+			}
+			button,
+			input {
+				border: 0px solid white;
+			}
+			
+			section>div,
+			section>button,
+			footer>button {
+				width: 90%;
+				margin: 0 auto;
+			}
+			
+			section>div.logo {
+				line-height: 45px;
+				font-size: 18px;
+				width: 60%;
+				color: #D3D3D3;
+			}
+			
+			
+			
+			section>div input {
+				width: 90%;
+            height: 32px;
+            font-size: 15px;
+            /*margin-left: 15px;*/
+            color: #111;
+            line-height: 20px;
+            /*padding-left: 5%;*/
+           border-radius: 0;
+            background-repeat: no-repeat;
+            background-size: auto 20px;
+            background-position: left center;
+			}
+			.ph{
+				width: 93%;
+				height: 40px;
+				border-radius: 20px;
+				line-height: 40px;
+				/*background-color:#cec1b5;*/
+			}
+			#phone {
+				background: url('img/login1/ren.png') no-repeat left center;
+				padding-left:20px;
+				background-size:13px 15px;
+				color:#fff;
+				opacity:1;
+			}
+			#code{
+				background: url('img/login1/yzm.png') no-repeat left center;
+				padding-left:20px;
+				background-size:16px 14px;
+				color:#fff;
+				opacity:1;
+				width:70%
+			}
+			.getCode{
+				width:30%;
+				background:#098E75;
+				color:#FFFFFF;
+				border-radius:20px;
+			}
+			#password1,#password2{
+				/*background: url('img/login1/suo.png') no-repeat left center;
+				padding-left:20px;
+				background-size:13px 15px;
+				color:#fff;*/
+				opacity:1;
+				border-bottom: 1px solid #b2b2b2;
+				width:70%
+			}
+			#phone::-webkit-input-placeholder,
+			#password2::-webkit-input-placeholder,
+			#password1::-webkit-input-placeholder {
+      			color: rgba(153,153,153,0.7);
+    			 }
+			section>div>input::-webkit-input-placeholder {
+				line-height: 21px;
+				color: rgba(153,153,153,0.7);
+			}
+			
+			.forget {
+				line-height: 42px;
+				height: 42px;
+				font-size: 14px;
+				border: none;
+				text-align: left;
+			}
+			
+			.colorABABAB {
+				color: #ABABAB;
+			}
+			
+			section>button,
+			footer>button {
+				margin-top: 28px;
+				display: block;
+				height: 44px;
+				color: #fff;
+				font-size: 17px;
+				text-align: center;
+				line-height: 44px;
+			}
+			
+			
+			.ph i>img,
+			.pw i>img {
+				vertical-align: middle;
+			}
+			
+			
+			.code>input {
+				width: 60%;
+			}
+			
+			.code>button {
+				color: #fff;
+				width: 40%;
+				height: 33px;
+				float: right;
+				line-height: 33px;
+				font-size: 14px;
+				margin-top: 7px;
+			}
+			input {
+				border: none;
+			}
+			
+			
+			.sign-wx {
+				height: 40px;
+			}
+			
+			.sign-wx img {
+				width: 33px;
+				height: 33px;
+			}
+			
+			.now {
+				font-weight: 600;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header>
+			<div class="navBar" style="padding: 0;box-shadow: none;">
+				 <div class="navBackIcon" onclick="Comm.close()"></div>
+			</div>
+		</header>
+		<section>
+			<div class=" color333 f24" style="margin: 36px 12px;">
+				 账号密码设置
+			</div>
+			
+			<div class="ph mart15 flex-between" id="pw" style="margin-left: 12px;">
+				<input type="password" style="width:100%" onfocus="model.butimg(1)" onblur="model.butimg(2)"  value="" name="password1" data-reg='p' maxlength="16" id="password1" placeholder="密码6位数以上" maxlength="20" />
+				<i style="width:10%;position: relative;right: 0;border-bottom: 1px solid #b2b2b2;height: 32px;" onclick="yanopen(1,this)">
+				<img class="imgCon" src="img/login1/bi.png" width="20">
+				</i>
+			</div>
+			<div class="ph mart15 flex-between" id="pw" style="margin-left: 12px;">
+				<input type="password" style="width:100%" onfocus="model.butimg(1)" onblur="model.butimg(2)"  value="" name="password2" data-reg='p' maxlength="16" id="password2" placeholder="请再次确定密码" maxlength="20" />
+				<i style="width:10%;position: relative;right: 0;border-bottom: 1px solid #b2b2b2;height: 32px;" onclick="yanopen(2,this)">
+				<img class="imgCon" src="img/login1/bi.png" width="20">
+			</i>
+			</div>
+			<button type="button" id="login" style="background: #098E75;width:80%;margin-top:150px;border-radius: 10px;font-size: 17px;" class="sign-btn f16" onclick="model.reg()">注册</button>
+			<!--<div class="f12 mart15 center">
+				<span class="colorfff">登录即表示您同意</span>
+				<span class="color038" onclick="Comm.go('Agreement.html')">《果仁服务协议》</span>
+				<span class="colorfff">和</span>
+				<span class="color038" onclick="Comm.go('helpDetails.html?id=1')">《隐私协议》</span>
+			</div>-->
+		<img id="butimg" src="img/login1/tu.png" width="130" height="76" style="position: absolute; right: 15px; bottom: 0;" />
+		</section>
+
+	</body>
+	<script type="text/javascript" src="./inc/z.js"></script>
+	<script type="text/javascript" src="./inc/g.js"></script>
+	<script type="text/javascript" src="./inc/comm.js"></script>
+	<script type="text/javascript">
+		//点击眼睛显示或隐藏密码
+		
+		function yanopen(type,e){
+			if($('#password'+type).attr('type') == 'password') {
+				
+				$('#password'+type).attr('type', 'text');
+				$(e).children().attr('src', 'img/login1/kai.png');
+			} else {
+				$('#password'+type).attr('type', 'password');
+				$(e).children().attr('src', 'img/login1/bi.png');
+			};
+		}
+		function pageload() {
+			
+		}
+
+		var model = {
+			butimg:function(id){
+            	if(id==1){
+			$('#butimg').hide();
+		}else{
+			$('#butimg').show();
+		}
+            },
+			reg:function(){
+				var pw1=$('#password1').val();
+				var pw2=$('#password2').val();
+				if(pw1.length<6||pw1.length>18){
+					Comm.message('请输入6-18位的密码');
+					return false;
+				}
+				if(pw1!=pw2){
+					Comm.message('两次密码输入不一致，请重新输入');
+					return false;
+				}
+				var o={};
+				o.password=pw1;
+				AJAX.POST('/api/customer/savePassword',o,function(a){
+					if(a&&a.code==1){
+						Comm.message('设置成功');
+						Comm.go('improveInfo.html?_type=0')
+						Comm.db('phone','');
+					}else{
+						Comm.message(a.msg);
+					}
+				})
+			}
+		}
+	</script>
+
+</html>

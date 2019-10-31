@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+
+		<style>
+			.navItemIcon {
+				background-image: url('img/msg.png');
+				background-position: center right;
+				background-repeat: no-repeat;
+				background-size: auto 20px;
+			}
+			
+			.searchBar {
+				margin: 0 auto;
+			}
+			body{
+				width: 100% !important;
+			}
+			.searchBar input {
+				width: 95%;
+				padding-left: 30px;
+				line-height: 30px;
+				height: 30px;
+				font-size: 14px;
+				color: #8891A7;
+				background-color: #F2F6F7;
+				border-radius: 18px;
+				background-image: url('img/search.png');
+				background-repeat: no-repeat;
+				background-size: 14px;
+				background-position: 10px center;
+				margin: 0 auto;
+				margin-left: 2.5%;
+			}
+			
+			.dian {
+				width: 20px;
+				height: 20px;
+				border-radius: 50%;
+				background-color: #CF2D28;
+				position: absolute;
+				right: 11px;
+				line-height: 20px;
+				top: 32px;
+				font-size: 12px;
+				color: #fff;
+				text-align: center;
+			}
+			
+			#sinbox {
+				width: 300px;
+				padding: 0;
+				border-radius: 10px;
+			}
+			
+			#sinbox1 {
+				position: absolute;
+				bottom: 0;
+				left: 5%;
+				width: 90%;
+			}
+			
+			.qxgz {
+				background: url(img/index/qxgz.png) no-repeat 0px center;
+				background-size: 16px;
+				text-align: left;
+				padding: 10px 0 10px 50px;
+				color: #444444;
+			}
+			
+			.bgxq {
+				background: url(img/index/bgxq.png) no-repeat 0px center;
+				background-size: 16px;
+				text-align: left;
+				padding: 10px 0 10px 50px;
+				color: #444444;
+				border-bottom: 1px solid #f4f4f4;
+			}
+			
+			.jb {
+				background: url(img/index/jb.png) no-repeat 0px center;
+				background-size: 16px;
+				text-align: left;
+				padding: 10px 0 10px 50px;
+				color: #444444;
+			}
+			
+			#sinbox2 {
+				width: 100%;
+				position: absolute;
+				bottom: 0px;
+				left: 0px;
+				padding: 20px;
+				background-color: #fff;
+			}
+			
+			.fb {
+				width: 33%;
+				padding: 10px;
+			}
+			
+			.fb img {
+				width: 40px;
+			}
+			
+			.getmor {
+				background: url(img/my/left.png) no-repeat 97% center;
+				background-size: 8px 14px;
+				border-bottom: 1px solid #f4f4f4;
+			}
+			
+			.god {
+				width: 18%;
+				display: inline-block;
+				white-space: initial;
+				vertical-align: top;
+				padding-top: 10px;
+			}
+			
+			.mescroll-totop {
+				bottom: 60px;
+				right: 30px;
+				opacity: 1;
+				z-index: 99;
+			}
+			
+			.hot {
+				width: 100%;
+				/*	height:278px;*/
+				/*background:url(img/index/hot.png) no-repeat bottom right 10px;
+        	background-size:26px 26px;*/
+			}
+			
+			.icon_left {
+				background: url('./img/my/left.png') no-repeat center right;
+				background-size: 6px 11px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar" style="padding: 0;box-shadow: none;">
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+				<div class="nav-title block searchBar" style="width: calc(100% - 80px);height: 44px;">
+					<form action="javascript:return true;">
+						<input id="id_searchInput" class="paddr15" type="search" oninput="refresh()" autocomplete="off" placeholder="搜索">
+					</form>
+				</div>
+
+			</div>
+
+		</header>
+		<section style="	background-color:#F0F0F0;" id="section" class="mescroll">
+			<div class="hot paddl15 paddr15">
+				<div class="paddt10 ">
+					<div class="color333 f16 bold fl">热门问题</div>
+					<div class="clearfix"></div>
+				</div>
+				<div id="hot" class="mart10">
+
+				</div>
+
+			</div>
+
+		</section>
+
+	</body>
+
+	<div id="sinbox1" class="paddb10" wtd="sinboxTemp3">
+		<div class="bg_white marb10 f16" style="border-radius: 10px;">
+			<div class="coloreb3 paddb15 paddt15" onclick="model.shanchu(1)">删除</div>
+		</div>
+		<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+	</div>
+	<div id="sinbox1" class="paddb10" wtd="sinboxTemp1">
+		<div class="bg_white marb10 f16" style="border-radius: 10px;">
+			<div class="paddt15 paddb15" onclick="model.bgxq(3)">不感兴趣</div>
+			<div class="paddt15 paddb15" style="border-top: 1px solid #EBEBEB;" onclick="model.jb(5)">举报</div>
+		</div>
+		<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+	</div>
+	<div id="sinbox" class="" wtd="sinboxTempxz">
+		<div class="bg_white f16" style="border-radius: 10px; padding: 30px 10px;">
+			您还未完善信息，请先完善信息
+		</div>
+		<div class="bg_white paddt15 paddb15 f16 colorfff" style="background-color: #098E75;" onclick="top.Comm.go('improveInfo.html?_type=0');">确定</div>
+	</div>
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script type="text/javascript" src="inc/mescroll/mescroll.min.js"></script>
+	<script type="text/javascript" src="inc/mescroll/swiper.min.js"></script>
+	<script type="text/javascript" src="inc/art-template.js"></script>
+	<script type="text/javascript" src="inc/refresh.js" charset="utf-8"></script>
+	<script type="text/javascript" src="inc/tpl.js"></script>
+
+	<script>
+		var customerId = app.getCid();
+		if(Comm.db('userinfo')) {
+			AJAX.GET('/api/customer/checkUserInfo?customerId=' + Comm.db('userinfo').customerId, function(d) {
+				if(d && d.data == 0) {
+					Comm.showWindow('sinboxTempxz',false);
+				}
+			})
+		}
+
+		function pageload() {
+			document.body.style.width = document.documentElement.offsetWidth + 'px';
+			model.init();
+			showmsg();
+		}
+
+		function showmsg() {
+			//判断消息个数
+			AJAX.GET('/api/mess/count?userType=1&type=1', function(a) {
+				if(a && a.code == 1) {
+					if(a.data > 0) {
+						$('.dian').html(a.data)
+						$('.dian').removeClass('hide');
+					} else {
+						$('.dian').addClass('hide');
+					}
+				}
+			})
+		}
+
+		function pageresume() {
+			showmsg()
+		}
+
+		var mid = "";
+		var merefresh = null;
+		var model = {
+			init: function() {
+				if(merefresh == null) {
+					merefresh = new MERefresh('section,hot', {
+						pagesize: 10,
+						refreshUrl: '/api/news/questionHotList',
+						refreshTypeGet: true
+					});
+					//网络请求参数
+					merefresh.refreshOption.refreshParm = {};
+					//页面 <刷新> 的回调
+					merefresh.refreshOption.refresh_cb = function(refresh, d) {
+						// console.info(d)
+						refresh.successEndRef(d.data.length, d.totalCount);
+						d.data.curPage = d.curPage;
+						d.data.customerId=customerId;
+						for(var i=0;i<d.data.length;i++){
+                    	d.data[i].content=d.data[i].content.replace(/<\/?.+?>/g, "").replace(/ /g, "")
+                    }
+						refresh.appendHtml(template('hotTpl', d.data));
+						Comm.resizeSection();
+					};
+				}
+			},
+			getHot: function() {
+				var o = {};
+				o.curpage = 1;
+				o.pagesize = 3
+				AJAX.POST('/api/news/questionHotList', o, function(a) {
+					if(a && a.code == 1) {
+						a.data.curPage = a.curPage;
+						$('#hot').html(template('hotTpl', a.data));
+					}
+				})
+			},
+			go: function(cnum, cid, nid) {
+				if(cnum != 0) {
+					top.Comm.go("anwser.html?newsId=" + nid + "&commentId=" + cid);
+				} else {
+					top.Comm.go("qzAskDetail.html?newsId=" + nid);
+				}
+			},
+			qh: function(id) {
+				mid = id;
+				event.stopPropagation();
+			},
+			islogin: function() {
+				AJAX.GET('/api/customer/detail', function(d) {
+					if(d && d.code === 1) {
+						if(Comm.db('userinfo').shutup==1){
+					Comm.alert('您暂无权限~',function(){
+							
+						})
+					return false;
+					}
+						top.Comm.go('send1.html&disable=1');
+					}
+				});
+			},
+			shanchu: function(type) {
+				Comm.showWindow('');
+				top.Comm.confirm('确认删除？', function(d) {
+					if(d) {
+						AJAX.GET('/api/news/del?newsId=' + mid, function(a) {
+							if(a && a.code == 1) {
+								Comm.message('删除成功');
+								$('#' + mid).remove();
+							} else {
+								Comm.message(a.msg);
+							}
+						})
+					}
+				})
+			},
+			bgxq: function(type) {
+				console.log('dd')
+				AJAX.GET('/api/keyword/notLike?newsId=' + mid, function(a) {
+					if(a && a.code == 1) {
+						$('#' + mid).remove();
+						Comm.showWindow('');
+					} else {
+						Comm.message(a.msg);
+					}
+				})
+				console.log(type, mid);
+			},
+			jb: function(type) {
+				if(app.isLogin() == false) {
+					Comm.showWindow('')
+					top.Comm.confirm('您还未登录,请先登录', function(a) {
+						if(a == 1) {
+							Comm.go('newLogin.html')
+						}
+					});
+					return false;
+				}
+				Comm.showWindow('');
+				top.Comm.go('report.html?itemId=' + mid);
+				
+			},
+		}
+
+		function refresh() {
+			if(merefresh != null) {
+				merefresh.refreshOption.refreshParm = {
+				keyword:$('#id_searchInput').val()
+				};
+				//重置列表数据
+				merefresh.MeRefScroll.resetUpScroll();
+				//merefresh.MeRefScroll.triggerDownScroll();
+				//隐藏回到顶部按钮
+				merefresh.MeRefScroll.hideTopBtn();
+			}
+		}
+
+		function showWindow1(name) {
+			if(name == 1) {
+				Comm.showWindow('sinboxTemp3',true);
+			} else if(name == 2) {
+				Comm.showWindow('sinboxTemp1',true);
+			}
+
+		}
+	</script>
+	<script type="text/html" id="hotTpl">
+		{{each $data v k}} {{hotQues(v,curPage,k,customerId)}} {{/each}}
+	</script>
+
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>意见说明</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+
+    <style>
+    	div {
+    -webkit-user-select: text;
+}
+
+div * {
+    -webkit-user-select: text
+}
+        body {
+            background: #f4f4f4;
+        }
+
+        .Opinion-type {
+            padding: 0 25px 10px 25px; 
+            background: #fff;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            
+        }
+
+        .Opinion-type>div {
+            width: 85px;
+            height: 35px;
+            text-align: center;
+            line-height: 35px;
+            color: #4E4E4E;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #BFBFBF;
+            margin-top: 10px;
+        }
+
+        .Selection {
+            background: #098E75 !important;
+            color: #fff !important;
+            border: 1px solid transparent !important;
+        }
+
+        .textBox {
+            width: 100%;
+            background: #fff;
+            padding: 10px 15px 0px 15px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 86px;
+            border: none;
+        }
+
+        .imgList {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .imgItem {
+            width: 58px;
+            height: 58px;
+            margin-top: 5px;
+        }
+
+        .imgItem img {
+            width: 58px;
+            height: 58px;
+        }
+        .footer{
+           margin-top: 20px;
+            width: 100%;
+        }
+        .footer button{
+            width: 100%;
+            border-radius: 0;
+        }
+        .closeimg {
+			position: absolute;
+			right: 0px;
+			top: 0px;
+		}
+
+		div#conimg {}
+
+		div#conimg .left {
+			width: 80px;
+			height: 80px;
+		}
+
+		div#conimg .left img {}
+
+		div#conimg .left img.closeimg {
+			width: 20px;
+			height: 20px;
+		}
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">意见反馈</div>
+        </div>
+    </header>
+    <section>
+        <p class="f12 pad10" style="color:#9E9E9E;">分类标签</p>
+        <div class="Opinion-type" id="list">
+            
+        </div>
+        <div class="f12 pad10" style="color:#9E9E9E;">
+        	<div class="fl">我要反馈</div>
+		<div class="fr"><span id="nowSize" class="color038">0</span><span>/200</span></div>
+		<div class="clearfix"></div>
+      </div>
+        <div class="textBox">
+            <textarea class="f14" id="text" oninput="length()" placeholder="请详细描述你的建议，这将帮助我们持续改进~" value=""></textarea>
+           <div class="paddt5 bg_white refund-price">
+					<div class="bg_white  paddr10">
+						<div class="clearfix paddt10" id="conimg">
+							<div class="left marr10 marb10" id="upm">
+								<img src="./img/my/xztp.png" width="80" height="80" id="imgupimg" />
+							</div>
+						</div>
+					</div>
+
+				</div>
+        </div>
+        <p class="f12 pad10" style="color:#9E9E9E;">联系方式</p>
+        <div class="pad15" style="background: #fff;">
+            <input type="text" style="width: 100%;"  class="lh20" id="phone" placeholder="请留下您的微信号或手机号">
+        </div>
+        <div class="footer">
+            <button onclick="model.submission()">提交</button>
+        </div>
+    </section>
+</body>
+<script type="text/html" id="demo">
+{{each $data as v k}}
+	{{if(k==0)}}
+	<div class="Selection" onclick="model.swdicl(this,{{v.dictid}})">{{v.dictname}}</div>
+	{{else}}
+	<div onclick="model.swdicl(this,{{v.dictid}})">{{v.dictname}}</div>
+	{{/if}}
+	{{/each}}
+</script>
+<script type="text/javascript" src="./inc/z.js"></script>
+<script type="text/javascript" src="./inc/g.js"></script>
+<script type="text/javascript" src="./inc/comm.js"></script>
+<script type="text/javascript" src="./inc/picker.min.js"></script>
+<script type="text/javascript" src="./inc/upimg/upload.js"></script>
+<script src="./inc/art-template.js"></script>
+<script src="inc/dict.js"></script>
+
+<script>
+	var whyPicker;
+	var upHeader = null;
+	var i = 0; //图片数量
+	var dictId = '';//标签id
+	var content = '';//举报内容
+	var customerId = app.getCid();
+	var itemType = Comm.query('itemType')||4;//举报类型
+	var itemId = Comm.query('itemId');//id
+	var first =1;
+function length(){
+	if($("#text").val().replace(/\s+/g, "").replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/[ ]|&nbsp;/g, '').length>=200){
+		if(first==1){
+			Comm.message('意见反馈最多输入200字')
+			first=2;
+		}
+	}
+}
+	//移除凭证
+	function removeimg(a,i) {
+		imgUrlList.splice(i,1)
+		 Comm.confirm('是否删除该图片', function(d) {
+            if (d) {
+                $(a).parent().remove();
+                var imgData = $(a).attr('data');
+                for (var i = 0; i < imgUrlList.length; i++) {
+                    if (imgUrlList[i].img == imgData) {
+                        imgUrlList.splice(i, 1)
+                        imgUploader.prototype.del(i);
+                    }
+                }
+                console.log(imgUrlList)
+                $("#upm").show().find('.moxie-shim').width(80).height(80);
+
+            }
+        })
+	}
+	var imgUrlList = []
+    function pageload() {
+upHeader = new imgUploader("imgupimg");
+		upHeader.success = function () {
+			var cimgUrl = this.imgList.length > 0 ? this.imgList[0] : 'img/error.png';
+			imgUrlList.push(cimgUrl)
+			$("#conimg").prepend(template('imgTpl', {src: cimgUrl,i:imgUrlList.length-1}))
+			i++;
+			if (i == 4) {
+				$("#upm").hide();
+			} else {
+				$("#upm").show().find('.moxie-shim').width(80).height(80);
+			}
+		}
+    }
+    var model = {
+		//获取标签列表
+		getlistByPid:function() {
+			GDict.init(function(){
+				var aa =GDict.getItem('41');
+				console.log(aa.cs)
+				$('#list').html(template('demo',aa.cs));
+					dictId = aa.cs[0].dictid
+			})
+		},
+		swdicl:function(e,id){
+			$('#list>div').attr('class','');
+			$(e).attr('class','Selection');
+			dictId = id;
+		},
+		submission:function(){
+			var phone = $('#phone').val();
+			if(content.length==0){
+				Comm.message('请输入反馈内容');
+				return false;
+			}
+			if(content.replace(/\s+/g, "").replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/[ ]|&nbsp;/g, '').length>200){
+				Comm.message('反馈内容最大字数200字');
+				return false;
+			}
+//			if(phone==""){
+//				Comm.message('请留下您的联系方式');
+//				return false;
+//			}
+			AJAX.POST('/api/complain/add',{dictId:dictId,itemType:itemType,itemId:itemId,content:content,url:imgUrlList.join(','),customerId:customerId,concatInfo:phone},function(d){
+				if(d.code == 1){
+					Comm.message('反馈成功');
+					Comm.close();
+				}else{
+					Comm.message('网络错误');
+				}
+			})
+		}
+	}
+	$('#text').on('input',function(e){
+		$('#nowSize').html($('#text').val().replace(/\s+/g, "").replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/[ ]|&nbsp;/g, '').length)
+		content = $('#text').val();
+	})
+	model.getlistByPid()
+</script>
+<script id="imgTpl" type="text/html">
+	<div class="left marr10 marb10" style="position:relative;">
+		<img src="./img/close.png" width="20" class="closeimg"  data-i="{{i}}" onclick="removeimg(this)" />
+		<img class="upimg" src="{{OSS(src)}}" width="80" height="80" data="{{src}}" />
+	</div>
+</script>
+</html>

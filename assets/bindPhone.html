@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>找回密码</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="./css/g.css" />
+    <link rel="stylesheet" href="./css/comm.css" />
+    <style>
+        section {
+            width: 100%;
+            height: 100%;
+            background: rgba(244, 244, 244, 1);
+        }
+
+        section .mas {
+            color: #444444;
+            font-size: 13px;
+            padding: 15px;
+        }
+
+        section>form {
+            padding: 0 15px;
+            background: #fff;
+
+        }
+
+        section form div {
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(220, 220, 220, 1);
+        }
+
+        section form label {
+            display: inline-block;
+            font-size: 16px;
+            color: #444;
+            width: 48px;
+        }
+
+        section form input {
+            margin-left: 31px;
+            font-size: 16px;
+            color: #444444;
+
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">绑定手机号</div>
+        </div>
+    </header>
+    <section>
+        <p class="mas">为了您的账户安全，请先绑定常用手机号，以便账户找回。</p>
+        <form>
+            <div class="ph">
+                <label for="phone">手机号</label>
+                <input number id="phone" style="width: 70%;" value="" data-reg='m' name="phone"type="tel" placeholder="请输入11位手机号码"
+                    maxlength="11">
+            </div>
+            <div class="cd">
+                <label for="code">验证码</label>
+                <input number id="code" value="" name="code" data-reg='c' type="tel" placeholder="请输入短信验证码"
+                    maxlength="6" style="width: 44%;">
+                <span style="color:#098E75;" class="fr" onclick="getCode(this)">获取验证码</span>
+            </div>
+            <div class="pw" id="pw">
+            	<label for="pw">密码</label>
+                <input value=""  class="f16" type="password" data-reg='p' name="password" id="password"placeholder="请输入密码" maxlength="18" />
+                
+            </div>
+        </form>
+        
+        <div class="flex-justify-center" style="margin-top: 25px;">
+            <button id="redBtn" style="background:#098E75;border:none;" onclick="wxLogin()">立即绑定</button>
+        </div>
+    </section>
+
+</body>
+<script type="text/javascript" src="./inc/z.js"></script>
+<script type="text/javascript" src="./inc/g.js"></script>
+<script type="text/javascript" src="./inc/comm.js"></script>
+<script type="text/javascript">
+     var wxData = Comm.db("wxData");
+
+    function pageload() {
+
+    }
+
+    function pageresume() {
+
+    }
+
+    function wxLogin() {
+    	 var token = Comm.query('token'); //来自微信登陆的token
+        var _password = $("#password").val();
+        var opt = Check.submit('POST');
+      if($('#phone').val()==''){
+      	Comm.message('请输入手机号');
+      	return false;
+      }
+      if($('#phone').val().length!=11){
+      	Comm.message('请输入正确手机号');
+      	return false;
+      }
+      if(code==''){
+      	Comm.message('请输入验证码');
+      	return false;
+      }
+      if(_password==''){
+      	Comm.message('请输入密码');
+      	return false;
+      }
+       
+            code = $("#code").val();
+        Comm.loading("正在绑定资料...")
+        AJAX.POST("/api/customer/wxregister", {
+            openId: wxData.openid,
+            nickname: wxData.nickname,
+            head: wxData.face,
+            phone: $('#phone').val(),
+            password: _password,
+            code: code
+        }, function (a) {
+            Comm.loading();
+            if (a.code == 1) {
+            	if(a.data.isReg==1){
+            		Comm.db("tempToken", a.data.token);
+                AJAX.setTag(a.data.token);
+                a.data.phone = opt.phone;
+
+                Comm.db('userinfo', a.data);
+                Comm.db("wxData", null)
+                Comm.go('improveInfo.html?_type=0');
+            	}else{
+            		Comm.db("tempToken", a.data.token);
+                AJAX.setTag(a.data.token);
+                a.data.phone = opt.phone;
+
+                Comm.db('userinfo', a.data);
+                Comm.db("wxData", null)
+                Comm.gotop('ifrm.html');
+            	}
+                
+            } else {
+                if (a.code == 2) {
+                    Comm.db("tempToken", a.data.token);
+                    AJAX.setTag(a.data.token);
+                    a.data.phone = opt.phone;
+
+                    Comm.db('userinfo', a.data);
+                    Comm.db("wxData", null)
+                    Comm.go("improveInfo.html?bindType=1&_type=0")
+                    return;
+                }
+                Comm.message(a.msg)
+            }
+        })
+    }
+    //获取验证码
+    function getCode(t) {
+        var type = 5; //1：注册 2：找回密码  5：手机验证
+        console.info(t, $("#phone").val(), type)
+        app.timeCountDown(t, $('#phone').val(), type);
+    }
+</script>
+
+</html>

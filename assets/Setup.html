@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>系统设置</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+
+    <style>
+        body {
+            background: #f4f4f4;
+        }
+        
+        input[type="checkbox"]+label {
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+            position: relative;
+            -webkit-transition: 0.3s;
+            transition: 0.3s;
+            box-sizing: border-box;
+        }
+        
+        input[type="checkbox"]+label:after {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 20px;
+            height: 20px;
+            -webkit-transition: 0.3s;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        
+        #simple_1:checked+label.red,
+        #simple_2:checked+label.red,
+        #simple_3:checked+label.red,
+        #simple_4:checked+label.red,
+        #simple_5:checked+label.red {
+            background: #098E75;
+        }
+        
+        #simple_1:checked+label:after,
+        #simple_2:checked+label:after,
+        #simple_3:checked+label:after,
+        #simple_4:checked+label:after,
+        #simple_5:checked+label:after {
+            left: calc(100% - 20px);
+        }
+        
+        #simple_1+label,
+        #simple_2+label,
+        #simple_3+label,
+        #simple_4+label,
+        #simple_5+label {
+            background: #ddd;
+            border-radius: 20px;
+            box-shadow: 1px 1px 3px #aaa;
+        }
+        
+        #simple_1+label:after,
+        #simple_2+label:after,
+        #simple_3+label:after,
+        #simple_4+label:after,
+        #simple_5+label:after {
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 1px 1px 3px #aaa;
+        }
+        
+        #sinbox1 {
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+            width: 90%;
+        }
+        
+        #sinbox {
+            width: 280px;
+            height: 224px;
+            border-radius: 10px;
+            padding-left: 9px;
+            padding-right: 9px;
+            position: relative;
+        }
+        
+        #sinbox .code {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+        
+        #sinbox .code input {
+            width: 160px;
+            height: 50px;
+            padding-left: 20px;
+            border: 1px solid #C9C9C9;
+            border-radius: 5px;
+        }
+        
+        #sinbox .code div {
+            width: 95px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            color: #098E75;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #098E75;
+        }
+        
+        #sinbox .footer {
+            width: 100%;
+            height: 43px;
+            border-top: 1px solid #E7E7E7;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom-right-radius: 9px;
+            border-bottom-left-radius: 9px
+        }
+        
+        #sinbox .footer div {
+            width: 50%;
+            height: 100%;
+            line-height: 43px;
+        }
+        
+        section>div {
+            background: #fff;
+        }
+        
+        .borb {
+            border-bottom: 1px solid #f4f4f4;
+        }
+        
+        .tcbtn {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 15px 0;
+            font-size: 16px;
+            color: red;
+            text-align: center;
+            background: #fff;
+        }
+        
+        .icon_left {
+            display: inline-block;
+            width: 6px;
+            height: 11px;
+            background: url('img/a/left.png')no-repeat center;
+            background-size: 100%;
+        }
+        
+        .radio {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #dedede;
+        }
+        
+        .fontBtn {
+            width: 90%;
+            position: absolute;
+            bottom: 5px;
+        }
+        
+        .fontBtn>div {
+            width: 50%;
+            height: 25px;
+            line-height: 25px;
+            border: 1px solid #098E75;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">设置</div>
+        </div>
+    </header>
+    <section>
+        <!--<div class="flex-between pad15 borb">
+            <div>
+                <p class="f16" style="color:#222222;">水印图片</p>
+                <p class="f12 mart5" style="color:#9E9E9E;">在上传的图片中添加水印</p>
+            </div>
+            <div>
+                <input type="checkbox" id="simple_1">
+                <label for="simple_1" class="red"></label>
+            </div>
+        </div>-->
+        <!--<div class="flex-between borb pad15" onclick="Comm.go('tongxunlu.html')">
+            <div>
+                <p class="f16" style="color:#222222;">手机通讯录</p>
+                <p class="f12 mart5" style="color:#9E9E9E;">可提供过手机号发现其他果仁用户</p>
+            </div>
+            <i class="icon_left"></i>
+            
+        </div>-->
+        <!--<div class="flex-between pad15 borb">
+            <div>
+                <p class="f16" style="color:#222222;">省流量模式</p>
+                <p class="f12 mart5" style="color:#9E9E9E;">仅在WIFI环境下加载图片或播放视频</p>
+            </div>
+            <div>
+                <input type="checkbox" id="simple_3">
+                <label for="simple_3" class="red"></label>
+            </div>
+        </div>-->
+        <!--<div class="flex-between pad15 borb">
+            <div>
+                <p class="f16" style="color:#222222;">夜间模式</p>
+                <p class="f12 mart5" style="color:#9E9E9E;">开启夜间阅读模式</p>
+            </div>
+            <div>
+                <input type="checkbox" id="simple_4">
+                <label for="simple_4" class="red"></label>
+            </div>
+        </div>-->
+        <div class="">
+            <!--<div class="flex-between pad15 borb indicator" onclick="Comm.showWindow('sinboxTemp',true);">
+                <p class="f16" style="color:#222222;">字体设置</p>
+                <i class="icon_left"></i>
+            </div>-->
+            <div class="flex-between pad15 borb indicator" onclick="Comm.go('./setMsg.html')">
+                <p class="f16" style="color:#222222;">消息设置</p>
+                <i class="icon_left"></i>
+            </div>
+            <div class="flex-between pad15 borb indicator" id="qqwx">
+
+            </div>
+            <div class="flex-between pad15 borb indicator" onclick="Comm.go('./Help.html')">
+                <p class="f16" style="color:#222222;">帮助说明</p>
+                <i class="icon_left"></i>
+            </div>
+            <div class="flex-between pad15 borb indicator" onclick="Comm.go('./Feedback.html')">
+                <p class="f16" style="color:#222222;">意见反馈</p>
+                <i class="icon_left"></i>
+            </div>
+            <div class="flex-between pad15 borb indicator " onclick="Comm.go('./Aboutus.html')">
+                <p class="f16" style="color:#222222;">关于我们</p>
+                <i class="icon_left"></i>
+            </div>
+            <!--<div class="flex-between pad15" style="margin-bottom: 48px;" onclick="model.clear()">
+                <p class="f16" style="color:#222222;">清理缓存</p>
+            </div>-->
+            <div class="tcbtn" onclick="model.out()">退出登录</div>
+    </section>
+</body>
+
+<script type="text/html" id="listTpl">
+
+</script>
+<div id="sinbox1" class="paddb10" wtd="sinboxTemp1">
+    <div class="bg_white marb10 f16" style="border-radius: 10px;">
+        <div class="paddt15 paddb15" style="border-bottom: 1px solid #EBEBEB;" onclick="wxSign(2)">绑定QQ</div>
+        <div class="paddt15 paddb15" onclick="wxSign(1)">绑定微信</div>
+    </div>
+    <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('');Comm.loading(false)">取消</div>
+</div>
+<div id="sinbox" wtd="sinboxTemp">
+    <h4>验证手机号</h4>
+    <p class="f12" style="color:#666666;margin-top: 28px;" id="tailPhone">输入手机尾号2321接收到的短信验证码</p>
+    <div class="code">
+        <input type='tel' id="msgCode" maxlength="4" placeholder="短信验证码">
+        <div onclick="model.sendMsg(this)" id="getCode">发送验证码</div>
+    </div>
+    <div class="footer">
+        <div style="color:#999999;border-right: 1px solid #E7E7E7;" onclick="Comm.showWindow('');Comm.loading(false)">取消</div>
+        <div style="color:#098E75;" onclick="model.determine()">确定</div>
+    </div>
+</div>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+
+<script>
+    var phone = Comm.db('userinfo').phone;
+    Comm.loading('加载中...')
+
+    function pageload() {
+        model.init();
+        Comm.storage("isX", function(d) {
+            if (d) {
+                $(".tcbtn").css("margin-bottom", "10px");
+                Comm.resizeSection();
+            }
+        });
+        $('#tailPhone').html('输入手机尾号' + phone.substr(phone.length - 4) + '接收到的短信验证码');
+    }
+
+    function setFontZize(e) {
+        $('.radio').attr('style', '')
+        $(e).attr('style', 'background:#098E75;')
+    }
+    var model = {
+        out: function() {
+            Comm.confirm('是否退出？', function(d) {
+                if (d) {
+                    Comm.db('_token', '');
+                    Comm.db('userinfo', '');
+                    Comm.gotop('newLogin.html');
+                }
+            })
+        },
+        clear: function() {
+            Comm.confirm('是否确定清理缓存？', function(d) {
+                if (d) {
+                    Comm.loading('清理中...');
+                    setTimeout(function() {
+                        Comm.message('清理成功');
+                        Comm.loading(false);
+                    }, 500)
+                }
+            })
+        },
+        init: function() {
+            AJAX.GET('/api/customer/checkUserBind?customerId=' + Comm.db('userinfo').customerId, function(a) {
+                if (a && a.code == 1) {
+                    Comm.loading(false);
+                    if (a.data == false) {
+                        $("#qqwx").html('<p class="f16" style="color:#222222;width:75%">QQ/微信</p><p class="f16" style="color:#666;">去绑定</p><i class="icon_left"></i>')
+                        $('#qqwx').attr('onclick', 'Comm.showWindow("sinboxTemp1",true)')
+                    } else {
+                        $("#qqwx").html('<p class="f16" style="color:#222222;width:75%">QQ/微信</p><p class="f16" style="color:#666;">已绑定</p><i class="icon_left"></i>')
+                        $('#qqwx').attr('onclick', 'conf()')
+                    }
+                }
+            })
+        },
+        go: function(e) {
+            if (e == 1) {
+                Comm.showWindow("sinboxTemp1", true);
+            } else {
+                Comm.showWindow("sinboxTemp", true);
+            }
+        },
+        sendMsg: function(el) {
+            var type = 3; //1：注册 2：找回密码  5：手机验证
+            app.timeCountDown(el, phone, type);
+        },
+        //确定 开始验证验证码
+        determine: function(e) {
+            if ($('#WTDBOXTD #msgCode').val() == '') {
+                Comm.message('验证码不能为空');
+                return;
+            }
+            AJAX.POST('/api/customer/delUserBind', {
+                    customerId: Comm.db('userinfo').customerId,
+                    phone: phone,
+                    code: $('#WTDBOXTD #msgCode').val()
+                }, function(d) {
+                    if (d && d.code == 1) {
+                        Comm.message('解除成功');
+                        Comm.showWindow('');
+                        Comm.loading(false);
+                        model.init();
+                    } else {
+                        Comm.message(d.msg);
+                    }
+                })
+                //Comm.showWindow('');
+        }
+    };
+    function conf(){
+    	Comm.confirm('确认解除绑定？',function(d){
+    		if(d){
+    			Comm.showWindow("sinboxTemp",true)
+    		}
+    	})
+    }
+    //微信登陆
+    function wxSign(type) {
+    	Comm.bg(false)
+        Comm.showWindow('');
+        Comm.extLogin({
+            type: type
+        }, function(data) {
+            console.log(data)
+            if (data.code == 1) {
+                Comm.loading("正在绑定");
+                Comm.db("wxData", data);
+                AJAX.POST("/api/customer/addUserBind", {
+                    openId: data.openid,
+                }, function(a) {
+                    Comm.loading(false);
+                    if (a.code == 201) {
+                        Comm.go("bindPhone.html");
+                    }
+                    if (a.code == 1) {
+                        Comm.loading(false);
+                        Comm.message('绑定成功');
+                        Comm.db("tempToken", a.data.token);
+                        AJAX.setTag(a.data.token);
+                        Comm.registerPush({
+                            state: 1,
+                            token: a.data.token,
+                            url: config.root + 'api/customer/deviceToken'
+                        })
+                        Comm.db('firsr', 1)
+                        Comm.db('userinfo', a.data);
+                        Comm.db("wxData", null)
+                        model.init();
+                    } else {
+                        Comm.message(a.msg);
+                    }
+
+                });
+                model.init();
+            }
+        });
+    }
+</script>
+
+</html>

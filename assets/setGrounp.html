@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>系统设置</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+
+    <style>
+        body {
+            background: #f4f4f4;
+        }
+        
+        #sinbox {
+            background-color: #fff;
+            padding: 10px 20px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+        
+        section>div {
+            background: #fff;
+        }
+        
+        .borb {
+            border-bottom: 1px solid #efefef;
+        }
+        
+        .tcbtn {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 15px 0;
+            font-size: 14px;
+            color: red;
+            text-align: center;
+            background: #fff;
+        }
+        
+        .icon_left {
+            display: inline-block;
+            width: 6px;
+            height: 11px;
+            background: url('img/a/left.png')no-repeat center;
+            background-size: 100%;
+        }
+        
+        #sinbox {
+            height: 300px;
+            width: 250px;
+            padding: 15px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -150px;
+            margin-left: -125px;
+        }
+        
+        .radio {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #dedede;
+        }
+        
+        .fontBtn {
+            width: 90%;
+            position: absolute;
+            bottom: 5px;
+        }
+        
+        .fontBtn>div {
+            width: 50%;
+            height: 25px;
+            line-height: 25px;
+            border: 1px solid #098E75;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">管理圈子</div>
+        </div>
+    </header>
+    <section>
+
+        <div class="mart10" id="list">
+
+        </div>
+
+    </section>
+    <footer class="shared hide" style="border:none" id="foot">
+    <div class="btn center" style="margin:10px auto;width: calc(100% - 90px);" onclick="model.del()">解散圈子</div>
+    </footer>
+</body>
+
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+
+<script>
+    var groupId = Comm.query('groupId');
+
+    function pageload() {
+        model.admin();
+    }
+    var admin = null;
+    var model = {
+        gopage: function(type) {
+            if (type == 1) {
+                Comm.go('CreateTeam.html?groupId=' + groupId);
+            } else if (type == 2) {
+                Comm.go('setMember.html?groupId=' + groupId);
+            } else if (type == 3) {
+                Comm.go('Prohibited.html?groupId=' + groupId);
+            } else if (type == 4) {
+                Comm.go('tiezi.html?groupId=' + groupId + '&admin=' + admin);
+            } else if (type == 5) {
+                Comm.go('groupRz.html?groupId=' + groupId);
+            }
+        },
+        admin: function() {
+            Comm.loading('加载中...')
+            AJAX.GET('/api/school/groups/getCustomerRole?groupId=' + groupId, function(a) {
+                Comm.loading(false)
+                if (a && a.code == 1) {
+                    admin = a.data;
+                    if (a.data == 2) {
+                        var str = '';
+                        str += '<div class="flex-between pad15 borb indicator" onclick="model.gopage(4)"><p class="f16" style="color:#222222;">帖子管理</p><i class="icon_left"></i></div>';
+                        str += '<div class="flex-between pad15 borb indicator" onclick="model.gopage(2)"><p class="f16" style="color:#222222;">成员管理</p><i class="icon_left"></i></div>'
+                        $('#list').html(str);
+                    } else if (a.data == 1) {
+                        var str = '';
+                        str += '<div id="ad1" class="flex-between pad15 borb indicator" onclick="model.gopage(1)"><p class="f16" style="color:#222222;">基本信息</p><i class="icon_left"></i></div><div class="flex-between pad15 borb indicator" onclick="model.gopage(2)"><p class="f16" style="color:#222222;">成员管理</p><i class="icon_left"></i></div><div id="ad2" class="flex-between pad15 borb indicator" onclick="model.gopage(3)"><p class="f16" style="color:#222222;">违禁词管理</p><i class="icon_left"></i></div><div class="flex-between pad15 borb indicator" onclick="model.gopage(4)"><p class="f16" style="color:#222222;">帖子管理</p><i class="icon_left"></i></div><div id="ad3" class="flex-between pad15 borb indicator" onclick="model.gopage(5)"><p class="f16" style="color:#222222;">管理日志</p><i class="icon_left"></i></div>';
+                        $("#foot").show();
+                        $('#list').html(str);
+                    }
+                }
+            })
+        },
+        del:function(){
+        	Comm.confirm('解散圈子后系统将删除本圈子所有相关信息，不可再恢复。仍确认解散？',function(d){
+        		if(d){
+        			AJAX.GET('/api/school/groups/dissolve?groupId='+groupId,function(a){
+        				if(a&&a.code==1){
+        					Comm.message('圈子已解散');
+        					Comm.close();
+        				}else{
+        					Comm.message(a.msg);
+        				}
+        			})
+        		}
+        	})
+        }
+    }
+</script>
+
+</html>

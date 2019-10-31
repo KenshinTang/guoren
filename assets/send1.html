@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加关注</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+		<link rel="stylesheet" href="css/edit.css" />
+		<style>
+			div {
+				-webkit-user-select: text;
+			}
+			
+			div * {
+				-webkit-user-select: text
+			}
+			
+			.navItemIcon {
+				width: 50px;
+				background: none;
+			}
+			
+			.jjs {
+				background-color: #f4f4f4;
+				border-radius: 5px;
+				color: #FFF;
+				line-height: 22px;
+				padding: 1px 8px;
+			}
+			
+			.search {
+				padding: 10px 25px;
+				background-color: #F3F3F3;
+				background-image: url(img/index/down.png);
+				background-repeat: no-repeat;
+				background-size: 6px 3px;
+				background-position: 98% center;
+			}
+			
+			.inp {
+				width: 100%;
+				background-color: #F3F3F3;
+			}
+			
+			.in-title {
+				width: 100%;
+			}
+			
+			.add-pic {
+				background-color: #F4F4F4;
+				padding: 10px 25px;
+			}
+			#miaoshu{
+				color: #464646;
+				font-size: 16px;
+			}
+			#title{
+				color: #101010;
+				font-size: 16px;
+				border-radius: 0;
+				font-weight: bold;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar" style="padding: 0;box-shadow: none;">
+
+				<div class="navBackIcon" onclick="model.close()"></div>
+
+				<div class="navItemIcon marl5 marr10">
+					<div class="jjs mart10">提问</div>
+				</div>
+				<div class="nav-title block searchBar f16 marl25" style="width: calc(100% - 85px);height: 44px;">
+					发布提问
+				</div>
+			</div>
+		</header>
+		<section>
+			<!--<div class="search">
+				<input id="nrh" oninput="model.search()" placeholder="搜索并添加您想关联的内容号？" type="text" class="inp" />
+			</div>
+			<div id="list" style="position: absolute; width: 87%;" class="bg_white hide">
+
+			</div>-->
+			<div class="paddl5 paddr10">
+			<div class="paddt5 paddl10">
+				<input id="title" oninput="len()" onfocus="changh(1)" onblur="changh(2)" placeholder="请输入问问标题并以？结尾" type="text" style="width: 100%;height: 32px; border: none;border-bottom: 1px solid #e6e6e6;" class="in-title f18" />
+			</div>
+			<textarea id="miaoshu" oninput="len()" onfocus="changh(1)" onblur="changh(2)" class="paddl10 paddt5" placeholder="你的疑惑我们解答~输入限制500字" style="height: 300px;width: 100%;border: none;"></textarea>
+			<p class="tright"><span id="nums" class="color038">0</span><span class="color666">/500</span></p>
+			</div>
+		</section>
+		<footer class="shared">
+
+			<div class="clearfix"></div>
+			</div>
+		</footer>
+	</body>
+	<script type="text/html" id="listTpl">
+		{{each $data v k}}
+		<div class="borderb" style="padding: 15px 5px;" onclick="model.cheak({{v.itemId}},{{v.itemType}},this);">{{v.schoolName}}</div>
+		{{/each}}
+	</script>
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="./inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+	<script type="text/javascript" src="inc/upimg/upload.js"></script>
+	<script>
+		var isfirst = 1,
+			first = 1;
+			var tui=1;
+		function pageload() {
+
+			if(Comm.query('id')) {
+				model.init();
+			}
+			if(Comm.ios()) {
+				setTimeout(function() {
+					var elem = document.getElementById('title');
+					elem.focus();
+					Comm.PopUpKeyboard({
+						code: 1
+					});
+				}, 500);
+				document.body.addEventListener('touchmove', function(e) {
+					if(document.activeElement)
+						document.activeElement.blur();
+				}, {
+					passive: false
+				});
+			} else {
+				var elem = document.getElementById('title');
+				elem.focus();
+				Comm.PopUpKeyboard({
+					code: 1
+				});
+			}
+			$("#title").bind("keydown", function(e) {
+				// 兼容FF和IE和Opera    
+				var theEvent = e || window.event;
+				var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+				if(code == 13) {
+					//回车执行查询
+					$("#miaoshu").focus();
+					return false;
+				}
+			});
+		}
+
+		function changh(e) {
+			if(e == 1) {
+				$('#miaoshu').css('height', '200px');
+			} else {
+				$('#miaoshu').css('height', '400px');
+			}
+		}
+
+		function len() {
+			if($('#title').val().length > 0) {
+				$('.jjs').css('background', '#098E75');
+				$('.jjs').attr('onclick', 'model.add()');
+			} else {
+				$('.jjs').css('background', '#f4f4f4');
+				$('.jjs').attr('onclick', '');
+			}
+			if($('#title').val().length >= 50 && isfirst == 1) {
+				Comm.message('标题最多输入50字')
+				isfirst = 2;
+			}
+			if($('#miaoshu').val().replace(/\n/g, "11").length >= 500 && first == 1) {
+				Comm.message('描述最多输入500字')
+				first = 2;
+			}
+			$('#nums').html($('#miaoshu').val().replace(/\n/g, "11").length)
+		}
+
+		function pageresume() {
+
+		}
+
+		function androidback() {
+			if(parseInt(Comm._pageinfo.android_home) === 0) {
+				model.close();
+			} else {
+				if(parseInt(Comm._pageinfo.android_home) === 1) {
+					Comm._pageinfo.android_home = 2;
+					Comm.confirm("您确定要退出应用？", function(a) {
+						if(a == 1) Comm.close();
+						else Comm._pageinfo.android_home = 1;
+					});
+				}
+			}
+		}
+		var mid = 0;
+		var mtype = 0;
+		var img = [];
+		var model = {
+			close: function() {
+				document.activeElement.blur();
+				Comm.resizeSection();
+				setTimeout(function() {
+					if($("#miaoshu").val() != '' && $('#title').val() != '') {
+						Comm.confirm('是否存入草稿箱？', function(d) {
+							if(d) {
+								var img1 = '';
+								if(img.length > 1) {
+									img1 = img.slice(0, 1);
+								} else if(img.length == 1) {
+									img1 = img;
+								}
+								var title = $("#title").val();
+								var miaoshu = '<div>' + $("#miaoshu").val().replace(/\n/g, "<br>") + '</div>';
+								if(title.replace(/\s+/g, "") == "") {
+									Comm.message('请输入问题');
+									return false;
+								}
+								if(title.indexOf('?') == -1 && title.indexOf('？') == -1) {
+									title = title + '?';
+								}
+								if(miaoshu.replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/[ ]|&nbsp;/g, '') == "") {
+									Comm.message('请输入描述');
+									return false;
+								}
+								var o = {};
+								if(Comm.query('id')) {
+									o.newsId = Comm.query('id');
+								}
+								o.newsType = 5;
+								o.title = title;
+								o.content = miaoshu;
+								o.subhead = miaoshu.replace(/<\/?.+?>/g, "").replace(/ /g, "").slice(0, 100);
+								o.urls = img1;
+								o.videoId = "";
+								o.isdraft = 1;
+								o.itemType = mtype;
+								o.itemId = mid;
+								o.newsRange = 3;
+								console.log(o)
+								Comm.loading('加载中...')
+								AJAX.POST('/api/news/sub', o, function(a) {
+
+									if(a && a.code == 1) {
+										Comm.loading('')
+										Comm.message('操作成功');
+										document.activeElement.blur();
+										Comm.close();
+									} else {
+										Comm.loading('')
+										Comm.message(a.msg);
+									}
+								})
+							} else {
+								document.activeElement.blur();
+								Comm.close();
+							}
+						})
+					} else if($("#miaoshu").val() != '' || $('#title').val() != '') {
+						Comm.confirm('确认退出？', function(d) {
+							if(d) {
+								document.activeElement.blur();
+								Comm.close();
+							}
+						})
+					} else {
+						document.activeElement.blur();
+						if(tui==1){
+                    	tui=2;
+                    	Comm.close();
+                    }
+					}
+				}, 200)
+
+			},
+			search: function() {
+				var inp = $("#nrh").val();
+				AJAX.GET('/api/school/fuzzySearch?schoolKey=' + inp + '&curPage=1' + '&pagesize=10', function(a) {
+					if(a && a.code == 1) {
+						$("#list").html(template('listTpl', a.data));
+						$("#list").show();
+					}
+				})
+
+			},
+			cheak: function(id, type, e) {
+				mid = id;
+				mtype = type;
+				var name = $(e)[0].innerHTML;
+				//				$("#nrh").val(name);
+				$('#list').hide();
+			},
+			add: function() {
+				var img1 = '';
+				if(img.length > 1) {
+					img1 = img.slice(0, 1);
+				} else if(img.length == 1) {
+					img1 = img;
+				}
+				var title = $("#title").val().replace(/<\/?.+?\/?>/g, "");
+				var miaoshu = '<div>' + $("#miaoshu").val().replace(/\n/g, "<br>") + '</div>';
+				//				var keyword = $("#keyword").val();
+				//				if(mid == '') {
+				//					Comm.message('请选择内容号');
+				//					return false;
+				//				}
+				if(title.replace(/\s+/g, "") == "") {
+					Comm.message('请输入问题');
+					return false;
+				}
+				if(title.replace(/\s+/g, "").length > 50) {
+					Comm.message('问题最多50字，请重新编辑');
+					return false;
+				}
+				if(title.indexOf('?') == -1 && title.indexOf('？') == -1) {
+					title = title + '？';
+				}
+				if($('#miaoshu').val().replace(/\n/g, "11").length > 500) {
+					Comm.message('描述最多输入500字')
+					return false;
+				}
+				if(miaoshu.replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/[ ]|&nbsp;/g, '') == "") {
+					Comm.message('请输入描述');
+					return false;
+				}
+				var o = {};
+				if(Comm.query('id')) {
+					o.newsId = Comm.query('id');
+				}
+				o.newsType = 5;
+				o.title = title;
+				o.content = miaoshu;
+				o.subhead = miaoshu.replace(/<\/?.+?>/g, "").replace(/ /g, "").slice(0, 100);
+				o.urls = img1;
+				o.videoId = "";
+				o.isdraft = 0;
+				o.itemType = mtype;
+				o.itemId = mid;
+				o.newsRange = 3;
+				console.log(o)
+				Comm.loading('发布中...');
+				AJAX.POST('/api/news/sub', o, function(a) {
+					if(a && a.code == 1) {
+						document.activeElement.blur();
+						$('.jjs').attr('onclick', '');
+						Comm.gotop('ifrm.html?top=2');
+						Comm.message('发布成功');
+
+					} else {
+						Comm.message(a.msg);
+					}
+					Comm.loading(false);
+				})
+			},
+			init: function() {
+				AJAX.GET('/api/news/info?newsId=' + Comm.query('id') + '&customerId=' + app.getCid(), function(a) {
+					if(a && a.code == 1) {
+						mtype = a.data.itemType;
+						mid = a.data.itemId;
+						//						$("#nrh").val(a.data.itemName);
+						$('#title').val(a.data.news.title);
+						$('#miaoshu').val(a.data.news.content.replace(/<div>|<\/div>/gi, '').replace(/<br(\s+)?\/?>/g, "\n"));
+						len();
+					}
+				})
+			}
+		}
+	</script>
+
+</html>

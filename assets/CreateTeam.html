@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>创建圈子</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="./css/g.css" />
+    <link rel="stylesheet" href="./css/comm.css" />
+    <link rel="stylesheet" href="./css/side.css" />
+    <link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="./css/tpl.css" />
+
+    <style>
+        body {
+            background: #f4f4f4;
+        }
+        
+        .main {
+            margin-top: 11px;
+            background: #fff;
+        }
+        
+        .imgBox {
+            width: 50px;
+            height: 50px;
+        }
+        
+        .icon_left {
+            width: 6px;
+            height: 11px;
+            display: inline-block;
+            background: url('./img/a/left.png')no-repeat center;
+            background-size: 100%;
+            position: absolute;
+            right: 10px;
+        }
+        
+        .closeimg {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+        }
+        
+        .xiutu {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            width: 20px;
+            height: 20px;
+        }
+        
+        div#conimg .left img.closeimg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .upimg {
+            width: 100px;
+            height: 50px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">创建圈子</div>
+        </div>
+    </header>
+    <section>
+        <div class="main">
+            <div class="borderb flex pad15" style="align-items: center;">
+                <p class="f14" style="color:#222222FF;">圈子头像</p>
+                <div class="clearfix paddb10 paddt10 marl20 marr15" id="conimg1">
+                    <div class="left marr10 marb10" id="upm1">
+                        <img src="./img/my/xztp.png" width="50" height="50" id="imgupimg1" />
+                    </div>
+                </div>
+                <p class="f10" style="color:#888888FF;">显示上传1张图片</p>
+            </div>
+            <div class="borderb flex pad15" style="align-items: center;">
+                <p class="f14" style="color:#222222FF;">详情头图</p>
+                <div class="clearfix paddb10 paddt10 marl20 marr15" id="conimg">
+                    <div class="left marr10 marb10" id="upm">
+                        <img src="./img/my/xztp.png" width="50" height="50" id="imgupimg" />
+                    </div>
+                </div>
+                <p class="f10" style="color:#888888FF;">显示上传1张图片</p>
+            </div>
+            <div class="borderb flex  paddl20 paddr20" style="align-items: center;height: 50px;">
+                <p class="f14" style="color:#222222FF;">圈子名称</p>
+                <input id="groupName" class="marl20  lh20" style="width: 65%;" oninput="inputLen()" type="text" placeholder="请输入圈子名称，上限为16字">
+                <!--<span><i class="color038" id="nameNum">0</i><i>/16</i></span>-->
+            </div>
+            <!--<div class="borderb flex paddl20 paddr20" style="align-items: center;height: 50px;position: relative;" onclick="Comm.go('checkbq.html')">
+                <p class="f14" style="color:#222222FF;">圈子标签</p>
+                <div style="width: 70%;font-size: 12px;color: #c9c9c9;" class="lh20 color999 paddl20" id="groupbq">
+                    请选择标签
+                </div>
+                <i class="icon_left"></i>
+            </div>-->
+            <div class="borderb flex  paddl20 paddr20" style="align-items: center;height:50px">
+                <p class="f14" style="color:#222222FF;">限制人数</p>
+                <input id="customerLimit" class="marl20 lh20" style="width: 75%;" maxlength="6" type="tel" placeholder="请输入圈子限制人数，上限为999999">
+            </div>
+            <div class="borderb  paddl20 paddr20" style="align-items: center;">
+                <p class="f14 fl mart10" style="color:#222222FF;">圈子介绍</p>
+                <textarea id="introduction" oninput="length()" class="marl20 paddt10" style="width: 75%; height: 130px; border: none;" placeholder="请输入圈子介绍,最长240字"></textarea>
+                <div class="clearfix"></div>
+                <p class="tright paddr10"><span class="color038" id="inNum">0</span><span>/240</span></p>
+            </div>
+            <!--<div class="borderb  paddl20 paddr20" style="align-items: center;">
+					<p class="f14 fl mart10" style="color:#222222FF;">圈子签名</p>
+					<textarea id="autograph" class="marl20 paddt10" style="width: 75%; height: 50px; border: none;" placeholder="请输入圈子签名"></textarea>
+					<div class="clearfix"></div>
+				</div>-->
+
+        </div>
+
+    </section>
+    <footer class="shared" style="border: none;">
+        <div class="btn center" style="margin: 10px auto;" onclick="sub();">保存</div>
+    </footer>
+
+</body>
+
+<script type="text/javascript" src="./inc/z.js"></script>
+<script type="text/javascript" src="./inc/g.js"></script>
+<script type="text/javascript" src="./inc/comm.js"></script>
+<script type="text/javascript" src="./inc/side.js"></script>
+<script src="./inc/mescroll/mescroll.min.js"></script>
+<script src="./inc/mescroll/swiper.min.js"></script>
+<script src="./inc/art-template.js"></script>
+<script type="text/javascript" src="inc/dict.js"></script>
+<script src="inc/upimg/plupload.full.min.js"></script>
+<script type="text/javascript" src="inc/upimg/upload.js"></script>
+<script src="./inc/refresh.js" charset="utf-8"></script>
+<script id="imgTpl1" type="text/html">
+    <div class="left marr10 marb10" style="position:relative;">
+        <img src="./img/close.png" width="20" data='{{src}}' class="closeimg" />
+        <img class="upimg1" id="imgupimg1" src="{{OSS(src)}}" width="50" height="50" data="{{src}}" />
+    </div>
+</script>
+<script id="imgTpl" type="text/html">
+    <div class="left marr10 marb10" style="position:relative;">
+        <img src="./img/close.png" width="20" data='{{src}}' class="closeimg" />
+        <img class="upimg" id="imgupimg" src="{{OSS(src)}}" width="50" height="50" data="{{src}}" />
+    </div>
+</script>
+<script>
+    var upHeader = null;
+    var i = 0,
+        k = 0; //图片数量
+    var groupTagId = [];
+    var sumbit = {};
+    var groupId = Comm.query('groupId');
+    var cimgUrl = [];
+    var faceimg = '';
+    var headimg = '';
+    var first = 1;
+	var sfirst = 1;
+    function inputLen() {
+        //			$("#nameNum").html($('#groupName').val().length)
+        if ($('#groupName').val().length > 16&&sfirst==1) {
+            Comm.message('圈子名称最大16位');
+            sfirst=2;
+            //$('#groupName').val($('#groupName').val().slice(0, 16));
+        }
+    }
+
+    function length() {
+        $("#inNum").html($('#introduction').val().length)
+        if ($('#introduction').val().length >= 240 && first == 1) {
+            Comm.message('圈子介绍最多240字');
+            first = 2
+        }
+    }
+
+    function pageload() {
+        GDict.init(function() {
+            if (groupId) {
+                $('.navTitle').html('编辑圈子')
+                AJAX.GET('/api/school/groups/info?groupId=' + groupId, function(a) {
+                    if (a && a.code == 1) {
+                        var str1 = '<div class="left marr10 marb10" style="position:relative;" id="upm"><img class="upimg" id="imgupimg" src="' + Comm.OSS.getImgUrl(a.data.headImg) + '" width="50" height="50" data="' + a.data.headImg + '" /><img src="img/close.png" class="xiutu" /></div>'
+                        var str2 = '<div class="left marr10 marb10" style="position:relative;" id="upm1"><img class="upimg1" id="imgupimg1"src="' + Comm.OSS.getImgUrl(a.data.face) + '" width="50" height="50" data="' + a.data.face + '" /><img src="img/close.png" class="xiutu" /></div>'
+                        $("#autograph").val(a.data.autograph);
+                        $("#groupName").val(a.data.groupName);
+                        //							$("#nameNum").html(a.data.groupName.length)
+                        $("#inNum").html(a.data.introduction.length)
+                        $("#introduction").val(a.data.introduction.replace(/<br\s*\/?>/gi, "\r\n"));
+                        $("#customerLimit").val(a.data.customerLimit);
+                        var str = '';
+                        headimg = a.data.headImg;
+                        faceimg = a.data.face;
+                        if (a.data.dictIds != '') {
+                            var selshop = []
+                            var dict = a.data.dictIds.split(',');
+                            for (var i = 0; i < dict.length; i++) {
+                                var s = GDict.getItem(dict[i]);
+                                str += '<span class="marl5">' + s.dictname + '</span>';
+                                selshop.push({
+                                    id: s.dictid,
+                                    name: s.dictname
+                                });
+                                groupTagId.push(s.dictid);
+                            }
+                            Comm.db('selshop', selshop);
+                            Comm.db('groupbq', dict);
+                            $("#groupbq").html(str);
+                        }
+
+
+                        $("#conimg1").html(str2);
+                        $("#conimg").html(str1);
+                        upHeader1 = new imgUploader('conimg', 11, "imgupimg");
+                        upHeader1.success = function() {
+                            cimgUrl = this.imgList.length > 0 ? this.imgList[0] : 'img/error.png';
+                            headimg = cimgUrl;
+                            $("#imgupimg").attr('src', Comm.OSS.getImgUrl(cimgUrl))
+
+                        }
+                        upHeader = new imgUploader('conimg1', 12, "imgupimg1");
+                        upHeader.success = function() {
+                            cimgUrl = this.imgList.length > 0 ? this.imgList[0] : 'img/error.png';
+                            faceimg = cimgUrl;
+                            $("#imgupimg1").attr('src', Comm.OSS.getImgUrl(cimgUrl))
+
+                        }
+                    } else {
+                        Comm.message(a.msg);
+                    }
+                })
+            }
+        })
+
+        upHeader1 = new imgUploader('conimg', 11, "imgupimg");
+        upHeader1.success = function() {
+            var cimgUrl = this.imgList.length > 0 ? this.imgList[0] : 'img/error.png';
+            console.log(cimgUrl)
+            $("#conimg").html(template('imgTpl', {
+                src: cimgUrl
+            }))
+            $("#upm").hide();
+
+        }
+        upHeader = new imgUploader('conimg1', 12, "imgupimg1");
+        upHeader.success = function() {
+            var cimgUrl = this.imgList.length > 0 ? this.imgList[0] : 'img/error.png';
+            console.log(cimgUrl)
+            $("#conimg1").html(template('imgTpl1', {
+                src: cimgUrl
+            }))
+            $("#upm1").hide();
+
+        }
+
+    }
+
+    function sub() {
+        sumbit.groupName = $("#groupName").val();
+        sumbit.customerLimit = $("#customerLimit").val();
+        sumbit.introduction = $("#introduction").val().replace(/\n/g, "<br/>");
+        sumbit.groupTagId = groupTagId.join(',');
+        sumbit.autograph = $("#introduction").val().slice(0, 10);
+        if (groupId) {
+            sumbit.face = faceimg;
+            sumbit.headImg = headimg;
+        } else {
+            var imgArr1 = $('#conimg1 .upimg1');
+            console.log(imgArr1)
+            sumbit.face = '';
+            if (imgArr1.length > 0) {
+                $.each(imgArr1, function() {
+                    sumbit.face += ',' + $(this).attr('data');
+                })
+                sumbit.face = sumbit.face.substr(1);
+            }
+            var imgArr = $('#conimg .upimg');
+            sumbit.headImg = '';
+            if (imgArr.length > 0) {
+                $.each(imgArr, function() {
+                    sumbit.headImg += ',' + $(this).attr('data');
+                })
+                sumbit.headImg = sumbit.headImg.substr(1);
+            }
+        }
+
+        if (!sumbit.face) {
+            Comm.message('请上传圈子头像');
+            return false;
+        }
+        if (!sumbit.headImg) {
+            Comm.message('请上传详情头图');
+            return false;
+        }
+        if (!sumbit.groupName) {
+            Comm.message('请填写圈子名称');
+            return false;
+        }
+        if (sumbit.groupName.length>16) {
+            Comm.message('圈子名称最多16字，请重新输入');
+            return false;
+        }
+        if (!sumbit.customerLimit) {
+            Comm.message('请填写圈子限制人数');
+            return false;
+        }
+        if (sumbit.customerLimit <= 0) {
+            Comm.message('请填写正确的圈子限制人数');
+            return false;
+        }
+        if (!sumbit.introduction) {
+            Comm.message('请填写圈子介绍');
+            return false;
+        }
+        if ($('#introduction').val().length>240) {
+            Comm.message('圈子介绍最多240字，请重新输入');
+            return false;
+        }
+        if (!sumbit.autograph) {
+            Comm.message('请填写圈子签名');
+            return false;
+        }
+        //			if(sumbit.groupTagId == "") {
+        //				Comm.message('请选择圈子标签');
+        //				return false;
+        //			}
+        if (groupId) {
+            sumbit.groupId = groupId;
+            AJAX.POST('/api/school/groups/update', sumbit, function(a) {
+                if (a && a.code == 1) {
+                    Comm.message('修改成功');
+                    Comm.db('selshop', '');
+                    setTimeout(function() {
+                        Comm.close();
+                    }, 1000)
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+        } else {
+            AJAX.POST('/api/school/groups/add', sumbit, function(a) {
+                if (a && a.code == 1) {
+                    Comm.message('添加成功');
+                    Comm.db('selshop', '');
+                    setTimeout(function() {
+                        Comm.close();
+                    }, 1000)
+                } else {
+                    Comm.message(a.msg);
+                }
+            })
+        }
+
+    }
+
+    function pageresume() {
+        var groupTag = Comm.db('selshop');
+        console.log(groupTag)
+        if (groupTag && groupTag != []) {
+            var str = "";
+            groupTagId = [];
+            for (var i = 0; i < groupTag.length; i++) {
+                groupTagId.push(groupTag[i].id);
+                str += '<span class="marl5">' + groupTag[i].name + '</span>';
+
+            }
+            document.getElementById('groupbq').innerHTML = str;
+        }
+        Comm.db('groupbq', groupTag);
+    }
+</script>
+
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>我的好友</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+
+    <style>
+        .navItemIcon {
+            background-image: url('img/msg.png');
+            background-position: center right;
+            background-repeat: no-repeat;
+            background-size: auto 20px;
+        }
+        
+        .searchBar {
+            margin: 0 auto;
+        }
+        
+        .searchBar input {
+            width: 95%;
+            padding-left: 30px;
+            line-height: 30px;
+            height: 30px;
+            font-size: 14px;
+            color: #8891A7;
+            background-color: #F2F6F7;
+            border-radius: 18px;
+            background-image: url('img/search.png');
+            background-repeat: no-repeat;
+            background-size: 14px;
+            background-position: 10px center;
+            margin: 0 auto;
+            margin-left: 2.5%;
+        }
+        
+        .search {
+            width: 100%;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .search>div {
+            width: 100%;
+            position: relative;
+        }
+        
+        .search input {
+            height: 35px;
+            width: 85%;
+            padding-left: 37px;
+            background: #F4F4F4;
+            border-radius: 20px;
+        }
+        
+        .icon_search {
+            display: inline-block;
+            width: 28px;
+            height: 25px;
+            background: url('./img/search.png')no-repeat center;
+            background-size: 65%;
+            position: absolute;
+            top: 50%;
+            margin-top: -13px;
+            left: 5px;
+        }
+        
+        .fansItem {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 13px;
+            border-bottom: 1px solid #f4f4f4;
+        }
+        
+        .userImg {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            /*border: 1px solid #dedede;*/
+        }
+        
+        .icon_jia {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: url('img/fans/guanzu.png')no-repeat center;
+            background-size: 100%;
+        }
+        
+        .icon_quxiao {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: url('img/fans/quxiao.png')no-repeat center;
+            background-size: 100%;
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #fff;
+            padding: 10px;
+        }
+        
+        .check {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #dedede;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">我的好友</div>
+        </div>
+    </header>
+    <section id="box" class="bg_hui">
+        <div class="search bg_white">
+            <form action="javascript:return true;" onsubmit="model.search()" style="position: relative;width:100%">
+                <div>
+                    <i class="icon_search fl"></i>
+                    <input type="search" id="search" oninput="model.search()" class="paddr15 fl" autocomplete="off" placeholder="搜索">
+                    <!--oninput="model.search()"-->
+                    <div class="lh30 marl5 marr10 fr" onclick="model.search()">搜索</div>
+                    <div class="clearfix"></div>
+                </div>
+            </form>
+        </div>
+        <div class="main">
+            <div class="fansList mescroll" id="fansList">
+            </div>
+        </div>
+
+    </section>
+    <footer class="shared">
+        <button style="margin: 10px 15px;" onclick="Submission()">@TA</button>
+    </footer>
+</body>
+<script type="text/html" id="dome1">
+    {{each $data as v k}}
+    <div class="fansItem">
+        <div style="display: flex;align-items: center;" onclick="selection(this,{{v.customerId}},'{{v.customerName}}')" data-on="0">
+            <img src="img/my/no.png" class="check" id="check{{v.customerId}}" />
+            <div class="userImg" style="margin-right: 15px;">
+                <img src="{{OSS(v.face)}}" alt="" width="50" height="50" style="border-radius:50%">
+            </div>
+            <div>
+                <p style="color:#222222;font-size:14px;font-weight: 700;">{{v.customerName}}</p>
+                <p class="wordW" style="color:#888888;font-size:12px;margin-top: 5px;width: 200px;">{{v.autograph||'这是一句生来就注定要被消灭的签名'}}</p>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</script>
+
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+
+<script>
+    var customerId = app.getCid();
+    var groupsId = '';
+    var merefresh = null;
+    var customerArr = [];
+    var search = '';
+
+    function pageload() {
+        Comm.db('atfriend', '');
+        model.search()
+    }
+
+    function selection(e, id, name) {
+        var isok = $(e).attr('data-on'); //是否选中
+        if (isok == '0') {
+            $(e).attr('data-on', '1')
+            $('#check' + id).attr('src', 'img/my/yese.png');
+            customerArr.push({
+                id: id,
+                name: name
+            })
+        } else {
+            $(e).attr('data-on', '0');
+            $('#check' + id).attr('src', 'img/my/no.png');
+            customerArr.map(function(item, index) {
+                item.id == id ? customerArr.splice(index, 1) : ''
+            })
+        }
+        console.log(customerArr)
+    }
+    //提交
+    function Submission() {
+        if (customerArr.length == 0) {
+            Comm.message('请至少邀请一位好友')
+        } else {
+            Comm.db('atfriend', customerArr);
+            //Comm.db('atfriend1212', '111111');
+           //Comm.message(JSON.stringify(Comm.db('atfriend')))
+            setTimeout(function() {
+                Comm.close();
+            }, 100)
+        }
+    }
+
+    var model = {
+        search: function() {
+            if (merefresh == null) {
+                merefresh = new MERefresh('box,fansList', {
+                    pagesize: 10,
+                    refreshUrl: '/api/customer/followList',
+                    refreshTypeGet: true,
+                });
+                //网络请求参数
+                merefresh.refreshOption.refreshParm = {
+                    customerId: customerId,
+                    followType:3
+                };
+                //页面 <刷新> 的回调
+                merefresh.refreshOption.refresh_cb = function(refresh, d) {
+                    if (d.curPage == 1) {
+                        customerArr = [];
+                    }
+                    refresh.successEndRef(d.data.length, d.totalCount);
+                    refresh.appendHtml(template('dome1', d.data));
+                    Comm.resizeSection();
+                };
+            } else {
+                merefresh.refreshOption.refreshParm = {
+                    customerId: customerId,
+                    followType:3,
+                    customerName: $('#search').val()
+                };
+                //重置列表数据
+                merefresh.MeRefScroll.resetUpScroll(false);
+                //merefresh.MeRefScroll.triggerDownScroll();
+                //隐藏回到顶部按钮
+                merefresh.MeRefScroll.hideTopBtn();
+            }
+        }
+    }
+</script>
+
+</html>

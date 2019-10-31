@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>消息列表</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/side.css" />
+		<link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="css/tpl.css" />
+
+		<style>
+			.vidos {
+				width: 40px;
+				height: 100%;
+				float: left;
+				font-size: 15px;
+				font-weight: bold;
+				color: #888888;
+				margin-left: 10px;
+				padding: 5px 0;
+				text-align: center;
+			}
+			
+			.vido-active {
+				border-bottom: 2px solid #098E75;
+				color: #000;
+			}
+			
+			.order-t {
+				text-align: center;
+				font-size: 12px;
+			}
+			
+			.order-t-c {
+				width: 25%;
+				height: 100%;
+				float: left;
+				font-size: 15px;
+				color: #9B9B9B;
+			}
+			
+			.order-t-c-active {
+				/*border-bottom: 2px solid #000000;*/
+				position: relative;
+				color: #098E75;
+			}
+			
+			.order-t-c-active:after {
+				content: '';
+				position: absolute;
+				left: 34%;
+				bottom: auto;
+				right: auto;
+				height: 2px;
+				width: 30px;
+				background-color: #098E75;
+			}
+			
+			.demo1,
+			.demo2,
+			.demo3 {
+				padding: 10px 10px 10px 10px;
+				display: inline-flex;
+				width: 100%;
+				background-color: #fff;
+				position: relative;
+			}
+			
+			.borb {
+				border-bottom: 1px solid #f4f4f4;
+			}
+			
+			.imgBox {
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
+				margin-right: 16px;
+			}
+			
+			.imgBox1 {
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				margin-right: 16px;
+				margin-top: 5px;
+			}
+			
+			.icon_Unread {
+				display: inline-block;
+				width: 8px;
+				height: 8px;
+				border-radius: 50%;
+				background: red;
+			}
+			
+			#swiper {
+				border-top: 1px solid #f4f4f4;
+			}
+			
+			.icon_xiaoxi {
+				display: inline-block;
+				width: 12px;
+				height: 14px;
+				background: url('img/my/masg.png')no-repeat center;
+				background-size: 100%;
+				margin-right: 15px;
+			}
+			
+			.deleteBtn {
+				width: 70px;
+				height: 30px;
+				background: #098E75;
+				border-radius: 15px;
+				text-align: center;
+				line-height: 30px;
+				color: #fff;
+			}
+			
+			.delete {
+				position: fixed;
+				z-index: 99999999;
+				bottom: 50px;
+				width: 100%;
+				background: #fff;
+				border-top: 1px solid #dedede;
+			}
+			
+			.sel {
+				position: absolute;
+				z-index: 1000;
+				top: 67%;
+				margin-top: -20px;
+				left: -35px;
+				width: 20px;
+			}
+			
+			.hide {
+				display: none !important;
+			}
+			
+			.msgNum {
+				height: 18px;
+				line-height: 18px;
+				display: inline-block;
+				background: #E0313F;
+				text-align: center;
+				border-radius: 18px;
+				color: #fff;
+				font-size: 12px;
+				min-width: 18px;
+				margin-bottom: 11px;
+			}
+			/*p img {
+				width: 30px
+			}*/
+			
+			.mescroll-totop {
+				display: none;
+			}
+			
+			.data-list {
+				background-color: #f4f4f4;
+			}
+			
+			b,
+			b div {
+				color: 464646;
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 21px;
+			}
+			
+			span {
+				vertical-align: bottom;
+			}
+			.dda,.dda div{
+				color:#464646;
+			}
+			.color505 div, .color505 span{
+				color:#464646;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar">
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+				<div class="navItem f14 marr10" id="edit" onclick="model.edit()">编辑</div>
+				<div class="navTitle">消息列表</div>
+			</div>
+
+		</header>
+		<section style="overflow-y: hidden;">
+			<div class="scrollx mescroll-touch-x">
+				<div id="scrollxContent" class="scrollx-content">
+					<div id="nav" class="order-t ovf bb1" style="border-bottom: 1px solid #f4f4f4;">
+						<div class="order-t-c brp order-t-c-active" i='0'>通知<span class="marl5 msgNum hide" id="msnum3"></span></div>
+						<div class="order-t-c brp" i='1'>回复<span class="marl5 msgNum hide" id="msnum2"></span></div>
+						<div class="order-t-c brp" i='2'>私信<span class="marl5 msgNum hide" id="msnum1"></span></div>
+						<div class="order-t-c brp xt" i='3'>系统<span class="marl5 msgNum hide" id="msnum4"></span></div>
+					</div>
+				</div>
+			</div>
+			<!--轮播-->
+			<div id="swiper" class="swiper-container">
+				<div id="swiperWrapper" class="swiper-wrapper">
+					<!--全部-->
+					<div id="mescroll0" class="swiper-slide mescroll" style="padding-bottom: 60px;">
+						<div id="dataList0" class="data-list">
+						</div>
+						<!--<div class="flex-between delete hide" style="padding:15px;">
+                        <div class="flex-between">
+                            <img src="img/my/no.png" style="width: 20px;height: 20px;margin-right: 20px;" class="selAll" id="" onclick="model.it(this)" />全选
+                        </div>
+                        <div class="flex-between">
+                            <div class="deleteBtn marr10" onclick="model.delete()">删除</div>
+                            <div class="deleteBtn" onclick="model.isRead()">已读</div>
+                        </div>
+                    </div>-->
+					</div>
+					<!--旗舰店-->
+					<div id="mescroll1" class="swiper-slide mescroll" style="padding-bottom: 60px;">
+						<div id="dataList1" class="data-list">
+						</div>
+						<!--<div class="delete hide">
+                    <div class="flex-between " style="padding:15px;">
+                        <div class="flex-between">
+                            <img src="img/my/no.png" style="width: 20px;height: 20px;margin-right: 20px;" class="selAll" id="" onclick="model.it(this)" />全选
+                        </div>
+                        <div class="flex-between">
+                            <div class="deleteBtn marr10" onclick="model.delete()">删除</div>
+                            <div class="deleteBtn" onclick="model.isRead()">已读</div>
+                        </div>
+                    </div>
+                    </div>-->
+					</div>
+					<!--优享店-->
+					<div id="mescroll2" class="swiper-slide mescroll" style="padding-bottom: 60px;">
+						<div id="dataList2" class="data-list">
+						</div>
+						<!--<div class="delete hide">
+                    <div class="flex-between " style="padding:15px;">
+                        <div class="flex-between">
+                            <img src="img/my/no.png" style="width: 20px;height: 20px;margin-right: 20px;" class="selAll" id="" onclick="model.it(this)" />全选
+                        </div>
+                        <div class="flex-between">
+                            <div class="deleteBtn marr10" onclick="model.delete()">删除</div>
+                            <div class="deleteBtn" onclick="model.isRead()">已读</div>
+                        </div>
+                    </div>
+                    </div>-->
+					</div>
+					<!--快取店-->
+					<div id="mescroll3" class="swiper-slide mescroll" style="padding-bottom: 60px;">
+						<div id="dataList3" class="data-list">
+						</div>
+						<!--<div class="delete hide">
+                    
+                    </div>-->
+					</div>
+
+				</div>
+			</div>
+		</section>
+		<footer class="shared hide">
+			<div class="flex-between " style="padding:15px 15px 15px 5px;">
+				<div class="flex-between">
+					<img src="img/my/no.png" style="width: 20px;height: 20px;margin-right: 20px;" class="selAll" id="" onclick="model.it(this)" />全选
+				</div>
+				<div class="flex-between">
+					<div class="deleteBtn marr10" onclick="model.delete()">删除</div>
+					<!--<div class="deleteBtn" onclick="model.isRead()">已读</div>-->
+				</div>
+			</div>
+		</footer>
+	</body>
+	<script type="text/html" id="listTpl">
+		{{if($data.dataIndex==2)}} {{each $data v k}}
+		<div class="demo1 borb" style="padding-bottom: 10px;{{if isbianji==1}} margin-left: 30px;{{/if}}">
+			<img src="img/my/no.png" class="sel marl10" id="{{v.messId}}" onclick="model.it(this)" />
+			<div class="imgBox" onclick="Comm.go('personal.html?customerId={{v.senderId}}')">
+				<img src="{{OSS(v.logo)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" style="object-fit: cover; border-radius: 50%;" width="50" height="50">
+			</div>
+			<div onclick="Comm.go('chat.html?id={{v.senderId}}&type={{v.senderType}}');setName('{{v.name}}',{{v.senderId}})" class=" " style="width:80%;display: flex;justify-content: space-between;flex-direction:column;margin-top: 2px;">
+				<div class="flex-between">
+					<p>{{v.name}}</p>
+					<p class="f12" style="color:#A3A3A5;margin-right: -6px;">{{sldate(v.addTime)}}</p>
+				</div>
+				<div class="wordW color505">{{v.content}}</div>
+				{{if v.isread==0}}
+				<span id="dian{{v.senderId}}" style="position: absolute;right: 20px;top: 45px;"><i class="icon_Unread"></i></span> {{/if}}
+			</div>
+		</div>
+		{{/each}} {{/if}} {{if($data.dataIndex==1)}} {{each $data v k}}
+		<div class="demo1 borb" {{if isbianji==1}} style="margin-left: 30px;" {{/if}}>
+			<img src="img/my/no.png" class="sel marl10" style="top: 30%;" id="{{v.messId}}" onclick="model.it(this)" />
+			<div class="imgBox" style="width:30px;height:30px;" onclick="Comm.go('personal.html?customerId={{v.customerId}}')">
+				<img src="{{OSS(v.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" style="object-fit: cover; border-radius: 50%;" width="30" height="30">
+			</div>
+			<div class=" paddb10 " style="width:87%;padding-right: 10px;">
+				<div class="flex-between">
+					<p style="color:#518EC2;" onclick="Comm.go('personal.html?customerId={{v.customerId}}')">{{v.customerName}}</p>
+					<p class="f12" style="color:#A3A3A5;margin-right: -6px;">{{sldate(v.addTime)}}</p>
+				</div>
+
+				{{if !v.newsTitle}} {{if v.newsType==0 || v.newsType==1||v.newsType==8||v.newsType==2}}
+				<div onclick="{{if v.newsType==5}}Comm.go('qzAskDetail.html?newsId={{v.newsId}}'){{else if v.commentLevel==1}}Comm.go('articleDetail.html?newsId={{v.newsId}}&cont=1'){{else}}Comm.go('commentDetails.html?newsId={{v.newsId}}&commentId={{v.commentId}}'){{/if}}">
+					<div style="margin:10px 0;" class="wordW3 dda">回复我：{{v.messTitle}}</div>
+					<div class="pad10" style="border-radius:3px;background:#F6F6F6;">
+						{{if v.newsType==0&&v.newsContent==""}}
+						<div class="color505 wordW2">转发</div>
+						{{else}}
+						{{if v.newsContent}}
+						<div class="color505 wordW2">{{v.newsContent}}</div>
+						{{else if v.newsFace}} {{imgTpl(v.newsFace,96)}}
+						{{else if v.commentContent}}
+						<div class="color505 wordW2">{{v.commentContent}}</div>
+						{{/if}}
+						{{/if}}
+						
+						
+					</div>
+				</div>
+				{{else}} {{if v.commentContent}}
+				<!--判断日志是否删除-->
+				<!--{{if v.iscomment==1&&v.commentLevel==1}}Comm.go('conDetail.html?newsId={{v.newsId}}'){{else}}{{/if}}-->
+				<div class="ssss" onclick="{{if v.newsType==5&&v.commentLevel==1}}Comm.go('anwser.html?newsId={{v.newsId}}&commentId={{v.curCommentId}}'){{else if v.newsType==5&&v.commentLevel==2}}Comm.go('moreAnwser.html?newsId={{v.newsId}}&commentId={{v.curCommentId}}'){{else}}Comm.go('commentDetails.html?newsId={{v.newsId}}&commentId={{v.commentId}}'){{/if}}">
+					<div style="margin:10px 0;" class="wordW3 dda">回复我：{{v.messTitle}}</div>
+
+					<div class="pad10" style="border-radius:3px;background:#F6F6F6;">
+						<div class="wordW2 color505">我的回复:{{if v.commentContent}}{{v.commentContent}}{{/if}}</div>
+					</div>
+				</div>
+				{{else}}
+				<div style="margin:10px 0;" class="wordW3 dda">回复我：{{v.messTitle}}</div>
+
+				<div class="pad10" style="border-radius:3px;background:#F6F6F6;">
+					<div class="wordW2 color505">该动态已删除</div>
+				</div>
+				{{/if}} {{/if}} {{else}}
+				<div onclick="{{if v.newsType==5}}Comm.go('qzAskDetail.html?newsId={{v.newsId}}'){{else}}Comm.go('articleDetail.html?newsId={{v.newsId}}&cont=1'){{/if}}">
+					<div style="margin:10px 0;" class="wordW3 dda">回复我：{{v.messTitle}}</div>
+					<div style="background-color: #F6F6F6;">
+						{{if v.newsTitle}}
+						<div style="border-radius:3px;background:#F6F6F6;" class="wordW paddl5 paddr5 paddt10 paddb5">{{if v.newsType==0}}转发： {{/if}}{{v.newsTitle}}</div>
+						{{/if}}
+						{{if v.newsType!=0}}
+						<div style="border-radius:3px;background:#F6F6F6;" class="wordW3 paddl5 paddr5 marb5 paddt5 color505">{{v.newsContent}}</div>
+						{{/if}}
+						{{if v.newsFace}}
+						<div style="padding-right: 2%;padding-left: 2%;background-color: #F6F6F6;">
+							{{imgTpl(v.newsFace,96,90)}}
+						</div>
+						{{/if}}
+						<div class="clearfix "></div>
+						<div style="height: 10px;background-color: #F6F6F6;"></div>
+					</div>
+				</div>
+				{{/if}}
+			</div>
+		</div>
+		{{/each}} {{/if}} {{if($data.dataIndex == 0)}} {{each $data v k}}
+		<div class="demo2 borb" {{if isbianji==1}} style="margin-left: 30px;" {{/if}}>
+			<img src="img/my/no.png" class="sel marl10" id="{{v.messId}}" onclick="model.it(this)" />
+			<div class="imgBox1" onclick="Comm.go('personal.html?customerId={{v.customerId}}')">
+				<img src="{{OSS(v.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" style="object-fit: cover; border-radius: 50%;" width="30" height="30">
+			</div>
+			<div class="" onclick="model.go2({{v.itemId}},{{v.itemType}},{{v.newsType}},{{v.newsId}},{{v.commentLevel}},{{if v.commentLevel<3}}{{v.commentId}}{{else}}{{v.rid}}{{/if}})" style="width:85%;margin-top: 2px; display: flex;justify-content: space-between;flex-direction:column;">
+				<div class="flex-between">
+					<div>
+						<span style="color:#518EC2;">{{v.customerName}}</span>
+						<span style="color:#A3A3A5;">{{v.messTitle}}</span>
+					</div>
+					<p class="f12" style="color:#A3A3A5;margin-right: -6px;">{{sldate(v.addTime)}}</p>
+				</div>
+				<div class="wordW color505">{{v.content}}</div>
+			</div>
+		</div>
+		{{/each}} {{/if}} {{if($data.dataIndex == 3)}} {{each $data v k}}
+		<div class="demo3  borb" {{if isbianji==1}} style="margin-left: 30px;" {{/if}}>
+			{{if v.customerId!=0}}
+			<img src="img/my/no.png" class="sel marl10" id="{{v.messId}}" onclick="model.it(this)" /> {{/if}}
+			<div class=" ">
+				<div>
+					<p class="f14 color505"><i class="icon_xiaoxi"></i>{{v.messTitle}}</p>
+				</div>
+				<p class="f14" style="color:#518EC2;margin:5px 0;" onclick="Comm.go('xtmsg.html?id={{v.messId}}')">查看详情》</p>
+				<p class="f12" style="color:#B0AFAF;">{{sldate(v.addTime)}}</p>
+			</div>
+		</div>
+		{{/each}} {{/if}}
+	</script>
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+	<script type="text/javascript" src="inc/tpl.js"></script>
+
+	<script>
+		var stype=Comm.query('type')||"";
+		function pageload() {
+			mescrollRefreshFn({
+				menuNumber: 6
+			});
+			if(stype==1){
+				$('.xt').click();
+			}
+		}
+
+		function msgNums() {
+			AJAX.GET('api/mess/getMyCenterNotReadMessCount', function(a) {
+				if(a && a.code == 1) {
+					if(a.data.privateCount != 0) {
+						var padd = "0px";
+						if(a.data.privateCount >= 100) {
+							padd = "0px 3px";
+						}
+						a.data.privateCount = a.data.privateCount >= 100 ? '99+' : a.data.privateCount;
+						$('#msnum1').html(a.data.privateCount).removeClass('hide').css('padding', padd);
+					} else {
+						$('#msnum1').addClass('hide')
+					}
+					if(a.data.commentCount != 0) {
+						a.data.commentCount = a.data.commentCount >= 100 ? '99+' : a.data.commentCount;
+						$('#msnum2').html(a.data.commentCount).removeClass('hide')
+					} else {
+						$('#msnum2').addClass('hide')
+					}
+					if(a.data.adviceCount != 0) {
+						a.data.adviceCount = a.data.adviceCount >= 100 ? '99+' : a.data.adviceCount;
+						$('#msnum3').html(a.data.adviceCount).removeClass('hide')
+					} else {
+						$('#msnum3').addClass('hide')
+					}
+					if(a.data.systemCount != 0) {
+						a.data.systemCount = a.data.systemCount >= 100 ? '99+' : a.data.systemCount;
+						$('#msnum4').html(a.data.systemCount).removeClass('hide')
+					} else {
+						$('#msnum4').addClass('hide')
+					}
+				}
+			})
+		}
+
+		function setName(a, id) {
+			Comm.db('setName', '');
+			Comm.db('setName', a);
+			$('#dian' + id).remove();
+		}
+
+		function pageresume() {
+			//      var page = {
+			//          num: 1,
+			//          size: 10
+			//      };
+			//      getListData(page);
+			msgNums();
+		}
+		var chose = [];
+		var issx = 0;
+		var model = {
+			go2: function(id, type, newsType, newsId, lev, cid) {
+				if(type == 1) { //新闻
+					if(newsType == 1) {
+						Comm.go('articleDetail.html?newsId=' + id)
+					} else {
+						Comm.go('articleDetail.html?newsId=' + id)
+					}
+				} else if(type == 2) { //回复
+					//					if(lev==1){
+					//						Comm.go('conDetail.html?newsId=' + newsId)
+					//					}else{
+					if(newsType == 5) {
+						if(lev > 2) {
+							Comm.go('moreAnwser.html?newsId=' + newsId + '&commentId=' + cid)
+						} else {
+							Comm.go('anwser.html?newsId=' + newsId + '&commentId=' + cid)
+						}
+
+					} else {
+						Comm.go('commentDetails.html?newsId=' + newsId + '&commentId=' + cid)
+					}
+
+					//}
+
+				}
+			},
+			//弹出编辑操作
+			edit: function() {
+				this.dataIndex = $('.order-t-c-active').attr('i');
+				//判断当前所在的选项
+				if(this.dataIndex == 2) { //资讯页
+					if($("#dataList2 .borb").length < 1) {
+						return Comm.message('当前没有记录不能编辑哦！');
+					}
+					issx = 1;
+					if($('#dataList2 .borb').css('marginLeft') == '30px') {
+						$('#dataList2 .borb').css('marginLeft', 0);
+						$('footer').attr('class', 'shared hide');
+						$('#edit').html('编辑');
+						$('.data-list').css('background-color', 'initial');
+					} else {
+						$('#dataList2 .borb').css('marginLeft', 30);
+						$('footer').attr('class', 'shared');
+						$('#edit').html('取消');
+						$('.data-list').css('background-color', '#fff');
+					}
+					Comm.resizeSection();
+				} else if(this.dataIndex == 1) { //帖子页
+					if($("#dataList1 .borb").length < 1) {
+						return Comm.message('当前没有记录不能编辑哦！');
+					}
+					issx = 0;
+					if($('#dataList1 .borb').css('marginLeft') == '30px') {
+						$('#dataList1 .borb').css('marginLeft', 0);
+						$('footer').attr('class', 'shared hide');
+						$('#edit').html('编辑');
+						$('.data-list').css('background-color', 'initial');
+					} else {
+						$('#dataList1 .borb').css('marginLeft', 30);
+						$('footer').attr('class', ' shared');
+						$('#edit').html('取消');
+						$('.data-list').css('background-color', '#fff');
+					}
+					Comm.resizeSection();
+				} else if(this.dataIndex == 0) { //问问页
+					if($("#dataList0 .borb").length < 1) {
+						return Comm.message('当前没有记录不能编辑哦！');
+					}
+					issx = 0;
+					if($('#dataList0 .borb').css('marginLeft') == '30px') {
+						$('#dataList0 .borb').css('marginLeft', 0);
+						$('footer').attr('class', 'shared hide');
+						$('#edit').html('编辑');
+						$('.data-list').css('background-color', 'initial');
+					} else {
+						$('#dataList0 .borb').css('marginLeft', 30);
+						$('footer').attr('class', ' shared');
+						$('#edit').html('取消');
+						$('.data-list').css('background-color', '#fff');
+					}
+					Comm.resizeSection();
+				} else if(this.dataIndex == 3) { //视频页
+					if($("#dataList3 .borb").length < 1) {
+						return Comm.message('当前没有记录不能编辑哦！');
+					}
+					issx = 0;
+					if($('#dataList3 .borb').css('marginLeft') == '30px') {
+						$('#dataList3 .borb').css('marginLeft', 0);
+						$('footer').attr('class', ' shared hide');
+						$('#edit').html('编辑');
+						$('.data-list').css('background-color', 'initial');
+					} else {
+						$('#dataList3 .borb').css('marginLeft', 30);
+						$('footer').attr('class', 'shared');
+						$('#edit').html('取消');
+						$('.data-list').css('background-color', '#fff');
+					}
+					Comm.resizeSection();
+				};
+			},
+			//选择删除项
+			it: function(thih) {
+				var data = $('#dataList' + this.dataIndex + ' .sel');
+				var leng = $("#dataList" + this.dataIndex).children();
+				if($(thih).attr('src') == 'img/my/yese.png') {
+					$(thih).attr('src', 'img/my/no.png');
+					if($(thih).attr('class') == 'selAll') {
+						data.attr('src', 'img/my/no.png');
+						chose = []
+					} else {
+						chose.pop($(thih)[0].id);
+					}
+					if(leng.length == chose.length) {
+						$('.selAll').attr('src', 'img/my/yese.png');
+					} else {
+						$('.selAll').attr('src', 'img/my/no.png');
+					}
+				} else {
+					$(thih).attr('src', 'img/my/yese.png');
+					if($(thih).attr('class') == 'selAll') {
+						data.attr('src', 'img/my/yese.png');
+						for(var i = 0; i < data.length; i++) {
+							chose.push(data[i].id);
+						}
+					} else {
+						chose.push($(thih)[0].id);
+					}
+					if(leng.length == chose.length) {
+						$('.selAll').attr('src', 'img/my/yese.png');
+					}
+
+				}
+				console.log(chose)
+			},
+			//删除
+			delete: function() {
+				Comm.confirm('确认删除？', function(d) {
+					if(d) {
+						newsIds = chose.join(',');
+						var url = '';
+						if(issx == 1) {
+							url = 'api/mess/delByPriMsg?ids=';
+						} else {
+							url = '/api/mess/delids?ids=';
+						}
+						AJAX.GET(url + newsIds + '&userType=1', function(a) {
+							if(a && a.code == 1) {
+								Comm.message('删除成功');
+								$('.selAll').attr('src', 'img/my/no.png');
+								$('#edit').click();
+								var page = {
+									num: 1,
+									size: 10
+								};
+								msgNums();
+								getListData(page);
+							} else {
+								Comm.message(a.msg);
+							}
+						})
+					}
+				})
+
+			},
+			//全部已读
+			isRead: function() {
+				newsIds = chose.join(',');
+				AJAX.GET('/api/mess/readids?ids=' + newsIds + '&userType=1', function(a) {
+					if(a && a.code == 1) {
+						$('.selAll').attr('src', 'img/my/no.png');
+						$('#edit').click();
+						var page = {
+							num: 1,
+							size: 10
+						};
+						msgNums();
+						getListData(page);
+					}
+				})
+			},
+		}
+		/*设置列表数据
+		 * pageData 当前页的数据
+		 * dataIndex 数据属于哪个nav */
+		function setListData(pageData, dataIndex) {
+			var swiper = document.getElementById("swiper");
+			var listDom = document.getElementById("dataList" + dataIndex),
+				nowStr = "",
+				listStr = "",
+				name = "";
+			if(pageData.curPage == 1) {
+				$('#edit').html('编辑');
+				$('.data-list').css('background-color', 'initial');
+				chose = [];
+				for(var c = 0; c < 4; c++) {
+					$('#dataList' + c + ' .schoolMsg').css('marginLeft', 0);
+					$('footer').attr('class', 'shared hide');
+					$('.sel').attr('src', 'img/my/no.png');
+					$('.selAll').attr('src', 'img/my/no.png');
+				}
+				Comm.resizeSection();
+			} else {
+				for(var c = 0; c < 4; c++) {
+					$('.sel').attr('src', 'img/my/no.png');
+					$('.selAll').attr('src', 'img/my/no.png');
+				}
+				Comm.resizeSection();
+			}
+			if(pageData.length > 0) {
+				pageData.dataIndex = dataIndex;
+				for(var i = 0; i < pageData.length; i++) {
+					if(pageData[i].newsFace) {
+						pageData[i].newsFace = pageData[i].newsFace.split(',');
+					}
+					if(dataIndex == 2||dataIndex == 1) {
+						if(pageData[i].newsContent) {
+							pageData[i].newsContent = pageData[i].newsContent.replace(/<\/?.+?>/g, "").replace(/ /g, "");
+
+						}
+						if(pageData[i].messTitle) {
+							pageData[i].messTitle = pageData[i].messTitle.replace(/<(?!img).*?>/g, "").replace(/ /g, "");
+						}
+						if(pageData[i].content) {
+							pageData[i].content = pageData[i].content.replace(/<(?!img).*?>/g, "");
+						}
+					}
+
+				}
+				console.log(pageData)
+				if($("#edit").html() == '取消') {
+					pageData.isbianji = 1;
+				} else {
+					pageData.isbianji = 0;
+				}
+				if(pageData.dataIndex == 0) {
+					for(var i = 0; i < pageData.length; i++) {
+						pageData[i].content = '<span>'+ pageData[i].content.replace(/<div>|<\/div>/gi, "").replace(/<br>/gi, "")+'</span>';
+						
+					}
+				}else if(pageData.dataIndex == 1){
+					for(var i = 0; i < pageData.length; i++) {
+					if(pageData[i].commentContent){
+							pageData[i].commentContent=pageData[i].commentContent.replace(/<\/?.+?\/?>/g, "")
+						}
+					}
+				}
+				listStr = template('listTpl', pageData);
+				if(pageData.curPage > 1) {
+					listDom.innerHTML += nowStr + name + listStr;
+				} else {
+					listDom.innerHTML = nowStr + name + listStr;
+				}
+				Comm.scorllDel();
+				msgNums();
+				$('.onePic').css('width','100%')
+			}
+
+		}
+
+		/*联网加载列表数据
+		 在您的实际项目中,请参考官方写法: http://www.mescroll.com/api.html#tagUpCallback
+		 请忽略getListDataFromNet的逻辑,这里仅仅是在本地模拟分页数据,本地演示用
+		 实际项目以您服务器接口返回的数据为准,无需本地处理分页.
+		 * */
+		var htmlData = [];
+
+		function getListDataFromNet(curNavIndex, pageNum, pageSize, successCallback, errorCallback) {
+			var type = '';
+			if(curNavIndex == 2) {
+				type = 2;
+			} else if(curNavIndex == 1) {
+				type = 4;
+			} else if(curNavIndex == 0) {
+				type = 3
+			} else {
+				type = 1
+			}
+			var o = {};
+			o.pageno = pageNum;
+			o.pagesize = pageSize;
+			o.messType = type;
+			AJAX.POST("/api/mess/getMyCenterMessList", o, function(a) {
+				if(a && a.code == 1) {
+					var r = a.data || [];
+					htmlData = r;
+					totalSize = a.totalCount;
+					htmlData.curPage = a.curPage;
+					successCallback && successCallback(htmlData, totalSize);
+					if(Comm.db('userinfo')) {
+						msgNums();
+					}
+				} else {
+					errorCallback && errorCallback();
+				}
+			});
+		}
+
+		function changePage(i) {
+			//			if(i == 3) {
+			//				$("#edit").hide();
+			//			} else {
+			//				$("#edit").show();
+			//			}
+			if(curNavIndex != i) {
+				//更改列表条件
+				var curNavDom; //当前菜单项
+				$("#nav div").each(function(n, dom) {
+					if(dom.getAttribute("i") == i) {
+						dom.classList.add("order-t-c-active");
+						curNavDom = dom;
+						//_type_ = dom.getAttribute("data-type");
+					} else {
+						dom.classList.remove("order-t-c-active");
+					}
+				});
+				//菜单项居中动画
+				var scrollxContent = document.getElementById("scrollxContent");
+				var star = scrollxContent.scrollLeft; //当前位置
+				var end = curNavDom.offsetLeft + curNavDom.clientWidth / 2 - document.body.clientWidth / 2; //居中
+				mescrollArr[curNavIndex].getStep(star, end, function(step, timer) {
+					scrollxContent.scrollLeft = step; //从当前位置逐渐移动到中间位置,默认时长300ms
+				});
+				//隐藏当前回到顶部按钮
+				mescrollArr[curNavIndex].hideTopBtn();
+				//取出菜单所对应的mescroll对象,如果未初始化则初始化
+				if(mescrollArr[i] == null) {
+					mescrollArr[i] = initMescroll(i, s);
+				} else {
+					//检查是否需要显示回到到顶按钮
+					var curMescroll = mescrollArr[i];
+					var curScrollTop = curMescroll.getScrollTop();
+					if(curScrollTop >= curMescroll.optUp.toTop.offset) {
+						curMescroll.showTopBtn();
+					} else {
+						curMescroll.hideTopBtn();
+					}
+				}
+				//更新标记
+				curNavIndex = i;
+			}
+			$('#edit').html('编辑');
+			$('.data-list').css('background-color', 'initial');
+			chose = [];
+			for(var c = 0; c < 4; c++) {
+				$('#dataList' + c + ' .borb').css('marginLeft', 0);
+				$('footer').attr('class', 'shared hide');
+				$('.sel').attr('src', 'img/my/no.png');
+				$('.selAll').attr('src', 'img/my/no.png');
+			}
+
+			Comm.resizeSection();
+		}
+	</script>
+
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>更换头像</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/tpl.css" />
+		<style>
+			body {
+				background: #f4f4f4;
+			}
+			
+			.banner {
+				height: 200px;
+				width: 100%;
+				background: url('img/geren/q.png')no-repeat center;
+				background-size: 100% 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.banner input {
+				z-index: 9999999;
+			}
+			
+			.exhibition {
+				width: 120px;
+				height: 120px;
+				position: relative;
+			}
+			
+			.dsimg {
+				width: 120px !important;
+				height: 120px !important;
+				border-radius: inherit !important;
+				position: absolute !important;
+				left: -10px !important;
+				top: -20px;
+			}
+			
+			.exhibition img {
+				width: 80px;
+				height: 80px;
+				border-radius: 50%;
+				margin: 10px;
+				left: 8%;
+				position: absolute;
+			}
+			
+			.available {
+				padding: 20px 10px;
+				background: #fff;
+			}
+			
+			.item {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: column;
+				position: relative;
+				/*margin-right: 10px;*/
+				padding-top: 10px;
+				padding-bottom: 15px;
+				width: 25%;
+				border-bottom: 5px solid #f4f4f4;
+			}
+			
+			.scrollx {
+				overflow: hidden;
+			}
+			
+			.scrollx-content {
+				width: 100%;
+				overflow-x: auto;
+				white-space: nowrap;
+			}
+			
+			.shiyon {
+				padding: 4px 6px;
+				background: #098E75;
+				border-radius: 2px;
+				font-size: 10px;
+				color: #fff;
+				text-align: center;
+				line-height: 15px;
+				z-index: 99;
+				position: absolute;
+				bottom: 0px;
+				right: 0;
+			}
+			
+			footer {
+				display: flex;
+				justify-content: center;
+			}
+			
+			.available img {
+				object-fit: contain;
+			}
+			
+			#imgBox {
+				position: relative;
+			}
+			
+			#imgBox .userImg {
+				position: absolute;
+				border-radius: 50%;
+				object-fit: cover;
+				width: 68px;
+				height: 68px;
+				margin: 16px;
+			}
+			
+			#imgBox .bk {
+				position: absolute;
+				width: 100px;
+				height: 100px;
+				z-index: 99;
+			}
+			
+			.qximg {
+				position: absolute;
+				top: 85%;
+				right: 0px;
+				padding: 5px 10px;
+				color: #fff;
+				border-radius: 5px;
+			}
+			
+			.order-t-c-active:after {
+				content: '';
+				position: absolute;
+				left: 45%;
+				top: 28px;
+				right: auto;
+				height: 2px;
+				width: 30px;
+				margin-left: -10px;
+				background-color: #098E75;
+			}
+			
+			.order-t-c-active {
+				color: #098E75;
+				font-weight: bold;
+				position: relative;
+			}
+			
+			.ischeck {
+				background: url(img/my/select.png) no-repeat;
+				background-size: 97% 88%;
+				background-position: 2px 12px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header>
+			<!--<div class="navBar bottomShadow">
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+				<div class="navTitle">更换头像</div>
+			</div>-->
+		</header>
+		<section id=''>
+			<div id="main">
+
+			</div>
+
+		</section>
+		<footer class="paddt10 paddb10">
+			<button onclick="model.submission()">保存</button>
+		</footer>
+	</body>
+
+	<script type="text/html" id="demo">
+		<div class="banner" style="position: relative;">
+			<div style="position: absolute;top: 10px;left: 10px;" onclick="Comm.close()"> <img src="img/my/imgbac.png" width="30" height="30" /></div>
+			<div class="exhibition" id="imgupimg">
+				<div id="nowRahmen" id="upm">
+					{{each $data.rahmenList v k}} {{if(v.rahmenId == $data.nowRahmenId)}}
+					<img class="dsimg" src="{{OSS(v.colorUrl)}}" style="z-index: 1;"> {{/if}} {{/each}}
+				</div>
+				<img src="{{OSS($data.uface)}}" alt="" style="">
+			</div>
+			<!--<div class="qximg"  onclick="model.delImg()">取消相框</div>-->
+		</div>
+
+		<div class="available">
+			<div class="flex-between paddb10" style="border-bottom: 1px solid #f4f4f4;">
+				<div style="width: 20%;"></div>
+				<div class="center order-t-c-active order-t-c" style="width: 30%;">推荐</div>
+				<div class="center" style="width: 30%;" onclick="Comm.message('暂未开放，敬请期待~')">分类</div>
+				<div style="width: 20%;"></div>
+			</div>
+
+			<div class="flex-between" style="flex-wrap: wrap;">
+				<div class="item" onclick="handleSetImg(0)">
+					<div style="width:100px;height:100px;" id="imgBox">
+						<img class="userImg" src="{{OSS($data.uface)}}" alt="" style="">
+						<img class="bk" src="img/my/def.png" style="width: 20px;height: 20px;position: relative;top: 65px;left: 65px;" alt="">
+					</div>
+					<p style="margin-top: 10px;">默认</p>
+				</div>
+				{{each $data.t[0].ct v k}}
+				<div class="item {{if($data.nowRahmenId == v.rahmenId)}} ischeck{{/if}}" onclick="handleSetImg({{v.rahmenId}},this,{{userLevel}},{{v.rahmenLevel}},'{{v.colorUrl}}')">
+					<div style="width:100px;height:100px;" id="imgBox">
+						{{if($data.userLevel>=v.rahmenLevel)}}
+						<img class="userImg" src="{{OSS($data.uface)}}" alt="" style="">
+						<img class="bk" src="{{OSS(v.colorUrl)}}" alt=""> {{else}}
+						<img class="userImg" src="{{OSS($data.uface)}}" alt="" style="">
+						<img class="bk" src="{{OSS(v.grayUrl)}}" alt=""> {{/if}} 
+					</div>
+					<p style="margin-top: 10px;">{{v.rahmenName}}</p>
+				</div>
+				{{/each}}
+			</div>
+		</div>
+
+	</script>
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/side.js"></script>
+	<script type="text/javascript" src="inc/dict.js"></script>
+	<script src="inc/mescroll/mescroll.min.js"></script>
+	<script src="./inc/mescroll/swiper.min.js"></script>
+	<script src="inc/art-template.js"></script>
+	<script type="text/javascript" src="./inc/upimg/upload.js"></script>
+	<script src="inc/refresh.js" charset="utf-8"></script>
+	<script>
+		var upHeader
+
+		function pageresume() {
+
+		}
+
+		function pageload() {
+			GDict.init(function() {
+				model.dict = GDict.get('rahmenType');
+				model.getImgList()
+			})
+		}
+		var data = {}
+
+		var model = {
+			uface: '', //用户头像
+			frames: '', //相框
+			framesId: '',
+			dict: '',
+			delImg: function() {
+				Comm.confirm('确认取消相框？', function(d) {
+					if(d) {
+						AJAX.POST('/api/customer/updateHeadimg', {
+							face: model.uface,
+							rahmenId: ''
+						}, function(d) {
+							if(d && d.code == 1) {
+								Comm.message('操作成功');
+								model.getImgList()
+							} else {
+								Comm.message(d.msg || '网络错误');
+							}
+						});
+
+					}
+				})
+			},
+			submission: function() {
+				AJAX.POST('/api/customer/updateHeadimg', {
+					face: model.uface,
+					rahmenId: model.framesId ? model.framesId : ''
+				}, function(d) {
+					if(d && d.code == 1) {
+						Comm.db('userinfo').face = model.uface;
+						Comm.message('操作成功');
+						setTimeout(function() {
+							Comm.close()
+						}, 1500)
+					} else {
+						Comm.message(d.msg || '网络错误');
+					}
+				});
+			},
+			getImgList: function() {
+				var that = this;
+				AJAX.POST('/api/customer/rahmenList', {
+					rahmenType: ''
+				}, function(d) {
+					if(d && d.code == 1) {
+
+						var t = [];
+						for(var i = 0; i < model.dict.length; i++) {
+							var m = {
+								dictid: model.dict[i].dictid,
+								dictname: model.dict[i].dictname,
+								ct: [],
+								count: 0,
+							}
+							for(var j = 0; j < d.data.rahmenList.length; j++) {
+								if(model.dict[i].dictid == d.data.rahmenList[j].rahmenType) {
+									m.ct.push(d.data.rahmenList[j]);
+									m.count++;
+								}
+							}
+							t.push(m);
+						}
+						d.data.t = t;
+						data = d.data;
+						model.uface = d.data.uface;
+						model.framesId = d.data.nowRahmenId;
+						console.log(d.data)
+						$('#main').html(template('demo', d.data));
+						if(model.framesId && model.framesId > 0) {
+							$('.qximg').show();
+						} else if(model.framesId == 0) {
+							$('.qximg').hide();
+						}
+						upHeader = new imgUploader('imgupimg', 10);
+						upHeader.success = function() {
+							model.uface = this.imgList[0];
+							console.log(model.uface)
+						}
+					}
+				})
+			},
+
+		}
+
+		//设置边框
+		function handleSetImg(id, that, userLevel, rahmenLevel, colorUrl) {
+			$('.item').removeClass('ischeck');
+			if(id == 0) {
+				$('#nowRahmen').html('');
+				model.framesUrl = "";
+				model.framesId = "";
+			} else {
+				if(userLevel < rahmenLevel) {
+					Comm.message('对不起,您当前用户等级不够')
+					return;
+				} else {
+					$(that).addClass('ischeck');
+					var url = Comm.OSS.getImgUrl(colorUrl, 'xs');
+					$('#nowRahmen').html('<img class="dsimg" src="' + url + '" style="z-index: 999;">');
+					model.framesUrl = colorUrl;
+					model.framesId = id;
+				}
+			}
+
+		}
+	</script>
+
+</html>

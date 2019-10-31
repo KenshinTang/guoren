@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>管理圈子</title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="./css/g.css" />
+		<link rel="stylesheet" href="./css/comm.css" />
+		<link rel="stylesheet" href="./css/side.css" />
+		<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+		<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+		<link rel="stylesheet" href="./css/tpl.css" />
+
+		<style>
+			body {
+				/* background: #f4f4f4; */
+			}
+			
+			.mescroll-fade-in {
+				display: none !important;
+			}
+			
+			.vidos {
+				width: 40px;
+				height: 100%;
+				float: left;
+				font-size: 15px;
+				font-weight: bold;
+				color: #888888;
+				margin-left: 10px;
+				padding: 5px 0;
+				text-align: center;
+			}
+			
+			.vido-active {
+				border-bottom: 2px solid #098E75;
+				color: #000;
+			}
+			
+			.order-t {
+				
+				text-align: center;
+				font-size: 12px;
+			}
+			
+			.order-t-c {
+				width: 33.33%;
+				height: 100%;
+				float: left;
+				font-size: 15px;
+				/*font-weight: bold;*/
+				color: #888888;
+			}
+			
+			.order-t-c-active {
+				color: #098E75;
+				position: relative;
+			}
+			
+			.order-t-c-active:after {
+				content: '';
+				position: absolute;
+				left: 35%;
+				bottom: auto;
+				right: auto;
+				height: 2px;
+				width: 30%;
+				background-color: #098E75;
+			}
+			
+			.demo1 {
+				padding: 10px 15px;
+				background: #fff;
+			}
+			
+			/*.borderDe {
+				border: 1px solid #dedede;
+			}*/
+			
+			.glBtn1 {
+				color: #098E75;
+				background: #FFEFEF;
+			}
+			
+			.glBtn1,
+			.glBtn2 {
+				width: 57px;
+				height: 20px;
+				text-align: center;
+				line-height: 20px;
+				font-size: 12px;
+				border-radius: 10px;
+			}
+			
+			.glBtn2 {
+				color: #FF7777;
+				background: #FAF0F0;
+			}
+			
+			.establish {
+				width: 120px;
+				height: 40px;
+				background: #098E75;
+				border-radius: 23px;
+				color: #fff;
+				text-align: center;
+				line-height: 40px;
+				margin: 10px auto;
+			}
+			
+			.icon_xie {
+				display: inline-block;
+				width: 14px;
+				height: 14px;
+				background: url('./img/a/bi.png')no-repeat center;
+				background-size: 100%;
+				margin-right: 5px;
+			}
+			
+			.demo2 {
+				padding: 15px 15px 15px 10px;
+				border-bottom: 1px solid #f4f4f4;
+				background-color: #fff;
+			}
+			
+			.data-list {
+				background-color: #f4f4f4;
+			}
+			.sc-l{
+				width: 74%;
+			}.sc-r{
+				width: 25%
+			}
+			#sinbox1 {
+				position: absolute;
+				bottom: 0;
+				left: 5%;
+				width: 90%;
+			}
+			.f5f5 div,.f5f5 span{
+				color: #5F5F5F;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<header>
+			<div class="navBar bottomShadow">
+				<div class="navBackIcon" onclick="Comm.close()"></div>
+				<div class="navTitle">管理圈子</div>
+			</div>
+		</header>
+		<section style="overflow: hidden;">
+			<div class="scrollx mescroll-touch-x">
+				<div id="scrollxContent" class="scrollx-content">
+					<div id="nav" class="order-t ovf bb1" style="border-bottom: 1px solid #f4f4f4;">
+						<div class="order-t-c brp order-t-c-active" i='0'>圈子</div>
+						<div class="order-t-c brp" i='1'>发布</div>
+						<div class="order-t-c brp" i='2'>回复</div>
+					</div>
+				</div>
+			</div>
+			<!--轮播-->
+			<div id="swiper" class="swiper-container">
+				<div id="swiperWrapper" class="swiper-wrapper">
+					<!--全部-->
+					<div id="mescroll0" class="swiper-slide mescroll" style="padding-bottom: 60px;">
+						<div id="dataList0" class="data-list">
+						</div>
+
+					</div>
+					<!--旗舰店-->
+					<div id="mescroll1" class="swiper-slide mescroll" style="padding-bottom: 60px;">
+						<div id="dataList1" class="data-list">
+						</div>
+					</div>
+					<!--优享店-->
+					<div id="mescroll2" class="swiper-slide mescroll" style="padding-bottom: 60px;">
+						<div id="dataList2" class="data-list">
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</section>
+		<footer class="shared" style="border: none;">
+			<div class="establish" onclick="model.getQuanzi()"><i class="icon_xie"></i> 创建圈子</div>
+		</footer>
+		<div id="sinbox1" class="paddb10" wtd="sinboxTemp">
+		<div class="bg_white marb10 f16" style="border-radius: 10px;">
+			<div class="coloreb3 paddb15 paddt15" onclick="model.shanchu(1)">删除</div>
+		</div>
+		<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+	</div>
+	</body>
+	<script type="text/html" id="listTpl">
+		{{each $data v k}}
+		<div class="demo2 bottomShadow" id="{{v.commentId}}" onclick="Comm.go('articleDetail.html?type=qz&newsId='+{{v.newsId}});event.stopPropagation();">
+			<div class="paddl5" style="width:100%;display: flex;justify-content: space-between;flex-direction:column;">
+				<div class="flex-between" onclick='Comm.go("personal.html?customerId="+{{$data.userinfo.customerId}});event.stopPropagation();'>
+					<div class="flex-between">
+						<img src="{{OSS($data.userinfo.face,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" style="object-fit: cover; border-radius: 50%;" width="30" height="30">
+						<p style="color:#333;" class="marl10">{{$data.userinfo.customerName}}</p>
+					</div>
+					<div>
+						<p class="f12 fl" style="color:#A3A3A5;">{{sldate(v.addTime)}}</p>
+						<div class="name-right fr paddl10 paddr10" onclick="Comm.showWindow('sinboxTemp',true);event.stopPropagation();model.qh({{v.commentId}})">
+							<img src="img/index/more.png" width="14" height="3" />
+						</div>
+					</div>
+					
+				</div>
+				<div style="margin:0px 0 10px 40px;" class="colors">{{v.comment}}</div>
+				<div style="background:#F6F6F6;border-radius:3px;margin-left: 40px;" class="pad10">
+					<div style="margin-bottom:5px;" class="color333">{{v.title}}</div>
+					<div class="flex-between ">
+						<div class="wordW3 f5f5 lh20" style="color:#5F5F5F;font-size:14px; {{if v.face&&v.face!=''}}width:227px;{{/if}}">{{v.subhead}}</div>
+						{{if v.face&&v.face!=''}}
+						<div style="width:100px;height:68px;">
+							<img src="{{OSS(v.face[0],'m')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" style="object-fit: cover;border-radius: 5px;" width="100" height="68">
+						</div>
+						{{/if}}
+					</div>
+				</div>
+			</div>
+		</div>
+		{{/each}}
+	</script>
+	<script type="text/html" id="listTpl1">
+		{{each $data v k}}
+		<div class="demo1 flex-between borderb" onclick="Comm.go('postDetails.html?groupId='+{{v.groupId}})" id="{{v.groupId}}">
+			<div class="flex-between">
+				<div class="borderDe marr15" style="width:40px;height:40px;   border-radius: 5px;">
+					<img src="{{OSS(v.face,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" style="object-fit: cover;border-radius: 5px;" width="40" height="40">
+				</div>
+				<div>
+					<p class="marb5 f14" style="color:#222;font-weight:700;height: 22px;">{{v.groupName}}</p>
+					<p class="f12" style="color:#888; height: 16px;">帖子{{conunm(v.newsNum)}} · 成员 {{v.customerNum}}</p>
+				</div>
+			</div>
+			{{if(v.customerRole==3)}}
+			<div class="glBtn2" onclick="model.remove({{v.groupId}});event.stopPropagation();">退出</div>
+			{{else}}
+			<div class="glBtn1" onclick='Comm.go("setGrounp.html?groupId={{v.groupId}}");event.stopPropagation();'>管理</div>
+			{{/if}}
+		</div>
+		{{/each}}
+	</script>
+	<script id="listTpl2" type="text/html">
+		{{each $data v k }}
+		<div class="demo2" id="{{v.newsId}}" onclick="event.stopPropagation();top.Comm.go('articleDetail.html?type=qz&newsId='+{{v.newsId}})">
+			<div class="fl center" style="width: 7%;">
+				<img src="img/ly.png" width="60%" />
+				<div class="mart5">{{v.commentNumber}}</div>
+			</div>
+			<div style="width: 90%;" class="fl marl5">
+				<div class="{{if v.face&&v.face[0]!=''}}sc-l fl{{/if}}">
+					<div class="f14 wordW2 color333">{{v.title}}</div>
+					<div class="heads mart5 lh25">
+						<div class="name-left fl" onclick="event.stopPropagation();top.Comm.go('postDetails.html?groupId={{v.groupId}}')">
+							<img src="{{OSS(v.groupFace,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" style="object-fit: cover;border-radius: 5px;" width="20" height="20" />
+							<span class="f12 wordW" style="margin-left:12px;color:#5F5F5F;width: 100px; display: inline-block;">{{v.groupName}}</span>
+
+						</div>
+						<div class="fl marl20 f12 c9e">{{sldate(v.addTime)}}</div>
+
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				{{if v.face&&v.face[0]!=''}}
+				<div class="fr sc-r">
+					{{imgTpl(v.face[0].split(','),56)}}
+				</div>
+				{{/if}}
+				<div class="clearfix"></div>
+
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		{{/each}}
+
+	</script>
+	<script type="text/javascript" src="./inc/z.js"></script>
+	<script type="text/javascript" src="./inc/g.js"></script>
+	<script type="text/javascript" src="./inc/comm.js"></script>
+	<script type="text/javascript" src="./inc/side.js"></script>
+	<script src="./inc/mescroll/mescroll.min.js"></script>
+	<script type="text/javascript" src="inc/tpl.js" ></script>
+	<script src="./inc/mescroll/swiper.min.js"></script>
+	<script src="./inc/art-template.js"></script>
+	<script src="./inc/refresh.js" charset="utf-8"></script>
+
+	<script>
+		var customerId = app.getCid();
+		var mid ='';
+		function pageload() {
+			mescrollRefreshFn({
+				menuNumber: 3
+			});
+		Comm.storage("isX", function(d) {
+            if (d) {
+                $("footer").css("padding-bottom", "10px");
+                
+            }
+        });
+		}
+
+		function pageresume() {
+//			var index = $('.order-t-c-active').attr('i');
+//			mescrollArr[parseInt(index)].resetUpScroll()
+		}
+		var model = {
+			getQuanzi:function(){
+				AJAX.GET('/api/customer/shutup', function(d) {
+					if(d.data==0){
+					Comm.go('./CreateTeam.html')		
+					}else{
+						Comm.alert('您暂无权限~',function(){
+							
+						})
+					return false;
+					}
+					
+				})
+			
+			},
+			remove: function(groupsId) {
+				Comm.confirm('确认退出？', function(d) {
+					if(d) {
+						AJAX.GET('/api/school/groups/cancelFocus?groupsId=' + groupsId + '&customerId=' + customerId, function(a) {
+							if(a && a.code == 1) {
+								if(a.data == '' || !a.data) {
+									$("#" + groupsId).remove();
+									getListData({num:1, size:10});
+								} else {
+									AJAX.GET('/api/school/groups/cancelFocusByLeader?groupsId=' + groupsId + '&myGroupsId=' + a.data.myGroupsId, function(d) {
+										if(d && d.code == 1) {
+											getListData({num:1, size:10});
+											//Comm.close();
+										} else {
+											Comm.message(d.msg);
+										}
+									})
+								}
+								
+							} else {
+								Comm.message(a.msg);
+							}
+						})
+					}
+				})
+
+			},
+			qh: function(id) {
+				mid = id
+			},
+			shanchu: function(type) {
+				Comm.showWindow('');
+				top.Comm.confirm('确认删除？', function(d) {
+					if(d) {
+						AJAX.GET('/admin/comment/noenable?commentId=' + mid, function(a) {
+							if(a && a.code == 1) {
+								Comm.message('删除成功');
+								$('#' + mid).remove();
+							} else {
+								Comm.message(a.msg);
+							}
+						})
+					}
+				})
+			},
+		}
+		/*切换列表*/
+		function changePage(i) {
+			console.log(i)
+			if(i != 0) {
+				$('footer').hide();
+				Comm.resizeSection();
+			} else {
+				$('footer').show();
+				Comm.resizeSection();
+			}
+			if(curNavIndex != i) {
+				//更改列表条件
+				var curNavDom; //当前菜单项
+				$("#nav div").each(function(n, dom) {
+					if(dom.getAttribute("i") == i) {
+						dom.classList.add("order-t-c-active");
+						curNavDom = dom;
+						//_type_ = dom.getAttribute("data-type");
+					} else {
+						dom.classList.remove("order-t-c-active");
+					}
+				});
+				//菜单项居中动画
+				var scrollxContent = document.getElementById("scrollxContent");
+				var star = scrollxContent.scrollLeft; //当前位置
+				var end = curNavDom.offsetLeft + curNavDom.clientWidth / 2 - document.body.clientWidth / 2; //居中
+				mescrollArr[curNavIndex].getStep(star, end, function(step, timer) {
+					scrollxContent.scrollLeft = step; //从当前位置逐渐移动到中间位置,默认时长300ms
+				});
+				//隐藏当前回到顶部按钮
+				mescrollArr[curNavIndex].hideTopBtn();
+				//取出菜单所对应的mescroll对象,如果未初始化则初始化
+				if(mescrollArr[i] == null) {
+					mescrollArr[i] = initMescroll(i, s);
+				} else {
+					//检查是否需要显示回到到顶按钮
+					var curMescroll = mescrollArr[i];
+					var curScrollTop = curMescroll.getScrollTop();
+					if(curScrollTop >= curMescroll.optUp.toTop.offset) {
+						curMescroll.showTopBtn();
+					} else {
+						curMescroll.hideTopBtn();
+					}
+				}
+				//更新标记
+				curNavIndex = i;
+			}
+			Comm.scorllDel();
+		}
+		/*设置列表数据
+		 * pageData 当前页的数据
+		 * dataIndex 数据属于哪个nav */
+		function setListData(pageData, dataIndex) {
+			var swiper = document.getElementById("swiper");
+			var listDom = document.getElementById("dataList" + dataIndex),
+				nowStr = "",
+				listStr = "",
+				name = "";
+			if(pageData.length > 0) {
+				pageData.dataIndex = dataIndex;
+				if(pageData.dataIndex == 0) {
+					listStr = template('listTpl1', pageData);
+				} else if(pageData.dataIndex == 1) {
+					for(var i = 0; i < pageData.length; i++) {
+						pageData[i].face = pageData[i].face.split(',');
+					}
+					listStr = template('listTpl2', pageData);
+				} else {
+					pageData.userinfo = Comm.db('userinfo');
+					for(var i = 0; i < pageData.length; i++) {
+						pageData[i].face = pageData[i].face.split(',')
+					}
+					listStr = template('listTpl', pageData);
+				}
+				if(pageData.curPage==1){
+					listDom.innerHTML = nowStr + name + listStr;
+				}else{
+					listDom.innerHTML += nowStr + name + listStr;
+				}
+			}
+			Comm.scorllDel();
+		}
+
+		/*联网加载列表数据
+		 在您的实际项目中,请参考官方写法: http://www.mescroll.com/api.html#tagUpCallback
+		 请忽略getListDataFromNet的逻辑,这里仅仅是在本地模拟分页数据,本地演示用
+		 实际项目以您服务器接口返回的数据为准,无需本地处理分页.
+		 * */
+		var htmlData = [];
+
+		function getListDataFromNet(curNavIndex, pageNum, pageSize, successCallback, errorCallback) {
+			var url = ['/api/school/groups/myList?curpage=' + pageNum + '&pagesize=' + pageSize + '&customerId=' + customerId, '/api/school/groups/myPublish?curpage=' + pageNum + '&pagesize=' + pageSize, '/api/school/groups/myComment?curpage=' + pageNum + '&pagesize=' + pageSize]
+			AJAX.GET(url[curNavIndex], function(a) {
+				if(a && a.code == 1) {
+					var r = a.data || [];
+					console.log(r)
+					
+					if(a.curPage == 1) {
+						htmlData = r;
+						totalSize = a.totalCount;
+					} else {
+						htmlData = r;
+						totalSize = totalSize;
+					}
+					htmlData.curPage =a.curPage;
+					successCallback && successCallback(htmlData, totalSize);
+				} else {
+					Comm.message(a.msg);
+					errorCallback && errorCallback();
+				}
+			});
+		}
+	</script>
+
+</html>

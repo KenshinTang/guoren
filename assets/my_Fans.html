@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>我的粉丝</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+
+    <style>
+        .navItemIcon {
+            background-image: url('img/msg.png');
+            background-position: center right;
+            background-repeat: no-repeat;
+            background-size: auto 20px;
+        }
+
+        .searchBar {
+            margin: 0 auto;
+        }
+
+        .searchBar input {
+            width: 95%;
+            padding-left: 30px;
+            line-height: 30px;
+            height: 30px;
+            font-size: 14px;
+            color: #8891A7;
+            background-color: #F2F6F7;
+            border-radius: 18px;
+            background-image: url('img/search.png');
+            background-repeat: no-repeat;
+            background-size: 14px;
+            background-position: 10px center;
+            margin: 0 auto;
+            margin-left: 2.5%;
+        }
+
+        .fansItem {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 13px;
+            border-bottom: 1px solid #f4f4f4;
+        }
+
+        .userImg {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid #dedede;
+
+        }
+
+        .icon_jia {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: url('img/fans/guanzu.png')no-repeat center;
+            background-size: 100%;
+        }
+
+        .icon_quxiao {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: url('img/fans/quxiao.png')no-repeat center;
+            background-size: 100%;
+        }
+
+        .icon_guanzu {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: url('img/fans/guanzu.png')no-repeat center;
+            background-size: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navTitle">我的粉丝</div>
+        </div>
+    </header>
+    <section id="box">
+        <div class="main">
+            <div class="fansList" id="fansList">
+            </div>
+        </div>
+
+    </section>
+</body>
+<!--  -->
+<script type="text/html" id="dome1">
+    {{each $data as v k}}
+    <div class="fansItem" onclick="Comm.go('./personal.html')">
+        <div style="display: flex;align-items: center;">
+            <div class="userImg" style="margin-right: 15px;">
+                <img src="{{OSS(v.face,'s')}}" alt="" width="50" height="50" style="border-radius:50%">
+            </div>
+            <div>
+                <p style="color:#222222;font-size:14px;font-weight: 700;">{{v.customerName}}</p>
+                <p style="color:#888888;font-size:12px;margin-top: 5px;width:150px"class="wordW">{{v.autograph||'这是一句生来就注定要被消灭的签名'}}</p>
+            </div>
+        </div>
+        <div>
+            {{if(v.isAdd == 1)}}
+                <i class="icon_quxiao" onclick="unfollow(this,{{v.customerId}});event.stopPropagation()"></i>
+            {{/if}}
+            {{if(v.isAdd == 0)}}
+                <i class="icon_guanzu" onclick="addFans(this,{{v.customerId}}); event.stopPropagation()"></i>
+            {{/if}}
+        </div>
+    </div>
+    {{/each}}
+</script>
+
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+
+<script>
+    var customerId = app.getCid();
+    var merefresh = null;
+    function pageload() {
+        myrefresh()
+    }
+
+
+
+    function myrefresh() {
+        if (merefresh == null) {
+            merefresh = new MERefresh('box,fansList', {
+                refreshUrl: '/api/fans/fansList',
+                refreshTypeGet: true
+            });
+            //网络请求参数
+            merefresh.refreshOption.refreshParm = {
+                curPage: 1,
+                pageSize : 10,
+                customerId: customerId
+            };
+            //页面 <刷新> 的回调
+            merefresh.refreshOption.refresh_cb = function (refresh, d) {
+                refresh.successEndRef(d.data.length, d.totalCount);
+                refresh.appendHtml(template('dome1', d.data));
+            };
+        }else{
+            console.log(merefresh)
+        }
+    }
+
+    //成为他的粉丝
+    function addFans(e,fid) {
+        AJAX.POST('/api/fans/addFans',{customerId:customerId,fid:fid},function(d){
+            if(d.code == 1){
+                Comm.message('关注成功');
+                $(e).attr('class','icon_quxiao').attr('onclick',`unfollow(this,${fid}); event.stopPropagation()`)
+            }
+        })
+    }
+    //取消关注
+    function unfollow(e,fid){
+        AJAX.POST('/api/fans/unfollow',{customerId:customerId,fid:fid},function(d){
+            if(d.code == 1){
+                Comm.message('取消关注');
+                $(e).attr('class','icon_guanzu').attr('onclick',`addFans(this,${fid});event.stopPropagation()`)
+
+            }
+        })
+    }
+    
+    // var model = {
+    //     // getFansList() {
+    //     //     AJAX.POST('/api/fans/fansList', { customerId: customerId, curPage: 1, pageSize: 10 }, function (d) {
+    //     //         if (d.code == 1) {
+    //     //             $('#fansList').html(template('dome1', d.data))
+    //     //         }
+    //     //     })
+    //     }
+    // }
+
+
+</script>
+
+</html>

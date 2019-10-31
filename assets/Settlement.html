@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>结算</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="css/side.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <link rel="stylesheet" href="inc/mescroll/swiper.min.css">
+    <link rel="stylesheet" href="css/tpl.css" />
+
+    <style>
+      .title {
+				color: #A8A8A8;
+				font-size: 12px;
+				padding: 7px 16px;
+				background: #F4F4F4;
+			}
+			
+			.main {}
+			
+			.main>div {
+				padding: 15px;
+			}
+			
+			#edit {
+				background: url('img/qianbao/genduo.png')no-repeat center;
+				width: 50px;
+				background-size: 35%;
+			}
+			
+			#sinbox {
+				height: 130px;
+				position: fixed;
+				left: 0;
+				padding: 0;
+			}
+			
+			#MainBg {
+				top: 45px;
+			}
+			
+			.navBar {
+				z-index: 133333333333;
+			}
+			 #sinbox .item {
+            padding: 0px 10px;
+            line-height: 40px;
+        }
+
+        #sinbox .item span.btn {
+            background: inherit;
+            padding: 5px 10px;
+            border-radius: 3px;
+            color: #222;
+            border: 1px solid #EBEBEB;
+            font-size: 14px;
+        }
+
+        #sinbox .item span.btnp {
+            padding: 5px 15px;
+        }
+
+        #sinbox .item span.cur {
+            color: #DD1474;
+            border-color: #DD1474;
+        }
+
+        #sinbox .tb {
+            height: 50px;
+            line-height: 50px;
+        }
+
+        #sinbox .tb .td {
+            width: 50%;
+            float: left;
+            background-color: #EBEBEB;
+        }
+
+        #sinbox .tb .r {
+            width: 50%;
+            height: 50px;
+            float: left;
+            color: #fff;
+            border-radius: 0px;
+        }
+
+        #sinbox .item .scoll {
+            overflow: hidden;
+            overflow-x: auto;
+            white-space: nowrap;
+            text-align: left;
+        }
+
+        #sinbox .item input {
+            width: 100px;
+            text-align: center;
+        }
+
+        #MainBg,
+        #WTDBOX {
+            top: 64px;
+            z-index: 99;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="navBar bottomShadow">
+            <div class="navBackIcon" onclick="Comm.close()"></div>
+            <div class="navItem f16 marr10" id="edit"></div>
+            <div class="navTitle">结算</div>
+        </div>
+    </header>
+    <section  class="body mescroll" id="box">
+    	<div class="center color999 mart30 marb20">累计结算总额</div>
+    	<div class="center marb30 f28" style="color:#ff9b11" id="prices">0积分</div>
+    	<div class="bg_hui pad10">结算记录</div>
+    	<div class="main" id="list">
+				
+				
+			</div>
+		</section>
+</body>
+<div id="sinbox" wtd="sinboxTemp">
+		<div class="item mart20">
+			<div class="colorb5 left paddl5">时间筛选：</div>
+			<div class="tleft">
+				<input readonly id="start" placeholder="开始时间" onclick="datePickerstart.show();" />
+				<span>至&nbsp;</span>
+				<input id="end" readonly onclick="datePickerend.show();" placeholder="结束时间" />
+			</div>
+			<div class="cls"></div>
+		</div>
+		<div>
+			<div onclick="model.reg()" class="fl border lh40 mart30" style="width: 30%;height: 40px;background-color: #E8F9F6;color: #098E75;">重置</div>
+			<div onclick="model.gets()" class="fl border lh40 mart30 colorfff" style="width: 30%;height: 40px;background-color: #098E75;">确定</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+<script type="text/html" id="listTpl">
+	{{each $data v k}}
+   <div class="borderb">
+   	<div class="fl">{{v.addTime}}</div>
+   	<div class="fr" style="color:#ff9b11;">￥{{v.price}}</div>
+   	<div class="clearfix"></div>
+   </div>
+   {{/each}}
+</script>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+<script type="text/javascript" src="inc/picker.min.js" ></script>
+
+<script>
+	var datePickerstart, merefreshbuy = null,
+			datePickerend, coinType = [],
+			activeText = '',
+			selectType = "",
+			start = "",
+			end = "";
+
+		function pageresume() {
+
+		}
+
+		function pageload() {
+			datePickerstart = new Datepicker("开始时间", function(a, b, c) {
+				$("#WTDBOX #start").val(b);
+				start = b;
+			});
+			datePickerend = new Datepicker("结束时间", function(a, b, c) {
+				$("#WTDBOX #end").val(b);
+				end = b;
+			});
+			record();
+			model.init();
+		}
+		var model = {
+			reg:function(){
+				$("#WTDBOX #start").val("");
+        			$("#WTDBOX #end").val("");
+			},
+			gets:function(){	
+    			okref();
+    			$('#edit').click();
+			},
+			init:function(){
+				AJAX.GET('/api/order/getOrdersMoneyCount',function(a){
+					if(a&&a.code==1){
+						$('#prices').html('￥'+a.data.priceNum)
+					}
+				})
+			}
+		}
+		function record() {
+        merefreshbuy = new MERefresh('box,list', {
+            pagesize: 10,
+            refreshUrl: '/api/order/getOrdersMoneyList',
+            refreshTypeGet: true
+        });
+
+        //网络请求参数projectType="+dictid+"&sortType="+sortType
+        merefreshbuy.refreshOption.refreshParm = {
+            startTime: '',
+            endTime: '',
+        };
+
+        //页面 <刷新> 的回调
+        merefreshbuy.refreshOption.refresh_cb = function (refresh, d) {
+            refresh.successEndRef(d.data.length, d.totalCount);
+            var h = template('listTpl', d.data);
+            refresh.appendHtml(h);
+        };
+
+    }
+
+    function okref() {
+        //网络请求参数projectType="+dictid+"&sortType="+sortType
+        merefreshbuy.refreshOption.refreshParm = {
+            startTime: $("#WTDBOX #start").val(),
+            endTime: $("#WTDBOX #end").val()
+        };
+        //重置列表数据
+        merefreshbuy.MeRefScroll.resetUpScroll();
+        //merefreshbuy.MeRefScroll.triggerDownScroll();
+        //隐藏回到顶部按钮
+        merefreshbuy.MeRefScroll.hideTopBtn();
+        Comm.showWindow()
+        var selectTime;
+        if (start && !end) {
+            selectTime = start + '&nbsp;~&nbsp;'
+        } else if (!start && end) {
+            selectTime = end + '&nbsp;~&nbsp;'
+        } else if (start && end) {
+            selectTime = start + '&nbsp;~&nbsp;' + end + '&nbsp;'
+        } else {
+            selectTime = ''
+        }
+        $('#time').html("<span>" + selectTime + "</span><span style='color:#DD1474'>" + activeText + "</span>")
+    }
+		$('#edit').on('click', function(e) {
+			if($('#edit').html() == '取消') {
+				$('#edit').html('');
+				$('#edit').attr('style', ' background: url("img/qianbao/genduo.png")no-repeat center;background-size: 35%;');
+				Comm.showWindow();
+			} else {
+				$('#edit').html('取消');
+				$('#edit').attr('style', 'background:none;');
+				var width = $(window).height();
+				$('#sinbox').attr('style', `width:${width}px; top:45px;`);
+				Comm.showWindow('sinboxTemp');
+			}
+		})
+</script>
+
+</html>

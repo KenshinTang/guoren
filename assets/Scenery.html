@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>学校环境</title>
+	<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+	<link rel="stylesheet" href="./css/g.css" />
+	<link rel="stylesheet" href="./css/comm.css" />
+	<link rel="stylesheet" href="./css/side.css" />
+	<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+	<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+	<link rel="stylesheet" href="./css/tpl.css" />
+
+	<style>
+		body {}
+
+		.title {
+			padding: 10px;
+			padding-left: 10px;
+			background: #dedede;
+			font-size: 12px
+		}
+
+		section {}
+
+		ul {
+			margin-top: 15px;
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			padding: 0 30px;
+		}
+
+		li {
+			width: 140px;
+			height: 140px;
+			margin-bottom: 20px;
+		}
+
+		li img {
+			width: 140px;
+			height: 140px;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- 头部 -->
+	<header>
+		<div class="navBar bottomShadow">
+			<div class="navBackIcon" onclick="Comm.close()"></div>
+			<div class="navTitle">校园风光</div>
+		</div>
+	</header>
+	<section>
+		<div class="main">
+			<p class="title">学校环境</p>
+			<ul id="content1">
+
+			</ul>
+			<p class="title">设备设施</p>
+			<ul id="content2">
+
+			</ul>
+		</div>
+	</section>
+</body>
+<script type="text/html" id="demo1">
+	{{each $data as v k}}
+	{{if(v.dictid==2)}}
+	<li onclick="showImgView(this)"><img src="{{OSS(v.url)}}" alt=""></li>
+	{{/if}}
+	{{/each}}
+</script>
+<script type="text/html" id="demo2">
+	{{each $data as v k}}
+	{{if(v.dictid==3)}}
+	<li onclick="showImgView(this)"><img src="{{OSS(v.url)}}" alt=""></li>
+	{{/if}}
+	{{/each}}
+</script>
+<script type="text/javascript" src="./inc/z.js"></script>
+<script type="text/javascript" src="./inc/g.js"></script>
+<script type="text/javascript" src="./inc/comm.js"></script>
+<script type="text/javascript" src="./inc/side.js"></script>
+<script src="./inc/mescroll/mescroll.min.js"></script>
+<script src="./inc/mescroll/swiper.min.js"></script>
+<script src="./inc/art-template.js"></script>
+<script src="./inc/refresh.js" charset="utf-8"></script>
+
+<script>
+	var schoolId = Comm.query('schoolId')
+	function pageload() {
+		getImgList()
+
+	}
+
+	function getImgList() {
+		AJAX.POST('/api/school/imgList', { schoolId: schoolId }, function (d) {
+			if (d.code == 1) {
+				console.log(d.data)
+				console.log(template('demo1', d.data))
+				$('#content1').html(template('demo1', d.data))
+				$('#content2').html(template('demo2', d.data))
+			}
+		})
+	}
+	var showImgView = function (that) {
+		var oImgs = $(that).find('img');
+		var imgArr = new Array;
+		$.each(oImgs, function (i, e) {
+			imgArr.push(e.src);
+		});
+		Comm.db('imgView', imgArr);
+		Comm.go('imgView.html');
+	}
+
+
+
+</script>
+
+</html>

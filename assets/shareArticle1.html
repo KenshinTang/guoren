@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>资讯详情</title>
+	<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+	<link rel="stylesheet" href="css/g.css" />
+	<link rel="stylesheet" href="css/comm.css" />
+	<link rel="stylesheet" href="css/side.css" />
+	<link rel="stylesheet" href="./inc/mescroll/mescroll.min.css" />
+	<link rel="stylesheet" href="./inc/mescroll/swiper.min.css">
+	<link rel="stylesheet" href="css/tpl.css" />
+
+	<style>
+		.add-guan {
+			border-radius: 20px;
+			background-color: #F7F7F7;
+			border: none;
+			color: #098E75;
+		}
+
+		.order-t {
+			height: 50px;
+			line-height: 50px;
+			text-align: center;
+			font-size: 12px;
+		}
+
+		.order-t-c {
+			width: 20%;
+			height: 100%;
+			float: left;
+			font-size: 15px;
+			color: #888888;
+			position: relative;
+		}
+
+		.order-t-c-active {
+			color: #000;
+			border-bottom: 2px solid #098E75;
+			/*font-weight: bold;*/
+		}
+
+		/* .order-t-c-active:after {
+			content: '';
+			position: absolute;
+			left: 15px;
+			top: 47px;
+			bottom: auto;
+			right: auto;
+			height: 2px;
+			width: 30%;
+			background-color: #098E75;
+		} */
+
+		#sinbox1 {
+			background-color: #fff;
+			padding: 10px 20px;
+			position: relative;
+			width: 300px;
+			border-radius: 10px;
+		}
+
+		#sinbox {
+			background-color: #fff;
+			padding: 10px 20px;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+		}
+
+		.qxgz {
+			background: url(img/index/qxgz.png) no-repeat 0px center;
+			background-size: 16px;
+			text-align: left;
+			padding: 10px 0 10px 50px;
+			color: #444444;
+			border-bottom: 1px solid #f4f4f4;
+		}
+
+		.bgxq {
+			background: url(img/index/bgxq.png) no-repeat 0px center;
+			background-size: 16px;
+			text-align: left;
+			padding: 10px 0 10px 50px;
+			color: #444444;
+			/* border-bottom: 1px solid #f4f4f4; */
+		}
+
+		.jb {
+			background: url(img/index/jb.png) no-repeat 0px center;
+			background-size: 16px;
+			text-align: left;
+			padding: 10px 0 10px 50px;
+			color: #444444;
+		}
+
+		.pl {
+			background: url(img/xzd.png) no-repeat 0px center;
+			background-size: 16px;
+			text-align: left;
+			padding: 10px 0 10px 50px;
+			color: #444444;
+		}
+
+		/* 回复 */
+		.reply {
+			padding: 15px;
+			border-bottom: 1px solid #E5E5E5FF;
+			display: flex;
+		}
+
+		.reply-l {
+			width: 36px;
+			height: 36px;
+			border-radius: 50%;
+			border: 1px solid #dededede;
+			margin-right: 10px;
+
+		}
+
+		.reply-r {
+			flex: 1
+		}
+
+		.reply .r-top {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.reply .r-center {
+			font-size: 14px;
+			color: #444444FF;
+			margin: 10px 0;
+		}
+
+		.reply .r-bottom {
+			font-size: 12px;
+			color: #8D8D8DFF;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+
+
+		.noData {
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		#id_searchInput {
+			height: 25px;
+			margin-top: 2px;
+			border: 1px solid #DBDBDBFF;
+			text-align: center;
+			line-height: 25px;
+			border-radius: 15px;
+			color: #ccc;
+			margin-right: 10px;
+			background: url('./img/xie.png') no-repeat center;
+			background-size: 10%;
+			background-position-x: 15px;
+			padding-left: 26px;
+			padding-right: 8px;
+
+
+		}
+
+		.bar {
+			position: fixed;
+			bottom: 0;
+			width: 100%;
+			background: #fff;
+			border-top: 1px solid #dedede;
+			z-index: 3;
+		}
+
+		.shared {
+			font-size: 14px;
+			background: #fff;
+			position: fixed;
+			width: 100%;
+			bottom: 0;
+			z-index: 4;
+		}
+
+		.shared .top {
+			display: flex;
+			justify-content: space-between;
+			padding: 5px 10px;
+			border: none;
+		}
+
+		.shared .top p {
+			color: #999999FF;
+		}
+
+		.shared .top .enlarge {
+			height: 15px;
+			width: 15px;
+			background: url('./img/pinglun/fd.png')no-repeat center;
+			background-size: 100%;
+		}
+
+		.shared .inputBox {
+			padding: 5px 10px;
+			width: 100%;
+		}
+
+		.shared .inputBox #huifu {
+			width: 100%;
+			font-size: 14px;
+			border: none;
+			max-height: 90px;
+			height: auto;
+		}
+
+		.shared .bottom {
+			padding: 5px 10px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.shared .bottom .l {
+			width: 23px;
+			height: 23px;
+			background: url('./img/pinglun/xl.png')no-repeat center;
+			background-size: 100%;
+		}
+
+		.shared .bottom .r {
+			color: #098E75;
+		}
+
+		#textarea {
+			display: block;
+			margin: 0 auto;
+			overflow: hidden;
+			width: 100%;
+			font-size: 14px;
+			height: 23px;
+			line-height: 28px;
+			padding: 2px;
+			max-height: 200px;
+			overflow-y: scroll;
+		}
+
+		textarea {
+			outline: 0 none;
+			border: none;
+			/* box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6); */
+		}
+
+		.children {
+			padding: 10px 0px;
+			border-top: 1px solid #dedede;
+		}
+
+		.children-top {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.children-top .l {
+			display: flex;
+			align-items: center;
+		}
+
+		.children .content {}
+
+		.imgbox img,
+		.imgs img {
+			width: 100%;
+		}
+
+		#swiper {
+			margin-bottom: 48px;
+		}
+
+		.pls {
+			height: 500px;
+			/* background: #098E75 */
+		}
+	</style>
+</head>
+
+<body>
+	<!-- 头部 -->
+	<header>
+		<!--<div class="navBar bottomShadow" style="padding: 0;">
+			<div class="navBackIcon" onclick="Comm.close()"></div>
+			<div class="navItemIcon marl5 marr10" onclick="Comm.showWindow('sinboxTemp2',true);"></div>
+			<div class="nav-title block searchBar " style="width: calc(100% - 44px);height: 44px;"></div>
+		</div>-->
+	</header>
+	<section>
+	
+		<!-- 新闻内容 -->
+		<div id="content1">
+
+		</div>
+	</section>
+</body>
+
+
+<script type="text/html" id="demo1">
+	<div class="paddl15 paddt10 paddr15 paddb20" style="border-bottom: #F4F4F4 10px solid ;">
+		<div class="f22 lh30 bold wordW2 lh25" id="newsTitle">{{$data.news.title}}</div>
+		<div class="heads mart20">
+			<div class="fl">
+				<img class="fl" src="{{OSS($data.itemFace)}}"  onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" style="border-radius:50%;"/>
+				<div class="fl marl10">
+					<p class="f14">{{$data.itemName}}</p>
+					<p class="f12 c9e">{{sldate($data.news.addTime)}}</p>
+				</div>
+			</div>
+		
+			<div class="clearfix"></div>
+		</div>
+		<div class=" mart30 f18 lh25 color333 marb10 imgs">
+			{{$data.news.content}}
+			{{if $data.news.newsType==8&&$data.news.face!=''}}
+			{{each $data.news.face v k}}
+				<img src="{{OSS(v)}}" class="mart20" style="width:345px;height:auto;" onerror="this.src='img/my/mti.png';this.onerror=null;" />
+			{{/each}}
+			{{/if}}
+		</div>
+	</div>
+</script>
+
+
+<!-- 分享 -->
+
+<!-- 没有数据 -->
+<script type="text/html" id="noData">
+	<div class="noData">
+		<img class="mart30 marb30" src="./img/wjg.png" alt="" style="width:100px;height:100px;">
+		<p style="text-align:center;color:#ccc;width:200px;">{{$data.msg}}</p>
+	</div>
+</script>
+<!-- 弹出层 -->
+<div id="sinbox1" wtd="sinboxTemp1">
+	<div class="pl" onclick="model.Reply()">回复</div>
+	<div class="jb" onclick="model.Report()">举报</div>
+</div>
+
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/side.js"></script>
+<script src="inc/mescroll/mescroll.min.js"></script>
+<script src="./inc/mescroll/swiper.min.js"></script>
+<script src="inc/art-template.js"></script>
+<script src="inc/refresh.js" charset="utf-8"></script>
+<script>
+	var newsId = Comm.query('newsId');//新闻id
+	var customerId = app.getCid();//用户id
+
+	var itemType = '';//0用户 1大学 2专业
+	var id = '' //学校id 或者专业id 或者 用户id
+	var shearId = '';
+	var shearTitle = '';
+	var shearContent = '';
+	function pageload() {
+	
+		model.getNewsInfo()
+	}
+
+	function pageresume() {
+
+	}
+	//全屏图片
+	var showImgView = function showImgView(that) {
+		var oImgs = $(that).find('img');
+		var imgArr = new Array();
+		$.each(oImgs, function (i, e) {
+			imgArr.push(e.src);
+		});
+		Comm.db('imgView', imgArr);
+		Comm.go('imgView.html');
+	};
+
+
+
+
+
+	var mid = "";
+	var model = {
+		newsInof: {},//新闻详情
+		commentList: [],//回复列表
+		commenData: {},//单条回复信息
+		itemType: 0,//身份
+		txt: '',//回复的内容
+		type: 1,//回复类型,1针对日志回复，2针对回复进行回复
+		init: function () {
+			// this.getCommentInfoByFid()
+		},
+
+
+
+		//获取新闻详情
+		getNewsInfo: function () {
+			var that = this;
+			AJAX.POST('/api/news/info', { newsId: newsId, customerId: customerId }, function (d) {
+				if (d.code == 1) {
+					
+					that.itemType = d.data.itemType
+					id = d.data.itemId;
+					//处理富文本
+					d.data.news.content = d.data.news.content.replace(/textarea/g, 'div');
+					$('#content1').html(template('demo1', d.data));
+					//内容不是富文本 将图片追加到内容
+					if (d.data.news.newsType == 1) {
+						var imgStr = ''
+						d.data.news.face.map(function (item, index) {
+							if (item != '') {
+								$('.imgs').append($('<img  src=' + (Comm.OSS.getImgUrl(item)) + ' class="mart10">'))
+							}
+						})
+					}
+					$('#content1 .imgs img').wrap('<div onclick="showImgView(this)"></div>');
+					// console.log($('#content1 .imgs'))
+					$("#content1").find('mark').remove();
+					var zz = document.getElementsByClassName('text111');
+					$('.text111').css('height', 'auto')
+					for (var i = 0; i < zz.length; i++) {
+						zz[i].innerHTML = zz[i].attributes.attr.value;
+					}
+					itemType = d.data.itemType;
+
+
+				}
+			})
+		},
+		//添加关注
+		
+
+	}
+
+	
+
+</script>
+
+
+</html>
