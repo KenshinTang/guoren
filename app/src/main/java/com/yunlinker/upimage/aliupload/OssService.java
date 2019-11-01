@@ -64,13 +64,7 @@ public class OssService {
             return;
         }
 
-        String uploadFileStr = localFile;
-        if (localFile.endsWith(".webp")) {
-            uploadFileStr = convertWebpToPng(localFile);
-        }
-        if (TextUtils.isEmpty(uploadFileStr)) {
-            uploadFileStr = localFile;
-        }
+        String uploadFileStr = convertToPngIfWebP(localFile);
 
         // 构造上传请求
         PutObjectRequest put = new PutObjectRequest(bucket, object, uploadFileStr);
@@ -97,22 +91,31 @@ public class OssService {
         });
     }
 
-    private String convertWebpToPng(String webpFilePath) {
-        Log.d("kenshin", "webpFilePath = " + webpFilePath);
-        String pathWithoutSuffix = webpFilePath.substring(0, webpFilePath.lastIndexOf("."));
-        String outputPngPath = pathWithoutSuffix + ".png";
+    private String convertToPngIfWebP(String inputPath) {
+        Log.d("kenshin", "before convert, input path = " + inputPath);
+        String pathWithoutSuffix = inputPath.substring(0, inputPath.lastIndexOf("."));
+        String outputPath = pathWithoutSuffix + ".png";
+        Log.d("kenshin", "before convert, output path = " + outputPath);
 
         try {
-            FileOutputStream out = new FileOutputStream(outputPngPath);
-            Bitmap bitmap = BitmapFactory.decodeFile(webpFilePath);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-            out.close();
-        } catch (Exception e) {
-            Log.e("kenshin", "outputPngPath = null", e);
-            return "";
-        }
+            FileOutputStream out = new FileOutputStream(outputPath);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            Bitmap bitmap = BitmapFactory.decodeFile(inputPath, options);
+            String mimeType = options.outMimeType;
+            Log.d("kenshin", "before convert, mimeType = " + mimeType);
+            if (mimeType.equals("image/webp")) {
+                Log.d("kenshin", "input is webp, convert to png before upload.");
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                out.close();
+                return outputPath;
+            } else {
+                Log.d("kenshin", "input is not webp, no need to convert, upload directly.");
+                return inputPath;
+            }
 
-        Log.d("kenshin", "outputPngPath = " + outputPngPath);
-        return outputPngPath;
+        } catch (Exception e) {
+            Log.e("kenshin", "outputPath = null", e);
+            return inputPath;
+        }
     }
 }
