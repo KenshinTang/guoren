@@ -14,9 +14,11 @@ import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.yunlinker.upimage.UpImger;
+import com.yunlinker.util.FullScreen;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -94,28 +96,55 @@ public class OssService {
     private String convertToPngIfWebP(String inputPath) {
         Log.d("kenshin", "before convert, input path = " + inputPath);
         String pathWithoutSuffix = inputPath.substring(0, inputPath.lastIndexOf("."));
-        String outputPath = pathWithoutSuffix + ".png";
+        String outputPath = pathWithoutSuffix + "temp.png";
         Log.d("kenshin", "before convert, output path = " + outputPath);
 
+        FileOutputStream out = null;
         try {
-            FileOutputStream out = new FileOutputStream(outputPath);
+            out = new FileOutputStream(outputPath);
             BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
             Bitmap bitmap = BitmapFactory.decodeFile(inputPath, options);
+            int width = FullScreen.screenWidth;
+            int height = FullScreen.screenHeight / 3;
+            int wRatio = (int) Math.ceil(options.outWidth / width);
+            int hRatio = (int) Math.ceil(options.outHeight / height);
             String mimeType = options.outMimeType;
+            if (wRatio > 1 && hRatio > 1) {
+                if (wRatio > hRatio) {
+                    options.inSampleSize = wRatio;
+                } else {
+                    options.inSampleSize = hRatio;
+                }
+            } else {
+                options.inSampleSize = 1;
+            }
+            Log.d("kenshin", "outWidth = " + options.outWidth + ",outHeight = " + options.outHeight + ",width = " + width + ",height = " + height);
+            Log.d("kenshin", "options.inSampleSize = " + options.inSampleSize);
             Log.d("kenshin", "before convert, mimeType = " + mimeType);
+
+            options.inJustDecodeBounds = false;
+            bitmap = BitmapFactory.decodeFile(inputPath, options);
+
             if (mimeType.equals("image/webp")) {
                 Log.d("kenshin", "input is webp, convert to png before upload.");
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-                out.close();
                 return outputPath;
             } else {
                 Log.d("kenshin", "input is not webp, no need to convert, upload directly.");
                 return inputPath;
             }
-
         } catch (Exception e) {
             Log.e("kenshin", "outputPath = null", e);
             return inputPath;
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

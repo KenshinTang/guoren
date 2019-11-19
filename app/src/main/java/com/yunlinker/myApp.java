@@ -42,6 +42,7 @@ import com.yunlinker.baseclass.BaseActivity;
 import com.yunlinker.guoren.MainActivity;
 import com.yunlinker.guoren.R;
 import com.yunlinker.manager.ActivityManager;
+import com.yunlinker.util.FullScreen;
 
 import org.json.JSONObject;
 import org.xutils.BuildConfig;
@@ -106,6 +107,7 @@ public class myApp extends Application {
                 new TextInfo().setFontColor(getResources().getColor(R.color.color_quedin));
         x.Ext.init(this);
        // x.Ext.setDebug(BuildConfig.DEBUG);
+        FullScreen.getScreenWidth(this);
     }
 
     @Override
