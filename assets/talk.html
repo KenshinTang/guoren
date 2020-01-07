@@ -224,6 +224,10 @@
 					Comm.message('话题标题限制20字，请简略输入');
 					return false;
 				}
+//				if(title.length < 8) {
+//					Comm.message('话题标题最少8字，请重新输入');
+//					return false;
+//				}
 				if(content.replace(/\s+/g, "") == '') {
 					Comm.message('请输入话题简介');
 					return false;

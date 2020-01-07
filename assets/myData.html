@@ -90,7 +90,7 @@
     <div class="paddl15 bg_white ">
         <div class="cellContent bottomBorder ">
             <div class="label f14 icon_pre icon_name ">姓名</div>
-            <input type="text" id="customerName" value="{{$data.customerName}}" maxlength="10" name="customerName" data-reg='empty' placeholder="快填写姓名吧" style="color:#888;" >
+            <input type="text" id="customerName" value="{{$data.customerName}}" maxlength="10" name="customerName" data-reg='empty' placeholder="快填写姓名吧" style="color:#888;width: 60%;" >
         </div>
     </div>
     <!--<div class="paddl15 bg_white">
@@ -175,6 +175,7 @@
         model.getUserInfo()
     }
     function length(){
+    	
     	if($('#autograph').val().length>=50&&isfirst==1){
     		Comm.message('个性签名最多输入50字')
     		isfirst=2;
@@ -197,7 +198,7 @@
             d.customerName = $('#customerName').val();
             d.identity = this.userData.identity
             d.phone = this.userData.phone;
-            d.autograph = $('#autograph').val();
+            d.autograph =$('<span/>').html($('#autograph').val()).text();
             d.sex = sex;
             
             AJAX.POST('/api/customer/updateByCenter',d,function(d){
@@ -226,6 +227,7 @@
                 if (d && d.code == 1) {
                     that.userData = d.data
                     sex = d.data.sex;
+                    Comm.db('userinfo',d.data)
                     $('section').html(template('userInfo', d.data))
                     if(d.data.authentication==0){
                     	$("#types").text('未填写');

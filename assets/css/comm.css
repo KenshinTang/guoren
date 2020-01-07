@@ -6,6 +6,11 @@
 .f15{
 	font-size: 15px !important;
 }
+.numspan{
+	display: inline-block;
+    width: 30px;
+    text-align: left;
+}
 section div,
 section span,
 section p {
@@ -162,7 +167,7 @@ textarea {
     }
 }
 
-.donghua {
+/*.donghua {
     -webkit-animation-name: fadeIn;
     /*动画名称*/
     -webkit-animation-duration: 1s;
@@ -171,7 +176,7 @@ textarea {
     /*动画次数*/
     -webkit-animation-delay: 0s;
     /*延迟时间*/
-}
+}*/
 
 .swiper-pagination-bullet-active {
     background: #098E75 !important;
@@ -183,6 +188,7 @@ textarea {
     color: black;
     /*font-family: "PuHui" !important;*/
     word-break: break-all;
+    -webkit-text-size-adjust: 100%;
 }
 
 .content {

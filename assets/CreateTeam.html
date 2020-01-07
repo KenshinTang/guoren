@@ -80,7 +80,7 @@
                 <p class="f14" style="color:#222222FF;">圈子头像</p>
                 <div class="clearfix paddb10 paddt10 marl20 marr15" id="conimg1">
                     <div class="left marr10 marb10" id="upm1">
-                        <img src="./img/my/xztp.png" width="50" height="50" id="imgupimg1" />
+                        <img src="./img/my/xztp.png" class="upimg1" width="50" height="50" id="imgupimg1" />
                     </div>
                 </div>
                 <p class="f10" style="color:#888888FF;">显示上传1张图片</p>
@@ -108,7 +108,7 @@
             </div>-->
             <div class="borderb flex  paddl20 paddr20" style="align-items: center;height:50px">
                 <p class="f14" style="color:#222222FF;">限制人数</p>
-                <input id="customerLimit" class="marl20 lh20" style="width: 75%;" maxlength="6" type="tel" placeholder="请输入圈子限制人数，上限为999999">
+                <input id="customerLimit" onkeyup="value=value.replace(/[^\d]/g, '').replace(/^0{1,}/g,'')" class="marl20 lh20" style="width: 75%;" maxlength="6" type="tel" placeholder="请输入圈子限制人数，上限为999999">
             </div>
             <div class="borderb  paddl20 paddr20" style="align-items: center;">
                 <p class="f14 fl mart10" style="color:#222222FF;">圈子介绍</p>
@@ -191,7 +191,7 @@
                     if (a && a.code == 1) {
                         var str1 = '<div class="left marr10 marb10" style="position:relative;" id="upm"><img class="upimg" id="imgupimg" src="' + Comm.OSS.getImgUrl(a.data.headImg) + '" width="50" height="50" data="' + a.data.headImg + '" /><img src="img/close.png" class="xiutu" /></div>'
                         var str2 = '<div class="left marr10 marb10" style="position:relative;" id="upm1"><img class="upimg1" id="imgupimg1"src="' + Comm.OSS.getImgUrl(a.data.face) + '" width="50" height="50" data="' + a.data.face + '" /><img src="img/close.png" class="xiutu" /></div>'
-                        $("#autograph").val(a.data.autograph);
+                        //$("#autograph").val(a.data.autograph);
                         $("#groupName").val(a.data.groupName);
                         //							$("#nameNum").html(a.data.groupName.length)
                         $("#inNum").html(a.data.introduction.length)
@@ -220,6 +220,13 @@
 
                         $("#conimg1").html(str2);
                         $("#conimg").html(str1);
+                        upHeader = new imgUploader("imgupimg1");
+                        upHeader.success = function() {
+                            cimgUrl = this.imgList.length > 0 ? this.imgList[0] : 'img/error.png';
+                            faceimg = cimgUrl;
+                            $("#imgupimg1").attr('src', Comm.OSS.getImgUrl(cimgUrl))
+                            $("#imgupimg1").attr('data', Comm.OSS.getImgUrl(cimgUrl))
+                        }
                         upHeader1 = new imgUploader('conimg', 11, "imgupimg");
                         upHeader1.success = function() {
                             cimgUrl = this.imgList.length > 0 ? this.imgList[0] : 'img/error.png';
@@ -227,13 +234,7 @@
                             $("#imgupimg").attr('src', Comm.OSS.getImgUrl(cimgUrl))
 
                         }
-                        upHeader = new imgUploader('conimg1', 12, "imgupimg1");
-                        upHeader.success = function() {
-                            cimgUrl = this.imgList.length > 0 ? this.imgList[0] : 'img/error.png';
-                            faceimg = cimgUrl;
-                            $("#imgupimg1").attr('src', Comm.OSS.getImgUrl(cimgUrl))
-
-                        }
+                        
                     } else {
                         Comm.message(a.msg);
                     }
@@ -251,14 +252,16 @@
             $("#upm").hide();
 
         }
-        upHeader = new imgUploader('conimg1', 12, "imgupimg1");
+        upHeader = new imgUploader("imgupimg1");
         upHeader.success = function() {
             var cimgUrl = this.imgList.length > 0 ? this.imgList[0] : 'img/error.png';
             console.log(cimgUrl)
-            $("#conimg1").html(template('imgTpl1', {
-                src: cimgUrl
-            }))
-            $("#upm1").hide();
+//          $("#conimg1").html(template('imgTpl1', {
+//              src: cimgUrl
+//          }))
+			$("#imgupimg1").attr('src', Comm.OSS.getImgUrl(cimgUrl))
+			$(".upimg1").attr('data',cimgUrl)
+           // $("#upm1").hide();
 
         }
 

@@ -154,9 +154,9 @@
 	<script type="text/html" id="listTpl">
 		{{each $data v k}}
 		<div class="schoolMsg" id="{{v.newsId}}" onclick="event.stopPropagation();Comm.go('articleDetail.html?type=qz&newsId='+{{v.newsId}})">
-			<div class="fl center" style="width: 7%;">
+			<div class="fl center" style="width: 8%;">
 				<img src="img/ly.png" width="60%" />
-				<p class="mart5" id="ping{{v.newsId}}">{{v.commentNumber}}</p>
+				<p class="mart5  color333 f12" id="ping{{v.newsId}}">{{conunm(v.commentNumber)}}</p>
 			</div>
 			<div style="width: 90%;" class="fl marl5">
 				<div class="{{if v.face&&v.face[0]!=''}}sc-l fl{{/if}}">

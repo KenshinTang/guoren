@@ -403,7 +403,7 @@
     
     .scl-dw {
         width: fit-content;
-        max-width: 80%;
+        max-width: 100%;
         border-radius: 20px;
         background-color: #F6F6F6;
         padding: 3px 10px 3px 25px;
@@ -608,7 +608,7 @@
                     <div id="con2"></div>
                 </div>
                 <div id="list3" class="paddb15 list hide">
-                    <div id="con3"></div>
+                    <div id="con3" class="paddt10"></div>
                 </div>
             </div>
         </div>
@@ -671,6 +671,21 @@
         </div>
         <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
     </div>
+    <div id="sinbox1" class="paddb10" wtd="sinboxTempwen">
+        <div class="bg_white marb10 f16" style="border-radius: 10px;">
+            <div class=" paddb15 paddt15" onclick="model.bainji()">编辑</div>
+        </div>
+        <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+    </div>
+    <div id="sinbox1" class="paddb10" wtd="sinboxTemphui">
+    		
+        <div class="bg_white marb10 f16" style="border-radius: 10px;">
+            <div class=" paddb15 paddt15 borderb" onclick="model.bainjihui()">编辑</div>
+            <div class="coloreb3 paddb15 paddt15" onclick="model.shanchu()">删除</div>
+        </div>
+        
+        <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+    </div>
     <div id="sinbox1" class="paddb10" wtd="sinboxTemp4">
         <div class="bg_white marb10 f16" style="border-radius: 10px;">
             <div class="paddb15 paddt15" onclick="Comm.showWindow('');Comm.showWindow('sinboxTemp2',true)">分享</div>
@@ -721,7 +736,8 @@
         {{else}}
         <p style="caret-color:#fff">
             {{if isBlack==0}} {{if($data.focus==0)}}
-            <span class="addFollow" style="padding: 0; border:inherit;" onclick="model.addFollow(this)"><img src="img/add.png" width="100%"/></span> {{/if}} {{if($data.focus==1)}}
+            <span class="addFollow" style="padding: 0; border:inherit;" onclick="model.addFollow(this)"><img src="img/add.png" width="100%"/></span> {{/if}}
+            {{if($data.focus==1)}}
             <span class="addFollow" style="padding:0;border:inherit;color:#999;" onclick="model.deleteFollow(this)"><img src="img/isAdd.png" width="100%"/></span> {{/if}}
             {{if($data.focus==2)}}
             <span class="addFollow" style="padding:0;border:inherit;color:#999;" onclick="model.deleteFollow(this)"><img style="border-radius: 4px;" src="img/my/xhgz.png" height="31" width="100%"/></span> {{/if}}
@@ -733,7 +749,7 @@
     </div>
     <div class="f22 color333 mart10" name='{{$data.customerName}}'>{{$data.customerName}}{{if sex==0}}<img class="marl10" src="img/woman.png" height="15" />{{else}}<img class="marl10" src="img/man.png" height="15" />{{/if}}{{if isVip==1}}<img class="marl10" src="img/index/v.png" height="15" />{{/if}}{{if authentication==2}}<img
             class="marl10" src="img/sm.png" height="15" />{{/if}}</div>
-    <p class="mart10 f12 wordW">
+    <p class="mart10 f12 wordW2">
         {{if userType==5}} {{officialCertification}}{{else if (userType == 0&&customerId==1||userType == 0&&customerId==2)}}果仁官方 {{else}}{{if identify==1}}{{$data.highSchool}} {{format($data.enrollmentYear)}}级{{else if identify==2||identify==3}}{{$data.schoolName}} {{$data.collegeName}} {{$data.majorName}} {{format($data.enrollmentYear)}}级{{/if}}
         {{/if}}
 
@@ -742,20 +758,20 @@
     {{if customerId!=1&&customerId!=2}}
     <div class="list">
         <div class="item" onclick="Comm.go('my_follow.html?customerId={{$data.customerId}}')">
-            <div class="f15 color333">{{$data.followNumber}}</div>
+            <div class="f15 color333">{{conunm($data.followNumber)}}</div>
             <div class="f12 mart5" style="color:#8D8D8D;">关注</div>
         </div>
         <div class="item" onclick="Comm.go('Fans.html?customerId={{$data.customerId}}')">
-            <div class="f15 color333">{{$data.fansNumber}}</div>
+            <div class="f15 color333">{{conunm($data.fansNumber)}}</div>
             <div class="f12 mart5" style="color:#8D8D8D;">粉丝</div>
         </div>
         <div class="item">
-            <div class="f15 color333">{{$data.praiseNumber}}</div>
+            <div class="f15 color333">{{conunm($data.praiseNumber)}}</div>
             <div class="f12 mart5" style="color:#8D8D8D;">获赞</div>
         </div>
         {{if($data.powerLimit==false)}}
         <div class="item" onclick="Comm.go('drafts.html?customerId={{$data.customerId}}')">
-            <div class="f15 color333">{{$data.draftNumber}}</div>
+            <div class="f15 color333">{{conunm($data.draftNumber)}}</div>
             <div class="f12 mart5" style="color:#8D8D8D;">草稿箱</div>
         </div>
         {{else}}
@@ -823,7 +839,7 @@
         </div>
         {{/if}}
         <div class="scl-but">
-            {{if v.isPraise==0}}
+            {{if v.isPraise==0||!v.isPraise}}
             <div class="paddt10 paddb10 paddl30 paddr30" onclick="model.zan({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zan.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12" id="zan{{v.newsId}}">{{conunm(v.praiseNumber)}}</span></div>
             {{else}}
             <div class="paddt10 paddb10 paddl30 paddr30" onclick="model.quxiao({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zand.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12" id="zan{{v.newsId}}">{{conunm(v.praiseNumber)}}</span></div>
@@ -882,7 +898,7 @@
         <div class="scl-dw mart10 wordW" onclick="Comm.go('talkDetail.html?topicId={{v.tId}}');event.stopPropagation()">{{v.tTitle}}</div>
         {{/if}}
         <div class="scl-but">
-            {{if v.isPraise==0}}
+            {{if v.isPraise==0||!v.isPraise}}
             <div class="paddt10 paddb10 paddl30 paddr30" onclick="model.zan({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zan.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12" id="zan{{v.newsId}}">{{conunm(v.praiseNumber)}}</span></div>
             {{else}}
             <div class="paddt10 paddb10 paddl30 paddr30" onclick="model.quxiao({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zand.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12" id="zan{{v.newsId}}">{{conunm(v.praiseNumber)}}</span></div>
@@ -936,7 +952,7 @@
         <div class="scl-dw mart10 wordW" onclick="Comm.go('talkDetail.html?topicId={{v.tId}}');event.stopPropagation()">{{v.tTitle}}</div>
         {{/if}}
         <div class="scl-but">
-            {{if v.isPraise==0}}
+           {{if v.isPraise==0||!v.isPraise}}
             <div class="paddt10 paddb10 paddl30 paddr30" onclick="model.zan({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zan.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12" id="zan{{v.newsId}}">{{conunm(v.praiseNumber)}}</span></div>
             {{else}}
             <div class="paddt10 paddb10 paddl30 paddr30" onclick="model.quxiao({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zand.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12" id="zan{{v.newsId}}">{{conunm(v.praiseNumber)}}</span></div>
@@ -986,7 +1002,7 @@
 				</video>
         </div>
         <div class="scl-but">
-            {{if v.isPraise==0}}
+           {{if v.isPraise==0||!v.isPraise}}
             <div class="paddt10 paddb10 paddl30 paddr30" onclick="model.zan({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zan.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12" id="zan{{v.newsId}}">{{conunm(v.praiseNumber)}}</span></div>
             {{else}}
             <div class="paddt10 paddb10 paddl30 paddr30" onclick="model.quxiao({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zand.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12" id="zan{{v.newsId}}">{{conunm(v.praiseNumber)}}</span></div>
@@ -1054,7 +1070,7 @@
         </div>
         {{/if}}
         <div class="scl-but">
-            {{if v.isPraise==0}}
+           {{if v.isPraise==0||!v.isPraise}}
             <div class="paddt10 paddb10 paddl30 paddr30" onclick="model.zan({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zan.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12" id="zan{{v.newsId}}">{{conunm(v.praiseNumber)}}</span></div>
             {{else}}
             <div class="paddt10 paddb10 paddl30 paddr30" onclick="model.quxiao({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zand.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12" id="zan{{v.newsId}}">{{conunm(v.praiseNumber)}}</span></div>
@@ -1117,7 +1133,7 @@
         </div>
         {{/if}}
         <div class="scl-but">
-            {{if v.isPraise==0}}
+           {{if v.isPraise==0||!v.isPraise}}
             <div class="paddt10 paddb10 paddl30 paddr30" onclick="model.zan({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zan.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12" id="zan{{v.newsId}}">{{conunm(v.praiseNumber)}}</span></div>
             {{else}}
             <div class="paddt10 paddb10 paddl30 paddr30" onclick="model.quxiao({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zand.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12" id="zan{{v.newsId}}">{{conunm(v.praiseNumber)}}</span></div>
@@ -1133,7 +1149,7 @@
     {{/if}} {{else}}
     <div class="mart10 borderb paddb10 paddl15 paddr15" id="{{if v.isAnswer==1}}{{v.commentId}}{{else}}{{v.newsId}}{{/if}}" onclick="{{if v.isAnswer==1}}Comm.go('anwser.html?newsId={{v.newsId}}&commentId={{v.commentId}}'){{else}}Comm.go('qzAskDetail.html?newsId={{v.newsId}}'){{/if}}">
         <div class="color333 f15 wordW fl" style="width:86%;font-family: Arial;">{{v.title}}</div>
-        <div style="width:12%" class="fl tright" onclick=" model.qh({{if v.isAnswer==1}}{{v.commentId}}{{else}}{{v.newsId}}{{/if}},{{if v.isAnswer==1}}'hui'{{else}}2{{/if}},{{v.itemType}},{{v.customerId}});event.stopPropagation()"><img src="img/index/more.png" width="18" /></div>
+        <div style="width:12%" class="fl tright" onclick=" model.qh({{if v.isAnswer==1}}{{v.commentId}}{{else}}{{v.newsId}}{{/if}},{{if v.isAnswer==1}}'hui'{{else}}'wen'{{/if}},{{v.itemType}},{{v.customerId}});event.stopPropagation()"><img src="img/index/more.png" width="18" /></div>
         <div class="clearfix"></div>
         <div>
             <div class="mart5 marb5">
@@ -1195,7 +1211,7 @@
         <div class="scl-dw mart10 wordW" onclick="Comm.go('talkDetail.html?topicId={{v.tId}}');event.stopPropagation()">{{v.tTitle}}</div>
         {{/if}}
         <div class="scl-but mart10 marb10">
-            {{if v.isPraise==0}}
+            {{if v.isPraise==0||!v.isPraise}}
             <div class="paddl30 paddr30" onclick="model.zan({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zan.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12">{{conunm(v.praiseNumber)}}</span></div>
             {{else}}
             <div class="paddl30 paddr30" onclick="model.quxiao({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zand.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12">{{conunm(v.praiseNumber)}}</span></div>
@@ -1247,7 +1263,7 @@
         <div class="scl-dw mart10 wordW" onclick="Comm.go('talkDetail.html?topicId={{v.tId}}');event.stopPropagation()">{{v.tTitle}}</div>
         {{/if}}
         <div class="scl-but mart10 marb10">
-            {{if v.isPraise==0}}
+            {{if v.isPraise==0||!v.isPraise}}
             <div class="paddl30 paddr30" onclick="model.zan({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zan.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12">{{conunm(v.praiseNumber)}}</span></div>
             {{else}}
             <div class="paddl30 paddr30" onclick="model.quxiao({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zand.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12">{{conunm(v.praiseNumber)}}</span></div>
@@ -1291,7 +1307,7 @@
         <div class="scl-dw mart10 wordW" onclick="Comm.go('talkDetail.html?topicId={{v.tId}}');event.stopPropagation()">{{v.tTitle}}</div>
         {{/if}}
         <div class="scl-but mart10 marb10">
-            {{if v.isPraise==0}}
+            {{if v.isPraise==0||!v.isPraise}}
             <div class="paddl30 paddr30" onclick="model.zan({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zan.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12">{{conunm(v.praiseNumber)}}</span></div>
             {{else}}
             <div class="paddl30 paddr30" onclick="model.quxiao({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zand.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12">{{conunm(v.praiseNumber)}}</span></div>
@@ -1339,7 +1355,7 @@
     {{each $data v k}}
     <div class="mart10 borderb paddb10 paddl15 paddr15" id="{{if v.isAnswer==1}}{{v.commentId}}{{else}}{{v.newsId}}{{/if}}" onclick="{{if v.isAnswer==1}}Comm.go('anwser.html?newsId={{v.newsId}}&commentId={{v.commentId}}'){{else}}Comm.go('qzAskDetail.html?newsId={{v.newsId}}'){{/if}}">
         <div class="color333 f15 wordW fl" style="width:86%;font-family: Arial;">{{v.title}}</div>
-        <div style="width:12%" class="fl tright" onclick=" model.qh({{if v.isAnswer==1}}{{v.commentId}}{{else}}{{v.newsId}}{{/if}},{{if v.isAnswer==1}}'hui'{{else}}2{{/if}},{{v.itemType}},{{v.customerId}});event.stopPropagation()"><img src="img/index/more.png" width="18" /></div>
+        <div style="width:12%" class="fl tright" onclick=" model.qh({{if v.isAnswer==1}}{{v.commentId}}{{else}}{{v.newsId}}{{/if}},{{if v.isAnswer==1}}'hui'{{else}}'wen'{{/if}},{{v.itemType}},{{v.customerId}});event.stopPropagation()"><img src="img/index/more.png" width="18" /></div>
         <div class="clearfix"></div>
         <div>
             <div class="mart5 marb5">
@@ -1465,8 +1481,17 @@
     }
 
     function pageresume() {
-
-        model.getUserInfo(function() {}, 1)
+		if(Comm.db('isbian')==1){
+		model.getUserInfo(function() {
+        	model.init(0);
+        	Comm.db('isbian','');
+        }, 1)
+		}else{
+		model.getUserInfo(function() {
+        	
+        }, 1)	
+		}
+        
         getmse();
 
     }
@@ -1774,11 +1799,16 @@
                     clearEmptyId: model.mere.MeRefScroll.optUp.clearEmptyId,
                     clearId: model.mere.MeRefScroll.optUp.clearId,
                 };
-
+				console.log($('header .navt').attr('style'))
                 $("section #nav div").removeClass('order-t-c-active');
                 $("header #nav div").removeClass('order-t-c-active');
                 $($("section #nav div")[i]).addClass('order-t-c-active');
                 $($("header #nav div")[i + 1]).addClass('order-t-c-active');
+                if($('header .navt').attr('style')=='padding-top: 30px; display: block;'){
+                	var stHeight = $('#ss').height() + $("#history").height() + $("#mfrend").height() + $('.navt').height();
+                	
+                	$('section').scrollTop(stHeight+25);
+                }
                 if (model.mere.refreshOption['isdata' + i]) {
                     $('.list').addClass('hide');
                     $("#list" + i).removeClass('hide');
@@ -2051,6 +2081,8 @@
                         AJAX.GET('/admin/comment/noenable?commentId=' + mid, function(a) {
                             if (a && a.code == 1) {
                                 Comm.message('删除成功');
+                                $('#' + mid).remove();
+                                $('#' + mid).remove();
                                 $('#m' + mid).remove();
                                 $('#m' + mid).remove();
                                 getmse();
@@ -2062,6 +2094,8 @@
                         AJAX.GET('/api/news/del?newsId=' + mid, function(a) {
                             if (a && a.code == 1) {
                                 Comm.message('删除成功');
+                                $('#' + mid).remove();
+                                $('#' + mid).remove();
                                	$('#m' + mid).remove();
                                 	$('#m' + mid).remove();
                                 getmse();
@@ -2073,6 +2107,14 @@
 
                 }
             })
+        },
+        bainji:function(){
+        	Comm.showWindow('');
+        	Comm.go('send1.html?id='+mid);
+        },
+        bainjihui:function(){
+        	Comm.showWindow('');
+        	Comm.go('anwserqz.html?plId='+mid);
         },
         jubao: function() {
             Comm.showWindow('');
@@ -2086,7 +2128,16 @@
             utype = user;
             midd = uid;
             if (uid == Comm.db('userinfo').customerId) {
-                Comm.showWindow('sinboxTemp3', true);
+            		if(type=='wen'){
+            			Comm.showWindow('sinboxTempwen', true);
+            			event.stopPropagation();
+            		}else if(type=='hui'){
+            			Comm.showWindow('sinboxTemphui', true);
+            			event.stopPropagation();
+            		} else{
+            			Comm.showWindow('sinboxTemp3', true);
+            		}
+                
             } else {
                 Comm.showWindow('sinboxTemp1', true);
             }

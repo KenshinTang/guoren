@@ -228,7 +228,7 @@
 				var pw1=$('#password1').val();
 				var pw2=$('#password2').val();
 				if(pw1.length<6||pw1.length>18){
-					Comm.message('请输入6-18位的密码');
+					Comm.message('请输入6-16位的密码');
 					return false;
 				}
 				if(pw1!=pw2){
@@ -240,7 +240,7 @@
 				AJAX.POST('/api/customer/savePassword',o,function(a){
 					if(a&&a.code==1){
 						Comm.message('设置成功');
-						Comm.go('improveInfo.html?_type=0')
+						Comm.go('improveInfo.html')
 						Comm.db('phone','');
 					}else{
 						Comm.message(a.msg);

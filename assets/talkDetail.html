@@ -340,13 +340,13 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="scl-but">
-					{{if v.isPraise==0}}
-					<div class="paddt10 paddb10 paddl30 paddr30" onclick="model.zan({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zan.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12">{{v.praiseNumber}}</span></div>
+					{{if !v.isPraise||v.isPraise==0}}
+					<div class="paddt10 paddb10 paddl20 paddr20" onclick="model.zan({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zan.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12 numspan">{{v.praiseNumber}}</span></div>
 					{{else}}
-					<div class="paddt10 paddb10 paddl30 paddr30" onclick="model.quxiao({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zand.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12">{{v.praiseNumber}}</span></div>
+					<div class="paddt10 paddb10 paddl20 paddr20" onclick="model.quxiao({{v.newsId}},this);event.stopPropagation()"><img src="img/index/zand.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12 numspan">{{v.praiseNumber}}</span></div>
 					{{/if}}
-					<div class="paddt10 paddb10 paddl30 paddr30" onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}&cont=1');event.stopPropagation()"><img src="img/index/pl.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12">{{v.commentNumber}}</span></div>
-					<div class="paddt10 paddb10 paddl30 paddr30" onclick="Comm.go('zhuanfa.html?newsId={{v.newsId}}');event.stopPropagation()"><img src="img/index/zf.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12">{{v.forwardNumber}}</span></div>
+					<div class="paddt10 paddb10 paddl20 paddr20" onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}&cont=1');event.stopPropagation()"><img src="img/index/pl.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12 numspan">{{v.commentNumber}}</span></div>
+					<div class="paddt10 paddb10 paddl20 paddr20" onclick="Comm.go('zhuanfa.html?newsId={{v.newsId}}');event.stopPropagation()"><img src="img/index/zf.png" width="20" height="20" /><span style="margin-left: 5px;" class="c9e f12 numspan">{{v.forwardNumber}}</span></div>
 				</div>
 			</div>
 			{{/each}}

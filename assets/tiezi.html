@@ -258,7 +258,7 @@
 		<div class="schoolMsg" id="{{v.newsId}}" onclick="event.stopPropagation();Comm.go('articleDetail.html?type=qz&newsId='+{{v.newsId}})">
 			<div class="fl center" style="width: 10%;">
 				<img src="img/ly.png" width="40%" />
-				<p class="mart5">{{v.commentNumber}}</p>
+				<p class="mart5 color333 f12">{{conunm(v.commentNumber)}}</p>
 			</div>
 			<div style="width: 90%;" class="fl">
 				
@@ -583,6 +583,10 @@
 						} else {
 							name = template('msgTpl', pageData);
 							listDom.innerHTML = name;
+						}
+						if(pageData==''){
+							listDom.style.background='#F4F4F4'
+							listDom.innerHTML = '<div class="mescroll-empty"><img class="empty-icon" src="img/noData.png"><p class="empty-tip">这里空空如也，去看看别的</p></div>';
 						}
 			} 
 

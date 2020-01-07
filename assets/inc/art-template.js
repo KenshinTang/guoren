@@ -918,9 +918,9 @@ if (template) {
                 timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟前';
             } else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
                 timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
-            } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 7) {
-
-                timeSpanStr = month + '-' + day;
+//          } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 7&& year == now.getFullYear()) {
+//
+//              timeSpanStr = month + '-' + day;
             } else if (milliseconds > 1000 * 60 * 60 * 24 * 1 && year == now.getFullYear()) {
                 timeSpanStr = month + '-' + day;
 

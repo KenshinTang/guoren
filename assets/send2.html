@@ -671,7 +671,7 @@
                         //                      Comm.db('tzcb', '1');
                         //                      Comm.close();
 
-                        Comm.gotop('ifrm.html?top=0');
+                        Comm.gotop('ifrm.html?top=5');
                     }
                 } else {
                     Comm.message(a.msg);
@@ -695,7 +695,7 @@
                     if (a.data.keyword) {
                         keyWord = a.data.keyword;
                     }
-
+					document.getElementById('imgupimg').style.display='none';
                 } else {
                     Comm.message(a.msg)
                 }

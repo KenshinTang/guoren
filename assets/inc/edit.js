@@ -55,6 +55,7 @@ var wedit = new function() {
 			curImg = null;
 			showMark();
 			//content.focus();
+			document.getElementById('imgupimg').style.display='none';
 		}
 	}
 
@@ -183,7 +184,8 @@ var wedit = new function() {
 		if(title) return;
 		title = ca('div', {
 			'class': 'title',
-			'id':'title'
+			'id':'title',
+			'placeholder':'请输入标题'
 		});
 		title.maxlength = 50;
 		content = ca('div', {
@@ -345,8 +347,9 @@ var wedit = new function() {
 				}
 				}
 			}
+			var titles = $('<span/>').html(title.innerText).text();
 			var data = {
-				title: title.innerText,
+				title: titles,
 				content: content.innerHTML,
 				img: im
 			};

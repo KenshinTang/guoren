@@ -36,25 +36,25 @@
 			}
 			
 			.dsimg {
-				width: 120px !important;
-				height: 120px !important;
+				width: 150px !important;
+				height: 150px !important;
 				border-radius: inherit !important;
 				position: absolute !important;
-				left: -10px !important;
-				top: -20px;
+				left: -20px !important;
+				top: -25px;
 			}
 			
 			.exhibition img {
-				width: 80px;
-				height: 80px;
+				width: 100px;
+				height: 100px;
 				border-radius: 50%;
 				margin: 10px;
-				left: 8%;
+				left: 4%;
 				position: absolute;
 			}
 			
 			.available {
-				padding: 20px 10px;
+				padding: 20px 0px;
 				background: #fff;
 			}
 			
@@ -64,9 +64,10 @@
 				align-items: center;
 				flex-direction: column;
 				position: relative;
+				margin-bottom: 5px;
 				/*margin-right: 10px;*/
-				padding-top: 10px;
-				padding-bottom: 15px;
+				/*padding-top: 10px;*/
+				padding-bottom: 5px;
 				width: 25%;
 				border-bottom: 5px solid #f4f4f4;
 			}
@@ -109,18 +110,30 @@
 			}
 			
 			#imgBox .userImg {
-				position: absolute;
+				/*position: absolute;
 				border-radius: 50%;
 				object-fit: cover;
 				width: 68px;
 				height: 68px;
-				margin: 16px;
+				margin: 16px;*/
+				position: absolute;
+				border-radius: 50%;
+				object-fit: cover;
+				width: 58px;
+				height: 58px;
+				margin: 21px;
 			}
 			
 			#imgBox .bk {
-				position: absolute;
+				/*position: absolute;
 				width: 100px;
 				height: 100px;
+				z-index: 99;*/
+				position: absolute;
+				width: 86px;
+				height: 86px;
+				left: 7px;
+				top: 7px;
 				z-index: 99;
 			}
 			
@@ -153,8 +166,10 @@
 			
 			.ischeck {
 				background: url(img/my/select.png) no-repeat;
-				background-size: 97% 88%;
-				background-position: 2px 12px;
+				/*background-size: 97% 88%;
+				background-position: 2px 12px;*/
+				background-size: 95% 95%;
+				background-position: 2px 0px;
 			}
 		</style>
 	</head>
@@ -173,7 +188,7 @@
 
 		</section>
 		<footer class="paddt10 paddb10">
-			<button onclick="model.submission()">保存</button>
+			<button style="font-size: 17px;border-radius: 6px;" onclick="model.submission()">保存</button>
 		</footer>
 	</body>
 
@@ -187,35 +202,40 @@
 				</div>
 				<img src="{{OSS($data.uface)}}" alt="" style="">
 			</div>
-			<!--<div class="qximg"  onclick="model.delImg()">取消相框</div>-->
+			<div style="position: absolute;color: #dadada;top: 160px;font-size: 12px;">点击头像可更换照片</div>
 		</div>
 
 		<div class="available">
-			<div class="flex-between paddb10" style="border-bottom: 1px solid #f4f4f4;">
+			<div class="flex-between paddb10 paddl10 paddr10" style="border-bottom: 1px solid #f4f4f4;">
 				<div style="width: 20%;"></div>
 				<div class="center order-t-c-active order-t-c" style="width: 30%;">推荐</div>
 				<div class="center" style="width: 30%;" onclick="Comm.message('暂未开放，敬请期待~')">分类</div>
 				<div style="width: 20%;"></div>
 			</div>
 
-			<div class="flex-between" style="flex-wrap: wrap;">
+			<div class="flex-between mart5" style="flex-wrap: wrap;">
 				<div class="item" onclick="handleSetImg(0)">
-					<div style="width:100px;height:100px;" id="imgBox">
+					<div style="width:100px;height:90px;" id="imgBox">
 						<img class="userImg" src="{{OSS($data.uface)}}" alt="" style="">
 						<img class="bk" src="img/my/def.png" style="width: 20px;height: 20px;position: relative;top: 65px;left: 65px;" alt="">
 					</div>
-					<p style="margin-top: 10px;">默认</p>
+					<p style="padding-bottom: 5px;">默认</p>
 				</div>
 				{{each $data.t[0].ct v k}}
 				<div class="item {{if($data.nowRahmenId == v.rahmenId)}} ischeck{{/if}}" onclick="handleSetImg({{v.rahmenId}},this,{{userLevel}},{{v.rahmenLevel}},'{{v.colorUrl}}')">
-					<div style="width:100px;height:100px;" id="imgBox">
+					<div style="width:100px;height:90px;" id="imgBox">
 						{{if($data.userLevel>=v.rahmenLevel)}}
 						<img class="userImg" src="{{OSS($data.uface)}}" alt="" style="">
 						<img class="bk" src="{{OSS(v.colorUrl)}}" alt=""> {{else}}
 						<img class="userImg" src="{{OSS($data.uface)}}" alt="" style="">
-						<img class="bk" src="{{OSS(v.grayUrl)}}" alt=""> {{/if}} 
+						<img class="bk" src="{{OSS(v.grayUrl)}}" alt=""> {{/if}}
 					</div>
-					<p style="margin-top: 10px;">{{v.rahmenName}}</p>
+					<p style="padding-bottom: 5px;font-size: 13px;">{{v.rahmenName}}</p>
+				</div>
+
+				{{/each}} {{each dd j l}}
+				<div class="item" style="height: 124px;">
+
 				</div>
 				{{/each}}
 			</div>
@@ -313,7 +333,15 @@
 						data = d.data;
 						model.uface = d.data.uface;
 						model.framesId = d.data.nowRahmenId;
-						console.log(d.data)
+						var dd = [];
+						var ff = 4 - d.data.t[0].ct.length % 4 - 1;
+						console.log(ff)
+						for(var i = 0; i < ff; i++) {
+							dd.push({
+								'w': 1
+							})
+						}
+						data.dd = dd;
 						$('#main').html(template('demo', d.data));
 						if(model.framesId && model.framesId > 0) {
 							$('.qximg').show();

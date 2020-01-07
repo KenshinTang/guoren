@@ -21,7 +21,7 @@
 
         input[type="checkbox"]+label {
             display: inline-block;
-            width: 40px;
+            width: 38px;
             height: 20px;
             position: relative;
             -webkit-transition: 0.3s;
@@ -33,10 +33,10 @@
             content: '';
             display: block;
             position: absolute;
-            left: 0px;
-            top: 0px;
-            width: 20px;
-            height: 20px;
+            left: 1px;
+            top: 1px;
+            width: 18px;
+            height: 18px;
             -webkit-transition: 0.3s;
             transition: 0.3s;
             cursor: pointer;
@@ -51,7 +51,7 @@
         #simple_6:checked+label:after,
         #simple_4:checked+label:after,
         #simple_5:checked+label:after {
-            left: calc(100% - 20px);
+            left: calc(100% - 19px);
         }
 
         #simple_6+label,
@@ -59,7 +59,7 @@
         #simple_5+label {
             background: #ddd;
             border-radius: 20px;
-            box-shadow: 1px 1px 3px #aaa;
+            /*box-shadow: 1px 1px 3px #aaa;*/
         }
 
         #simple_6+label:after,
@@ -84,7 +84,7 @@
         }
 
         .borb {
-            border-bottom: 1px solid #dedede;
+            border-top: 1px solid #dedede;
         }
 
         .tcbtn {
@@ -117,31 +117,31 @@
         </div>
     </header>
     <section>
-        <div class="flex-between pad15 borb">
+        <div class="flex-between borb" style="padding: 13px 15px;">
             <div>
-                <p class="f12 mart5" style="color:#9E9E9E;">有人赞了我的日志/问问</p>
+                <p class="f14" style="color:#535353;">有人赞了我的日志/问问</p>
             </div>
             <div>
-                <input type="checkbox" class="bg_white" id="simple_5" checked="checked"  onfocus="input(5)">
-                <label for="simple_5" class="red"></label>
-            </div>
-        </div>
-        <div class="flex-between pad15 borb">
-            <div>
-                <p class="f12 mart5" style="color:#9E9E9E;">有人回复我的日志/问问</p>
-            </div>
-            <div>
-                <input type="checkbox" class="bg_white" id="simple_4" checked="checked"  onfocus="input(4)">
-                <label for="simple_4" class="red"></label>
+                <input type="checkbox" class="bg_white" id="simple_5" checked="checked">  <!--onfocus="input(5)"-->
+                <label for="simple_5" class="red" onclick="input(5)"></label>
             </div>
         </div>
-        <div class="flex-between pad15 ">
+        <div class="flex-between borb" style="padding: 13px 15px;">
             <div>
-                <p class="f12 mart5" style="color:#9E9E9E;">有人转发了我的发布</p>
+                <p class="f14" style="color:#535353;">有人回复我的日志/问问</p>
             </div>
             <div>
-                <input type="checkbox" class="bg_white" id="simple_6" checked="checked" onfocus="input(6)">
-                <label for="simple_6" class="red"></label>
+                <input type="checkbox" class="bg_white" id="simple_4" checked="checked" >
+                <label for="simple_4" class="red" onclick="input(4)"></label>
+            </div>
+        </div>
+        <div class="flex-between borb" style="padding: 13px 15px;">
+            <div>
+                <p class="f14" style="color:#535353;">有人转发了我的发布</p>
+            </div>
+            <div>
+                <input type="checkbox" class="bg_white" id="simple_6" checked="checked" >
+                <label for="simple_6" class="red" onclick="input(6)"></label>
             </div>
         </div>
     </section>

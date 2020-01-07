@@ -72,7 +72,7 @@
             </div>
             <div class="pw" id="pw">
             	<label for="pw">密码</label>
-                <input value=""  class="f16" type="password" data-reg='p' name="password" id="password"placeholder="请输入密码" maxlength="18" />
+                <input value=""  class="f16" type="password" data-reg='p' name="password" id="password"placeholder="请输入密码" maxlength="16" />
                 
             </div>
         </form>
@@ -117,6 +117,10 @@
       	Comm.message('请输入密码');
       	return false;
       }
+      if(_password.length<6||_password.length>16){
+      	Comm.message('密码位数须大于6位小于16位');
+      	return false;
+      }
        
             code = $("#code").val();
         Comm.loading("正在绑定资料...")
@@ -137,7 +141,7 @@
 
                 Comm.db('userinfo', a.data);
                 Comm.db("wxData", null)
-                Comm.go('improveInfo.html?_type=0');
+                Comm.go('improveInfo.html');
             	}else{
             		Comm.db("tempToken", a.data.token);
                 AJAX.setTag(a.data.token);
@@ -149,16 +153,16 @@
             	}
                 
             } else {
-                if (a.code == 2) {
-                    Comm.db("tempToken", a.data.token);
-                    AJAX.setTag(a.data.token);
-                    a.data.phone = opt.phone;
-
-                    Comm.db('userinfo', a.data);
-                    Comm.db("wxData", null)
-                    Comm.go("improveInfo.html?bindType=1&_type=0")
-                    return;
-                }
+//              if (a.code == 2) {
+//                  Comm.db("tempToken", a.data.token);
+//                  AJAX.setTag(a.data.token);
+//                  a.data.phone = opt.phone;
+//
+//                  Comm.db('userinfo', a.data);
+//                  Comm.db("wxData", null)
+//                  Comm.go("improveInfo.html?bindType=1&_type=0")
+//                  return;
+//              }
                 Comm.message(a.msg)
             }
         })

@@ -415,6 +415,9 @@
                     if (a.code == 1) {
                         Comm.loading(false);
                         Comm.message('绑定成功');
+                        //model.init();
+                        $("#qqwx").html('<p class="f16" style="color:#222222;width:75%">QQ/微信</p><p class="f16" style="color:#666;">已绑定</p><i class="icon_left"></i>')
+                        $('#qqwx').attr('onclick', 'conf()')
                         Comm.db("tempToken", a.data.token);
                         AJAX.setTag(a.data.token);
                         Comm.registerPush({
@@ -424,16 +427,16 @@
                         })
                         Comm.db('firsr', 1)
                         Comm.db('userinfo', a.data);
-                        Comm.db("wxData", null)
-                        model.init();
+                        Comm.db("wxData", null);
                     } else {
                         Comm.message(a.msg);
                     }
-
-                });
-                model.init();
+					model.init();
+                }); 
             }
+            
         });
+        
     }
 </script>
 

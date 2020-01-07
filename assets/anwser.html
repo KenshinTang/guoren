@@ -323,13 +323,13 @@
 			<input class="txt-div wordWrap" readonly="readonly" id="txt-div" onfocus="model.showReviews()" placeholder="写回复..." /> {{if($data[0].isPraise==1)}}
 			<div onclick="model.removePraise({{$data[0].commentId}},this)" style="width:60px">
 				<img src="img/index/zand.png" id="zan" height="20" />
-				<span style="margin-left: 1px;display: inline-block;width: 25px;" class="c9e f12 zan tleft wordW">{{conunm($data[0].praiseNumber)}}</span>
+				<span style="margin-left: 1px;display: inline-block;width: 25px;" class="c9e f12 zan tleft">{{conunm($data[0].praiseNumber)}}</span>
 				<p class="c9e f12" style="text-align: left;padding-left: 12px;">点赞</p>
 			</div>
 			{{else}}
 			<div onclick="model.addPraise({{$data[0].commentId}},this)" style="width:60px">
 				<img src="img/index/zan.png" id="zan" height="20" />
-				<span style="margin-left: 1px;display: inline-block;width: 25px;" class="c9e f12 zan tleft wordW">{{conunm($data[0].praiseNumber)}}</span>
+				<span style="margin-left: 1px;display: inline-block;width: 25px;" class="c9e f12 zan tleft">{{conunm($data[0].praiseNumber)}}</span>
 				<p class="c9e f12" style="text-align: left;padding-left: 12px;">点赞</p>
 			</div>
 			{{/if}} {{if $data[0].isTrample == 1}}
@@ -365,7 +365,7 @@
 		{{each $data[0].oneList as item index}}
 		<div class="item" id="{{item.commentId}}">
 			<img onclick="{{if item.userType==1}}Comm.go('personal.html?customerId={{item.customerId}}'){{else if item.userType==2}}Comm.go('University.html?schoolId={{item.customerId}}' ){{else if item.userType==3}}Comm.go('major.html?majorId={{item.customerId}}'){{/if}}" src="{{OSS(item.face,'s')}}" class="fl" width="36" height="36" style="border-radius:50%;">
-			<div class="fr r f14 marl15" style="width: 90%;">
+			<div class="fr r f14 marl15" style="width: 85%;">
 				<div class="">
 					<!--onclick="{{if item.userType==1}}Comm.go('personal.html?customerId={{item.customerId}}'){{else if item.userType==2}}Comm.go('University.html?schoolId={{item.customerId}}' ){{else if item.userType==3}}Comm.go('major.html?majorId={{item.customerId}}'){{/if}}"-->
 					<span class="fl bold wordW">
@@ -447,7 +447,7 @@
 					<img class="img fl" src="{{OSS($data[0].face,'s')}}" onclick="Comm.go('personal.html?customerId={{$data[0].customerId}}')" />
 					<div class="fl" style="width: 84%;">
 						<p class="bold">
-							<span>{{$data[0].customerName}}</span> {{if $data[0].isBestComment==1}}<span style="display: inline-block;"><img src="img/index/zuiyouhuida.png" width="50" height="16" style="margin-left: 5px;margin-top: -2px;" /></span>{{/if}}
+							<span>{{$data[0].customerName}}</span> {{if $data[0].isBestComment==1}}<span style="display: inline-block;"><img src="img/index/zuiyouhuida.png" width="50" height="16" style="margin-left: 5px;margin-top: -2px;object-fit: contain;" /></span>{{/if}}
 							<span onclick="model.More({{$data[0].commentId}},'{{$data[0].customerName}}',{{$data[0].customerId}},{{$data[0].publishCustomerId}},'',1)" class="fr paddl5"><img src="img/index/more.png" width="14" height="3"></span>
 						</p>
 						<p class="f12" style="color:#8D8D8D;">{{sldate($data[0].addTime)}}</p>
@@ -461,6 +461,13 @@
 	</script>
 	<div id="sinbox1" class="paddb10" wtd="sinboxTemp">
 		<div class="bg_white marb10 f16" style="border-radius: 10px;">
+			<div class="coloreb3 paddb15 paddt15" onclick="Comm.showWindow('');model.shanping()">删除</div>
+		</div>
+		<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+	</div>
+	<div id="sinbox1" class="paddb10" wtd="sinboxTemphui">
+		<div class="bg_white marb10 f16" style="border-radius: 10px;">
+			<div class="paddb15 paddt15 borderb" onclick="Comm.showWindow('');model.bianji()">编辑</div>
 			<div class="coloreb3 paddb15 paddt15" onclick="Comm.showWindow('');model.shanping()">删除</div>
 		</div>
 		<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
@@ -546,6 +553,10 @@
 		}
 
 		function pageresume() {
+			if(Comm.db('isbian')==1){
+				myrefresh();
+				Comm.db('isbian','');
+			}
 			if(Comm.db('zhuanfa') == 1) {
 				zhuanfa.pageresume(Comm.g('textarea'));
 				Comm.db('zhuanfa', '9');
@@ -667,7 +678,7 @@
 						$('#name').html('<span class="bold">' + d.data.itemName + '</span>' + '<br><span class="color999 f12">' + sldate(d.data.news.addTime) + '</span>')
 						//						<span class="cunbtn">提问者</span>
 
-						$('.lookAll').html('查看全部' + d.data.news.commentNumber + '条回答>>')
+						$('.lookAll').html('查看全部' + app.conunm(d.data.news.commentNumber) + '条回答>>')
 						if(Comm.db('userinfo') && Comm.db('userinfo').customerName) {
 							shearTitle = Comm.db('userinfo').customerName + '给您分享了一个回答';
 						}
@@ -735,14 +746,24 @@
 				//          }else{
 
 				if(sid == customerId) {
-					Comm.showWindow('sinboxTemp', true);
+					if(fist==1){
+					Comm.showWindow('sinboxTemphui', true);
 					$('footer').css('z-index', 999);
+					}else{
+					Comm.showWindow('sinboxTemp', true);
+					$('footer').css('z-index', 999);	
+					}
+					
 				} else {
 					Comm.showWindow('sinboxTemp1', true)
 					$('footer').css('z-index', 999);
 				}
 				//          }
 
+			},
+			bianji:function(){
+			Comm.showWindow('');
+        		Comm.go('anwserqz.html?plId='+mid);	
 			},
 			shanping: function() {
 				Comm.showWindow('');

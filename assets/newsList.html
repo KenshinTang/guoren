@@ -65,7 +65,7 @@
 			.demo1,
 			.demo2,
 			.demo3 {
-				padding: 10px 10px 10px 10px;
+				padding: 9px 15px 9px 15px;
 				display: inline-flex;
 				width: 100%;
 				background-color: #fff;
@@ -179,11 +179,19 @@
 			span {
 				vertical-align: bottom;
 			}
-			.dda,.dda div{
-				color:#464646;
+			
+			.dda,
+			.dda div {
+				color: #464646;
 			}
-			.color505 div, .color505 span{
-				color:#464646;
+			
+			.color505 div,
+			.color505 span {
+				color: #464646;
+			}
+			
+			img {
+				object-fit: contain;
 			}
 		</style>
 	</head>
@@ -317,16 +325,12 @@
 					<div class="pad10" style="border-radius:3px;background:#F6F6F6;">
 						{{if v.newsType==0&&v.newsContent==""}}
 						<div class="color505 wordW2">转发</div>
-						{{else}}
-						{{if v.newsContent}}
+						{{else}} {{if v.newsContent}}
 						<div class="color505 wordW2">{{v.newsContent}}</div>
-						{{else if v.newsFace}} {{imgTpl(v.newsFace,96)}}
-						{{else if v.commentContent}}
+						{{else if v.newsFace}} {{imgTpl(v.newsFace,96)}} {{else if v.commentContent}}
 						<div class="color505 wordW2">{{v.commentContent}}</div>
-						{{/if}}
-						{{/if}}
-						
-						
+						{{/if}} {{/if}}
+
 					</div>
 				</div>
 				{{else}} {{if v.commentContent}}
@@ -351,11 +355,9 @@
 					<div style="background-color: #F6F6F6;">
 						{{if v.newsTitle}}
 						<div style="border-radius:3px;background:#F6F6F6;" class="wordW paddl5 paddr5 paddt10 paddb5">{{if v.newsType==0}}转发： {{/if}}{{v.newsTitle}}</div>
-						{{/if}}
-						{{if v.newsType!=0}}
+						{{/if}} {{if v.newsType!=0}}
 						<div style="border-radius:3px;background:#F6F6F6;" class="wordW3 paddl5 paddr5 marb5 paddt5 color505">{{v.newsContent}}</div>
-						{{/if}}
-						{{if v.newsFace}}
+						{{/if}} {{if v.newsFace}}
 						<div style="padding-right: 2%;padding-left: 2%;background-color: #F6F6F6;">
 							{{imgTpl(v.newsFace,96,90)}}
 						</div>
@@ -388,12 +390,17 @@
 		<div class="demo3  borb" {{if isbianji==1}} style="margin-left: 30px;" {{/if}}>
 			{{if v.customerId!=0}}
 			<img src="img/my/no.png" class="sel marl10" id="{{v.messId}}" onclick="model.it(this)" /> {{/if}}
-			<div class=" ">
-				<div>
-					<p class="f14 color505"><i class="icon_xiaoxi"></i>{{v.messTitle}}</p>
+			<div class="flex-between" style="width: 100%;">
+				<span>
+				<img src="img/guoren.png" width="44" height="44" />	
+				</span>
+				<div class="paddl15" style="width: calc(100% - 44px);padding-top: 2px;">
+					<p class="f15 color505 wordW" style="width: 98%;">{{v.messTitle}}</p>
+					<p class="f12" style="color:#B0AFAF;">{{sldate(v.addTime)}}</p>
+					<p class="f14" style="color:#518EC2;margin:1px 0;font-size: 13px;" onclick="Comm.go('xtmsg.html?id={{v.messId}}')">查看详情<img src="img/xxm.png" width="6" height="9" style="margin-left: 7px;margin-top: -3px;" /></p>
+
 				</div>
-				<p class="f14" style="color:#518EC2;margin:5px 0;" onclick="Comm.go('xtmsg.html?id={{v.messId}}')">查看详情》</p>
-				<p class="f12" style="color:#B0AFAF;">{{sldate(v.addTime)}}</p>
+
 			</div>
 		</div>
 		{{/each}} {{/if}}
@@ -409,12 +416,13 @@
 	<script type="text/javascript" src="inc/tpl.js"></script>
 
 	<script>
-		var stype=Comm.query('type')||"";
+		var stype = Comm.query('type') || "";
+
 		function pageload() {
 			mescrollRefreshFn({
 				menuNumber: 6
 			});
-			if(stype==1){
+			if(stype == 1) {
 				$('.xt').click();
 			}
 		}
@@ -609,6 +617,10 @@
 			delete: function() {
 				Comm.confirm('确认删除？', function(d) {
 					if(d) {
+						if(chose == "") {
+							Comm.message('请选择删除的消息');
+							return false;
+						}
 						newsIds = chose.join(',');
 						var url = '';
 						if(issx == 1) {
@@ -685,7 +697,7 @@
 					if(pageData[i].newsFace) {
 						pageData[i].newsFace = pageData[i].newsFace.split(',');
 					}
-					if(dataIndex == 2||dataIndex == 1) {
+					if(dataIndex == 2 || dataIndex == 1) {
 						if(pageData[i].newsContent) {
 							pageData[i].newsContent = pageData[i].newsContent.replace(/<\/?.+?>/g, "").replace(/ /g, "");
 
@@ -707,13 +719,13 @@
 				}
 				if(pageData.dataIndex == 0) {
 					for(var i = 0; i < pageData.length; i++) {
-						pageData[i].content = '<span>'+ pageData[i].content.replace(/<div>|<\/div>/gi, "").replace(/<br>/gi, "")+'</span>';
-						
+						pageData[i].content = '<span>' + pageData[i].content.replace(/<div>|<\/div>/gi, "").replace(/<br>/gi, "") + '</span>';
+
 					}
-				}else if(pageData.dataIndex == 1){
+				} else if(pageData.dataIndex == 1) {
 					for(var i = 0; i < pageData.length; i++) {
-					if(pageData[i].commentContent){
-							pageData[i].commentContent=pageData[i].commentContent.replace(/<\/?.+?\/?>/g, "")
+						if(pageData[i].commentContent) {
+							pageData[i].commentContent = pageData[i].commentContent.replace(/<\/?.+?\/?>/g, "")
 						}
 					}
 				}
@@ -725,7 +737,7 @@
 				}
 				Comm.scorllDel();
 				msgNums();
-				$('.onePic').css('width','100%')
+				$('.onePic').css('width', '100%')
 			}
 
 		}

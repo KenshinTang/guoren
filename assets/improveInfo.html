@@ -493,7 +493,7 @@
     var model = {
         _type: Comm.query('_type') || -1,
         n: Comm.query('n') || 1,
-        i: 1,
+        i: 2,
         sel: function(a, i) {
             if (!$(a).hasClass('.active')) {
                 $(a).parent().find('button').removeClass('active');
@@ -592,17 +592,17 @@
 
             if (model.n == 1) {
                 if (model.i == 6) {
-                    Comm.go('improveInfo.html?n=' + 5);
+                    Comm.go('improveInfo.html?n=' + 5+'&_type='+model._type);
                 } else {
-                    Comm.go('improveInfo.html?n=' + 2);
+                    Comm.go('improveInfo.html?n=' + 2+'&_type='+model._type);
                 }
             } else if (model.n == 2) {
-                Comm.go('improveInfo.html?n=' + 3);
+                Comm.go('improveInfo.html?n=' + 3+'&_type='+model._type);
             } else if (model.n == 3) {
             	AJAX.GET('api/customer/checkCollege?collegeId='+model.veinfo.collegeId+'&collegeName='+model.veinfo.collegeName,function(a){
             		if(a&&a.code==1){
             			if(a.data==true){
-            				Comm.go('improveInfo.html?n=' + 4);
+            				Comm.go('improveInfo.html?n=' + 4+'&_type='+model._type);
             			}else{
             				Comm.message('请选择标准学院名称')
             			}
@@ -611,11 +611,15 @@
             			Comm.message('请选择标准学院名称')
             		}
               	})
-                
+                console.log(model.veinfo)
             } else if (model.n == 4) {
-                Comm.go('improveInfo.html?n=' + 5);
+            		Comm.db('veinfo', model.veinfo);
+            		console.log(model.veinfo)
+                Comm.go('improveInfo.html?n=' + 5+'&_type='+model._type);
             } else if (model.n == 5) {
-                Comm.go('improveInfo.html?n=' + 5);
+            	Comm.db('veinfo', model.veinfo);
+            		console.log(model.veinfo)
+                Comm.go('improveInfo.html?n=' + 5+'&_type='+model._type);
             }
         },
         sub: function() {
@@ -632,7 +636,28 @@
                 Comm.message('请选择性别');
                 return;
             }
-            var data = {
+           
+            console.log(model._type);
+            var url ='';
+            if(Comm.query('_type')&&Comm.query('_type')!='-1'){
+            	url ='/api/customer/updateByCenter';
+            	console.log(Comm.db('veinfo'))
+            	 var data = {
+                customerName: userName,
+                face: model.veinfo.face,
+                sex: model.veinfo.sex,
+                identity: model.veinfo.type,
+                enrollmentYear: model.veinfo.year,
+                majorName: model.veinfo.majorName,
+                collegeName: model.veinfo.collegeName,
+                collegeId: model.veinfo.collegeId,
+                universityId:model.veinfo.school.i,
+                universityCityId:model.veinfo.city.i
+            }
+            
+            }else{
+            	url ='/api/customer/update';
+            	 var data = {
                 customerName: userName,
                 face: model.veinfo.face,
                 sex: model.veinfo.sex,
@@ -650,13 +675,13 @@
                 data.universityId = model.veinfo.school.i;
                 data.universityCityId = model.veinfo.city.i;
             }
-            console.log(data);
-            AJAX.POST('/api/customer/update', data, function(d) {
+            }
+            AJAX.POST(url, data, function(d) {
                 if (d.code === 1) {
                     Comm.message('信息完善成功');
                     setTimeout(function() {
                         Comm.db('veinfo', null);
-                        if (model.veinfo._type == 0) {
+                        if (model.veinfo._type == '-1') {
                             Comm.gotop('recommend.html');
                         } else if (model.veinfo.type == 6) {
                             Comm.close(2)
@@ -675,11 +700,13 @@
                     type: model.i
                 }
             }
-            if (model._type == 1 || model._type == 0) {
+            if ((model._type == 1 || model._type == 0)&model.n!=5) {
                 AJAX.GET('/api/customer/detail', function(d) {
                     if (d && d.code == 1) {
                         model.i = d.data.identity;
-                        model.veinfo = {
+                        console.log(model.veinfo)
+                        if(model.n!=4){
+                        	model.veinfo = {
                             _type: model._type,
                             customerName: d.data.customerName,
                             face: d.data.face,
@@ -690,13 +717,30 @@
                             collegeName: d.data.collegeName,
                             collegeId: d.data.collegeId,
                         }
+                        }else{
+                        	var tsdd = model.veinfo
+                        	model.veinfo = {
+                            _type: model._type,
+                            customerName: d.data.customerName,
+                            face: d.data.face,
+                            sex: d.data.sex,
+                            type: d.data.identity,
+                            year: d.data.enrollmentYear ? d.data.enrollmentYear : '',
+                            majorName: tsdd.majorName,
+                            collegeName: tsdd.collegeName,
+                            collegeId: tsdd.collegeId,
+                            school: tsdd.school,
+                        }
+                        }
+                        
                         if (d.data.universityCityId != "0") {
                             model.veinfo.city = {
                                 i: d.data.universityCityId,
                                 n: Area.getArea(d.data.universityCityId)
                             }
                         }
-                        if (d.data.identity == 1) {
+                        if(model.n!=4){
+                        	if (d.data.identity == 1) {
                             model.veinfo.school = {
                                 i: d.data.highSchoolCityId,
                                 n: d.data.highSchool
@@ -707,6 +751,8 @@
                             }
                             model.initmconName(model.veinfo.school.i);
                         }
+                        }
+                        
                     }
                     Comm.db('veinfo', model.veinfo);
                     init();
@@ -721,6 +767,9 @@
                     model.initcity();
                 } else if (model.n == 3) {
                     model.initschool();
+                }else if(model.n==4){
+                		console.log(model.veinfo)
+                		 $('section #main').html(template('type' + model.n + 'Tpl', model.veinfo))
                 } else if (model.n == 5) {
                     $('section #main').html(template('type' + model.n + 'Tpl', model.veinfo));
                     model.upimg = new imgUploader("upimg", 10);

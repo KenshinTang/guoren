@@ -109,13 +109,13 @@
 			}
 			.add-guan {
             color: #098E75;
-            width: 65px;
-            height: 25px;
+            width: 52px;
+            height: 30px;
             text-align: center;
-            line-height: 25px;
+            line-height: 30px;
             background: #fff;
             border: 1px solid #098E75;
-            border-radius: 15px;
+            border-radius: 5px;
             padding: 0px;
         }
 			input[type=search]::-webkit-search-cancel-button {
@@ -165,20 +165,21 @@
 	<script type="text/html" id="listTpl">
 		<div>
 			{{each $data v k}}
-			<div class="paddt15 paddb15 paddr25 paddl25 borderb bg_white" id="{{v.groupId}}">
+			<div class="paddt15 paddb15 paddr25 paddl25 borderb bg_white" style="padding: 14px 15px;" id="{{v.groupId}}">
 				<div class="heads">
-					<div class="name-left fl" style="width: 75%; position: relative;" onclick="Comm.go('postDetails.html?groupId={{v.groupId}}')">
-						<img class="fl" src="{{OSS(v.face,'s')}}" style="border-radius: 50%;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
-						<div class="fl marl10" style="width: 70%;">
-							<p class="f14 bold wordW" style="height: 22px;">{{v.groupName}}</p>
+					<div class="name-left fl" style="width: 75%;padding: 1px 0; position: relative;" onclick="Comm.go('postDetails.html?groupId={{v.groupId}}')">
+						<img class="fl" src="{{OSS(v.face,'s')}}" style="border-radius: 4px;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="44" height="44" />
+						<div class="fl marl10" style="width: 70%;margin-top: 3px;">
+							<p class="f15 bold wordW" style="height: 22px;">{{v.groupName}}</p>
 							<p class="f12 c9e" style="height: 16px;">帖子{{conunm(v.newsNum)}} · 成员 {{conunm(v.customerNum)}}</p>
 						</div>
 					</div>
 					<div id="isAdd">
 						{{if v.focus==0}}
-						<div class=" add-guan fr" style="margin-top: 8px;" onclick="model.add({{v.groupId}},this)">加入</div>
+						<img src="img/jiaru.png" class="fr" style="object-fit: contain;margin-top: 8px;" onclick="model.add({{v.groupId}},this)" width="52" height="30">
+						
 						{{else}}
-						<div class="f14 fr isJiaru" onclick="model.remove({{v.groupId}},this)">退出</div>
+						<div class="fr isJiaru" style="font-size: 13px;" onclick="model.remove({{v.groupId}},this)">退出</div>
 						{{/if}}
 					</div>
 					<div class="clearfix"></div>

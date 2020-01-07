@@ -696,24 +696,25 @@
 				Comm.resizeSection();
 			},
 			changeDeta: function(r) { //处理推荐、关注数据
-				console.log(r)
 				var news = r.newsInfoVOList;
 				var forward = r.forward;
 				var top = r.topic;
 				var user = r.userInfo;
 				var resource = r.resource;
 				for(var i = 0; i < news.length; i++) {
-					//          	news[i].forwardId > 0 && 
+					//news[i].forwardId > 0 && 
 					if(news[i].resourceId > 0) {
 						for(var q = 0; q < resource.length; q++) {
 							if(news[i].resourceId == resource[q].newsId) {
 								news[i].yTitle = resource[q].title;
 								news[i].ynewsId = resource[q].newsId;
 								if(resource[q].subhead != "") {
-									news[i].yContent = resource[q].subhead;
-								} else {
-									news[i].yContent = resource[q].title;
+									news[i].yContent = resource[q].content ? resource[q].content : resource[q].subhead;
+									news[i].yContent = news[i].yContent.replace(/div/g, "b");
 								}
+								//                          else {
+								//                              news[i].yContent = resource[q].title;
+								//                          }
 								news[i].ynum = resource[q].forwardNumber;
 								news[i].ynewsType = resource[q].newsType;
 								news[i].yaddTime = resource[q].addTime;
@@ -721,13 +722,12 @@
 								for(var s = 0; s < user.length; s++) {
 
 									if(resource[q].customerId == user[s].customerId) {
-
 										news[i].yname = user[s].customerName;
-										if(resource[q].newsType == 7) {
+										if(resource[q].newsType == 7||resource[q].newsType == 8) {
 											news[i].yid = user[s].customerId;
 											news[i].yitemtype = 0;
-										} else {
-											news[i].yid = user[s].userId;
+										} else if(resource[q].newsId == user[s].newsId) {
+											news[i].yid = user[s].customerId;
 											news[i].yitemtype = user[s].itemType;
 										}
 									}
@@ -753,26 +753,47 @@
 					}
 					if(news[i].itemType == 0) {
 						for(var l = 0; l < user.length; l++) {
-							if(news[i].customerId == user[l].userId && news[i].itemType == user[l].itemType) {
+							if(news[i].customerId == user[l].customerId && news[i].itemType == user[l].itemType) {
 
-								news[i].uid = user[l].userId;
+								news[i].uid = user[l].customerId;
 								news[i].uname = user[l].customerName;
 								news[i].uface = user[l].customerFace;
 								news[i].schoolName = user[l].schoolName;
 								news[i].enrollmentYear = user[l].enrollmentYear;
+								news[i].userType = user[l].userType;
+								news[i].officialCertification = user[l].officialCertification;
 
 							}
 						}
 
 					} else {
 						for(var c = 0; c < user.length; c++) {
-							if(news[i].customerId == 10) {
-								console.log(user[c])
-							}
 							if(news[i].newsId == user[c].newsId && news[i].itemType == user[c].itemType) {
-								news[i].uid = user[c].userId;
-								news[i].uname = user[c].customerName;
-								news[i].uface = user[c].face;
+								if(news[i].newsType == 7) {
+									news[i].gid = user[c].userId;
+									news[i].gname = user[c].userName;
+									news[i].gface = user[c].face;
+									news[i].uid = user[c].customerId;
+									news[i].uname = user[c].customerName;
+									news[i].uface = user[c].customerFace;
+
+								} else {
+
+									if(news[i].resourceId > 0) {
+
+										news[i].uid = user[c].userId;
+										news[i].uname = user[c].userName;
+										news[i].uface = user[c].face;
+									} else {
+										news[i].uid = user[c].customerId;
+										news[i].uname = user[c].customerName;
+										news[i].uface = user[c].customerFace;
+										news[i].schoolName = user[c].schoolName;
+										news[i].enrollmentYear = user[c].enrollmentYear;
+										news[i].userType = user[c].userType;
+										news[i].officialCertification = user[c].officialCertification;
+									}
+								}
 							}
 						}
 					}
@@ -780,14 +801,20 @@
 						news[i].face = news[i].face.split(',');
 					}
 					if(news[i].content) {
-						news[i].content = news[i].content.replace('font-family').replace('font-size')
+						if(news[i].newsType == 1 || news[i].newsType == 8) {
+							news[i].content = news[i].content.replace('font-family').replace('font-size').replace(/(\r\n|\n|\r)/gm, "<br/>").replace(/<div class='f14'>/gi, "<div>")
+						} else {
+							news[i].content = news[i].content.replace('font-family').replace('font-size').replace(/<div class="f14">/gi, "").replace(/<div class='f14'>/gi, "").replace(/(\r\n|\n|\r)/gm, "<br/>")
+						}
+
 					}
 					if(news[i].subhead) {
-						news[i].subhead = news[i].subhead.replace(/<\/?.+?>/g, "").replace(/ /g, "");
+						news[i].subhead = news[i].subhead.replace('font-family').replace('font-size').replace(/<div class="f14">/gi, "").replace(/<div class='f14'>/gi, "").replace(/<div>|<\/div>/gi, "").replace(/(\r\n|\n|\r)/gm, "<br/>")
 					}
 
 				}
 				console.log(news)
+				Comm.scorllDel();
 				return news;
 			},
 			//赞

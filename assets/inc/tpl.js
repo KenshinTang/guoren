@@ -441,9 +441,9 @@ var imgTpl = {
                 //          }
                 mahtml.push('<div class="fl getpic paddt5 paddr5" style="width:' + imgTpl.w + '">')
                 if (imgTpl.imgs[i].indexOf('gif') > 0 || imgTpl.imgs[i].indexOf('GIF') > 0) {
-                    mahtml.push('<img class="wimg" onload="app.calcImgTag(this)" onclick="Photo.show(this,false);"  rsrc="' + Comm.OSS.getImgUrl(imgTpl.imgs[i]) + '" src="' + Comm.OSS.getImgUrl(imgTpl.imgs[i]) + '" style="border-radius: 5px;width:' + imgTpl.w + 'px;height:' + imgTpl.h + 'px;" onerror="' + imgTpl.errorimg + '"/>');
+                    mahtml.push('<img class="wimg" onload="app.calcImgTag(this)" onclick="Photo.show(this,false);"  rsrc="' + Comm.OSS.getImgUrl(imgTpl.imgs[i]) + '" src="' + Comm.OSS.getImgUrl(imgTpl.imgs[i],'f') + '" style="border-radius: 5px;width:' + imgTpl.w + 'px;height:' + imgTpl.h + 'px;" onerror="' + imgTpl.errorimg + '"/>');
                 } else {
-                    mahtml.push('<img class="wimg" onload="app.calcImgTag(this)" onclick="Photo.show(this,false);"  rsrc="' + Comm.OSS.getImgUrl(imgTpl.imgs[i]) + '" src="' + Comm.OSS.getImgUrl(imgTpl.imgs[i]) + '" style="border-radius: 5px;width:' + imgTpl.w + 'px;height:' + imgTpl.h + 'px;" onerror="' + imgTpl.errorimg + '"/>');
+                    mahtml.push('<img class="wimg" onload="app.calcImgTag(this)" onclick="Photo.show(this,false);"  rsrc="' + Comm.OSS.getImgUrl(imgTpl.imgs[i]) + '" src="' + Comm.OSS.getImgUrl(imgTpl.imgs[i],'f') + '" style="border-radius: 5px;width:' + imgTpl.w + 'px;height:' + imgTpl.h + 'px;" onerror="' + imgTpl.errorimg + '"/>');
                 }
                 mahtml.push('</div>')
                     //         	if (imgTpl.imgs[i].indexOf('gif') > 0) {
@@ -700,9 +700,9 @@ var _Tpl = {
                 timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟前';
             } else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
                 timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
-            } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 7) {
-                //timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-                timeSpanStr = month + '-' + day;
+//          } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 7) {
+//              //timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
+//              timeSpanStr = month + '-' + day;
             } else if (milliseconds > 1000 * 60 * 60 * 24 * 1 && year == now.getFullYear()) {
                 timeSpanStr = month + '-' + day;
                 //timeSpanStr = month + '-' + day + ' ' + hour + ':' + minute;
@@ -737,7 +737,7 @@ var _Tpl = {
             }
 
         }
-        if (d.userType != 0) {
+        if (d.customerId!=1||d.customerId!=2) {
             return '<div class="heads flex_wrap" style="justify-content:space-between;">\
                     <div class="name-left">\
                         <img onclick="model.geren(' + d.uid + ',0)" class="fl" style="border-radius: 50%;" src="' + Comm.OSS.getImgUrl(d.uface, 's') + '" onerror="this.src=\'' + _Tpl.logo + '\';this.onerror=null;" width="40" height="40">\
@@ -782,7 +782,7 @@ var _Tpl = {
                 rhtml.push('<img width="22" height="18" class="marr5" src="img/gfrend.png"/>')
             }
             if (d.recommend == 1) {
-                rhtml.push("<span class='cunbtn'>推荐</span>")
+                rhtml.push("<span><img src='img/tuijian.png' style='margin-top: -3px;margin-right: 15px;height:18px;' /></span>")
             }
             rhtml.push("<span class='PingFangHKRegular color141'style='font-family: Arial;'>" + d.title + "</span>");
             rhtml.push("</div>")
@@ -855,7 +855,7 @@ var _Tpl = {
             }
             rhtml.push('<div style="word-wrap:break-word;color:#464646;line-height:22px" class="mart5 f15 colors PingFangHKLight" onclick="event.stopPropagation();Page.send(\'go\',\'articleDetail.html?newsId=' + d.newsId + '\');">');
             if (d.recommend == 1) {
-                rhtml.push("<span class='cunbtn'>推荐</span>")
+                rhtml.push("<span><img src='img/tuijian.png' style='margin-top: -3px;margin-right: 15px;height:18px;' /></span>")
             }
             rhtml.push(template.defaults.imports.repcontent(d.content, d.newsId, '#fff'));
             if (d.face) {
@@ -885,16 +885,16 @@ var _Tpl = {
         //点赞 
         if (d.isPraise == 0) {
             //没有点赞
-            rhtml.push('<div class="paddt10 paddb10 paddl30 paddr30" onclick="model.zan(' + d.newsId + ',this);event.stopPropagation()"><img src="img/index/zan.png" width="20" height="20"><span style="margin-left: 5px;" class="c9e f12" id="zan' + d.newsId + '">' + app.conunm(d.praiseNumber) + '</span></div>')
+            rhtml.push('<div class="paddt10 paddb10 paddl20 paddr20" onclick="model.zan(' + d.newsId + ',this);event.stopPropagation()"><img src="img/index/zan.png" width="20" height="20"><span style="margin-left: 5px;" class="c9e f12 numspan" id="zan' + d.newsId + '">' + app.conunm(d.praiseNumber) + '</span></div>')
         } else {
-            rhtml.push('<div class="paddt10 paddb10 paddl30 paddr30" onclick="model.quxiao(' + d.newsId + ',this);event.stopPropagation()"><img src="img/index/zand.png" width="20" height="20"><span style="margin-left: 5px;" class="c9e f12" id="zan' + d.newsId + '">' + app.conunm(d.praiseNumber) + '</span></div>')
+            rhtml.push('<div class="paddt10 paddb10 paddl20 paddr20" onclick="model.quxiao(' + d.newsId + ',this);event.stopPropagation()"><img src="img/index/zand.png" width="20" height="20"><span style="margin-left: 5px;" class="c9e f12 numspan" id="zan' + d.newsId + '">' + app.conunm(d.praiseNumber) + '</span></div>')
         }
         //评论
-        rhtml.push('<div class="paddt10 paddb10 paddl30 paddr30" onclick="Page.send(\'go\',\'articleDetail.html?newsId=' + d.newsId + '&amp;cont=1\');event.stopPropagation()"><img src="img/index/pl.png" width="20" height="20"><span style="margin-left: 5px;" class="c9e f12" id="ping' + d.newsId + '">' + app.conunm(d.commentNumber) + '</span></div>');
+        rhtml.push('<div class="paddt10 paddb10 paddl20 paddr20" onclick="Page.send(\'go\',\'articleDetail.html?newsId=' + d.newsId + '&amp;cont=1\');event.stopPropagation()"><img src="img/index/pl.png" width="20" height="20"><span style="margin-left: 5px;" class="c9e f12 numspan" id="ping' + d.newsId + '">' + app.conunm(d.commentNumber) + '</span></div>');
 
         //转发 排除 问问
         if (d.newsType != 5) {
-            rhtml.push('<div class="paddt10 paddb10 paddl30 paddr30" onclick="model.zhuanfa(' + d.newsId + ');event.stopPropagation()"><img src="img/index/zf.png" width="24" height="20"><span style="margin-left: 5px;" class="c9e f12" id="shou' + d.newsId + '">' + app.conunm(d.forwardNumber) + '</span></div>')
+            rhtml.push('<div class="paddt10 paddb10 paddl20 paddr20" onclick="model.zhuanfa(' + d.newsId + ');event.stopPropagation()"><img src="img/index/zf.png" width="24" height="20"><span style="margin-left: 5px;" class="c9e f12 numspan" id="shou' + d.newsId + '">' + app.conunm(d.forwardNumber) + '</span></div>')
         } else {
             rhtml.push('<div></div>')
         }

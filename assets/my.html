@@ -30,7 +30,10 @@
 			/*section {
             background: url("http://guoren-app.oss-cn-shenzhen.aliyuncs.com/2019_07/ame8auufr83hv16ak.jpg/250") 0% 0% / 100% 250px no-repeat;
         }*/
-			
+			section{
+				position: relative;
+				
+			}
 			section>div {
 				background: #fff;
 			}
@@ -219,7 +222,7 @@
 			}
 			
 			.top-top {
-				position: relative;
+				/*position: relative;*/
 				/*padding: 15px 0px;*/
 				border-bottom: 12px solid #f0f0f0;
 			}
@@ -315,7 +318,7 @@
 			.main {
 				font-size: 14px;
 				padding: 0 10px;
-				position: relative;
+				/*position: relative;*/
 			}
 			
 			.main>div {
@@ -460,7 +463,7 @@
 			}
 			
 			header {
-				position: relative;
+				/*position: relative;*/
 			}
 		</style>
 	</head>
@@ -496,7 +499,7 @@
 			<div class="banner" style="margin-top: 60px;">
 				<div style="position: relative;z-index: 999;top: 35px;">
 					<div class="userImg" style="margin: 0 auto;width:90px; height: 90px;">
-						<img id="userface" src="img/my/mti.png" alt="" style="border-radius: 50%;margin-top: 10px;box-shadow: none;">
+						<img id="userface" src="img/my/mti.png" alt=""  style="border-radius: 50%;border: 1px solid #fff;width: 62px;height: 62px;box-shadow: 0px 4px 13px #d0d0d5;margin-top: 17px;margin-left: 15px;">
 					</div>
 					<div class="userData mart10">
 						<p class="paddt5" style="" id="customerName">未登录</p>
@@ -826,7 +829,7 @@
 		<div class="bg_white f16" style="border-radius: 10px; padding: 30px 10px;">
 			您还未完善信息，请先完善信息
 		</div>
-		<div class="bg_white paddt15 paddb15 f16 colorfff" style="background-color: #098E75;" onclick="Page.send('go','improveInfo.html?_type=0');">确定</div>
+		<div class="bg_white paddt15 paddb15 f16 colorfff" style="background-color: #098E75;" onclick="Page.send('go','improveInfo.html');">确定</div>
 	</div>
 	<div id="sinbox" wtd="sinboxTemps">
 		<h4>确认删除？</h4>
@@ -989,12 +992,12 @@
 						}
 						$('#viplevel').html(d.data.userLevel); //等级
 
-						$('#followNumber').html(d.data.followNumber); //关注
-						$('#fansNumber').html(d.data.fansNumber); //粉丝
+						$('#followNumber').html(app.conunm(d.data.followNumber)); //关注
+						$('#fansNumber').html(app.conunm(d.data.fansNumber)); //粉丝
 
-						$('#collectionNumber').html(d.data.collectionNumber); //收藏
+						$('#collectionNumber').html(app.conunm(d.data.collectionNumber)); //收藏
 
-						$('#draftNumber').html(d.data.draftNumber); //草稿箱
+						$('#draftNumber').html(app.conunm(d.data.draftNumber)); //草稿箱
 						model.getMsgNumber();
 						//                  visible = d.data.visible.split(',');
 						//                  for (var i = 0; i < visible.length; i++) {

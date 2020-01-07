@@ -1,83 +1,82 @@
-
 <!DOCTYPE html>
 <html>
 
-<head>
-	<meta charset="UTF-8">
-	<title></title>
-	<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="format-detection" content="telephone=no,email=no,adress=no" />
-	<link rel="stylesheet" href="css/g.css" />
-	<link rel="stylesheet" href="css/comm.css" />
-	<link rel="stylesheet" href="css/photo.css" />
-	<style>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+		<link rel="stylesheet" href="css/g.css" />
+		<link rel="stylesheet" href="css/comm.css" />
+		<link rel="stylesheet" href="css/photo.css" />
+		<style>
 			::-webkit-scrollbar {
 				display: none;
 			}
-
+			
 			body {
 				width: 1px;
 				min-width: 100%;
 			}
-
+			
 			iframe {
 				height: 100%;
 				width: 100%;
 				min-width: 100%;
 				display: block;
 			}
-
+			
 			iframe.safaric_fix {
 				width: 1px;
 				min-width: 100%;
 			}
-
+			
 			footer li.index {
 				background-image: url("img/index.png");
 			}
-
+			
 			footer li.index.colorred {
 				background-image: url("img/index-r.png");
 			}
-
+			
 			footer li.sl_askForLeave {
 				background-image: url("img/sl_askForLeave.png");
 			}
-
+			
 			footer li.sl_askForLeave.colorred {
 				background-image: url("img/sl_askForLeave-r.png");
 			}
-
+			
 			footer li.question {
 				background-image: url("img/question.png");
 			}
-
+			
 			footer li.question.colorred {
 				background-image: url("img/question-r.png");
 			}
-
+			
 			footer li.my {
 				background-image: url("img/my.png");
 			}
-
+			
 			footer li.my.colorred {
 				background-image: url("img/my-r.png");
 			}
-
+			
 			#sinboxW {
 				width: 300px;
 				padding: 0;
 				border-radius: 10px;
 			}
-
+			
 			#sinbox1 {
 				position: absolute;
 				bottom: 0;
 				left: 5%;
 				width: 90%;
 			}
-
+			
 			.qxgz {
 				background: url(img/index/qxgz.png) no-repeat 0px center;
 				background-size: 16px;
@@ -86,7 +85,7 @@
 				color: #444444;
 				border-bottom: 1px solid #f4f4f4;
 			}
-
+			
 			.bgxq {
 				background: url(img/index/bgxq.png) no-repeat 0px center;
 				background-size: 16px;
@@ -95,14 +94,14 @@
 				color: #444444;
 				border-bottom: 1px solid #f4f4f4;
 			}
-
+			
 			.jb {
 				background: url(img/index/jb.png) no-repeat 50px center;
 				background-size: 16px;
 				/*padding: 10px 0 10px 50px;*/
 				color: #444444;
 			}
-
+			
 			#sinbox2 {
 				width: 100%;
 				position: absolute;
@@ -111,16 +110,16 @@
 				padding: 20px;
 				background-color: #F0F0F0;
 			}
-
+			
 			.fb {
 				width: 33%;
 				padding: 10px;
 			}
-
+			
 			.fb img {
 				width: 50px;
 			}
-
+			
 			#sinboxW {
 				width: 280px;
 				height: 124px;
@@ -130,11 +129,11 @@
 				position: relative;
 				background-color: #fff;
 			}
-
+			
 			#sinboxW h3 {
 				padding-top: 20px;
 			}
-
+			
 			#sinboxW .footer {
 				width: 100%;
 				height: 43px;
@@ -148,17 +147,17 @@
 				border-bottom-right-radius: 9px;
 				border-bottom-left-radius: 9px
 			}
-
+			
 			#sinboxW .footer div {
 				width: 50%;
 				height: 100%;
 				line-height: 43px;
 			}
-
+			
 			.colorccc {
 				color: #CCCCCC;
 			}
-
+			
 			#sinboxfx {
 				background-color: #fff;
 				padding: 10px 20px;
@@ -167,7 +166,7 @@
 				left: 0;
 				width: 100%;
 			}
-
+			
 			.mescroll-totop,
 			.mescroll-totop1 {
 				position: fixed;
@@ -178,182 +177,179 @@
 				right: 30px;
 				opacity: 1;
 				z-index: 99;
-
 			}
 		</style>
-</head>
+	</head>
 
-<body>
-<section style="overflow-y: hidden;">
-	<iframe frameborder="0" class="hide" name="index" id="index"></iframe>
-	<iframe frameborder="0" class="hide" name="sl_askForLeave" id="sl_askForLeave"></iframe>
-	<iframe frameborder="0" class="hide" name='question' id="question"></iframe>
-	<iframe frameborder="0" class="hide" name="my" id="my"></iframe>
-</section>
-<div class="mescroll-totop" onclick="islogin()">
-	<img src="img/index/bj.png" width="45" />
-</div>
-<div id="send" class="mescroll-totop1" onclick="islogin1();">
-	<img src="img/index/bj.png" width="45" />
-</div>
-<footer class="shared" style="background-color: #fff;">
-	<ul class="footer-con">
-		<!--ontouchstart="showifrm('index',this);event.stopPropagation();"-->
-		<li class="footer-item index colorred bg_white" onclick="showifrm('index',this);event.stopPropagation();">首页</li>
-		<!--ontouchstart="showifrm('sl_askForLeave',this);event.stopPropagation();"-->
-		<li class="footer-item sl_askForLeave bg_white" onclick="showifrm('sl_askForLeave',this);event.stopPropagation();">圈子</li>
-		<!-- ontouchstart="showifrm('question',this);event.stopPropagation();"-->
-		<li class="footer-item question bg_white" onclick="showifrm('question',this);event.stopPropagation();">问问</li>
-		<!-- ontouchstart="showifrm('my',this);event.stopPropagation();"-->
-		<li class="footer-item my bg_white" onclick="showifrm('my',this);event.stopPropagation();">我的</li>
-	</ul>
-</footer>
+	<body>
+		<section style="overflow-y: hidden;">
+			<iframe frameborder="0" class="hide" name="index" id="index"></iframe>
+			<iframe frameborder="0" class="hide" name="sl_askForLeave" id="sl_askForLeave"></iframe>
+			<iframe frameborder="0" class="hide" name='question' id="question"></iframe>
+			<iframe frameborder="0" class="hide" name="my" id="my"></iframe>
+		</section>
+		<div class="mescroll-totop" onclick="islogin()">
+			<img src="img/index/bj.png" width="45" />
+		</div>
+		<div id="send" class="mescroll-totop1" onclick="islogin1();">
+			<img src="img/index/bj.png" width="45" />
+		</div>
+		<footer class="shared" style="background-color: #fff;">
+			<ul class="footer-con">
+				<!--ontouchstart="showifrm('index',this);event.stopPropagation();"-->
+				<li class="footer-item index colorred bg_white" onclick="showifrm('index',this);event.stopPropagation();">首页</li>
+				<!--ontouchstart="showifrm('sl_askForLeave',this);event.stopPropagation();"-->
+				<li class="footer-item sl_askForLeave bg_white" onclick="showifrm('sl_askForLeave',this);event.stopPropagation();">圈子</li>
+				<!-- ontouchstart="showifrm('question',this);event.stopPropagation();"-->
+				<li class="footer-item question bg_white" onclick="showifrm('question',this);event.stopPropagation();">问问</li>
+				<!-- ontouchstart="showifrm('my',this);event.stopPropagation();"-->
+				<li class="footer-item my bg_white" onclick="showifrm('my',this);event.stopPropagation();">我的</li>
+			</ul>
+		</footer>
 
-<div id="sinboxfx" wtd="sinboxTempfx">
-	<div class="dflex" style="border-bottom: #f4f4f4 1px solid;">
-		<div class="mart20 marb20" onclick="Comm.showWindow('');model.shear(1)">
-			<img src="img/index/wx.png" width="45" />
-			<p class="c9e mart10">微信好友</p>
+		<div id="sinboxfx" wtd="sinboxTempfx">
+			<div class="dflex" style="border-bottom: #f4f4f4 1px solid;">
+				<div class="mart20 marb20" onclick="Comm.showWindow('');model.shear(1)">
+					<img src="img/index/wx.png" width="45" />
+					<p class="c9e mart10">微信好友</p>
+				</div>
+				<div class="mart20 marb20" onclick="Comm.showWindow('');model.shear(2)">
+					<img src="img/index/pyq.png" width="45" />
+					<p class="c9e mart10">朋友圈</p>
+				</div>
+				<div class="mart20 marb20" onclick="Comm.showWindow('');model.shear(3)">
+					<img src="img/index/qq.png" width="45" />
+					<p class="c9e mart10">QQ</p>
+				</div>
+				<div class="mart20 marb20" onclick="Comm.showWindow('');model.shear(4)">
+					<img src="img/index/qqkj.png" width="45" />
+					<p class="c9e mart10">QQ空间</p>
+				</div>
+				<div class="mart20 marb20" onclick="Comm.showWindow('');model.shear(5)">
+					<img src="img/index/wb.png" width="45" />
+					<p class="c9e mart10">微博</p>
+				</div>
+			</div>
+			<div class="paddt10 paddb10 color666" style="border-top:#f4f4f4 1px solid;" onclick="Comm.showWindow('')">
+				取消
+			</div>
 		</div>
-		<div class="mart20 marb20" onclick="Comm.showWindow('');model.shear(2)">
-			<img src="img/index/pyq.png" width="45" />
-			<p class="c9e mart10">朋友圈</p>
+        <div id="sinboxW" wtd="sinboxTempgx1">
+            <h3 class="center">提示</h3>
+            <p class="mart5 center">已有版本更新，请前往下载</p>
+            <div class="footer">
+                <div style="color:#999999;border-right: 1px solid #E7E7E7;" onclick="Comm.showWindow();">取消</div>
+                <div style="color:#098E75;" class="center" id="down">确定</div>
+            </div>
+        </div>
+        <div id="sinboxW" wtd="sinboxTempgx">
+            <h3 class="center">提示</h3>
+            <p class="mart5 center">已有版本更新，请前往下载</p>
+            <div class="footer">
+                <div style="color:#098E75;width:100%;" id="down">确定</div>
+            </div>
+        </div>
+		<div id="sinboxW" wtd="sinboxTempsi">
+			<p class="paddt30 center">确认删除？</p>
+			<div class="footer">
+				<div style="color:#999999;border-right: 1px solid #E7E7E7;" onclick="Comm.showWindow();">取消</div>
+				<div style="color:#098E75;" onclick="Comm.showWindow('');shanchu()">确定</div>
+			</div>
 		</div>
-		<div class="mart20 marb20" onclick="Comm.showWindow('');model.shear(3)">
-			<img src="img/index/qq.png" width="45" />
-			<p class="c9e mart10">QQ</p>
-		</div>
-		<div class="mart20 marb20" onclick="Comm.showWindow('');model.shear(4)">
-			<img src="img/index/qqkj.png" width="45" />
-			<p class="c9e mart10">QQ空间</p>
-		</div>
-		<div class="mart20 marb20" onclick="Comm.showWindow('');model.shear(5)">
-			<img src="img/index/wb.png" width="45" />
-			<p class="c9e mart10">微博</p>
-		</div>
-	</div>
-	<div class="paddt10 paddb10 color666" style="border-top:#f4f4f4 1px solid;" onclick="Comm.showWindow('')">
-		取消
-	</div>
-</div>
-<div id="sinboxW" wtd="sinboxTemps">
-	<h3 class="center">提示</h3>
-	<p class="mart5 center">确认删除？</p>
-	<div class="footer">
-		<div style="color:#999999;border-right: 1px solid #E7E7E7;" onclick="Comm.showWindow();">取消</div>
-		<div style="color:#098E75;" onclick="Comm.showWindow('');shanchu()">确定</div>
-	</div>
-</div>
-<div id="sinboxW" wtd="sinboxTempgx1">
-	<h3 class="center">提示</h3>
-	<p class="mart5 center">已有版本更新，请前往下载</p>
-	<div class="footer">
-		<div style="color:#999999;border-right: 1px solid #E7E7E7;" onclick="Comm.showWindow();">取消</div>
-		<div style="color:#098E75;" class="center" id="down">确定</div>
-	</div>
-</div>
-<div id="sinboxW" wtd="sinboxTempgx">
-	<h3 class="center">提示</h3>
-	<p class="mart5 center">已有版本更新，请前往下载</p>
-	<div class="footer">
-		<div style="color:#098E75;width:100%;" id="down">确定</div>
-	</div>
-</div>
-<div id="sinboxW" wtd="sinboxTempsi">
-	<p class="paddt30 center">确认删除？</p>
-	<div class="footer">
-		<div style="color:#999999;border-right: 1px solid #E7E7E7;" onclick="Comm.showWindow();">取消</div>
-		<div style="color:#098E75;" onclick="Comm.showWindow('');shanchu()">确定</div>
-	</div>
-</div>
-<div id="sinboxW" wtd="sinboxTempClear">
-	<h4>确认清除缓存？</h4>
+		<div id="sinboxW" wtd="sinboxTempClear">
+			<h4>确认清除缓存？</h4>
 
-	<div class="footer">
-		<div style="color:#999999;border-right: 1px solid #E7E7E7;" onclick="Comm.showWindow();">取消</div>
-		<div style="color:#098E75;" onclick="Comm.showWindow('');qingchu()">确定</div>
-	</div>
-</div>
-<div id="sinbox" class="" wtd="sinboxTempxz">
-	<div class="bg_white f16" style="border-radius: 10px; padding: 30px 10px;">
-		您还未完善信息，请先完善信息
-	</div>
-	<div class="bg_white paddt15 paddb15 f16 colorfff" style="background-color: #098E75;" onclick="Comm.go('improveInfo.html?_type=0');">确定</div>
-</div>
-<div id="sinbox1" class="paddb10" wtd="sinboxTemp">
-	<div class="bg_white marb10 f16" style="border-radius: 10px;">
-		<div class="paddt15 paddb15" style="border-bottom: 1px solid #EBEBEB;" onclick="Comm.showWindow('');getFuc(1)">取消关注</div>
-		<!--<div class="paddt15 paddb15" style="border-bottom: 1px solid #EBEBEB;border-top: 1px solid #EBEBEB;" onclick="getFuc(2)">不感兴趣</div>-->
-		<div class="paddt15 paddb15" onclick="Comm.showWindow('');getFuc(3);">举报</div>
-	</div>
-	<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
-</div>
-
-<div id="sinbox1" class="paddb10" wtd="sinboxTemp3">
-	<div class="bg_white marb10 f16" style="border-radius: 10px;">
-		<div class="coloreb3 paddb15 paddt15" onclick="Comm.showWindow('');getFuc(4);">删除</div>
-	</div>
-	<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
-</div>
-<div id="sinbox1" class="paddb10" wtd="sinboxTemp4">
-	<div class="bg_white marb10 f16" style="border-radius: 10px;">
-		<div class="coloreb3 paddb15 paddt15" onclick="Comm.showWindow('');getFuc(4);">删除</div>
-	</div>
-	<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
-</div>
-<div id="sinbox1" class="paddb10" wtd="sinboxTemp1">
-	<div class="bg_white marb10 f16" style="border-radius: 10px;">
-		<div class="paddt15 paddb15" onclick="Comm.showWindow('');getFuc(2)">不感兴趣</div>
-		<div class="paddt15 paddb15" style="border-top: 1px solid #EBEBEB;" onclick="getFuc(3)">举报</div>
-	</div>
-	<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
-</div>
-<div id="sinbox1" class="paddb10" wtd="sinboxTempqz">
-	<div class="bg_white marb10 f16" style="border-radius: 10px;">
-		<div class="paddt15 paddb15" onclick="Comm.showWindow('');getFuc(3)">举报</div>
-	</div>
-	<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
-</div>
-
-<div id="sinbox2" wtd="sinboxTemp2">
-
-	<div>
-		<div class="fb fl" onclick="Comm.showWindow('');top.Comm.go('send3.html?disable=1')">
-			<img src="img/index/shuoshuo.png" />
-			<p class="mart10 colorccc f12">说说</p>
+			<div class="footer">
+				<div style="color:#999999;border-right: 1px solid #E7E7E7;" onclick="Comm.showWindow();">取消</div>
+				<div style="color:#098E75;" onclick="Comm.showWindow('');qingchu()">确定</div>
+			</div>
 		</div>
-		<div class="fb fl" onclick="Comm.showWindow('');top.Comm.go('send2.html?disable=1')">
-			<img src="img/index/wenzhang.png" />
-			<p class="mart10 colorccc f12">日志</p>
+		<div id="sinbox" class="" wtd="sinboxTempxz">
+			<div class="bg_white f16" style="border-radius: 10px; padding: 30px 10px;">
+				您还未完善信息，请先完善信息
+			</div>
+			<div class="bg_white paddt15 paddb15 f16 colorfff" style="background-color: #098E75;" onclick="Comm.go('improveInfo.html');">确定</div>
 		</div>
-		<!--<div class="fb fl" onclick="top.Comm.go('send5.html');Comm.showWindow('')">
-        <img src="img/index/shipin.png" />
-        <p class="mart5">视频</p>
-    </div>-->
-		<!--<div class="fb fl" onclick="top.Comm.go('send4.html');Comm.showWindow('')">
-        <img src="img/index/suipai.png" />
-        <p class="mart5">随拍</p>
-    </div>-->
-		<div class="fb fl" onclick="Comm.showWindow('');top.Comm.go('send1.html?disable=1')">
-			<img src="img/index/tiwen.png" />
-			<p class="mart10 colorccc f12">问问</p>
+		<div id="sinbox1" class="paddb10" wtd="sinboxTemp">
+			<div class="bg_white marb10 f16" style="border-radius: 10px;">
+				<div class="paddt15 paddb15" style="border-bottom: 1px solid #EBEBEB;" onclick="Comm.showWindow('');getFuc(1)">取消关注</div>
+				<!--<div class="paddt15 paddb15" style="border-bottom: 1px solid #EBEBEB;border-top: 1px solid #EBEBEB;" onclick="getFuc(2)">不感兴趣</div>-->
+				<div class="paddt15 paddb15" onclick="Comm.showWindow('');getFuc(3);">举报</div>
+			</div>
+			<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
 		</div>
-	</div>
-	<div class="clearfix"></div>
-	<div class="mart10" onclick="Comm.showWindow()"><img src="img/index/qx.png" width="15" /></div>
-</div>
 
-</body>
+		<div id="sinbox1" class="paddb10" wtd="sinboxTemp3">
+			<div class="bg_white marb10 f16" style="border-radius: 10px;">
+				<div class="coloreb3 paddb15 paddt15" onclick="Comm.showWindow('');getFuc(4);">删除</div>
+			</div>
+			<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+		</div>
+		<div id="sinbox1" class="paddb10" wtd="sinboxTemp4">
+			<div class="bg_white marb10 f16" style="border-radius: 10px;">
+				<div class="coloreb3 paddb15 paddt15" onclick="Comm.showWindow('');getFuc(4);">删除</div>
+			</div>
+			<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+		</div>
+		<div id="sinbox1" class="paddb10" wtd="sinboxTemp1">
+			<div class="bg_white marb10 f16" style="border-radius: 10px;">
+				<div class="paddt15 paddb15" onclick="Comm.showWindow('');getFuc(2)">不感兴趣</div>
+				<div class="paddt15 paddb15" style="border-top: 1px solid #EBEBEB;" onclick="getFuc(3)">举报</div>
+			</div>
+			<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+		</div>
+		<div id="sinbox1" class="paddb10" wtd="sinboxTempqz">
+			<div class="bg_white marb10 f16" style="border-radius: 10px;">
+				<div class="paddt15 paddb15" onclick="Comm.showWindow('');getFuc(3)">举报</div>
+			</div>
+			<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+		</div>
+		<div id="sinbox1" class="paddb10" wtd="sinboxTempzqb">
+			<div class="bg_white marb10 f16" style="border-radius: 10px;">
+				<div class=" paddb15 paddt15" onclick="Comm.showWindow('');getFuc(9);">编辑</div>
+			</div>
+			<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
+		</div>
+		<div id="sinbox2" wtd="sinboxTemp2">
 
-<script type="text/javascript" src="inc/z.js"></script>
-<script type="text/javascript" src="inc/g.js"></script>
-<script type="text/javascript" src="inc/comm.js"></script>
-<script type="text/javascript" src="inc/art-template.js"></script>
-<script type="text/javascript" src="inc/ifrm.js"></script>
-<script type="text/javascript" src="inc/photo.js"></script>
-<script src="inc/roots.js"></script>
-<script type="text/javascript">
+			<div>
+				<div class="fb fl" onclick="Comm.showWindow('');top.Comm.go('send3.html?disable=1')">
+					<img src="img/index/shuoshuo.png" />
+					<p class="mart10 colorccc f12">说说</p>
+				</div>
+				<div class="fb fl" onclick="Comm.showWindow('');top.Comm.go('send2.html?disable=1')">
+					<img src="img/index/wenzhang.png" />
+					<p class="mart10 colorccc f12">日志</p>
+				</div>
+				<!--<div class="fb fl" onclick="top.Comm.go('send5.html');Comm.showWindow('')">
+				<img src="img/index/shipin.png" />
+				<p class="mart5">视频</p>
+			</div>-->
+				<!--<div class="fb fl" onclick="top.Comm.go('send4.html');Comm.showWindow('')">
+				<img src="img/index/suipai.png" />
+				<p class="mart5">随拍</p>
+			</div>-->
+				<div class="fb fl" onclick="Comm.showWindow('');top.Comm.go('send1.html?disable=1')">
+					<img src="img/index/tiwen.png" />
+					<p class="mart10 colorccc f12">问问</p>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="mart10" onclick="Comm.showWindow()"><img src="img/index/qx.png" width="15" /></div>
+		</div>
+
+	</body>
+
+	<script type="text/javascript" src="inc/z.js"></script>
+	<script type="text/javascript" src="inc/g.js"></script>
+	<script type="text/javascript" src="inc/comm.js"></script>
+	<script type="text/javascript" src="inc/art-template.js"></script>
+	<script type="text/javascript" src="inc/ifrm.js"></script>
+	<script type="text/javascript" src="inc/photo.js"></script>
+	<script src="inc/roots.js"></script>
+	<script type="text/javascript">
 		var t = Comm.query('top');
+		console.log(t)
 		var first = 1;
 		var ids = '';
 		//var userinfo = Comm.db('userinfo');
@@ -364,7 +360,9 @@
 		}
 
 		function pageload() {
-		app.update();
+
+            app.update();
+
 			//设置主页
 			Comm.setAndroidHome(1);
 			regResume();
@@ -382,10 +380,9 @@
 				}
 			});
 			if(Comm.ios()){
-				Comm.resizeDom();
+				//Comm.resizeDom();
 				resizeDom();
 			}
-
 		}
 
 		function go(a) {
@@ -415,7 +412,8 @@
 				dbnewsId: Comm.db('newsID'),
 				shanchu: Comm.db('shanchu'),
 				_token: Comm.db('_token'),
-				firsr: Comm.db('firsr')
+				firsr: Comm.db('firsr'),
+				istui:t==5?1:0
 			}
 			return obj;
 		}
@@ -579,10 +577,12 @@
 		function showWindow(e) {
 			if(e.model == 'question') {
 				if(e.sinboxTemp4 == 'sinboxTemp1') {
-					e.sinboxTemp4 = 'sinboxTempqz';
+//					e.sinboxTemp4 = 'sinboxTempqz';
+					Comm.showWindow('sinboxTempqz', true);
+				}else{
+					Comm.showWindow('sinboxTempzqb', true);
 				}
 				Comm.setAndroidHome(0);
-				Comm.showWindow(e.sinboxTemp4, true);
 				Comm.g('WTDBOX').addEventListener("touchstart", function() {
 					Comm.setAndroidHome(1);
 				}, false);
@@ -591,6 +591,7 @@
 				Comm.setAndroidHome(0);
 				if(e.sinboxTemp4 == 'sinboxTempxz') {
 					Comm.showWindow(e.sinboxTemp4, false);
+					Comm.setAndroidHome(1);
 				} else {
 					Comm.showWindow(e.sinboxTemp4, true);
 
@@ -639,11 +640,13 @@
 				//				Comm.confirm('确认删除？',function(d){
 				//					if(d){
 				setTimeout(function() {
-					if(Comm.ios()) {
-						Comm.showWindow('sinboxTempsi', true)
-					} else {
-						Comm.showWindow('sinboxTemps', true)
-					}
+					Comm.confirm('确认删除？', function(d) {
+						if(d) {
+							Root.send('getModel', 'shanchu', window.frames[ids]);
+							Comm.showWindow('');
+							curifr = null;
+						}
+					})
 				}, 100)
 
 				//	}
@@ -659,6 +662,10 @@
 					//curifr = null;      		
 				}, 100)
 
+			}else if(type==9){
+				Root.send('getModel', 'shanchu', window.frames[ids]);
+							Comm.showWindow('');
+							curifr = null;
 			}
 		}
 

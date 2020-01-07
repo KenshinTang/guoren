@@ -675,12 +675,7 @@
                     var i = swiper.activeIndex;
                     $('#nav li.order-t-c-active').removeClass('order-t-c-active');
                     $($('#nav li')[i]).addClass('order-t-c-active');
-                    if ($('#swiper').height() < $('section').height()) {
-                        //$('#swiper').height($('section').height() - 46.5);
-                        $('#swiper').css('min-height', $('section').height() - 46.5);
-                    } else {
-                        $('#swiper').css('height', 'auto');
-                    }
+                    
                     //初始化数据
                     model.initmescroll(i);
                 },
@@ -723,11 +718,7 @@
                     $('#swiperWrapper').removeClass('notransform');
                 }
             });
-            if (model.cont == 1) {
-                //$('#swiper').height($('section').height() - $('#nav').height());
-                $('#swiper').css('min-height', $('section').height() - $('#nav').height());
-                Comm.g('maodian').scrollIntoView();
-            }
+            
             var loadii = 0;
             $('#news .content img').each(function(i, e) {
                 if (model.cont == 1) {
@@ -748,6 +739,10 @@
             $('.wimg').attr('onclick', 'Photo.show(this,true)');
             model.initmescroll(0);
 
+			if (model.cont == 1) {
+				Comm.g('maodian').scrollIntoView();
+				console.log('锚点有了')
+			}
         },
         opt: [],
         url: [],
@@ -808,6 +803,7 @@
                         $('.addHave').children().addClass('havemenu');
                     } else if (refresh.i == 1) {
                         refresh.appendHtml(template('praiseListTpl', d.data));
+                        
                     } else if (refresh.i == 2) {
                         refresh.appendHtml(template('forwardListTpl', d.data));
                     } else if (refresh.i == 3) {
@@ -815,24 +811,28 @@
                     }
                     $('#dataList' + refresh.i).after($('section>.mescroll-upwarp'));
 
-
-                    compre(refresh.i)
+                    compre(model.mere.i);
+					if(d.curPage==1){
+						if (model.cont == 1) {
+							Comm.g('maodian').scrollIntoView();
+							console.log('锚点有了')
+						}
+					}
+					
                 };
                 model.mescrolls[i] = model.mere;
             } else {
                 model.mere = model.mescrolls[i];
                 model.mere.i = i;
-                compre(i)
-
+                compre(i);
             }
 
             function compre(i) {
-                if ($('#dataList' + i).height() + $("#nav").height() < $('section').height()) {
-                    //$('#swiper').height($('section').height() - $("#nav").height());
-                    $('#swiper').css('min-height', $('section').height() - $("#nav").height());
+				var h=$('section').height()-$("#nav").height()-10; 
+                if ($('#dataList' + i).height() < h) {
+                    $('#swiper').css('height', h);
                 } else {
-                    //$('#swiper').css('height', $('#dataList' + i).height() + 50);
-                    $('#swiper').css('min-height', $('#dataList' + i).height() + 50);
+                    $('#swiper').css('height', $('#dataList' + i).height()+50);
                 }
             }
 
@@ -1613,8 +1613,8 @@
 </script>
 
 <script type="text/html" id="mainTpl">
-    <div class="linebod"></div>
     <a id="maodian" href="javascript:void(0);"></a>
+    <div class="linebod"></div>
     <div class="scrollx mescroll-touch-x">
         <div id="scrollxContent" class="scrollx-content">
             <ul id="nav" class="flex_wrap bg_white lh45" style="padding-left: 13px;">
@@ -1638,7 +1638,7 @@
     <div class="commentList">
         {{each $data.commentList item index}}
         <div class="item pad10" id="{{item.commentId}}">
-            <img onclick="model.geren({{item.customerId}},0)" src="{{OSS(item.face)}}" class="fl" width="36" height="36" style="border-radius:50%;">
+            <img onclick="model.geren({{item.customerId}},0)" src="{{OSS(item.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" class="fl" width="36" height="36" style="border-radius:50%;">
             <div class="fr r f15">
                 <div class="paddr10">
                     <span class=" bold wordW color333" onclick="model.geren({{item.customerId}},0)">
@@ -1670,14 +1670,14 @@
                     <div onclick="model.setu({{v.commentId}},'{{v.customerName}}',{{v.customerId}},{{item.commentId}})">
                         {{if(v.customerName2 && v.parentContent)}}
                         <div class="mart5 paddr20 addHave" style="text-align:left;">
-                        		<img src="{{OSS(v.face)}}" style="border-radius: 50%;" class="marr5" width="22" height="22"/>
+                        		<img src="{{OSS(v.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" style="border-radius: 50%;" class="marr5" width="22" height="22"/>
                             <span class="wordW color038" onclick="model.geren({{v.customerId}},0)">{{v.customerName}}</span>{{if v.customerId==item.publishCustomerId&&item.newsType==7}}<span style="vertical-align:bottom;margin-top: -1px;"><img src="img/index/louzhu.png" width="31"  style="margin-top: -3px;margin-left: 8px;margin-top: -1px;"/></span>{{/if}}
                             <span>回复</span>
                             <span class="color038" onclick="Comm.go('personal.html?customerId={{v.customerId2}}')">@{{v.customerName2}}</span>{{if v.customerId2==item.publishCustomerId&&item.newsType==7}}<span style="vertical-align:bottom;margin-top: -1px;"><img src="img/index/louzhu.png" width="31"  style="margin-top: -3px;margin-left: 8px;margin-right: 8px;"/></span>{{/if}}: 
                             {{v.content}} <!--style="display: inline-block;"-->
                         </div>
                         {{else}}
-                        <div class="mart5 paddr20 addHave" style="text-align:left;"><img src="{{OSS(v.face)}}" width="22" height="22"/ style="margin-right: 8px;border-radius: 50%;"><span class="color038" onclick="model.geren({{v.customerId}},0)">{{v.customerName}}</span>{{if v.customerId==item.publishCustomerId&&item.newsType==7}}<span style="vertical-align:bottom;margin-top: -1px;"><img src="img/index/louzhu.png"  width="31" style="margin-top: -3px;margin-left: 8px;margin-right: 8px;"/></span>{{/if}}</span><span>: </span>{{v.content}}</div>
+                        <div class="mart5 paddr20 addHave" style="text-align:left;"><img src="{{OSS(v.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="22" height="22"/ style="margin-right: 8px;border-radius: 50%;"><span class="color038" onclick="model.geren({{v.customerId}},0)">{{v.customerName}}</span>{{if v.customerId==item.publishCustomerId&&item.newsType==7}}<span style="vertical-align:bottom;margin-top: -1px;"><img src="img/index/louzhu.png"  width="31" style="margin-top: -3px;margin-left: 8px;margin-right: 8px;"/></span>{{/if}}</span><span>: </span>{{v.content}}</div>
                         {{/if}}
                     </div>
                     <div class="fr f12 r" style="width: 100%;">
@@ -1715,7 +1715,7 @@
     <div class="praiseList">
         {{each $data item index}}
         <div class="item">
-            <img class="fl" onclick="model.geren({{item.customerId}},0)" src="{{OSS(item.face)}}" width="36" height="36" style="border-radius:50%;">
+            <img class="fl" onclick="model.geren({{item.customerId}},0)" src="{{OSS(item.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="36" height="36" style="border-radius:50%;">
             <span class="marl15 bold f14">{{item.customerName}}</span>
             <span class="marl15 f12" style="color:#999;">{{sldate(item.addTime)}}</span>
         </div>
@@ -1727,7 +1727,7 @@
     <div class="forwardList">
         {{each $data item index}}
         <div class="item">
-            <img class="fl" onclick="model.geren({{item.customerId}},0)" src="{{OSS(item.face)}}" width="36" height="36" style="border-radius:50%;">
+            <img class="fl" onclick="model.geren({{item.customerId}},0)" src="{{OSS(item.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="36" height="36" style="border-radius:50%;">
             <div class="marl15 tleft">
                 <div>
                     <span class=" bold f14" onclick="model.geren({{item.customerId}},0)">{{item.customerName}}</span>
@@ -1744,7 +1744,7 @@
     <div class="collectionList">
         {{each $data item index}}
         <div class="item">
-            <img class="fl" onclick="model.geren({{item.customerId}},0)" src="{{OSS(item.face)}}" width="36" height="36" style="border-radius:50%;">
+            <img class="fl" onclick="model.geren({{item.customerId}},0)" src="{{OSS(item.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="36" height="36" style="border-radius:50%;">
             <span class="marl15 bold f14" onclick="model.geren({{item.customerId}},0)">{{item.customerName}}</span>
             <span class="marl15 f12" style="color:#999;">{{sldate(item.addTime)}}</span>
         </div>

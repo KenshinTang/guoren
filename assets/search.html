@@ -102,7 +102,8 @@
     {{each $data v k}}
     <div class="sear paddl30 paddb10 paddt10" onclick="model.search('{{v}}')">
         <span class="color333">{{v}}</span>
-        <img src="img/index/sqx.png" onclick="model.del('{{v}}',this);event.stopPropagation()" height="10" class="fr mart5 marr10" />
+        <span class="fr paddt5 paddr15 paddb10 paddl15" onclick="model.del('{{v}}',this);event.stopPropagation()"><img src="img/index/sqx.png" height="10" /></span>
+        
     </div>
     {{/each}}
 </script>
@@ -156,13 +157,13 @@
                 Comm.goself('searchDetail.html?keyWord=' + name);
                 
             } else {
-                if ($("#id_searchInput").val() == '') {
+                if ($("#id_searchInput").val().replace(/\s+/g, "") == '') {
                     Comm.message('请输入关键词');
                     return false;
                 }
                 document.activeElement.blur();
                 historySearch = Comm.db('historySearch') && Comm.db('historySearch').length > 0 ? Comm.db('historySearch') : [];
-                var keyWord = $("#id_searchInput").val()
+                var keyWord = $("#id_searchInput").val().replace(/\s+/g, "")
                 if (keyWord != '') {
                     var index = historySearch.indexOf(keyWord)
                     if (index == -1) {
@@ -174,7 +175,7 @@
                     Comm.db('historySearch', historySearch);
                 }
                 console.log(Comm.db('historySearch'))
-                Comm.goself('searchDetail.html?keyWord=' + $("#id_searchInput").val());
+                Comm.goself('searchDetail.html?keyWord=' + $("#id_searchInput").val().replace(/\s+/g, ""));
             }
 
         },
@@ -196,6 +197,7 @@
 
         },
         del: function(id, e) {
+        	historySearch = Comm.db('historySearch') && Comm.db('historySearch').length > 0 ? Comm.db('historySearch') : [];
             if (id == -1) {
             	var a ='';
             		Comm.db('historySearch',a);

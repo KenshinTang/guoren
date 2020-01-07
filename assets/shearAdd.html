@@ -135,6 +135,12 @@
 		var footer = tpl.foorers();
 		$('footer').html(footer);
 		Comm.resizeSection()
+		if(Comm.qq()){
+			$('#Password').attr('readonly','readonly');
+			$('#code').attr('readonly','readonly');
+			$('#phone').attr('readonly','readonly');
+			$('section').attr('onclick','alert("请使用Safari打开本页面")')
+		}
 		}
 		function pageresume() {
 
@@ -184,10 +190,12 @@
             //未填写手机号
             if (phone == '') {
                 Comm.message('请填写手机号');
+                first=1;
                 return;
             };
             if (phone.length != 11) {
                 Comm.message('请填写正确手机号');
+                first=1;
                 return;
             };
             AJAX.POST('/api/customer/sendMsg', { phone: phone, bo: 1 }, function (d) {

@@ -213,7 +213,7 @@
 			<div class="heads">
 				<div class="name-left fl" style="width: 100%;">
 					<img class="fl" style="border-radius: 50%;" onclick="Comm.go('personal.html?customerId={{v.customerId}}')" src="{{OSS(v.face)}}" onerror="this.src='img/index/scr.png';this.onerror=null;" width="40" height="40" />
-					<div class="fl marl10" style="width: 60%; height: 40px;" onclick="Comm.go('personal.html?customerId={{v.customerId}}')">
+					<div class="fl marl10" style="width: 70%; height: 40px;" onclick="Comm.go('personal.html?customerId={{v.customerId}}')">
 						<p class="f14 color333" style="height: 25px;">
 							<span>{{v.customerName}}</span> {{if v.isBestComment==1}}<span><img src="img/index/zuiyouhuida.png" width="55" style="margin-left: 5px;margin-top: -2px;" /></span>{{/if}}
 						</p>
@@ -427,7 +427,7 @@
 								Comm.close();
 							})
 						}
-						$("#commentNumber").html(d.data.news.commentNumber + '个回答');
+						$("#commentNumber").html(app.conunm(d.data.news.commentNumber) + '个回答');
 						$('#newsTitle').html(d.data.news.title.replace(/<div>|<\/div>/gi, "").replace(/(\r\n|\n|\r)/gm, "<br/>").replace(/[ ]/g, "&nbsp;").replace(/&nbsp;src/g, " src"))
 						$('#newsContent').html(d.data.news.content.replace(/<div>|<\/div>/gi, "").replace(/<script/g, '').replace(/(\r\n|\n|\r)/gm, "<br/>").replace(/[ ]/g, "&nbsp;").replace(/&nbsp;src/g, " src"));
 						$('#uFace').attr('src', Comm.OSS.getImgUrl(d.data.itemFace));

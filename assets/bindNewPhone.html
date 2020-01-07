@@ -79,7 +79,7 @@
             <div class="cellContent  ">
                 <div>
                     <i class="icon_code"></i>
-                    <input type="tel" id="codeVal" maxlength="6" placeholder="请输入验证码">
+                    <input type="tel" id="codeVal" maxlength="4" placeholder="请输入验证码">
                 </div>
                 <div id="getCode" onclick="model.getCode(this)">获取验证码</div>
             </div>
@@ -113,6 +113,7 @@
     }
     var model = {
         countdown: 60,//倒计时时间上限
+        isfirst:1,
         //获取验证码
         getCode: function (el) {
             var that = this;
@@ -121,27 +122,35 @@
                 Comm.message('请输入手机号');
                 return;
             }
-            AJAX.POST('/api/customer/sendMsg', { phone: phone, bo: 3 }, function (d) {
+            if(model.isfirst==1){
+            	AJAX.POST('/api/customer/sendMsg', { phone: phone, bo: 3 }, function (d) {
                 if (d && d.code == 1) {
                     that.settime($(el))
                 } else {
                     Comm.message(d.msg || '网络错误')
                 }
             })
+            }
+            
         },
         //验证码倒计时
         settime: function (el) {
-            var thih = this
+        	if(model.isfirst==1){
+        		 var thih = this;
+        		 model.isfirst=0;
             var i = setInterval(function () {
                 el.html(thih.countdown + '秒');
                 if (thih.countdown > 0) {
                     thih.countdown -= 1;
                 } else {
                     el.html('重新获取');
-                    thih.countdown = 60
-                    clearInterval(i)
+                    thih.countdown = 60;
+                    clearInterval(i);
+                    model.isfirst=1;
                 }
             }, 1000)
+        	}
+           
         },
         //确定
         submission: function () {
@@ -156,7 +165,7 @@
                 return;
             }
             AJAX.POST('/api/customer/updatePhone', { phone: phone, code: codeVal }, function (d) {
-                    if (d && d.code) {
+                    if (d && d.code==1) {
                         Comm.message('操作成功');
                         setTimeout(function () {
                             Comm.close(2)

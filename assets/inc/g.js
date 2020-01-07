@@ -40,7 +40,7 @@ var AJAX = new function() {
                         if (window['Page']) {
                             Page.send('confir', 0);
                         } else {
-                            Comm.confirm("登录信息已过期，请重新登录", function(d) {
+                            Comm.confirm("您还未登录，请先登录", function(d) {
                                 //Comm.bg(false);
                                 Comm.loading(false);
                                 if (d) {
@@ -553,6 +553,12 @@ var Comm = new function() {
             navigator.userAgent.toLocaleLowerCase().indexOf("micromessenger") > -1
         );
     };
+     //是否处理QQ中
+    z.qq = function() {
+        return (
+            navigator.userAgent.toLocaleLowerCase().indexOf("qq") > -1
+        );
+    };
     //是否是ios
     z.ios = function() {
         return (
@@ -788,7 +794,7 @@ var Comm = new function() {
             jsonObj["code"] = setcb(cb);
             if (z.w9()) callNative("shareUrl", jsonObj);
         } else {
-            Comm.confirm('登录信息已过期，请重新登录', function(d) {
+            Comm.confirm('您还未登录，请先登录', function(d) {
                 if (d) {
                     Comm.go('newLogin.html');
                 }
@@ -1395,8 +1401,8 @@ var wscroll = new function() {
     function now() {
         return +(new Date());
     }
-
     function doing(e) {
+    	
         runing = now();
         if (box != this) {
             init();
@@ -1412,9 +1418,12 @@ var wscroll = new function() {
                 handle = setInterval(check, 150);
         }
         ratio = box.offsetHeight / box.scrollHeight;
-        scroll.style.top = (bound.top + box.scrollTop * ratio) + 'px';
+        if(box.scrollTop<box.scrollHeight-box.offsetHeight){
+        	 scroll.style.top = (bound.top + box.scrollTop * ratio) + 'px';
         scroll.style.height = (box.offsetHeight * ratio) + 'px';
-
+        }
+       
+		
     }
 
     function reg(ids) {

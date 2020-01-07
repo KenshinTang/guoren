@@ -209,7 +209,7 @@
         <ul class="adminList">
             {{each $data v k}} {{if v.customerRole==1}}
             <li>
-                <div class="userImg" onclick="Comm.go('personal.html?customerId={{v.customerId}}');"><img style="border-radius: 50%;" src="{{OSS(v.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20"></div>
+                <div class="userImg" onclick="Comm.go('personal.html?customerId={{v.customerId}}');"><img style="border-radius: 50%;" src="{{OSS(v.face,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20"></div>
                 <div class="userData">
                     <span class="userName wordW" onclick="Comm.go('personal.html?customerId={{v.customerId}}');">{{v.customerName}}</span>
                     <span class="identity">圈主</span>
@@ -217,7 +217,7 @@
             </li>
             {{/if}} {{if v.customerRole==2}}
             <li>
-                <div class="userImg" onclick="Comm.go('personal.html?customerId={{v.customerId}}');"><img style="border-radius: 50%;" src="{{OSS(v.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20"></div>
+                <div class="userImg" onclick="Comm.go('personal.html?customerId={{v.customerId}}');"><img style="border-radius: 50%;" src="{{OSS(v.face,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20"></div>
                 <div class="userData paddr30">
                     <span class="userName wordW" onclick="Comm.go('personal.html?customerId={{v.customerId}}');">{{v.customerName}}</span>
                     <span class="identity" style="background: #EFB950;">管理员</span> {{if userType==1}}
@@ -233,7 +233,7 @@
         <ul class="memberList">
             {{each $data v k}} {{if v.customerRole==3}}
             <li>
-                <div class="userImg" onclick="Comm.go('personal.html?customerId={{v.customerId}}');"><img style="border-radius: 50%;" src="{{OSS(v.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20"></div>
+                <div class="userImg" onclick="Comm.go('personal.html?customerId={{v.customerId}}');"><img style="border-radius: 50%;" src="{{OSS(v.face,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20"></div>
                 <div class="userName flex paddr20 lh45" style="justify-content:space-between;width: 100%;border-bottom: 1px solid #dedede;">
                     <span class="userName" onclick="Comm.go('personal.html?customerId={{v.customerId}}');">{{v.customerName}}</span> {{if userType==1}}
                     <span class="inblock" onclick="Comm.showWindow('sinboxTemp',true);model.id({{v.customerId}})"> <img src="img/index/more.png" width="14" height="3" /></span> {{else if userType==2}}
@@ -250,7 +250,7 @@
         <ul class="memberList">
             {{each $data v k}} {{if v.customerRole==1}}
             <li>
-                <div class="userImg" onclick="Comm.go('personal.html?customerId={{v.customerId}}');"><img style="border-radius: 50%;" src="{{OSS(v.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20"></div>
+                <div class="userImg" onclick="Comm.go('personal.html?customerId={{v.customerId}}');"><img style="border-radius: 50%;" src="{{OSS(v.face,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20"></div>
                 <div class="userData">
                     <span class="userName wordW" onclick="Comm.go('personal.html?customerId={{v.customerId}}');">{{v.customerName}}</span>
                     <span class="identity">圈主</span>
@@ -258,7 +258,7 @@
             </li>
             {{/if}} {{if v.customerRole==2}}
             <li>
-                <div class="userImg" onclick="Comm.go('personal.html?customerId={{v.customerId}}');"><img style="border-radius: 50%;" src="{{OSS(v.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20"></div>
+                <div class="userImg" onclick="Comm.go('personal.html?customerId={{v.customerId}}');"><img style="border-radius: 50%;" src="{{OSS(v.face,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20"></div>
                 <div class="userData paddr30">
                     <span class="userName wordW" onclick="Comm.go('personal.html?customerId={{v.customerId}}');">{{v.customerName}}</span>
                     <span class="identity" style="background: #EFB950;">管理员</span> {{if userType==1}}
@@ -267,7 +267,7 @@
             </li>
             {{/if}} {{if v.customerRole==3}}
             <li>
-                <div class="userImg" onclick="Comm.go('personal.html?customerId={{v.customerId}}');"><img style="border-radius: 50%;" src="{{OSS(v.face)}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20"></div>
+                <div class="userImg" onclick="Comm.go('personal.html?customerId={{v.customerId}}');"><img style="border-radius: 50%;" src="{{OSS(v.face,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" width="20" height="20"></div>
                 <div class="userName flex paddr20 lh45" style="justify-content:space-between;width: 100%;border-bottom: 1px solid #dedede;">
                     <span class="userName" onclick="Comm.go('personal.html?customerId={{v.customerId}}');">{{v.customerName}}</span> {{if userType==1}}
                     <span class="inblock" onclick="Comm.showWindow('sinboxTemp',true);model.id({{v.customerId}})"> <img src="img/index/more.png" width="14" height="3" /></span> {{else if userType==2}}

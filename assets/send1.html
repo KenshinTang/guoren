@@ -179,8 +179,8 @@
 				$('.jjs').css('background', '#f4f4f4');
 				$('.jjs').attr('onclick', '');
 			}
-			if($('#title').val().length >= 50 && isfirst == 1) {
-				Comm.message('标题最多输入50字')
+			if(($('#title').val().length >= 50||$('#title').val().length <8) && isfirst == 1) {
+				Comm.message('标题字数为8-50字')
 				isfirst = 2;
 			}
 			if($('#miaoshu').val().replace(/\n/g, "11").length >= 500 && first == 1) {
@@ -224,7 +224,7 @@
 								} else if(img.length == 1) {
 									img1 = img;
 								}
-								var title = $("#title").val();
+								var title = $('<span/>').html($("#title").val()).text();
 								var miaoshu = '<div>' + $("#miaoshu").val().replace(/\n/g, "<br>") + '</div>';
 								if(title.replace(/\s+/g, "") == "") {
 									Comm.message('请输入问题');
@@ -322,8 +322,8 @@
 					Comm.message('请输入问题');
 					return false;
 				}
-				if(title.replace(/\s+/g, "").length > 50) {
-					Comm.message('问题最多50字，请重新编辑');
+				if(title.replace(/\s+/g, "").length > 50||title.replace(/\s+/g, "").length < 8) {
+					Comm.message('问题字数为8-50字，请重新编辑');
 					return false;
 				}
 				if(title.indexOf('?') == -1 && title.indexOf('？') == -1) {

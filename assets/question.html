@@ -166,7 +166,7 @@
                 </div>
             </div>
             <div class="nav-title block searchBar" onclick="Page.send('go','search.html?type=5&focus=1');" style="padding-top: 8px;width: calc(100% - 50px);height: 44px; margin: 0;">
-                <div id="id_searchInput" class="color999 tleft">请输入您搜索的问题</div>
+                <div id="id_searchInput" class="color999 tleft">请输入搜索的内容</div>
                
             </div>
         </div>
@@ -201,7 +201,7 @@
 
 <div id="sinbox1" class="paddb10" wtd="sinboxTemp">
     <div class="bg_white marb10 f16" style="border-radius: 10px;">
-        <div class="coloreb3 paddb15 paddt15" onclick="model.shanchu(1)">删除</div>
+        <div class="coloreb3 paddb15 paddt15" onclick="model.shanchu(1)">编辑</div>
     </div>
     <div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
 </div>
@@ -216,7 +216,7 @@
     <div class="bg_white f16" style="border-radius: 10px; padding: 30px 10px;">
         您还未完善信息，请先完善信息
     </div>
-    <div class="bg_white paddt15 paddb15 f16 colorfff" style="background-color: #098E75;" onclick="Page.send('go','improveInfo.html?_type=0');">确定</div>
+    <div class="bg_white paddt15 paddb15 f16 colorfff" style="background-color: #098E75;" onclick="Page.send('go','improveInfo.html');">确定</div>
 </div>
 <script type="text/javascript" src="inc/z.js"></script>
 <script type="text/javascript" src="inc/g.js"></script>
@@ -289,6 +289,9 @@
         AJAX.GET('/api/mess/count?userType=1&type=1', function(a) {
             if (a && a.code == 1) {
                 if (a.data > 0) {
+                	if(a.data>99){
+								a.data='99'
+							}
                     $('.dian').html(a.data)
                     $('.dian').removeClass('hide');
                 } else {
@@ -313,7 +316,7 @@
     	AJAX.GET('/api/customer/detail', function(d) {
             if (d && d.code === 1) {
             	
-                if (name == 1) {
+       if (name == 1) {
             Page.send('showWindow', {
                 model: 'question',
                 sinboxTemp4: 'sinboxTemp3'
@@ -402,14 +405,15 @@
         },
         
         shanchu: function(type) {
-            AJAX.GET('/api/news/del?newsId=' + mid, function(a) {
-                if (a && a.code == 1) {
-                    Comm.message('删除成功');
-                    $('#' + mid).remove();
-                } else {
-                    Comm.message(a.msg);
-                }
-            })
+//          AJAX.GET('/api/news/del?newsId=' + mid, function(a) {
+//              if (a && a.code == 1) {
+//                  Comm.message('删除成功');
+//                  $('#' + mid).remove();
+//              } else {
+//                  Comm.message(a.msg);
+//              }
+//          })
+		Page.send('go', "send1.html?id=" + mid);
         },
         bgxq: function(type) {
             console.log('dd')
@@ -459,22 +463,22 @@
         <div class="clearfix"></div>
         <div>
             <div class="mart5 marb5">
-                <div class="fl f12 color999" style="width:85%">回答 {{conunm(v.commentNumber)}}</div>
-                <div class="fr f12 center" style="width:15%">
+                <div class="fl f12 color999" style="width:80%">回答 {{conunm(v.commentNumber)}}</div>
+                <div class="fr f12 center" style="width:20%">
                     <img src="img/index/{{if v.isPraise==1}}dzan{{else}}zan{{/if}}.png" width="14" height="11" class="" style="margin:-2px 0 0 0;object-fit: contain;" />
                     <span class="f12 color999">{{conunm(v.praiseNumber)}}</span>
                 </div>
                 <div class="clearfix"></div>
             </div>
             <div>
-                <div style="width:85%" class="fl">
+                <div style="width:80%" class="fl">
                     <div class="color038 wordW f12 marb5" style="">
                         <img src="{{OSS(v.face,'s')}}" onerror="app.herrorimg(this)" style="border-radius:50%" width="15" height="15" />
                         <span class="color038 f12 wordW" style="display:inline-block;max-width:20%;font-family: Arial;margin-top: 2px;">{{v.customerName}}：</span>
                         <span class="color999 wordW f12" style="display:inline-block;width:65%;font-family: Arial;margin-top: 2px;">{{v.content}}</span>
                     </div>
                 </div>
-                <div style="width:15%" class="fr f12 color999">{{sldate(v.addTime)}}</div>
+                <div style="width:20%" class="fr f12 color999">{{sldate(v.addTime)}}</div>
             </div>
             <div class="clearfix"></div>
             {{imgTpl(v.newsImg.split(','),1024)}}

@@ -334,7 +334,7 @@
                                 if ($('#change').attr('data') == 1) {
                                     Comm.go('setPw.html');
                                 } else {
-                                    Comm.go('improveInfo.html?_type=0');
+                                    Comm.go('improveInfo.html');
                                 }
                                 Comm.registerPush({
                                     state: 1,
@@ -355,7 +355,7 @@
                                     if (d.data.isRealInfo == true) {
                                         Comm.gotop('ifrm.html');
                                     } else if (d.data.customerName == "") {
-                                        Comm.go('improveInfo.html?_type=0')
+                                        Comm.go('improveInfo.html')
                                     } else {
                                         Comm.go('setPw.html');
                                     }
@@ -363,7 +363,7 @@
                                     if (d.data.havePass == true) {
                                         Comm.gotop('ifrm.html');
                                     } else if (d.data.customerName == "") {
-                                        Comm.go('improveInfo.html?_type=0')
+                                        Comm.go('improveInfo.html')
                                     } else {
                                         Comm.go('setPw.html');
                                     }

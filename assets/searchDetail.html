@@ -55,7 +55,7 @@
 			}
 			
 			.order-t-c {
-				width: 17%;
+				width: 16.3%;
 				height: 98%;
 				font-size: 15px;
 				/*font-weight: bold;*/
@@ -115,8 +115,14 @@
 			
 			.isJiaru {
 				/*border: 1px solid #D3D3D3;*/
+				/*color: #fff;
+				border-radius: 4px;*/
 				color: #fff;
+				width: 52px;
 				border-radius: 4px;
+				height: 30px;
+				line-height: 25px;
+				text-align: center;
 			}
 			
 			.schoolMsg {
@@ -131,13 +137,17 @@
 			.data-list {
 				background-color: #F4F4F4;
 			}
-			.c60 div, .c60 span{
+			
+			.c60 div,
+			.c60 span {
 				color: #606060;
 			}
-			.mart1{
+			
+			.mart1 {
 				margin-top: 1px;
 			}
-			#mescroll0 .mescroll-upwarp{
+			
+			#mescroll0 .mescroll-upwarp {
 				display: none !important;
 			}
 		</style>
@@ -160,15 +170,15 @@
 				<div id="scrollxContent" class="scrollx-content">
 					<div id="nav" class="order-t ovf bb1">
 						<div class=" order-t-c brp order-t-c-active" i='0'>综合</div>
-						
+
 						<div class=" order-t-c brp" i='1'>用户</div>
 						<div class=" order-t-c brp" i='2'>说说</div>
 						<div class=" order-t-c brp" i='3'>日志</div>
 						<div class=" order-t-c brp" i='4'>圈子</div>
+						<div class=" order-t-c brp" i='5'>帖子</div>
 						<!--<div class=" order-t-c brp" i='5'>视频</div>-->
-						<div class=" order-t-c brp" i='5'>问问</div>
-						<div class=" order-t-c brp" i='6'>话题</div>
-						<div class=" order-t-c brp" i='7'>资讯</div>
+						<div class=" order-t-c brp" i='6'>问问</div>
+						<div class=" order-t-c brp" i='7'>话题</div>
 
 					</div>
 				</div>
@@ -232,28 +242,44 @@
 			<p class="empty-tip">没有更多数据啦~5~</p>
 		</div>
 		{{/if}} -->
-		{{if $data.dataIndex==0}}
-		
-		{{if $data.articleResult!=''}}
-		<div class="paddl15 bg_white paddr15" {{if $data.articleResult!='' }}style="border-bottom: 10px solid #f4f4f4;" {{/if}}>
+		{{if $data.dataIndex==0}} {{if $data.customerResult!=''}}
+		<div class="paddl15 bg_white paddr15" {{if $data.customerResult!='' }} style="border-bottom: 10px solid #f4f4f4;" {{/if}}>
 
-			<div class="getmor paddb10 paddt10" onclick="model.qh(3)">
-				<div class="fl color666 mart1" style="line-height: 24px;">日志</div>
+			<div class="getmor paddb10 paddt10" style="border-bottom: initial;" onclick="model.qh(1)">
+				<div class="fl color666 mart1" style="line-height: 24px;">用户</div>
 				<div class="fr color666 mart1"><img src="img/more.png" width="60" height="24" /></div>
 				<div class="clearfix"></div>
 			</div>
-			{{each $data.articleResult v k}}
-			<div style="border-bottom: 1px solid #f4f4f4 ;" class="paddb10" onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}')">
-				<div class="f15 wordW2 mart10">{{v.title}}</div>
-				<div class="fl mart5 lh20 wordW2 c60">
-					{{v.subhead}}
+			{{each $data.customerResult v k}}
+			<div class="schoolMsg" style="border-top: 1px solid #f4f4f4;">
+				<div class="heads">
+					<div class="name-left fl" style="width: 80%; position: relative;" onclick="Comm.go('personal.html?customerId={{v.customerId}}')">
+						<img class="fl" src="{{OSS(v.face)}}" style="border-radius: 50%;margin-top: 6px;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
+						<div class="fl marl10" style="width: 70%;">
+							<p class="f12 wordW">{{v.customerName}}</p>
+							<p class="f12 c9e wordW">{{if v.userType==5||(v.userType==0&&v.customerId==1||v.userType==0&&v.customerId==2)}}果仁官方{{else}}{{if v.schoolName}}{{v.schoolName}}{{v.enrollmentYear}}级{{/if}}{{/if}}</p>
+							{{if v.customerId!=1&&v.customerId!=2}}
+							<p class="f12 c9e">关注{{conunm(v.followNumber)}} · 粉丝{{conunm(v.fansNumber)}} · 获赞{{conunm(v.praiseNumber)}} </p>{{/if}}
+						</div>
+					</div>
+					<div id="isAdd1">
+						{{if(v.focus == 1&&v.isAdd==1)}}
+						<div class="pad10 fr" style="width: 50px; padding-bottom: 1px;margin-top: 9px;" onclick="model.removepeo({{v.customerId}},this);event.stopPropagation()">
+							<i class="icon_quxiao"></i>
+						</div>
+						{{/if}} {{if(v.focus == 1&&v.isAdd=="0")}}
+						<div class="pad10 fr" style="width: 50px; padding-bottom: 1px;margin-top: 9px;" onclick="model.removepeo({{v.customerId}},this);event.stopPropagation()">
+							<i class="icon_yguanzhu"></i>
+						</div>
+						{{/if}} {{if(v.focus == "0")}}
+						<div class="pad10 fr" style="width: 50px; padding-bottom: 1px;margin-top: 9px;" onclick="model.addpeo({{v.customerId}},this);event.stopPropagation()">
+							<i class="icon_guanzu"></i>
+						</div>
+						{{/if}}
+					</div>
+					<div class="clearfix"></div>
+
 				</div>
-				<!--<div class="fr sc-r mart15">
-				<img src="img/index/scr.png" class="fr" width="100%" height="70" style="border-radius: 10px;">
-			</div>-->
-				<div class="clearfix"></div>
-				<div class="f12 color999">转发 {{conunm(v.forwardNumber)}} · 回复 {{conunm(v.commentNumber)}} · 点赞{{conunm(v.praiseNumber)}}</div>
-				<div class="clearfix"></div>
 			</div>
 			{{/each}}
 		</div>
@@ -269,6 +295,29 @@
 			<div style="border-bottom: 1px solid #f4f4f4 ;" class="paddb10" onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}')">
 
 				<div class="fl mart15 wordW2 c60">
+					{{v.subhead}}
+				</div>
+				<!--<div class="fr sc-r mart15">
+				<img src="img/index/scr.png" class="fr" width="100%" height="70" style="border-radius: 10px;">
+			</div>-->
+				<div class="clearfix"></div>
+				<div class="f12 color999">转发 {{conunm(v.forwardNumber)}} · 回复 {{conunm(v.commentNumber)}} · 点赞{{conunm(v.praiseNumber)}}</div>
+				<div class="clearfix"></div>
+			</div>
+			{{/each}}
+		</div>
+		{{/if}} {{if $data.articleResult!=''}}
+		<div class="paddl15 bg_white paddr15" {{if $data.articleResult!='' }}style="border-bottom: 10px solid #f4f4f4;" {{/if}}>
+
+			<div class="getmor paddb10 paddt10" onclick="model.qh(3)">
+				<div class="fl color666 mart1" style="line-height: 24px;">日志</div>
+				<div class="fr color666 mart1"><img src="img/more.png" width="60" height="24" /></div>
+				<div class="clearfix"></div>
+			</div>
+			{{each $data.articleResult v k}}
+			<div style="border-bottom: 1px solid #f4f4f4 ;" class="paddb10" onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}')">
+				<div class="f15 wordW2 mart10">{{v.title}}</div>
+				<div class="fl mart5 lh20 wordW2 c60">
 					{{v.subhead}}
 				</div>
 				<!--<div class="fr sc-r mart15">
@@ -300,9 +349,11 @@
 					</div>
 					<div id="isAdd">
 						{{if v.focus==0}}
-						<div class=" add-guan fr " onclick="model.add({{v.groupId}},this)">加入</div>
+						<img src="img/jiaru.png" class="fr" style="object-fit: contain;margin-top: 8px;" onclick="model.add({{v.groupId}},this)" width="52" height="30">
+						<!--<div class=" add-guan fr " onclick="model.add({{v.groupId}},this)">加入</div>-->
 						{{else}}
-						<div class="f14 fr isJiaru" onclick="model.remove({{v.groupId}},this)">退出</div>
+						<img src="img/out.png" class="fr" style="object-fit: contain;margin-top: 8px;" onclick="model.remove({{v.groupId}},this)" width="52" height="30">
+						<!--<div class="f14 fr isJiaru" onclick="model.remove({{v.groupId}},this)">退出</div>-->
 						{{/if}}
 					</div>
 					<div class="clearfix"></div>
@@ -311,47 +362,30 @@
 			</div>
 			{{/each}}
 		</div>
-		{{/if}} {{if $data.customerResult!=''}}
-		<div class="paddl15 bg_white paddr15" {{if $data.customerResult!='' }} style="border-bottom: 10px solid #f4f4f4;" {{/if}}>
+		{{/if}} {{if $data.invitationResult!=''}}
+		<div class="paddl15 bg_white paddr15" {{if $data.invitationResult!='' }}style="border-bottom: 10px solid #f4f4f4;" {{/if}}>
 
-			<div class="getmor paddb10 paddt10" style="border-bottom: initial;" onclick="model.qh(1)">
-				<div class="fl color666 mart1" style="line-height: 24px;">用户</div>
+			<div class="getmor paddb10 paddt10" onclick="model.qh(5)">
+				<div class="fl color666 mart1" style="line-height: 24px;">帖子</div>
 				<div class="fr color666 mart1"><img src="img/more.png" width="60" height="24" /></div>
 				<div class="clearfix"></div>
 			</div>
-			{{each $data.customerResult v k}}
-			<div class="schoolMsg" style="border-top: 1px solid #f4f4f4;">
-				<div class="heads">
-					<div class="name-left fl" style="width: 80%; position: relative;" onclick="Comm.go('personal.html?customerId={{v.customerId}}')">
-						<img class="fl" src="{{OSS(v.face)}}" style="border-radius: 50%;margin-top: 6px;" onerror="this.src='img/my/mti.png';this.onerror=null;" width="40" height="40" />
-						<div class="fl marl10" style="width: 70%;">
-							<p class="f12 wordW">{{v.customerName}}</p>
-							<p class="f12 c9e wordW">{{if v.userType==5||(v.userType==0&&v.customerId==1||v.userType==0&&v.customerId==2)}}果仁官方{{else}}{{if v.schoolName}}{{v.schoolName}}{{v.enrollmentYear}}级{{/if}}{{/if}}</p>
-							{{if v.customerId!=1&&v.customerId!=2}}<p class="f12 c9e">关注{{conunm(v.followNumber)}} · 粉丝{{conunm(v.fansNumber)}} · 获赞{{conunm(v.praiseNumber)}} </p>{{/if}}
-						</div>
-					</div>
-					<div id="isAdd1">
-						{{if(v.focus == 1&&v.isAdd==1)}}
-						<div class="pad10 fr" style="width: 50px; padding-bottom: 1px;margin-top: 9px;" onclick="model.removepeo({{v.customerId}},this);event.stopPropagation()">
-							<i class="icon_quxiao"></i>
-						</div>
-						{{/if}} {{if(v.focus == 1&&v.isAdd=="0")}}
-						<div class="pad10 fr" style="width: 50px; padding-bottom: 1px;margin-top: 9px;" onclick="model.removepeo({{v.customerId}},this);event.stopPropagation()">
-							<i class="icon_yguanzhu"></i>
-						</div>
-						{{/if}} {{if(v.focus == "0")}}
-						<div class="pad10 fr" style="width: 50px; padding-bottom: 1px;margin-top: 9px;" onclick="model.addpeo({{v.customerId}},this);event.stopPropagation()">
-							<i class="icon_guanzu"></i>
-						</div>
-						{{/if}}
-					</div>
-					<div class="clearfix"></div>
-
+			{{each $data.invitationResult v k}}
+			<div style="border-bottom: 1px solid #f4f4f4 ;" class="paddb10" onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}')">
+				<div class="f16  wordW2 mart15">{{v.title}}</div>
+				<div class="fl mart5 wordW2 c60">
+					{{v.subhead}}
 				</div>
+				<!--<div class="fr sc-r mart15">
+				<img src="img/index/scr.png" class="fr" width="100%" height="70" style="border-radius: 10px;">
+			</div>-->
+				<div class="f12 color999">转发 {{conunm(v.forwardNumber)}} · 回复 {{conunm(v.commentNumber)}} · 点赞{{conunm(v.praiseNumber)}}</div>
+				<div class="clearfix"></div>
 			</div>
 			{{/each}}
 		</div>
 		{{/if}}
+
 		<!--{{if $data.videoResult!=''}}
 		<div class="paddl10 paddr10" {{if $data.videoResult!=''}}style="border-bottom: 5px solid #f4f4f4;" {{/if}}>
 			
@@ -380,7 +414,7 @@
 		{{if $data.questionResult!=''}}
 		<div class="paddl15 bg_white paddr15" {{if $data.questionResult!='' }}style="border-bottom: 5px solid #f4f4f4;" {{/if}}>
 
-			<div class="getmor paddb10 paddt10" onclick="model.qh(5)">
+			<div class="getmor paddb10 paddt10" onclick="model.qh(6)">
 				<div class="fl color666 mart1" style="line-height: 24px;">问问</div>
 				<div class="fr color666 mart1"><img src="img/more.png" width="60" height="24" /></div>
 				<div class="clearfix"></div>
@@ -397,11 +431,10 @@
 			</div>
 			{{/each}}
 		</div>
-		{{/if}} 
-		{{if $data.topicResult!=''}}
+		{{/if}} {{if $data.topicResult!=''}}
 		<div class="paddl15 bg_white paddr15" {{if $data.topicResult!='' }}style="border-bottom: 10px solid #f4f4f4;" {{/if}}>
 
-			<div class="getmor paddb10 paddt10" onclick="model.qh(6)">
+			<div class="getmor paddb10 paddt10" onclick="model.qh(7)">
 				<div class="fl color666 mart1" style="line-height: 24px;">话题</div>
 				<div class="fr color666 mart1"><img src="img/more.png" width="60" height="24" /></div>
 				<div class="clearfix"></div>
@@ -420,52 +453,32 @@
 			</div>
 			{{/each}}
 		</div>
-		{{/if}}
-		{{if $data.informationResult!=''}}
-		<div class="paddl15 bg_white paddr15" {{if $data.informationResult!='' }}style="border-bottom: 10px solid #f4f4f4;" {{/if}}>
-
-			<div class="getmor paddb10 paddt10" onclick="model.qh(7)">
-				<div class="fl color666 mart1" style="line-height: 24px;">资讯</div>
-				<div class="fr color666 mart1"><img src="img/more.png" width="60" height="24" /></div>
-				<div class="clearfix"></div>
-			</div>
-			{{each $data.informationResult v k}}
-			<div style="border-bottom: 1px solid #f4f4f4 ;" class="paddb10" onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}')">
-				<div class="f16  wordW2 mart15">{{v.title}}</div>
-				<div class="fl mart5 wordW2 c60">
-					{{v.subhead}}
-				</div>
-				<!--<div class="fr sc-r mart15">
-				<img src="img/index/scr.png" class="fr" width="100%" height="70" style="border-radius: 10px;">
-			</div>-->
-				<div class="f12 color999">转发 {{conunm(v.forwardNumber)}} · 回复 {{conunm(v.commentNumber)}} · 点赞{{conunm(v.praiseNumber)}}</div>
-				<div class="clearfix"></div>
-			</div>
-			{{/each}}
-		</div>
-		{{/if}}
-		{{/if}}{{if $data.dataIndex==7}}
+		{{/if}} {{/if}}{{if $data.dataIndex==5}}
 		<div class="paddl15 bg_white paddr15">
 			{{each $data v k}}
 			<div style="border-bottom: 1px solid #f4f4f4 ;" class="paddb10" onclick="Comm.go('articleDetail.html?newsId={{v.newsId}}')">
-				<div class="f16  wordW2 mart15">{{v.title}}</div>
+				<div class="f15  wordW2 paddt15">{{v.title}}</div>
 				{{if v.face&&v.face[0]!=''&&v.face.length==1}}
-				<div class="sc-l fl mart15 wordW2 lh25 c60">
-					{{if v.subhead!=''}}{{v.subhead}}{{else}}{{v.content}}{{/if}}
+				<div class=" paddt5 wordW2 lh20 c60">
+					{{v.subhead}}
 				</div>
-				<div class="fr sc-r mart15">
+				<div class="mart15">
 					{{imgTpl(v.face,96)}}
 				</div>
 				{{else if v.face&&v.face.length>1}}
-				<div class="mart15 wordW2 c60">
-					{{if v.subhead!=''}}{{v.subhead}}{{else}}{{v.content}}{{/if}}
+				<div class="mart5 wordW2 c60">
+					<!--{{if v.subhead!=''}}-->
+					{{v.subhead}}
+					<!--{{else}}{{v.content}}{{/if}}-->
 				</div>
 				<div class="mart5">
 					{{if v.newsType!=6&&v.newsType!=2}}{{imgTpl(v.face,96)}} {{else}}{{imgTpl(v.face,76)}}{{/if}}
 				</div>
 				{{else}}
 				<div class=" mart15 wordW2 c60">
-					{{if v.subhead!=''}}{{v.subhead}}{{else}}{{v.content}}{{/if}}
+					<!--{{if v.subhead!=''}}-->
+					{{v.subhead}}
+					<!--{{else}}{{v.content}}{{/if}}-->
 				</div>
 				{{/if}}
 				<div class="clearfix"></div>
@@ -555,10 +568,12 @@
 						</div>
 					</div>
 					<div id="isAdd">
-						{{if v.focus==0}}
-						<div class=" add-guan fr " style="margin-top: 8px;" onclick="model.add({{v.groupId}},this)">加入</div>
+						{{if v.focus==0||!v.focus}}
+						<img src="img/jiaru.png" class="fr" style="object-fit: contain;margin-top: 8px;" onclick="model.add({{v.groupId}},this)" width="52" height="30">
+						<!--<div class=" add-guan fr " style="margin-top: 8px;" onclick="model.add({{v.groupId}},this)">加入</div>-->
 						{{else}}
-						<div class="f14 fr isJiaru" style="margin-top: 7px;" onclick="model.remove({{v.groupId}},this)">退出</div>
+						<!--<div class="f14 fr isJiaru" style="margin-top: 7px;" onclick="model.remove({{v.groupId}},this)">退出</div>-->
+						<img src="img/out.png" class="fr" style="object-fit: contain;margin-top: 8px;" onclick="model.remove({{v.groupId}},this)" width="52" height="30">
 						{{/if}}
 					</div>
 					<div class="clearfix"></div>
@@ -614,7 +629,7 @@
 			{{/each}}
 		</div>
 		{{/if}} -->
-		{{if $data.dataIndex==5 }}
+		{{if $data.dataIndex==6 }}
 		<div class="paddl15 bg_white paddr15">
 			{{each $data v k}}
 			<div style="border-bottom: 1px solid #f4f4f4 ;" class="paddb10" onclick="Comm.go('qzAskDetail.html?newsId={{v.newsId}}')">
@@ -627,7 +642,7 @@
 			</div>
 			{{/each}}
 		</div>
-		{{/if}} {{if $data.dataIndex==6 }}
+		{{/if}} {{if $data.dataIndex==7 }}
 		<div class="paddl15 bg_white paddr15">
 			{{each $data v k}}
 			<div class="schoolMsg" style="border-bottom: 1px solid #f4f4f4 ;" onclick="Comm.go('talkDetail.html?topicId={{v.topicId}}')">
@@ -658,20 +673,21 @@
 				<div style="width: calc(100% - 100px);">
 					<p class="wordW" style="color:#222222;font-size:12px;font-weight: 700; ">{{v.customerName}}</p>
 					<p class="wordW paddr10" style="color:#888888;font-size:12px;margin-top: 5px; ">{{if v.userType==5||(v.userType==0&&v.customerId==1||v.userType==0&&v.customerId==2)}}果仁官方{{else}}{{if v.schoolName}}{{v.schoolName}}{{v.enrollmentYear}}级{{/if}}{{/if}}</p>
-					{{if v.customerId!=1&&v.customerId!=2}}<p class="f12 c9e">关注{{conunm(v.followNumber)}} · 粉丝{{conunm(v.fansNumber)}} · 获赞{{conunm(v.praiseNumber)}} </p>{{/if}}
+					{{if v.customerId!=1&&v.customerId!=2}}
+					<p class="f12 c9e">关注{{conunm(v.followNumber)}} · 粉丝{{conunm(v.fansNumber)}} · 获赞{{conunm(v.praiseNumber)}} </p>{{/if}}
 				</div>
 				{{if myId!=v.customerId}}
 				<div class="caozuo">
 					{{if(v.focus == 1&&v.isAdd==1)}}
-					<div class="paddb10"style=" padding-bottom: 1px;" onclick="model.removepeo({{v.customerId}},this);event.stopPropagation()">
+					<div class="paddb10" style=" padding-bottom: 1px;" onclick="model.removepeo({{v.customerId}},this);event.stopPropagation()">
 						<i class="icon_quxiao"></i>
 					</div>
 					{{/if}} {{if(v.focus == 1&&v.isAdd=="0")}}
-					<div class="paddb10"style=" padding-bottom: 1px;" onclick="model.removepeo({{v.customerId}},this);event.stopPropagation()">
+					<div class="paddb10" style=" padding-bottom: 1px;" onclick="model.removepeo({{v.customerId}},this);event.stopPropagation()">
 						<i class="icon_yguanzhu"></i>
 					</div>
 					{{/if}} {{if(v.focus == "0")}}
-					<div class="paddb10"style=" padding-bottom: 1px;" onclick="model.addpeo({{v.customerId}},this);event.stopPropagation()">
+					<div class="paddb10" style=" padding-bottom: 1px;" onclick="model.addpeo({{v.customerId}},this);event.stopPropagation()">
 						<i class="icon_guanzu"></i>
 					</div>
 					{{/if}}
@@ -698,11 +714,11 @@
 		} else {
 			var customerId = "";
 		}
-		if (Comm.db('historySearch')) {
-        var historySearch = Comm.db('historySearch');
-    } else {
-        var historySearch = [];
-    }
+		if(Comm.db('historySearch')) {
+			var historySearch = Comm.db('historySearch');
+		} else {
+			var historySearch = [];
+		}
 		$("#id_searchInput").val(Comm.query('keyWord'));
 
 		function pageload() {
@@ -730,9 +746,9 @@
 			qh: function(id) {
 				swiper.slideTo(id);
 				getListData({
-						num: 1,
-						size: 10
-					});
+					num: 1,
+					size: 10
+				});
 			},
 			search: function() {
 				getListData({
@@ -748,7 +764,11 @@
 				AJAX.GET('/api/school/groups/addFocus?groupsId=' + groupsId + '&customerIds=' + customerId, function(a) {
 					if(a && a.code == 1) {
 						Comm.message('加入成功');
-						$(e).removeClass('add-guan').addClass('isJiaru').attr('onclick', 'event.stopPropagation();model.remove(' + groupsId + ',this)').html('退出')
+						$(e).parent().html('<img src="img/out.png" class="fr" style="object-fit: contain;margin-top: 8px;" onclick="event.stopPropagation();model.remove(' + groupsId + ',this)" width="52" height="30">')
+//						$(e).parent().html('<div class="f14 fr isJiaru" style="margin-top: 7px;" onclick="model.remove(' + groupsId + ',this)">退出</div>');
+						//						removeClass('add-guan').addClass('isJiaru').attr('onclick', 'event.stopPropagation();model.remove(' + groupsId + ',this)').html('退出')
+					} else {
+						Comm.message(a.msg)
 					}
 				})
 			},
@@ -758,7 +778,8 @@
 						AJAX.GET('/api/school/groups/cancelFocus?groupsId=' + groupsId + '&customerIds=' + customerId, function(a) {
 							if(a && a.code == 1) {
 								Comm.message('退出成功');
-								$(e).removeClass('isJiaru').addClass('add-guan').attr('onclick', 'event.stopPropagation();model.add(' + groupsId + ',this)').html('加入')
+								$(e).parent().html('<img src="img/jiaru.png" class="fr" style="object-fit: contain;margin-top: 8px;" onclick="event.stopPropagation();model.add(' + groupsId + ',this)" width="52" height="30">')
+								//								$(e).removeClass('isJiaru').addClass('add-guan').attr('onclick', 'event.stopPropagation();model.add(' + groupsId + ',this)').html('加入')
 							}
 						})
 					}
@@ -810,7 +831,7 @@
 					observer: true,
 					onTransitionEnd: function(swiper) {
 						var i = swiper.activeIndex; //轮播切换完毕的事件
-						
+
 						changePage(i);
 						$('#dataList' + i).html('');
 						mescrollArr[curNavIndex].resetUpScroll(true);
@@ -818,47 +839,47 @@
 							num: 1,
 							size: 10
 						});
-						
+
 						Comm.scorllDel();
-						
+
 					},
 					onTouchStart: function(swiper, even) {
-                if ((swiper.activeIndex == 0 || swiper.activeIndex == $('#swiperWrapper>.swiper-slide').length - 1) && even) {
-                    if (even.changedTouches && even.changedTouches.length > 0) {
-                        _pageX = even.changedTouches[0].pageX;
-                        if (swiper.activeIndex == $('#swiperWrapper>.swiper-slide').length - 1) {
-                            _lasttransform = Comm.g('swiperWrapper').style.transform;
-                        }
-                    }
-                }
-            },
-            onTouchMove: function(swiper, even) {
-                if (swiper.activeIndex == 0 && even) { //第一个
-                    //console.log(_pageX < even.changedTouches[0].pageX);
-                    if (even.changedTouches && even.changedTouches.length > 0) {
-                        if (_pageX < even.changedTouches[0].pageX) {
-                            $('#swiperWrapper').addClass('notransform');
-                        } else {
-                            $('#swiperWrapper').removeClass('notransform');
-                        }
-                    }
-                }
+						if((swiper.activeIndex == 0 || swiper.activeIndex == $('#swiperWrapper>.swiper-slide').length - 1) && even) {
+							if(even.changedTouches && even.changedTouches.length > 0) {
+								_pageX = even.changedTouches[0].pageX;
+								if(swiper.activeIndex == $('#swiperWrapper>.swiper-slide').length - 1) {
+									_lasttransform = Comm.g('swiperWrapper').style.transform;
+								}
+							}
+						}
+					},
+					onTouchMove: function(swiper, even) {
+						if(swiper.activeIndex == 0 && even) { //第一个
+							//console.log(_pageX < even.changedTouches[0].pageX);
+							if(even.changedTouches && even.changedTouches.length > 0) {
+								if(_pageX < even.changedTouches[0].pageX) {
+									$('#swiperWrapper').addClass('notransform');
+								} else {
+									$('#swiperWrapper').removeClass('notransform');
+								}
+							}
+						}
 
-                if (swiper.activeIndex == $('#swiperWrapper>.swiper-slide').length - 1 && even) { //最后一个
-                    if (even.changedTouches && even.changedTouches.length > 0) {
-                        //console.log(_pageX);
-                        //console.log(even.changedTouches[0].pageX);
-                        if (_pageX > even.changedTouches[0].pageX) {
-                            Comm.g('swiperWrapper').style.transform = _lasttransform;
-                        } else {}
-                    }
-                }
-            },
-            onTouchEnd: function(swiper, even) {
-                _lasttransform = "";
-                _pageX = 0;
-                $('#swiperWrapper').removeClass('notransform');
-            }
+						if(swiper.activeIndex == $('#swiperWrapper>.swiper-slide').length - 1 && even) { //最后一个
+							if(even.changedTouches && even.changedTouches.length > 0) {
+								//console.log(_pageX);
+								//console.log(even.changedTouches[0].pageX);
+								if(_pageX > even.changedTouches[0].pageX) {
+									Comm.g('swiperWrapper').style.transform = _lasttransform;
+								} else {}
+							}
+						}
+					},
+					onTouchEnd: function(swiper, even) {
+						_lasttransform = "";
+						_pageX = 0;
+						$('#swiperWrapper').removeClass('notransform');
+					}
 				});
 				/*菜单点击事件*/
 				$("#nav div").click(function() {
@@ -874,7 +895,7 @@
 					swiper.slideTo(i); //以轮播的方式切换列表
 
 				});
-				
+
 			}
 		}
 		/*设置列表数据
@@ -886,7 +907,14 @@
 			if(dataIndex == 0) {
 				if(pageData != '') {
 					pageData.dataIndex = dataIndex;
-					
+
+					if(pageData.invitationResult != '') {
+						var value = $("#id_searchInput").val();
+						for(var i = 0; i < pageData.invitationResult.length; i++) {
+							var values = pageData.invitationResult[i].title.split(value);
+							pageData.invitationResult[i].title = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
+						}
+					}
 					if(pageData.articleResult != '') {
 						var value = $("#id_searchInput").val();
 						for(var i = 0; i < pageData.articleResult.length; i++) {
@@ -894,7 +922,7 @@
 							pageData.articleResult[i].title = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
 						}
 					}
-					if(pageData.customerResult != ''){
+					if(pageData.customerResult != '') {
 						var value = $("#id_searchInput").val();
 						for(var i = 0; i < pageData.customerResult.length; i++) {
 							var values = pageData.customerResult[i].customerName.split(value);
@@ -905,28 +933,28 @@
 							pageData.customerResult[i].schoolName = value2.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
 						}
 					}
-					if(pageData.saysayResult != ''){
+					if(pageData.saysayResult != '') {
 						var value = $("#id_searchInput").val();
 						for(var i = 0; i < pageData.saysayResult.length; i++) {
 							var values = pageData.saysayResult[i].subhead.split(value);
 							pageData.saysayResult[i].subhead = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
 						}
 					}
-					if(pageData.questionResult != ''){
+					if(pageData.questionResult != '') {
 						var value = $("#id_searchInput").val();
 						for(var i = 0; i < pageData.questionResult.length; i++) {
 							var values = pageData.questionResult[i].title.split(value);
 							pageData.questionResult[i].title = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
 						}
 					}
-					if(pageData.groupsResult != ''){
+					if(pageData.groupsResult != '') {
 						var value = $("#id_searchInput").val();
 						for(var i = 0; i < pageData.groupsResult.length; i++) {
 							var values = pageData.groupsResult[i].groupName.split(value);
 							pageData.groupsResult[i].groupName = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
 						}
 					}
-					if(pageData.topicResult != ''){
+					if(pageData.topicResult != '') {
 						var value = $("#id_searchInput").val();
 						for(var i = 0; i < pageData.topicResult.length; i++) {
 							var values = pageData.topicResult[i].title.split(value);
@@ -942,7 +970,7 @@
 			} else {
 				if(pageData.length > 0) {
 					var value = $("#id_searchInput").val();
-					if(dataIndex == 7 || dataIndex == 2 || dataIndex == 3) {
+					if(dataIndex == 5 || dataIndex == 2 || dataIndex == 3) {
 						for(var i = 0; i < pageData.length; i++) {
 							pageData[i].face = pageData[i].face.split(',');
 							var values = pageData[i].subhead.replace(/<\/?[^>]*>/gim, "").split(value);
@@ -957,7 +985,7 @@
 							pageData[i].groupName = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
 						}
 
-					} else if(dataIndex == 5 || dataIndex == 6) {
+					} else if(dataIndex == 6 || dataIndex == 7) {
 						for(var i = 0; i < pageData.length; i++) {
 							var values = pageData[i].title.replace(/<\/?[^>]*>/gim, "").split(value);
 							pageData[i].title = values.join('<span style="color:#098E75;vertical-align:top">' + value + '</span>');
@@ -984,9 +1012,9 @@
 				} else {
 					listDom.innerHTML = '<div class="mescroll-empty"><img class="empty-icon" src="img/noData.png"><p class="empty-tip">这里空空如也，去看看别的</p></div>'
 				}
-				
+
 			}
-			wscroll.reg('mescroll'+dataIndex);
+			wscroll.reg('mescroll' + dataIndex);
 			Comm.scorllDel();
 			Comm.resizeSection();
 		}
@@ -1006,29 +1034,29 @@
 			o.title = title;
 			o.curpage = pageNum;
 			o.pagesize = pageSize;
-			 historySearch = historySearch && historySearch.length > 0 ? historySearch : [];
-                var keyWord = $("#id_searchInput").val()
-                if (keyWord != '') {
-                    var index = historySearch.indexOf(keyWord)
-                    if (index == -1) {
-                        historySearch.unshift(keyWord);
-                    } else {
-                        historySearch.splice(index, 1);
-                        historySearch.unshift(keyWord);
-                    }
-                    Comm.db('historySearch', historySearch);
-                }
-			if(curNavIndex == 7) {
-				o.type = 1;
+			historySearch = historySearch && historySearch.length > 0 ? historySearch : [];
+			var keyWord = $("#id_searchInput").val()
+			if(keyWord != '') {
+				var index = historySearch.indexOf(keyWord)
+				if(index == -1) {
+					historySearch.unshift(keyWord);
+				} else {
+					historySearch.splice(index, 1);
+					historySearch.unshift(keyWord);
+				}
+				Comm.db('historySearch', historySearch);
+			}
+			if(curNavIndex == 5) {
+				o.type = 7;
 			} else if(curNavIndex == 3) {
 				o.type = 10;
 			} else if(curNavIndex == 4) {
 				o.type = 2;
 			} else if(curNavIndex == 1) {
 				o.type = 3;
-			} else if(curNavIndex == 5) {
-				o.type = 5;
 			} else if(curNavIndex == 6) {
+				o.type = 5;
+			} else if(curNavIndex == 7) {
 				o.type = 11;
 			} else if(curNavIndex == 2) {
 				o.type = 12;
@@ -1041,7 +1069,7 @@
 					htmlData = r;
 					totalSize = a.totalCount;
 					htmlData.curPage = a.curPage;
-					if(htmlData.informationResult == '' && htmlData.articleResult == '' && htmlData.groupsResult == '' && htmlData.customerResult == '' && htmlData.videoResult == '' && htmlData.questionResult == '' && htmlData.forumResult == '' && htmlData.saysayResult == '' && htmlData.topicResult == '') {
+					if(htmlData.invitationResult == '' && htmlData.articleResult == '' && htmlData.groupsResult == '' && htmlData.customerResult == '' && htmlData.videoResult == '' && htmlData.questionResult == '' && htmlData.forumResult == '' && htmlData.saysayResult == '' && htmlData.topicResult == '') {
 						htmlData = [];
 					}
 					successCallback && successCallback(htmlData, totalSize);

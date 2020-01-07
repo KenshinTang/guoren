@@ -187,19 +187,19 @@ function length(){
 	}
 }
 	//移除凭证
-	function removeimg(a,i) {
-		imgUrlList.splice(i,1)
+	function removeimg(a) {
 		 Comm.confirm('是否删除该图片', function(d) {
             if (d) {
                 $(a).parent().remove();
                 var imgData = $(a).attr('data');
-                for (var i = 0; i < imgUrlList.length; i++) {
-                    if (imgUrlList[i].img == imgData) {
-                        imgUrlList.splice(i, 1)
-                        imgUploader.prototype.del(i);
+                for (var k = 0; k < imgUrlList.length; k++) {
+                    if (imgUrlList[k].img == imgData) {
+                        imgUrlList.splice(k, 1)
+                        imgUploader.prototype.del(k);
                     }
                 }
-                console.log(imgUrlList)
+                i--;
+                console.log(i)
                 $("#upm").show().find('.moxie-shim').width(80).height(80);
 
             }
@@ -211,9 +211,10 @@ upHeader = new imgUploader("imgupimg");
 		upHeader.success = function () {
 			var cimgUrl = this.imgList.length > 0 ? this.imgList[0] : 'img/error.png';
 			imgUrlList.push(cimgUrl)
-			$("#conimg").prepend(template('imgTpl', {src: cimgUrl,i:imgUrlList.length-1}))
+			$("#conimg").prepend(template('imgTpl', {src: cimgUrl}))
 			i++;
-			if (i == 4) {
+			console.log(i)
+			if (i >= 4) {
 				$("#upm").hide();
 			} else {
 				$("#upm").show().find('.moxie-shim').width(80).height(80);

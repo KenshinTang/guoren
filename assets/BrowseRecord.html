@@ -198,6 +198,7 @@ function pageload() {
  		}
  	},
  	init:function(){
+ 		$('.main').html('<div class="mescroll-empty"><p class="empty-tip">没有更多数据啦~</p></div>');
  		var data = Comm.db('seeHistory');
  		for (var i=0;i<data.length;i++) {
  			data[i].content=data[i].content.replace(/<\/?.+?\/?>/g, "").replace(/<[^>]*>|<\/[^>]*>/gm, "")
@@ -207,6 +208,9 @@ function pageload() {
 		}else{
 			$('.main').html('<div class="mescroll-empty"><p class="empty-tip">没有更多数据啦~</p></div>');
 		}
+		
+			
+		
  	},
  	del:function(id){
  		var data = Comm.db('seeHistory');

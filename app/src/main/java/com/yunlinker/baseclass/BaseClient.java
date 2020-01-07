@@ -130,6 +130,35 @@ public class BaseClient extends WebViewClient {
                 }
             });
             return true;
+        }else if(url.startsWith("mailto:")){
+
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                    builder.setMessage("发送邮件：" + url.replaceAll("mailto:", "") + "，是否发送邮件？");
+                    builder.setCancelable(false);
+                    builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            Intent intent = new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse(url));
+                            activity.startActivity(intent);
+                        }
+                    });
+                    builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    activity.dialog = builder.create();
+                    activity.dialog.show();
+                }
+            });
+            return true;
+
         }else{
             Log.e("111111111", "overrideUrlLoading: "+url);
 //            if(url.contains("_ifr"))
@@ -139,6 +168,9 @@ public class BaseClient extends WebViewClient {
 //            if(!TextUtils.isEmpty(url) && url.contains("asset"))
 //                view.loadUrl(url);
         }
+
         return super.shouldOverrideUrlLoading(view, url);
     }
+
+
 }

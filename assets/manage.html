@@ -41,7 +41,6 @@
 			}
 			
 			.order-t {
-				
 				text-align: center;
 				font-size: 12px;
 			}
@@ -72,10 +71,9 @@
 			}
 			
 			.demo1 {
-				padding: 10px 15px;
+				padding: 15px 15px;
 				background: #fff;
 			}
-			
 			/*.borderDe {
 				border: 1px solid #dedede;
 			}*/
@@ -87,12 +85,12 @@
 			
 			.glBtn1,
 			.glBtn2 {
-				width: 57px;
-				height: 20px;
+				width: 52px;
+				height: 30px;
 				text-align: center;
-				line-height: 20px;
+				line-height: 30px;
 				font-size: 12px;
-				border-radius: 10px;
+				border-radius: 4px;
 			}
 			
 			.glBtn2 {
@@ -101,13 +99,14 @@
 			}
 			
 			.establish {
-				width: 120px;
-				height: 40px;
+				width: 92%;
+				height: 44px;
 				background: #098E75;
-				border-radius: 23px;
+				border-radius: 5px;
 				color: #fff;
 				text-align: center;
-				line-height: 40px;
+				line-height: 44px;
+				font-size: 17px;
 				margin: 10px auto;
 			}
 			
@@ -129,18 +128,24 @@
 			.data-list {
 				background-color: #f4f4f4;
 			}
-			.sc-l{
+			
+			.sc-l {
 				width: 74%;
-			}.sc-r{
+			}
+			
+			.sc-r {
 				width: 25%
 			}
+			
 			#sinbox1 {
 				position: absolute;
 				bottom: 0;
 				left: 5%;
 				width: 90%;
 			}
-			.f5f5 div,.f5f5 span{
+			
+			.f5f5 div,
+			.f5f5 span {
 				color: #5F5F5F;
 			}
 		</style>
@@ -191,11 +196,11 @@
 			<div class="establish" onclick="model.getQuanzi()"><i class="icon_xie"></i> 创建圈子</div>
 		</footer>
 		<div id="sinbox1" class="paddb10" wtd="sinboxTemp">
-		<div class="bg_white marb10 f16" style="border-radius: 10px;">
-			<div class="coloreb3 paddb15 paddt15" onclick="model.shanchu(1)">删除</div>
+			<div class="bg_white marb10 f16" style="border-radius: 10px;">
+				<div class="coloreb3 paddb15 paddt15" onclick="model.shanchu(1)">删除</div>
+			</div>
+			<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
 		</div>
-		<div class="bg_white paddt15 paddb15 f16 color666" style="border-radius: 10px;" onclick="Comm.showWindow('')">取消</div>
-	</div>
 	</body>
 	<script type="text/html" id="listTpl">
 		{{each $data v k}}
@@ -212,7 +217,7 @@
 							<img src="img/index/more.png" width="14" height="3" />
 						</div>
 					</div>
-					
+
 				</div>
 				<div style="margin:0px 0 10px 40px;" class="colors">{{v.comment}}</div>
 				<div style="background:#F6F6F6;border-radius:3px;margin-left: 40px;" class="pad10">
@@ -234,16 +239,16 @@
 		{{each $data v k}}
 		<div class="demo1 flex-between borderb" onclick="Comm.go('postDetails.html?groupId='+{{v.groupId}})" id="{{v.groupId}}">
 			<div class="flex-between">
-				<div class="borderDe marr15" style="width:40px;height:40px;   border-radius: 5px;">
-					<img src="{{OSS(v.face,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" style="object-fit: cover;border-radius: 5px;" width="40" height="40">
+				<div class="borderDe marr15" style="width:44px;height:44px;   border-radius: 5px;">
+					<img src="{{OSS(v.face,'s')}}" onerror="this.src='img/my/mti.png';this.onerror=null;" style="object-fit: cover;border-radius: 5px;" width="44" height="44">
 				</div>
 				<div>
-					<p class="marb5 f14" style="color:#222;font-weight:700;height: 22px;">{{v.groupName}}</p>
-					<p class="f12" style="color:#888; height: 16px;">帖子{{conunm(v.newsNum)}} · 成员 {{v.customerNum}}</p>
+					<p class="f15 wordW" style="color:#222;font-weight:700;height: 22px;">{{v.groupName}}</p>
+					<p class="f12" style="color:#888;margin-top: 2px; height: 16px;">帖子{{conunm(v.newsNum)}} · 成员 {{conunm(v.customerNum)}}</p>
 				</div>
 			</div>
 			{{if(v.customerRole==3)}}
-			<div class="glBtn2" onclick="model.remove({{v.groupId}});event.stopPropagation();">退出</div>
+			<img src="img/out.png" style="object-fit: contain;"  onclick="model.remove({{v.groupId}});event.stopPropagation();" width="52" height="30">
 			{{else}}
 			<div class="glBtn1" onclick='Comm.go("setGrounp.html?groupId={{v.groupId}}");event.stopPropagation();'>管理</div>
 			{{/if}}
@@ -253,9 +258,9 @@
 	<script id="listTpl2" type="text/html">
 		{{each $data v k }}
 		<div class="demo2" id="{{v.newsId}}" onclick="event.stopPropagation();top.Comm.go('articleDetail.html?type=qz&newsId='+{{v.newsId}})">
-			<div class="fl center" style="width: 7%;">
+			<div class="fl center" style="width: 8%;">
 				<img src="img/ly.png" width="60%" />
-				<div class="mart5">{{v.commentNumber}}</div>
+				<div class="mart5 color333 f12">{{conunm(v.commentNumber)}}</div>
 			</div>
 			<div style="width: 90%;" class="fl marl5">
 				<div class="{{if v.face&&v.face[0]!=''}}sc-l fl{{/if}}">
@@ -289,44 +294,45 @@
 	<script type="text/javascript" src="./inc/comm.js"></script>
 	<script type="text/javascript" src="./inc/side.js"></script>
 	<script src="./inc/mescroll/mescroll.min.js"></script>
-	<script type="text/javascript" src="inc/tpl.js" ></script>
+	<script type="text/javascript" src="inc/tpl.js"></script>
 	<script src="./inc/mescroll/swiper.min.js"></script>
 	<script src="./inc/art-template.js"></script>
 	<script src="./inc/refresh.js" charset="utf-8"></script>
 
 	<script>
 		var customerId = app.getCid();
-		var mid ='';
+		var mid = '';
+
 		function pageload() {
 			mescrollRefreshFn({
 				menuNumber: 3
 			});
-		Comm.storage("isX", function(d) {
-            if (d) {
-                $("footer").css("padding-bottom", "10px");
-                
-            }
-        });
+			Comm.storage("isX", function(d) {
+				if(d) {
+					$("footer").css("padding-bottom", "10px");
+
+				}
+			});
 		}
 
 		function pageresume() {
-//			var index = $('.order-t-c-active').attr('i');
-//			mescrollArr[parseInt(index)].resetUpScroll()
+			//			var index = $('.order-t-c-active').attr('i');
+			//			mescrollArr[parseInt(index)].resetUpScroll()
 		}
 		var model = {
-			getQuanzi:function(){
+			getQuanzi: function() {
 				AJAX.GET('/api/customer/shutup', function(d) {
-					if(d.data==0){
-					Comm.go('./CreateTeam.html')		
-					}else{
-						Comm.alert('您暂无权限~',function(){
-							
+					if(d.data == 0) {
+						Comm.go('./CreateTeam.html')
+					} else {
+						Comm.alert('您暂无权限~', function() {
+
 						})
-					return false;
+						return false;
 					}
-					
+
 				})
-			
+
 			},
 			remove: function(groupsId) {
 				Comm.confirm('确认退出？', function(d) {
@@ -335,18 +341,24 @@
 							if(a && a.code == 1) {
 								if(a.data == '' || !a.data) {
 									$("#" + groupsId).remove();
-									getListData({num:1, size:10});
+									getListData({
+										num: 1,
+										size: 10
+									});
 								} else {
 									AJAX.GET('/api/school/groups/cancelFocusByLeader?groupsId=' + groupsId + '&myGroupsId=' + a.data.myGroupsId, function(d) {
 										if(d && d.code == 1) {
-											getListData({num:1, size:10});
+											getListData({
+												num: 1,
+												size: 10
+											});
 											//Comm.close();
 										} else {
 											Comm.message(d.msg);
 										}
 									})
 								}
-								
+
 							} else {
 								Comm.message(a.msg);
 							}
@@ -442,15 +454,15 @@
 					}
 					listStr = template('listTpl2', pageData);
 				} else {
-					pageData.userinfo = Comm.db('userinfo');
 					for(var i = 0; i < pageData.length; i++) {
-						pageData[i].face = pageData[i].face.split(',')
+						pageData[i].face = pageData[i].face.split(',');
 					}
+
 					listStr = template('listTpl', pageData);
 				}
-				if(pageData.curPage==1){
+				if(pageData.curPage == 1) {
 					listDom.innerHTML = nowStr + name + listStr;
-				}else{
+				} else {
 					listDom.innerHTML += nowStr + name + listStr;
 				}
 			}
@@ -469,8 +481,11 @@
 			AJAX.GET(url[curNavIndex], function(a) {
 				if(a && a.code == 1) {
 					var r = a.data || [];
+
+					if(curNavIndex == 2) {
+						r.userinfo = Comm.db('userinfo')
+					}
 					console.log(r)
-					
 					if(a.curPage == 1) {
 						htmlData = r;
 						totalSize = a.totalCount;
@@ -478,7 +493,7 @@
 						htmlData = r;
 						totalSize = totalSize;
 					}
-					htmlData.curPage =a.curPage;
+					htmlData.curPage = a.curPage;
 					successCallback && successCallback(htmlData, totalSize);
 				} else {
 					Comm.message(a.msg);

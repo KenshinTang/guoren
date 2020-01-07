@@ -235,7 +235,9 @@
 						if(a && a.code == 1) {
 							Comm.message('操作成功');
 							Comm.db('qzTitle', '');
-							Comm.goself('anwser.html?newsId=' + newsId + '&commentId=' + plId);
+							Comm.db('isbian','1')
+							Comm.close();
+							//Comm.goself('anwser.html?newsId=' + newsId + '&commentId=' + plId);
 						} else {
 							Comm.message(a.msg);
 						}

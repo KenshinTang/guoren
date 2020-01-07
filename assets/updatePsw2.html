@@ -62,11 +62,11 @@
         <div class="main">
             <h3 class="title">重置密码</h3>
             <div class="pswBox">
-                <input type="password" id="newPsw" placeholder="请输入原密码">
+                <input type="password" id="newPsw" maxlength="16" placeholder="请输入原密码">
                 <span class="icon_quxiao fr" id="quxiao1">x</span>
             </div>
             <div class="pswBox">
-                <input type="password" id="newPsw2" placeholder="请输入新密码">
+                <input type="password" id="newPsw2" maxlength="16" placeholder="请输入新密码">
                 <span class="icon_quxiao fr" id="quxiao2">x</span>
             </div>
             <p class="masg">密码长度6-16位字符，字母数字组合</p>
@@ -104,15 +104,23 @@
     var model = {
         determine:function(){
             if($('#newPsw').val()==''){
-                Comm.message('请填写新密码');
+                Comm.message('请填写原密码');
+                return;
+            }
+            if($('#newPsw').val().length<6||$('#newPsw').val().length>16){
+                Comm.message('请填写6-16位原密码');
                 return;
             }
             if($('#newPsw2').val()==''){
-                Comm.message('请填写确认密码');
+                Comm.message('请填写新密码');
+                return;
+            }
+            if($('#newPsw2').val().length<6||$('#newPsw2').val().length>16){
+                Comm.message('请填写6-16位新密码');
                 return;
             }
             AJAX.POST('/api/customer/updatePassword',{oldPassword:$('#newPsw').val(),password:$('#newPsw2').val()},function(d){
-                if(d&&d.code){
+                if(d&&d.code==1){
                     Comm.message('密码修改成功');
                     setTimeout(function(){
                         Comm.db('_token','');

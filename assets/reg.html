@@ -210,7 +210,7 @@ if ($('#Password').val().length<6) {
                 return;
             };
             if ($('#Password').val().length>18) {
-                Comm.message('密码最大18位数');
+                Comm.message('密码最大16位数');
                 return;
             };
 //          if (this.code != $('#code').val()) {
@@ -241,7 +241,7 @@ if ($('#Password').val().length<6) {
                             Comm.db("tempToken", d.data.token);
                             AJAX.setTag(d.data.token);
                             Comm.db('userinfo', d.data);
-                            Comm.go('improveInfo.html?_type=0')
+                            Comm.go('improveInfo.html')
                 } else {
                     Comm.message(d.msg);
                 }

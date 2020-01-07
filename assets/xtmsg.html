@@ -16,6 +16,9 @@
 
     <style>
         body {}
+        #list img{
+        	width: 100%;
+        }
     </style>
 </head>
 
@@ -58,6 +61,7 @@
     	init:function(){
     		AJAX.GET('/api/mess/sysInfo?messId='+Comm.query('id')+'&setRead=1',function(a){
     			if(a&&a.code==1){
+    				$('#title').html(a.data.messTitle);
     				$('#list').html(a.data.content);
     			}
     		})

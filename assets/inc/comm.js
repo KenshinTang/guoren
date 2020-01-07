@@ -2,8 +2,8 @@ var config = {
     // root:'http://192.168.0.182:8080/',//扶摇
     //root:'http://192.168.0.113/',//张宇
     //root: 'http://192.168.0.96:8082/', //扶摇
-    root: 'http://www.guorenapp.cn/guoren/', //测试
-    //root: 'http://www.guorenapp.cn/guoren_pro/', //正式
+    //root: 'http://www.guorenapp.cn/guoren/', //测试
+    root: 'http://www.guorenapp.cn/guoren_pro/', //正式
     //root:'http://192.168.0.80:8080/',//何刚
     webroot: "http://www.guorenapp.cn/app_pro/app/", //网址地址正式
     //webroot: "http://www.guorenapp.cn/app/app/", //网址地址测试
@@ -17,33 +17,34 @@ var config = {
 /*app 公用方法处理器*/
 var app = new function() {
 
-this.update = function() {
-        //软件升级
-        if (Comm.w9()) {
-        	var data = '';
-        	Comm.getVersion(function(d) {data=d});
-        var clientSys = Comm.ios() ? 2 : 1; //1 android 2 ios
-        AJAX.GET('/api/version/newVersionInfo?type=' + clientSys, function(a) {
-           if (a.code == 1) {
-              if (data.versionName != a.data.versionNum) {
-              	if(a.data.forced==1){
-              	Comm.showWindow('sinboxTempgx',false);
-                $('#WTDBOXTD #down').attr('onclick','xiazai("'+Comm.OSS.getImgUrl(a.data.url)+'")')
-                $('footer').hide();
-                $('section').html('')
-                $('.mescroll-totop').html('');
-                $('.mescroll-totop1').html('');
-                return false;
-              	}else{
-              	Comm.showWindow('sinboxTempgx1',false);
-                $('#WTDBOXTD #down').attr('onclick','xiazai("'+Comm.OSS.getImgUrl(a.data.url)+'")')
+	this.update = function() {
+            //软件升级
+            if (Comm.w9()) {
+            	var data = '';
+            	Comm.getVersion(function(d) {data=d});
+            var clientSys = Comm.ios() ? 2 : 1; //1 android 2 ios
+            AJAX.GET('/api/version/newVersionInfo?type=' + clientSys, function(a) {
+               if (a.code == 1) {
+                  if (data.versionName < a.data.versionNum) {
+                  	if(a.data.forced==1){
+                  	Comm.showWindow('sinboxTempgx',false);
+                    $('#WTDBOXTD #down').attr('onclick','xiazai("'+Comm.OSS.getImgUrl(a.data.url)+'")')
+                    $('footer').hide();
+                    $('section').html('')
+                    $('.mescroll-totop').html('');
+                    $('.mescroll-totop1').html('');
+                    return false;
+                  	}else{
+                  	Comm.showWindow('sinboxTempgx1',false);
+                    $('#WTDBOXTD #down').attr('onclick','xiazai("'+Comm.OSS.getImgUrl(a.data.url)+'")')
 
-              	}
-                   }
-                    }
-                })
+                  	}
+                       }
+                        }
+                    })
+            }
         }
-    }
+
     this.calcImgTag = function(o, h, w) {
         if (h && w) {
             if (document.body.clientHeight * 1.3 / document.body.clientWidth < h / w) {
@@ -132,8 +133,8 @@ this.update = function() {
                             timeCountDownclick = true;
                             o.removeAttribute("disabled");
                             o.innerText = "重新发送";
-                            o.style.color = '#fff';
-                            o.style.background = '#098E75';
+//                            o.style.color = '#fff';
+//                            o.style.background = '#098E75';
                             wait = 60;
                             clearInterval(i);
                         } else {
@@ -275,10 +276,10 @@ this.update = function() {
         if (d == undefined) {
             d = 1;
         }
-        if (v > 1000) {
+        if (v >= 1000&&v<10000) {
             return (Number(v) / 1000).toFixed(d) + "k"
         }
-        if (v > 10000) {
+        if (v >= 10000) {
             return (Number(v) / 10000).toFixed(d) + "w"
         }
         if (v != null && v != "" && v != undefined) {
@@ -822,7 +823,7 @@ function MERefresh(selector, config) {
         }
         console.log('准备调用刷新的请求');
         var pageParams = {};
-        pageParams.pageno = 1,
+        		pageParams.pageno = 1,
             pageParams.curpage = 1;
         pageParams.pagesize = t.refreshOption.pagesize;
 
@@ -1128,9 +1129,9 @@ var sldate = function formatMsgTime(timespan) {
         timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟前';
     } else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
         timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
-    } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 7) {
-        //      timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-        timeSpanStr = month + '-' + day;
+//    } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 7) {
+//        //      timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
+//        timeSpanStr = month + '-' + day;
     } else if (milliseconds > 1000 * 60 * 60 * 24 * 1 && year == now.getFullYear()) {
         //      timeSpanStr = month + '-' + day + ' ' + hour + ':' + minute;
         timeSpanStr = month + '-' + day;
