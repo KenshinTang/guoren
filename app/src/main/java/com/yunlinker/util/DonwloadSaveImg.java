@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -48,7 +49,7 @@ public class DonwloadSaveImg {
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(filePath));
                 //指定下载路径和下载文件名
                 String fileName = UUID.randomUUID().toString() +type;
-                request.setDestinationInExternalPublicDir("/download/", fileName);
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
                //获取下载管理器
                 DownloadManager downloadManager= (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
                 //将下载任务加入下载队列，否则不会进行下载
